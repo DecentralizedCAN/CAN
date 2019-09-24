@@ -48,7 +48,7 @@
 		<li>a = polling average</li>
 		<li>c = criterion</li>
 	</ul>
-	[View diagram](app/assets/images/scoring-algorithm.png)
+	<a href="https://github.com/DecentralizedCAN/CAN/blob/master/app/assets/images/scoring-algorithm.png">View Diagram</a>
 </div>
 
 <h1 id="crowdacting">Actions</h1>
