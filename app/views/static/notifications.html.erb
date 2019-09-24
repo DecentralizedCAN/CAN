@@ -1,0 +1,44 @@
+<div id="solver">
+
+<div class="back-button">
+  <%= link_to main_feed_path do %>
+    <div class="back-button-arrow"></div>
+    <div class="back-button-content">
+      Back
+    </div>
+  <% end %>
+</div>
+
+<ol id="notifications">
+<% @notifications.each do |notification| %>
+	<% if notification.criterium %>
+		<%= link_to show_criterium_path(:criterium_id => notification.criterium.hashid) do %>
+	  <li>
+  		The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
+	  </li>
+		<% end %>
+	<% elsif notification.problem %>
+		<%= link_to show_criterium_path(:criterium_id => notification.problem.hashid) do %>
+	  <li>
+  		The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
+	  </li>
+		<% end %>
+	<% elsif notification.discussion %>
+		<%= link_to discussion_path(notification.discussion.hashid) do %>
+	  <li>
+  		<%= notification.details %>
+	  </li>
+		<% end %>
+	<% elsif notification.activity %>
+		<%= link_to action_path(notification.activity.hashid) do %>
+	  <li>
+  		The action <em><%= notification.activity.title %></em> <%= notification.details %>
+	  </li>
+		<% end %>
+	<% end %>
+<% end %>
+</ol>
+
+<%= will_paginate @notifications %>
+
+</div>

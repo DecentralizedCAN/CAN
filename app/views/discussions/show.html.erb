@@ -1,0 +1,204 @@
+<br>
+<% if @discussion.problem %>
+  <div class="back-button">
+    <%= link_to issue_path(@discussion.problem) do %>
+      <div class="back-button-arrow"></div>
+      <div class="back-button-content">
+        Back to brainstorm
+      </div>
+    <% end %>
+  </div>
+<% elsif @discussion.activity %>
+  <div class="back-button">
+    <%= link_to action_path(@discussion.activity.hashid) do %>
+      <div class="back-button-arrow"></div>
+      <div class="back-button-content">
+        Back to action
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="back-button">
+    <%= link_to main_feed_path do %>
+      <div class="back-button-arrow"></div>
+      <div class="back-button-content">
+        Feed
+      </div>
+    <% end %>
+  </div>
+
+    <%= render(:partial => 'static/post-stuff', :locals => {:post => @discussion.post})%>
+
+      <div class="discussion">
+        <div class="discussion-title"><%= @discussion.title %> <span class="feed-label">Discussion</span></div>
+        <div class="issue-info">
+            <div>
+              <i class="fas fa-calendar"></i>
+              created <%= time_ago_in_words(@discussion.created_at) %> ago
+            </div>
+            <div>
+              <i class="fas fa-comment-dots"></i>
+              <%= pluralize(@discussion.comment.count, "comment") %>
+            </div>
+          </div>
+        <div class="discussion-content"><%= @discussion.content %></div>
+      </div>
+
+<% end %>
+<!-- </div> -->
+<div class="discussion-column discussion-large" id="main-discussion">
+<!--   <h1>New</h1>
+ -->  <ul id="scroll-div">
+  	<% @discussion.comment.last(200).each do |comment| %>
+  		<% if comment.content %>
+  		  <li>
+          <div>
+            <!-- <%= gravatar_for comment.user, :class => "gravatar" %> -->
+            <strong><%= comment.user.name %></strong>
+            <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
+          </div>
+  		  	<div class="comment">
+            <%= comment.content.html_safe %>
+          </div>
+          <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} %>
+          
+          <% if comment.upvotes.count > 0 %>
+            <div class="like-div active">
+          <% else %>
+            <div class="like-div">
+          <% end %>
+          
+            <% if pre_upvote %>
+              <%= button_to unlike_path(comment), method: :post, :class => "red-like" do %>
+                <span class="red-like-count"><%= comment.upvotes.count %></span>
+                <i class="far fa-thumbs-up" style="color:#ffcc00"></i>
+              <% end %>
+            <% else %>
+              <%= button_to like_path(comment), method: :post, :class => "gray-like" do %>
+                <span class="gray-like-count"><%= comment.upvotes.count %></span>
+                <i class="far fa-thumbs-up" style="color:#f5f5f5"></i>
+              <% end %>
+            <% end %>
+          </div>
+  	  	</li>
+  		<% end %>
+  	<% end %>
+  </ul>
+
+  <%= form_with(model: @discussion.comment.new(:user => current_user), local: true) do |form| %>
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this @comment from being saved:</h2>
+
+        <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.hidden_field :user_id %>
+    <%= form.hidden_field :discussion_id %>
+
+    <div class="comment-box">
+      <%= form.text_field :content, id: :comment_content, autocomplete: "off" %>
+      <%= form.submit "Send", id: :send %>
+    </div>
+
+  <% end %>
+</div>
+
+<div class="flex-container vertical discussion-sidebar">
+  <% if @top_liked.length > 8 %>
+    <div class="discussion-column">
+      <h3>Recently Liked</h3>
+        <% @recent_liked.each do |comment| %>
+          <% if comment.content  %>
+            <li>
+              <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} %>
+              <div class="like-div">
+                <% if pre_upvote %>
+                  <%= button_to unlike_path(comment), method: :post, :class => "red-like" do %>
+                    <span class="red-like-count"><%= comment.upvotes.count %></span>
+                    <i class="far fa-thumbs-up"></i>
+                  <% end %>
+                <% else %>
+                  <%= button_to like_path(comment), method: :post, :class => "gray-like" do %>
+                    <span class="gray-like-count"><%= comment.upvotes.count %></span>
+                    <i class="far fa-thumbs-up"></i>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= comment.content.html_safe  %>
+              <em>–<%= comment.user.name %></em>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @top_liked.length > 0 && @discussion.comment.count > 9 %>
+    <div class="discussion-column">
+      <h3>Top Liked</h3>
+        <% @top_liked.each do |comment| %>
+          <% if comment.content %>
+            <li>
+              <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} %>
+              <div class="like-div">
+                <% if pre_upvote %>
+                  <%= button_to unlike_path(comment), method: :post, :class => "red-like" do %>
+                    <span class="red-like-count"><%= comment.upvotes.count %></span>
+                    <i class="far fa-thumbs-up"></i>
+                  <% end %>
+                <% else %>
+                  <%= button_to like_path(comment), method: :post, :class => "gray-like" do %>
+                    <span class="gray-like-count"><%= comment.upvotes.count %></span>
+                    <i class="far fa-thumbs-up"></i>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= comment.content.html_safe  %>
+              <em>–<%= comment.user.name %></em>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+
+<% if current_user.admin %>
+  <%= @discussion.creator %>
+  | <%= link_to 'Destroy', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<script type="text/javascript">
+  var element = document.getElementById("scroll-div");
+  element.scrollTop = element.scrollHeight;
+  $("#comment_content").focus()
+
+  // respond to liking and unliking comments
+  $(".like-div > form").click(function() {
+    form = this
+    setTimeout(function () {
+        $(form).find('button').toggleClass('red-like gray-like');
+
+        if ($(form).attr('action').indexOf('unlike') > -1) {
+          newAction = $(form).attr('action').replace('unlike', 'like')
+          $(form).find('span')[0].innerText = Number($(form).find('span')[0].innerText) - 1
+        } else {
+          newAction = $(form).attr('action').replace('like', 'unlike')
+          $(form).find('span')[0].innerText = Number($(form).find('span')[0].innerText) + 1
+          $(form).parent().css( "display", "inline-block" );
+        }
+
+        console.log(newAction)
+    
+        $(form).attr('action', newAction);
+    }, 100);
+
+  });
+</script>

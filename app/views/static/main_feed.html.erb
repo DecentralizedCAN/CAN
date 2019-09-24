@@ -1,0 +1,136 @@
+<div id="main-feed">
+
+	<div class="flex-container">
+		<ol class="new-posts">
+	  <% @posts.each do |post| %>
+			<% #if post.upvotes.count > 0 %>
+
+				<% if post.activity %>
+			  	
+					<% if (post.activity.deadline && post.activity.deadline > @current_time) || (post.activity.expiration && post.activity.expiration > @current_time) || (!post.activity.deadline && !post.activity.expiration) %>
+						<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
+
+						<%= link_to action_path(post.activity.hashid) do %>
+						  <li class="proposal">
+								<%= render(:partial => 'activities/activity', :locals => {:activity => post.activity})%>
+						  </li>
+						<% end %>
+					<% end %>
+				<% elsif post.problem %>
+
+				<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
+				<%= link_to issue_path(post.problem) do %>
+	        <% #if post.problem.user.count > 0 %>
+	          <div class="issue">
+	            <div class="issue-title"><%= post.problem.title %> <span class="feed-label">Brainstorm</span></div>
+		            <div class="issue-info">
+		              <div>
+		                <i class="fas fa-calendar"></i>
+		                created <%= time_ago_in_words(post.problem.created_at) %> ago
+		              </div>
+		              <div>
+		                <i class="fas fa-handshake"></i>
+		                <%= post.problem.user.count %> collaborators
+		              </div>
+		              <div>
+		                <i class="fas fa-clipboard-list"></i>
+		                <%= post.problem.criterium.count %> criteria
+		              </div>
+		              <div>
+		                <i class="fas fa-comment-alt"></i>
+		                <%= pluralize(post.problem.solution.count, "proposal") %>
+		              </div>
+		  
+
+		            </div>
+		          </div>
+
+		      <% end %>
+
+
+				<% elsif post.discussion %>
+					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
+					<%= link_to discussion_path(post.discussion) do %>
+	          <div class="discussion">
+							<div class="discussion-title"><%= post.discussion.title %> </div>
+							<span class="feed-label">Discussion</span><br>
+
+							<div class="issue-info">
+		              <div>
+		                <i class="fas fa-calendar"></i>
+		                created <%= time_ago_in_words(post.discussion.created_at) %> ago
+		              </div>
+		              <div>
+		                <i class="fas fa-comment-dots"></i>
+		                <%= pluralize(post.discussion.comment.count, "comment") %>
+		              </div>
+		            </div>
+						</div>
+		      <% end %>
+				<% end %>
+
+				<!-- <hr> -->
+
+		<% end %>
+		</ol>
+
+		<ol class="side-card">
+
+		  <div id="post-something"> 
+  			<%= link_to 'New Post', new_discussion_path if logged_in? %>
+			</div>
+
+		  <%= render(:partial => 'static/commitments-mini') if logged_in?%>
+
+			<% if logged_in? && @notifications.length > 0 %>
+		  <div class="card-item">
+
+		  	<div class="flex-container">
+		  		<h2>Notifications</h2>
+		  		<%= link_to "view all", notifications_path, :id => "all-notifications" %>
+		  	</div>
+
+			  <% @notifications.each do |notification| %>
+					<% if notification.criterium %>
+			  		<%= link_to show_criterium_path(:criterium_id => notification.criterium.hashid) do %>
+					  <li>
+				  		The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
+					  </li>
+						<% end %>
+					<% elsif notification.problem %>
+			  		<%= link_to show_criterium_path(:criterium_id => notification.problem.hashid) do %>
+					  <li>
+				  		The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
+					  </li>
+						<% end %>
+					<% elsif notification.discussion %>
+			  		<%= link_to discussion_path(notification.discussion.hashid) do %>
+					  <li>
+				  		<%= notification.details %>
+					  </li>
+						<% end %>
+					<% elsif notification.activity %>
+			  		<%= link_to action_path(notification.activity.hashid) do %>
+					  <li>
+				  		The action <em><%= notification.activity.title %></em> <%= notification.details %>
+					  </li>
+						<% end %>
+					<% end %>
+			  <% end %>
+			</div>
+	  	<% end %>
+
+<!-- 		  <div class="card-item">
+				<div id="daily-quote">
+				  <em><%= @quote[0] %></em>
+				  <br>
+				  ~ <%= @quote[1] %>
+				</div>
+			</div> -->
+		</ol>
+	</div>
+
+</div>
+
+<span id="paginate_solutions"><%= will_paginate @posts %></span>
+<br><br>

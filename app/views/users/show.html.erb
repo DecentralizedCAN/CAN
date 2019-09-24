@@ -1,0 +1,46 @@
+<div class="backdrop">
+
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <!-- <%= gravatar_for @user %> -->
+        <%= @user.name %>
+      </h1>
+      <% if current_user.admin? %> 
+        <%= @user.email %> <br>
+        <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %> 
+    </section>
+  </aside>
+</div>
+
+<% if current_user?(@user) %>
+  <%= link_to "Log out", logout_path, method: :post %>
+
+  <% provide(:title, 'Edit user') %>
+  <% provide(:button_text, 'Save changes') %>
+  <h2>Update your profile</h2>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-0">
+      <%= render 'form', user: @user %>
+      <!-- <div class="gravatar_edit"> -->
+        <!-- <%= gravatar_for @user %> -->
+        <!-- <a href="http://gravatar.com/emails" target="_blank">Change Avatar</a> -->
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <div>
+    <h2>Preferences</h2>
+    <%= form_with(model: @user, local: true) do |form| %>
+      <%= form.check_box :email_notifications, id: :email_notifications %> receive updates by email
+      <div>
+        <%= form.submit "Save preferences" %>      
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+</div>

@@ -1,0 +1,96 @@
+<div class="backdrop">
+
+<div class="back-button">
+  <%= link_to issue_path(:problem_id => @criterium.problem.hashid, :anchor => "criteria"), data: { turbolinks: false } do %>
+    <div class="back-button-arrow"></div>
+    <div class="back-button-content">
+      All criteria
+    </div>
+  <% end %>
+</div>
+
+
+<div class="criterion-outer">
+
+<h1>
+  <%= @criterium.title %>
+</h1>
+
+<h2>
+  Criterion for <strong><%= @criterium.problem.title %></strong>
+</h2>
+
+<% if !@criterium.cridissent.find_by(user: @user) %>
+  <%if @criterium.user.include?(@user)%>
+    <div><em><%= link_to "cancel support", unsponsor_criteria_path(:criterium_id => @criterium.id), :method => "post" %></em></div>
+  <%else%>
+    <div class="sponsor-criteria"><em><%= link_to "support", sponsor_criteria_path(:criterium_id => @criterium.id), :method => "post" %></em></div>
+  <%end%>
+<% end %>
+
+<div class="criterion-action-box">
+	<h3>Objections (<%= @criterium.cridissent.count %>)</h3>
+	<div class="criterium-dissent">
+		<%if @criterium.cridissent.find_by(user: @user)%>
+	    <div>
+	      you objected: <%= @criterium.cridissent.find_by(user: @user).title %>
+	      <em><%= link_to "remove objection", assent_criteria_path(:criterium_id => @criterium.id), :method => "post" %></em>
+	    </div>
+	  <%else%>
+		  <%= form_for(@criterium.cridissent.new, :url => dissent_criteria_path, remote: true) do |form| %>
+		    <div class="dissent-instructions">I cannot support a plan where this is true because:</div>
+		    <%= form.hidden_field :criterium_id %>
+		    <div class="dissent-title"><%= form.text_area :title %></div>
+		    <div class="submit-dissent"><%= form.submit "Object" %></div>
+		  <% end %>
+	  <%end%>
+
+	</div>
+	<!-- <hr> -->
+	<ul><% @criterium.cridissent.each do |dissent| %>
+  	<%if dissent.title%>
+  	<li><%= dissent.title %></li>
+  	<%end%>
+	<% end %>
+</div>
+
+<div class="criterion-action-box">
+	<h3>Add to alternatives list</h3>
+	<ul>
+		<% @criterium.problem.criterium.each do |alt| %>
+			<% unless alt.id==@criterium.id || @criterium.crialt.select{|x| x["alternative"].to_i == alt.id}.count > 0%>
+					<li>
+						<%= link_to "Add", alt_criterium_path(:from => @criterium.id, :to=> alt.id), :class => "suggest-link", :method => "post" %>
+						<%= alt.title %>
+						<% if alt.cridissent.count > 0 %>
+							(<%= alt.cridissent.count %> objections)
+						<% end %>
+					</li>
+			<% end %>
+		<% end %>
+	</ul>
+</div>
+
+<div class="criterion-action-box">
+	<h3>Transfer support to an alternative</h3>
+	<ul>
+		<% @criterium.crialt.order("transferred_user_count DESC").each do |suggestion| %>
+				<li>
+					<% if @criterium.user.include?(@user) %>
+						<%= link_to "Transfer to this", accept_alt_path(:crialt => suggestion.id), :class => "transfer-link", :method => "post"%>
+					<% end %>
+		  		<%= Criterium.find(suggestion.alternative).title %>
+	  			(<%= suggestion.transferred_user_count %> transfers so far)
+				</li>
+		<%end%>
+	</ul>
+</div>
+
+
+</div>
+
+<% if current_user.admin %>
+  <%= @criterium.creator %>
+  | <%= link_to 'Destroy', @criterium, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+</div>

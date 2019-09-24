@@ -1,0 +1,17 @@
+<div class="backdrop">
+
+<div class="back-button">
+  <%= link_to issue_path(@problem.id) do %>
+    <div class="back-button-arrow"></div>
+    <div class="back-button-content">
+      Back
+    </div>
+  <% end %>
+</div>
+
+<div class="form-tab">
+<h1>New Proposal for <strong><%= @problem.title %></strong></h1>
+<%= render 'form', solution: @solution %>
+</div>
+
+</div>

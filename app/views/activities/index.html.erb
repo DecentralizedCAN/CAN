@@ -1,0 +1,59 @@
+<%= render 'layouts/nav-two' %>
+
+<div id="activator">
+  <div id="propose-activity"> <%= link_to 'Propose action', post_action_path %> </div>
+
+  <ol>
+    <% @activities.each do |activity| %>
+
+      <%= link_to action_path(activity.id) do %>
+        <li class="proposal">
+          <div class="proposal-block-one">
+            <div class="activity-title"><%= activity.title %></div>
+            <div class="activity-info">
+              <div>
+                <i class="fas fa-calendar"></i>
+                proposed <%= time_ago_in_words(activity.created_at) %> ago
+              </div>              
+            </div>
+          </div>
+
+          <div class="roll-progress">
+
+            <div class="written-progress">
+              <i class="fas fa-users"></i>
+              Participants <% if activity.roll.first.minimum < activity.roll.first.maximum %>
+                <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>-<%=activity.roll.first.maximum %>
+              <% else %>
+                <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>
+              <% end %>
+            </div>
+            
+            <div class="participation-meter">
+              <div class="participation-progress" style="
+              width: <%= activity.roll.first.user.count.to_f / activity.roll.first.minimum.to_f * 100 + 1%>%; 
+              background-color: rgba(255, 116, 85, <%= activity.roll.first.user.count.to_f / activity.roll.first.minimum.to_f %>);
+              ">
+              </div>
+            </div>
+
+            <% if activity.roll.first.user.include?(@user) %>
+              <span class="committed">√ you are committed</span>
+            <% end %>
+
+          </div>
+
+          <% if activity.actdissent.count > 0 %>
+            <div class="dissenter-count">
+              <i class="fas fa-hand-point-down"></i>
+              <%= activity.actdissent.count %> objections
+            </div>
+          <% end %>
+          
+        </li>
+      <% end %>
+    <%end%>
+  </ol>
+</div>
+
+<br>

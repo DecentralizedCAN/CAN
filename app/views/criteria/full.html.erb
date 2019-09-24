@@ -1,0 +1,54 @@
+<div id="solver">
+
+  <div class="back-button">
+    <%= link_to issue_path(:problem_id => @problem.hashid) do %>
+      <div class="back-button-arrow"></div>
+      <div class="back-button-content">
+        Brainstorm
+      </div>
+    <% end %>
+  </div>
+
+  <div class="criteria-outer">
+
+    <h1 id="criteria">
+      <i class="fas fa-clipboard-list"></i>
+      <%= @criteria_count %> Active criteria for <em><%= @problem.title %></em>
+    </h1>
+
+    <em>
+      <%= link_to "Add to criteria", new_criterium_path( :problem_id => @problem.id) %>
+    </em>
+
+    <div id="issue-criteria">
+      <% if @my_criteria.count > 0 %>
+      <h2>Supported criteria</h2>
+      <% end %>
+      <div class="criteria-list">
+      <% @my_criteria.each do |criterium| %>
+        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+      <% end %>
+      </div>
+
+      <% if @criteria.count > 0 %>
+      <h2>Active criteria</h2>
+      <% end %>
+      <div class="criteria-list">
+      <% @criteria.each do |criterium| %>
+        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+      <% end %>
+      </div>
+
+      <% if @inactive_criteria.count > 0 %>
+      <h2>Inactive criteria</h2>
+      <% end %>
+      <div class="criteria-list">
+      <% @inactive_criteria.each do |criterium| %>
+        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+      <% end %>
+      </div>
+
+    </div>
+  </div>
+
+</div>

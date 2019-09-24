@@ -1,0 +1,32 @@
+<div class="backdrop">
+
+<div class="back-button">
+  <%= link_to issue_path(:problem_id => @criterium.problem.id) do %>
+    <div class="back-button-arrow"></div>
+    <div class="back-button-content">
+      Back
+    </div>
+  <% end %>
+</div>
+
+<div class="form-tab">
+
+<h1>Add a criterion to inform and evaluate proposals for <span class="problem-title"><%=  @criterium.problem.title %></span></h1>
+
+<div id="submit-criteria">
+  <%= form_for(@criterium, remote: true) do |form| %>
+
+    <div class="criterion-description">
+      <%= form.text_area :title, id: :criterium_title, placeholder: "What would you like be true about any proposal addressing the issue in question?" %>
+    </div>
+
+    <%= form.hidden_field :problem_id, id: :id %>
+
+    <%= form.submit "Add to criteria", id: :submit_form %>
+
+  <% end %>
+</div>
+
+</div>
+
+</div>

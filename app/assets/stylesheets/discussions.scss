@@ -1,0 +1,227 @@
+// Place all the styles related to the Discussions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+$offwhite: #f5f5f5;
+$label-blue: #81c4ff;
+$neutral-blue: #0091ff;
+
+
+.discussion-sidebar {
+  background-color: white;
+}
+
+.discussion-column {
+	background-color: $offwhite;
+  display: block;
+  float: left;
+  background-color: white;
+  padding: 1em;
+  margin-bottom: .5em;
+  box-shadow: 0px 3px 6px 0px #d0d0d0;
+  border: 1px solid #efefef;
+
+	li {
+		list-style: none;
+    padding-bottom: 5px;
+	}
+
+	* {
+		color: black;
+    font-family: 'Monteserrat', sans-serif;
+	}
+
+	h1 {
+		margin: 0;
+    margin-bottom: 10px;
+    padding: 4px 7px;
+	}
+
+  h3 {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+}
+
+#main-discussion {
+	width: 70%;
+  background-color: white;
+}
+
+.discussion-large {
+  padding: 0 !important;
+  vertical-align: top;
+  margin-right: 10px;
+
+  #scroll-div {
+    padding: 10px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .discussion-column, #main-discussion {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+#scroll-div {
+	height: 400px;
+  overflow: auto;
+  padding: 0;
+	.like-div, .time { display:none; }
+
+	li {
+		margin-bottom: 6px;
+	}
+}
+
+#scroll-div > li:hover .time,
+#scroll-div > li:hover .like-div,
+#scroll-div > li > .like-div.active { 
+	display:inline-block; 
+}
+
+.time {
+	color: gray;
+	font-style: italic;
+}
+
+
+.like-div {
+	display: inline-block;
+  letter-spacing: -1px;
+
+  &:focus, form:focus, button {
+  	outline: none;
+  }
+
+	form {
+		display: inline-block;
+	}
+}
+
+.red-like {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+
+  .fa-thumbs-up:before {
+		color: $neutral-blue;
+  }
+	
+	span {
+		color: $neutral-blue !important;
+	}
+}
+
+
+
+.gray-like {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+
+	.fa-thumbs-up:before {
+		color: gray;
+	}
+
+	span {
+		color: gray;
+	}
+}
+
+
+
+
+
+.comment-box, .submit-comment {
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+.comment-box {
+  width: 100%;
+  height: 24px;
+
+  #comment_content {
+  	width: 100%;
+    padding-right: 50px;
+  }
+}
+
+
+
+
+
+#submit_discussion {
+  margin-top: 12px;
+  background-color: $neutral-blue;
+  border: 1px solid #ddd;
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: none;
+
+  &:hover {
+    background-color: #0382e2;
+  }
+}
+
+#discussion_content {
+    height: 200px;
+}
+
+
+#comment_content:focus {
+	outline: none;
+}
+
+
+.gravatar {
+  width: 24px;
+}
+
+#send {
+  float: right;
+  position: relative;
+  top: -22px;
+  left: -8px;
+  border: none;
+  padding: 0;
+  color: #1491ff !important;
+  font-weight: bold;
+}
+
+#activator > .discussion-outer {
+  width: 50%;
+  float: right;
+  margin: 0;
+  
+  h1 {
+    font-size: 14px;
+  }
+
+  a {
+    color: #3a3a3a;
+  }
+}
+
+.discussion-title {
+  display: inline-block;
+  color:black;
+}
+
+.discussion-content {
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+#top-liked-mini {
+  padding: 6px;
+  border-radius: 2px;
+  border: 1px solid #c7c7c7;
+
+  h2 {
+    margin-top: 2px;
+  }
+}

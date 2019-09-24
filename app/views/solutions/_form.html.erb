@@ -1,0 +1,29 @@
+<%= form_with(model: solution, local: true) do |form| %>
+  <% if solution.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(solution.errors.count, "error") %> prohibited this solution from being saved:</h2>
+
+      <ul>
+      <% solution.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="solution-form-body">
+    <%= form.text_area :title, id: :solution_title, placeholder: "Title" %>
+    <%= form.text_area :description, id: :solution_description, placeholder: "Description" %>
+
+    <div class="activation">
+      <b> Participants </b><br>
+      Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
+      Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
+    </div>
+
+  </div>
+
+  <%= form.hidden_field :problem_id, id: :solution_problem_id %>
+
+  <%= form.submit "Submit proposal", id: :submit_action %>
+<% end %>

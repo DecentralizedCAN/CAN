@@ -1,0 +1,179 @@
+<div id="solver">
+
+  <div class="back-button">
+    <%= link_to main_feed_path do %>
+      <div class="back-button-arrow"></div>
+      <div class="back-button-content">
+        Feed
+      </div>
+    <% end %>
+  </div>
+
+
+    <% if @problem.post %>
+      <%= render(:partial => 'static/post-stuff', :locals => {:post => @problem.post})%>
+    <% end %>
+
+    <div class="issue">
+      <div class="flex-container">
+
+        <div class="issue-title view"><%= @problem.title %>
+          <span class="feed-label">Brainstorm</span>
+        </div>
+
+        <div id="issue-sponsorship">
+          <%if @problem.user.include?(@user)%>
+            <em><%= link_to "Leave this Brainstorm", unsponsor_problem_path(:problem_id => @problem.id), :method => "post" %></em>
+          <%else%>
+            <em><%= link_to "Join this Brainstorm", sponsor_problem_path(:problem_id => @problem.id), :method => "post" %></em>
+          <%end%>
+        </div>
+
+      </div>
+
+
+      <div class="issue-info">
+        <div>
+          <i class="fas fa-calendar"></i>
+          <%= time_ago_in_words(@problem.created_at) %> ago
+        </div>
+        <div>
+          <i class="fas fa-handshake"></i>
+          <%= @problem.user.count %> collaborators
+        </div>
+        <div>
+          <i class="fas fa-clipboard-list"></i>
+          <%= @problem.criterium.count %> criteria
+        </div>
+        <div>
+          <i class="fas fa-comment-alt"></i> 
+          <%= @problem.solution.count %> proposals
+        </div>
+        <% if current_user.admin? %> 
+          <div>          
+            <i class="fas fa-user-alt"></i> 
+            <%= @problem.creator %>
+          </div>
+        <% end %>
+      </div>
+
+      <p class="issue-description"><%= @problem.description %></p>
+    </div>
+
+    <!-- DETAILS ENDS -->
+
+
+<!-- EXTRA-SECTIONS -->
+
+    <!-- CRITERIA -->
+    <div class="criteria-outer">
+
+      <h1 id="criteria">
+        <i class="fas fa-clipboard-list"></i>
+        <%= @criteria_count %> Active criteria
+      </h1>
+
+      <em>
+        <%= link_to "View all", full_criterium_path( :problem_id => @problem.id) %>
+      </em>
+      |
+      <em>
+        <%= link_to "Add to criteria", new_criterium_path( :problem_id => @problem.id) %>
+      </em>
+
+      <div id="issue-criteria">
+
+        <div class="criteria-list">
+          <% @my_criteria.each do |criterium| %>
+            <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+          <% end %>
+          <% @criteria.each do |criterium| %>
+            <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+<!-- CRITERIA ENDS -->
+
+<div id="extra-sections-outer">
+
+<!-- SOLUTIONS -->
+
+  <div class="solutions-outer">
+
+    <h1 id="solutions">
+      <i class="fas fa-comment-alt"></i>
+      <%= @solutions.count %> Proposals
+    </h1>
+
+    <em><%= link_to 'Add proposal', new_solution_path(:problem_id => @problem.id) %></em>
+
+    <ol class="solutions">
+      <% @solutions.each do |solution| %>
+        <li>
+          <div class="solution-item">
+
+            <%= link_to solution_path(:problem_id => solution.problem.hashid, :solution_id => solution.hashid) do %>
+
+              <div>
+                <%= solution.title %>                 
+              </div>
+
+              <div class="score-bar-outer">
+                <div class="score-bar-inner" style="background-color: #ff6c52; width: <%= solution.score %>%" ></div>
+                <div class="written-criterion-score">
+                  <%= solution.score %>%
+                </div>
+              </div>
+
+            <% end %>
+           
+            <% if solution.user.count < @problem.suggestion_min - 1 %>
+              <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
+                Suggest (<%= solution.user.count %>/<%= @problem.suggestion_min %>)
+              <% end %>
+            <% elsif solution.user.count >= @problem.suggestion_min %>
+              <%= link_to action_path(:activity_id => solution.activity.id) do %>
+                <em>View action</em>
+              <% end %>
+            <% elsif solution.user.include?(@user) %>
+              <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
+                Suggested (<%= solution.user.count %>/<%= @problem.suggestion_min %>)
+              <% end %>
+            <% elsif solution.user.count == @problem.suggestion_min - 1 %>
+              <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
+                Post as action
+              <% end %>
+            <% end %>
+            
+          </div>
+        </li>
+      <% end %>
+    </ol>
+
+    <span id="paginate_solutions"><%= will_paginate @solutions %></span>
+
+  </div>
+
+  <!-- </div> -->
+<!-- SOLUTIONS ENDS --->
+
+<!-- DISCUSSION -->
+  
+<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion})%>
+
+<!-- DISCUSSION ENDS -->
+
+
+
+</div>
+<!-- EXTRA-SECTIONS ENDS -->
+
+<% if current_user.admin %>
+  <%= @problem.creator %>
+  | <%= link_to 'Destroy', @problem, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+</div>

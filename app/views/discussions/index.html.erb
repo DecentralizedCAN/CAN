@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Discussions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Post</th>
+      <th>Problem</th>
+      <th>Comment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @discussions.each do |discussion| %>
+      <tr>
+        <td><%= discussion.content %></td>
+        <td><%= link_to 'Show', discussion %></td>
+        <td><%= link_to 'Edit', edit_discussion_path(discussion) %></td>
+        <td><%= link_to 'Destroy', discussion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Discussion', new_discussion_path %>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% (ENV['GROUP_ABBREVIATION'] != nil)? group_abbreviation = ENV['GROUP_ABBREVIATION'] : group_abbreviation = "DCAN" %>
+    <title><%= group_abbreviation %></title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag asset_path('can.svg') %>
+  </head>
+
+
+
+  <%= render 'layouts/header' %>
+
+  <body>
+
+    <div class="converge-container">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+      <!-- <%= debug(params) if Rails.env.development? %> -->
+    </div>
+  </body>
+</html>

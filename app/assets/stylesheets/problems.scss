@@ -1,0 +1,326 @@
+// Place all the styles related to the problems controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+// $dissent-green: #05adab;
+$dissent-green: #3be1ea;
+$success-red: #ff7455;
+
+.issue {
+  border-radius: 2px;
+  margin-bottom: 10px;
+  display: block;
+  background-color: #343536;
+}
+
+.issue-title {
+  font-size: 14px;
+}
+
+.issue-info, .activity-info, .discussion-info {
+  line-height: 14px;
+}
+
+.issue-info > div {
+  display: inline-block;
+  margin-right: 4px;
+  color: #757575;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: -0.2px;
+}
+
+.issue-description {
+  margin-top: 8px;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+#solver{
+  ol {
+  	padding: 0px;
+  	margin: auto;
+
+    a {
+      font-style: normal;
+    }
+  }
+} 
+
+#issue-details {
+  background-color: white;
+}
+
+#issue-sponsorship {
+  display: inline-block;
+  float: right;
+
+  a {
+    color: #3a3a3a !important;
+  }
+}
+
+#issue-criteria {
+  display: inline-block;
+
+  h2 {
+    margin-bottom: -6px;
+    line-height: 28px;
+  }
+}
+
+.sponsor-count {
+}
+
+.dissenter-count {
+  color: $dissent-green !important;
+}
+
+#issue-criteria {
+  width: 100%;
+}
+
+.criterion-description {
+  display: block;
+
+  #criterium_title {
+    width: 100%;
+    height: 100px;
+  }
+}
+
+#submit-criteria .field,
+#submit-criteria .actions {
+  display: inline-block;
+  margin: 0;
+}
+
+.actions {
+  width: 100%;
+  border: 1px solid;
+  border-top: none;
+  text-align: right;
+  background-color: white;
+}
+
+#submit-criteria .field textarea {
+  width: 100%;
+  height: 60px;
+  vertical-align: top;
+}
+
+.criteria-list {
+  float: left;
+  column-count: 4;
+  display: inline-block;
+  border-radius: 2px;
+  width: 100%;
+}
+
+.criterium {
+  margin-bottom: 6px;
+  margin-top: 6px;
+  display: inline-block;
+  vertical-align: top;
+  background-color: white;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 20vw;
+  padding: 0 2px;
+  box-shadow: 0px 3px 6px 0px #d0d0d0;
+  border: 1px solid #efefef;
+
+  * {
+    color: #3a3a3a;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  #criteria-list {
+    column-count: 2;
+  }
+
+  .criterium {
+    max-width: 40vw;
+  }
+}
+
+.dissent-title {
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 10px;
+}
+
+.dissent-stuff {
+  padding: 2px;
+  width: auto;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.dissent-instructions {
+  font-size: 10px;
+}
+
+.criteria-sponsorship {
+  padding: 2px;
+  width: auto;
+  vertical-align: top;
+  display: inline-block;
+  float: left;
+}
+
+.criterium-title {
+  padding: 4px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.criterium-response {
+  padding: 4px;
+  vertical-align: top;
+  display: inline-block;
+  cursor: default;
+
+  span {
+    margin: 2px;
+    letter-spacing: -1px;
+  }
+}
+
+.solutions {
+  padding: 0;
+}
+
+.new-criterium {
+  margin: 6px;
+  width: auto;
+}
+
+#post-problem {
+  margin-bottom: 10px;
+  padding: 4px;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+
+// FORM
+.main-field textarea {
+  width: 100%;
+}
+
+#problem_description {
+  height: 200px;
+}
+
+#submit_goal {
+  margin-top: 12px;
+  background-color: $dissent-green;
+  border: 1px solid #ddd;
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: none;
+
+  &:hover {
+    background-color: #059290;
+  }
+}
+
+
+
+// DISCUSSION
+#extra-sections-outer {
+  width: 100%;
+
+  &>div {
+    display: inline-block;
+    width: 47%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  #extra-sections-outer {
+    &>div {
+      width: 100%;
+    }
+  }
+
+  #criteria-list {
+    column-count: 2;
+  }
+}
+
+.criteria-outer, .discussion-outer, .solutions-outer {
+  display: inline-block;
+  width: 100%;
+  margin-right: 20px;
+  vertical-align: top;
+
+  #main-discussion {
+    width: 100%;
+    margin-left: 0;   
+  }
+
+  .discussion-column.mini {
+    min-height: 290px;
+    height: auto;
+    box-shadow: 0px 3px 6px 0px #d0d0d0;
+    border: 1px solid #efefef;
+
+    * {
+      color: #3a3a3a;
+    }
+
+    #scroll-div {
+      height: 240px;
+      resize: vertical;
+      overflow-y: auto;
+    }
+
+    ul {
+      padding: 0;
+    }
+  }
+}
+
+#full-discussion-view {
+  float: right;
+  color: #3a3a3a !important;
+}
+
+#suggestion_min {
+  width: 40px;
+}
+
+.number-field-outer {
+  p {
+    width: 200px;
+  }
+
+  p, input {
+    display: inline-block;
+  }
+}
+
+#paginate_solutions, #paginate_feed {
+  * {
+    line-height: 8px;
+    font-size: 12px;
+  }
+
+  .pagination {
+    margin: 0;
+  }
+
+  .active > a {
+    background-color: gray;
+    color: white;
+  }
+
+  a {
+    color: black;
+  }
+}

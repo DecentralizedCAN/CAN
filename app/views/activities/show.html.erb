@@ -1,0 +1,99 @@
+<div id="activator">
+
+  <div class="back-button">
+    <%= link_to main_feed_path do %>
+      <div class="back-button-arrow"></div>
+      <div class="back-button-content">
+        Feed
+      </div>
+    <% end %>
+  </div>
+
+  <% if @activity.post %>
+    <%= render(:partial => 'static/post-stuff', :locals => {:post => @activity.post})%>
+  <% end %>
+
+  <div class="proposal">
+    <% if @activity.roll.first.user.include?(@user) %>
+    <% unless @activity.roll.last.user.include?(@user) %>
+      <%= link_to "Mark complete", complete_path(:activity_id => @activity.id), :method => "post", :id => "mark-complete" %>
+    <% else %>
+      <em id="mark-complete"> completed </em>
+    <% end %>
+    <% end %>
+    
+    <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
+
+    <div>
+      <% if @activity.solution && @activity.solution.problem %>
+        View brainstorm: <%= link_to issue_path(@activity.solution.problem.hashid) do %>
+          <%= @activity.solution.problem.title %>
+        <% end %>
+
+        <br>
+        View proposal: <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid) do %>
+          <%= @activity.solution.title %>
+        <% end %>        
+      <% end %> 
+
+    </div>
+    
+
+    <% if @roll.user.include?(@user) %>
+    <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
+        <br>
+        <%= link_to commit_path(:roll_id => @roll.id) do %>
+          <div class="commit-button">
+            <i class="fas fa-user-plus"></i> Participate
+          </div>
+        <% end %>
+    <% end %>
+
+  </div>
+
+  
+  <% if current_user.admin %>
+    <%= @activity.creator %>
+    | <%= link_to 'Destroy', @activity, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+
+  <div class="dissent-activity">
+    <%if @activity.actdissent.find_by(user: @user)%>
+      <td>
+        your objected with the reason: <%= @activity.actdissent.find_by(user: @user).title %><br>
+        <%= link_to "don't object", assent_activity_path(:activity_id => @activity.id), :method => "post" %>
+      </td>
+    <% elsif !@roll.user.include?(@user) %>
+      <td>
+        <%= form_for(@activity.actdissent.new, :url => dissent_activity_path, remote: true) do |form| %>
+          I do not support this plan because:<br>
+          <%= form.text_area :title %>
+
+          <%= form.hidden_field :activity_id %>
+
+          <%= form.submit "Submit objection" %>
+        <% end %>
+
+        </td>
+    <%end%>
+  </div>
+
+  <% if @activity.actdissent.count > 0 %>
+    <strong>Dissent</strong>
+    <div>
+      <% @activity.actdissent.each do |dissent| %>
+        <%= dissent.title %>
+      <% end %>    
+    </div>
+  <% end %>
+
+
+  <div id="action-columns">
+    <div id="action-details">
+      <h1>Details</h1>
+      <p><%= @activity.description %></p>
+    </div>
+    <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion})%>  
+  </div>
+
+</div>

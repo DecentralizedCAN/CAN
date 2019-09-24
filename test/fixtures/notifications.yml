@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  details: MyText
+  user: one
+  criterium: one
+  activity: one
+  problem: one
+
+two:
+  details: MyText
+  user: two
+  criterium: two
+  activity: two
+  problem: two

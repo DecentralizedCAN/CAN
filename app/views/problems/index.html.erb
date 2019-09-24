@@ -1,0 +1,43 @@
+<%= render 'layouts/nav-three' %>
+
+<div id="solver">
+  <div id="post-problem"> <%= link_to 'New issue', post_problem_path %> </div>
+
+  <ol>
+    <% @problems.each do |problem| %>
+      <%= link_to issue_path(problem) do %>
+        <% if problem.user.count > 0 %>
+          <div class="issue">
+            <div class="issue-title"><%= problem.title %></div>
+            <div class="issue-info">
+              <div>
+                <i class="fas fa-calendar"></i>
+                <%= time_ago_in_words(problem.created_at) %> ago
+              </div>
+              <div>
+                <i class="fas fa-handshake"></i>
+                <%= problem.user.count %> collaborators
+              </div>
+              <div>
+                <i class="fas fa-clipboard-list"></i>
+                <%= problem.criterium.count %> criteria
+              </div>
+              <div>
+                <i class="fas fa-comment-alt"></i>
+                <%= problem.solution.count %> proposals
+              </div>
+  
+              <!-- <% if current_user.admin? %> 
+                <%= link_to "delete", problem, method: :delete,
+                    data: { confirm: "You sure?" } %>
+              <% end %>  -->
+
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>  
+  </ol>
+</div>
+
+<br>

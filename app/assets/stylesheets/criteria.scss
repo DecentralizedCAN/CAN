@@ -1,0 +1,102 @@
+$dissent-green: #3be1ea;
+$success-red: #ff7455;
+$neutral-blue: #0091ff;
+$label-blue: #81c4ff;
+
+.problem-title {
+	font-weight: bold;
+}
+
+.criterion-action-box {
+	background-color: white;
+	padding: 4px 6px;
+	margin-bottom: 10px;
+	border-radius: 2px;
+  height: 300px;
+  max-width: 400px;
+  display: inline-block;
+  vertical-align: text-top;
+  border: 1px solid black;
+  box-shadow: 0px 3px 6px 0px #d0d0d0;
+  border: 1px solid #efefef;
+  margin-left: 4px;
+  overflow: auto;
+
+  h3 {
+  	background-color: transparent;
+  	font-weight: bold;
+  }
+
+	ul {
+		margin: 0;
+		list-style: none;
+		padding: 0;
+		
+		li {
+      max-width: 280px;
+			margin: 2px 0;
+		}
+	}
+}
+
+.criterion-outer {
+	.criterion-action-box {
+		color: #3a3a3a;
+		* {
+			color: #3a3a3a;
+		}
+	}
+}
+
+.suggest-link, .submit-dissent > input, .transfer-link, #submit_form {
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: white !important;
+  font-style: normal;
+  font-size: 12px;
+}
+
+.suggest-link {
+  background-color: $neutral-blue;
+  &:hover {
+  	background-color: #0382e2;
+  }
+}
+
+.submit-dissent > input {
+  padding: 0px 6px;
+  background-color: $dissent-green;
+  &:hover {
+    background-color: #04908e;
+  }
+}
+
+#submit_form {
+  background-color: #292929;;
+  border-radius: 2.8px;
+  &:hover {
+    background-color: black;
+  }
+}
+
+.transfer-link {
+  background-color: $neutral-blue;
+  &:hover {
+  	background-color: #0382e2;
+  }
+}
+
+.criterium-dissent {
+  margin: 4px 0;
+  padding: 2px;
+  vertical-align: top;
+  display: inline-block;
+  textarea {
+    height: 40px;
+    margin-bottom: 4px;
+    width: 100%;
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: top;
+  }
+}

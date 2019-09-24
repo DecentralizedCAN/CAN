@@ -1,0 +1,39 @@
+<%= form_with(model: activity, local: true) do |form| %>
+  <% if activity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+
+      <ul>
+      <% activity.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="main">
+    <h1>Title</h1>
+    <%= form.text_area :title, id: :activity_title, placeholder: "Title" %>
+    <h1>Details</h1>
+    <%= form.text_area :description, id: :activity_description, placeholder: "Description" %>
+  </div>
+
+  <div class="activation">
+    <b> Participants </b><br>
+    Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
+    Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
+  </div>
+
+  <div class="activation">
+    <!-- <%= form.number_field :deadline, placeholder: 1, value: 1, min: 1 %>  -->
+    <!-- <%= form.number_field :deadline, placeholder: 0, min: 1 %> -->
+    <!-- <br> -->
+    <b>Days until action expires</b>
+    <!-- <%= form.number_field :expiration, placeholder: 1, value: 1, min: 1 %> -->
+    <%= form.number_field :expiration, placeholder: "∞", min: 1 %>
+  </div>
+
+  <%= form.submit value: "Post", id: :submit_action do %>
+  <% end %>
+
+<% end %>

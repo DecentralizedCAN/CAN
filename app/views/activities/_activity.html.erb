@@ -1,0 +1,60 @@
+
+    <div class="proposal-block-one">
+      <div class="activity-title"><%= activity.title %> <span class="feed-label">Action</span></div>
+
+			<% if activity.solution %>
+				<div class="proposal-activity-description">
+					Proposal for <em><%= activity.solution.problem.title %></em>
+					with <%= activity.solution.score %>% estimated benefit
+				</div>
+			<% end %>
+
+      <div class="activity-info">
+        <div>
+          <i class="fas fa-calendar"></i>
+          created <%= time_ago_in_words(activity.created_at) %> ago
+        </div>
+        <div>
+          <% if activity.expiration && activity.expiration > @current_time %>
+            <i class="fas fa-clock"></i>
+            expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="written-progress">
+        <i class="fas fa-users"></i>
+        <% if !activity.roll.first.maximum %>
+          <%= activity.roll.first.user.count %>/<%= activity.roll.first.minimum %>-∞
+        <% elsif activity.roll.first.minimum < activity.roll.first.maximum %>
+          <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>-<%=activity.roll.first.maximum %>
+        <% else %>
+          <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>
+        <% end %>
+        participants
+      </div>
+    </div>
+
+    <div class="roll-progress">
+      
+      <div class="participation-meter">
+        <div class="participation-progress" style="
+        width: <%= activity.roll.first.user.count.to_f / activity.roll.first.minimum.to_f * 100 + 1%>%; 
+        background-color: rgba(255, 116, 85, <%= activity.roll.first.user.count.to_f / activity.roll.first.minimum.to_f %>);
+        ">
+        </div>
+      </div>
+
+      <% if activity.roll.first.user.include?(@user) %>
+        <span class="committed"><i class="fa fa-check"></i> you are committed</span>
+      <% end %>
+
+    </div>
+
+    <% if activity.actdissent.count > 0 %>
+      <div class="dissenter-count">
+        <i class="fas fa-hand-point-down"></i>
+        <%= activity.actdissent.count %> objections
+      </div>
+    <% end %>
+

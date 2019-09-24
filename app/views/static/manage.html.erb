@@ -1,0 +1,36 @@
+<h1>Brainstorms</h1>
+<ol>
+<% @problems.each do |problem| %>
+	<li>
+		<%= problem.title %>
+	  <strong><%= problem.creator %></strong>
+		| <%= link_to "View", issue_path(problem) %>
+		| <%= link_to 'Destroy', problem, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+	</li>
+<% end %>
+</ol>
+
+<h1>Actions</h1>
+<ol>
+	<% @activities.each do |activity| %>
+		<li>
+			<%= activity.title %>		
+	  	<strong><%= activity.creator %></strong>
+			| <%= link_to "View", action_path(activity.hashid) %>
+			| <%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %>
+		</li>
+	<% end %>
+</ol>
+
+<h1>Discussions</h1>
+<ol>
+	<% @discussions.each do |discussion| %>
+		<li>
+			<%= discussion.title %>		
+	  	<strong><%= discussion.creator %></strong>
+			| <%= link_to "View", discussion_path(discussion) %>
+			| <%= link_to 'Destroy', discussion, method: :delete, data: { confirm: 'Are you sure?' } %>
+		</li>
+	<% end %>
+</ol>

@@ -1,0 +1,6 @@
+<h1>New Proposal for <%= @solution.problem.title %></h1>
+
+<h2><%= @solution.title %></h2>
+<p><%= @solution.description %></p>
+
+<%= link_to "View", solution_url(:problem_id => @solution.problem_id, :solution_id => @solution.id) %>

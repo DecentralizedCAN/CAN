@@ -1,0 +1,51 @@
+<% if current_user && current_user.admin? %>
+<div class="delete-button">
+	<%= link_to "Ø", delete_post_path(:post_id => post.id), method: :delete,
+                                  data: { confirm: "Delete post?" } %>
+
+</div>
+<% end %>
+
+<% pre_upvote = post.upvotes.find { |upvote| upvote.user_id == current_user.id} if current_user %>
+
+<div class="upvote-div">
+	<% if pre_upvote %>
+		<%= button_to unupvote_path(post, pre_upvote), method: :post, :class => "upvote red-upvote" do %>
+      <span class="red-upvote-count"><%= post.upvotes.count %></span>
+    <% end %>
+	<% else %>
+	  <%= button_to upvote_path(post), method: :post, :class => "upvote gray-upvote" do %>
+      <span class="gray-upvote-count"><%= post.upvotes.count %></span>
+    <% end %>
+	<% end %>
+</div>
+
+
+
+<script type="text/javascript">
+
+  $(".upvote-div > form").on('click', function(event){
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    form = event.currentTarget
+
+
+    setTimeout(function () {
+      $(form).find('.upvote').toggleClass('red-upvote gray-upvote');
+
+      if ($(form).attr('action').indexOf('unupvote') > -1) {
+        newAction = $(form).attr('action').replace('unupvote', 'upvote')
+        $(form).find('span')[0].innerText = Number($(form).find('span')[0].innerText) - 1
+      } else {
+        newAction = $(form).attr('action').replace('upvote', 'unupvote')
+        $(form).find('span')[0].innerText = Number($(form).find('span')[0].innerText) + 1
+        $(form).parent().css( "display", "inline-block" );
+      }
+  
+      $(form).attr('action', newAction);
+    }, 200);
+
+  });
+
+</script>

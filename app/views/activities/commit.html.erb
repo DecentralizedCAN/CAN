@@ -1,0 +1,14 @@
+<div class="backdrop">
+
+<h1>Become a <%= @roll.title %> for <strong><%= @roll.activity.title %></strong></h1>
+<!-- @roll.description -->
+<p>You are about to commit to participate in this collective action.
+The action will only take place if there are enough participants. 
+Right now, <%= @roll.user.count %> participants have committed, and <%= @roll.minimum %> are needed.
+</p>
+If activated I commit to being a <%= @roll.title %>:
+<br>
+<i class="fa fa-times"></i><%= link_to "Cancel", action_path(@roll.activity.hashid) %>
+&nbsp;<i class="fa fa-check"></i><%= link_to "I agree", participate_path(:roll_id => @roll.id), :method => "post" %>
+
+</div>

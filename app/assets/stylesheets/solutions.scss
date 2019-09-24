@@ -1,0 +1,136 @@
+$success-red: #ff7455;
+$dissent-green: #3be1ea;
+$offwhite: #f5f5f5;
+
+.solutions li {
+  list-style: none;
+
+  * {
+  	color: #3a3a3a;
+  }
+}
+
+.solutions .solution-item {
+  font-size: 14px;
+  padding: 2px 0px;
+  background-color: $offwhite;
+  border-radius: 2px;
+  margin: 10px 0;
+  background-color: white;
+  padding: 2px 4px;
+  box-shadow: 0px 3px 6px 0px #d0d0d0;
+  border: 1px solid #efefef;
+}
+
+.solution-item > a, .solution-item > a > div {
+	display: inline-block;
+  vertical-align: top;
+}
+
+.solution-item > a:first-child {
+  width: calc(100% - 100px);
+}
+
+.solution-form-body {
+	textarea {
+		width: 100%;
+	}
+
+	#solution_description {
+		height: 200px;
+	}
+}
+
+#proposal-description, #proposal-polling {
+	background-color: $offwhite;
+	padding: 10px;
+	padding-left: 0px;
+	margin-bottom: 10px;
+	border-radius: 2px;
+
+	h1 {
+		margin: 0;
+		margin-bottom: 10px;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	tr {
+    box-shadow: 0px 3px 6px 0px #d0d0d0;
+    border: 1px solid #efefef;
+    background-color: white;
+    margin: 6px 0;
+	}
+
+	td {
+    max-width: 260px;
+	}
+}
+
+.score-bar-outer {
+  width: 200px;
+  height: 12px;
+  border: 1px solid;
+  border-radius: 2px;
+  margin: 4px;
+}
+
+.score-bar-limit {
+	height: 100%;
+	background-color: white;
+}
+
+.score-bar-inner {
+  height: 100%;
+  background-color: #ff6c52;
+}
+
+.written-criterion-score {
+  position: relative;
+  top: -14px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.criterion-score-info {
+	font-size: 8px;
+  font-weight: bold;
+	text-align: center;
+}
+
+.suggest {
+	float: right;
+	display: inline-block;
+	font-size: 12px;
+  font-style: italic !important;
+  color: #3a3a3a !important;
+}
+
+.solution-outer {
+
+	#proposal-description {
+		* {
+			color: #3a3a3a;
+		}
+	}	
+
+	#proposal-polling {
+		display: inline-block;
+		vertical-align: top;
+    min-width: 46%;
+
+		color: #3a3a3a;			
+		* {
+			color: #3a3a3a;			
+		}
+	}
+}
+
+.solution-discussion {
+	display: inline-block;
+  min-width: 46%;
+  margin-left: 2px;
+}

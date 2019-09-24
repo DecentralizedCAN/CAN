@@ -1,0 +1,27 @@
+<% if @notification.criterium %>
+	<%= link_to show_criterium_url(:criterium_id => @notification.criterium.hashid) do %>
+  <p>
+		The criterion <em><%= @notification.criterium.title %></em> <%= @notification.details %>
+  </p>
+	<% end %>
+<% elsif @notification.problem %>
+	<%= link_to show_criterium_url(:criterium_id => @notification.problem.hashid) do %>
+  <p>
+		The brainstorm <em><%= @notification.problem.title %></em> <%= @notification.details %>
+  </p>
+	<% end %>
+<% elsif @notification.discussion %>
+	<%= link_to discussion_url(@notification.discussion.hashid) do %>
+  <p>
+		<%= @notification.details %>
+  </p>
+	<% end %>
+<% elsif @notification.activity %>
+	<%= link_to action_url(@notification.activity.hashid) do %>
+  <p>
+		The action <em><%= @notification.activity.title %></em> <%= @notification.details %>
+  </p>
+	<% end %>
+<% end %>
+
+<p>You can update your email preferences in your profile settings</p>

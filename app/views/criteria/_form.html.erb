@@ -1,0 +1,30 @@
+<%= form_with(model: criterium, remote: true) do |form| %>
+  <% if criterium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(criterium.errors.count, "error") %> prohibited this criterium from being saved:</h2>
+
+      <ul>
+      <% criterium.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title, "Describe the criteria as concisely as possible" %>
+    <%= form.text_area :title, id: :criterium_title %>
+  </div>
+
+<!--   <div class="field">
+    <%= form.label :alternatives %>
+    <%= form.text_area :alternatives, id: :criterium_alternatives %>
+  </div> -->
+
+
+  <%= form.hidden_field :problem_id, id: :criterium_problem_id %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

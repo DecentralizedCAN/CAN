@@ -1,0 +1,129 @@
+<!-- DISCUSSION -->
+<div class="discussion-outer">
+
+  <h1>
+    <!-- <%= @discussion.title %> -->
+    Discussion
+  </h1>
+
+  <div class="discussion-column mini" id="main-discussion">
+    <!-- <%= link_to "Full view", discussion_path(@discussion), :id => "full-discussion-view" %> -->
+
+    <% if @top_liked.length > 0 && @discussion.comment.count > 15 %>
+
+      <ul id="top-liked-mini">
+        <h2>Top Liked</h2>
+        <% @top_liked.each do |comment| %>
+          <% if comment.content %>
+            <li>
+              <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} %>
+              <div class="like-div">
+                <% if pre_upvote %>
+                  <%= button_to unlike_path(comment), method: :post, :class => "red-like" do %>
+                    <span class="red-like-count"><%= comment.upvotes.count %></span>
+                    <i class="far fa-thumbs-up"></i>
+                  <% end %>
+                <% else %>
+                  <%= button_to like_path(comment), method: :post, :class => "gray-like" do %>
+                    <span class="gray-like-count"><%= comment.upvotes.count %></span>
+                    <i class="far fa-thumbs-up"></i>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= comment.content.html_safe  %>
+              –<%= comment.user.name %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+
+    <% end %>
+<!--     <h1>New</h1>
+ -->
+    <ul id="scroll-div">
+      <% @discussion.comment.last(100).each do |comment| %>
+        <% if comment.content %>
+          <li>
+            <div>
+              <strong><%= comment.user.name %></strong>
+              <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
+            </div>
+            <div class="comment"><%= comment.content.html_safe  %></div>
+            <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} %>
+
+            <% if comment.upvotes.count > 0 %>
+              <div class="like-div active">
+            <% else %>
+              <div class="like-div">
+            <% end %>
+            
+              <% if pre_upvote %>
+                <%= button_to unlike_path(comment), method: :post, :class => "red-like" do %>
+                  <span class="red-like-count"><%= comment.upvotes.count %></span>
+                  <i class="far fa-thumbs-up" style="color:#ffcc00"></i>
+                <% end %>
+              <% else %>
+                <%= button_to like_path(comment), method: :post, :class => "gray-like" do %>
+                  <span class="gray-like-count"><%= comment.upvotes.count %></span>
+                  <i class="far fa-thumbs-up" style="color:#f5f5f5"></i>
+                <% end %>
+              <% end %>
+            </div>
+
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+
+    <%= form_with(model: @discussion.comment.new(:user => current_user), local: true) do |form| %>
+      <% if @comment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this @comment from being saved:</h2>
+
+          <ul>
+          <% @comment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form.hidden_field :user_id %>
+      <%= form.hidden_field :discussion_id %>
+
+      <div class="comment-box">
+        <%= form.text_field :content, id: :comment_content, autocomplete: 'off' %>
+        <%= form.submit "Send", id: :send %>
+      </div>
+
+    <% end %>
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  var element = document.getElementById("scroll-div");
+  element.scrollTop = element.scrollHeight;
+
+  // respond to liking and unliking comments
+  $(".like-div > form").click(function() {
+    form = this
+    setTimeout(function () {
+        $(form).find('button').toggleClass('red-like gray-like');
+
+        if ($(form).attr('action').indexOf('unlike') > -1) {
+          newAction = $(form).attr('action').replace('unlike', 'like')
+          $(form).find('span')[0].innerText = Number($(form).find('span')[0].innerText) - 1
+        } else {
+          newAction = $(form).attr('action').replace('like', 'unlike')
+          $(form).find('span')[0].innerText = Number($(form).find('span')[0].innerText) + 1
+          $(form).parent().css( "display", "inline-block" );
+        }
+    
+        $(form).attr('action', newAction);
+    }, 100);
+
+  });
+</script>
+<!-- DISCUSSION ENDS

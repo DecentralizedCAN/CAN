@@ -1,0 +1,20 @@
+<div class="backdrop">
+
+<%= @criterium.title %>
+
+<p>
+  <strong>Problem:</strong>
+  <%= @criterium.problem.title %>
+</p>
+
+
+<div class="criterium-dissent">
+  <%= form_for(@criterium.cridissent.new, :url => dissent_criteria_path, remote: true) do |form| %>
+    <div class="dissent-instructions">I cannot support a plan where this is true because:</div>
+    <%= form.hidden_field :criterium_id %>
+    <div class="dissent-title"><%= form.text_area :title %></div>
+    <div class="submit-dissent"><%= form.submit "Dissent" %></div>
+  <% end %>
+</div>
+
+</div>

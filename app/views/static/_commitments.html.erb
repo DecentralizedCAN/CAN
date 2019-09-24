@@ -1,0 +1,81 @@
+<%= render 'layouts/nav-one' %>
+
+<div id="dashboard">
+  <%= link_to main_feed_path, :id=>"feed-path" do %>
+    Feed
+  <% end %>
+    
+
+  <%    
+    @user = current_user
+    @commitments = @user.rolls
+    @sponsored_problems = @user.problems
+    @proposals = @user.solutions
+    @current_time = Time.now.to_i
+  %>
+
+  <div class="dashboard-item">
+    <h1>
+      <i class="fas fa-users"></i>
+      Commitments
+    </h1>
+
+    <% if @commitments.count > 0 %>
+      <h2>
+        <i class="fas fa-calendar-check"></i>
+        Activated
+      </h2>
+      <ul>
+        <% @commitments.each do |commitment| %>
+          <% if commitment.user.count >= commitment.minimum && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+            <%= link_to  action_path(commitment.activity.id) do %>
+              <li> <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+
+      <h2>
+        <i class="far fa-calendar"></i>
+        Unactivated
+      </h2>
+      <ul>
+      	<% @commitments.each do |commitment| %>
+          <% if commitment.user.count < commitment.minimum  && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+        		<%= link_to  action_path(commitment.activity.id) do %>
+              <li> <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+      	<% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="dashboard-item">
+    <h1>
+      <i class="fas fa-handshake"></i>
+      Collaborations
+    </h1>
+    <ul>
+      <% @sponsored_problems.each do |problem| %>
+        <%= link_to issue_path(problem) do %>
+          <li> <%= problem.title %> </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="dashboard-item">
+    <h1>
+      <i class="fas fa-comment-alt"></i>
+      Proposals
+    </h1>
+    <ul>
+      <% @proposals.each do |solution| %>
+        <%= link_to solution_path(:problem_id => solution.problem_id, :solution_id => solution.id) do %>
+          <li> <%= solution.title %> </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

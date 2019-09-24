@@ -1,0 +1,178 @@
+$background-gray: #efeeee;
+$success-red: #ff7455;
+$offwhite: #f5f5f5;
+
+.proposal {
+  border-radius: 2px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.proposal-block-one {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.activity-title {
+  font-size: 14px;
+}
+
+.activity_title {
+  width: 100%;
+}
+
+.activity-info {
+  display: inline-block;
+}
+
+.activity-info > div {
+  display: inline-block;
+  color: #757575;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: -0.2px;
+}
+
+.proposal-activity-description {
+  font-size: 12px;
+}
+
+.nav-tabs > li.active > a {
+	background-color: $background-gray !important;
+	border-radius: 2px;
+}
+
+#activator > ol {
+	padding: 0px;
+	margin: auto;
+
+  a {
+    font-style: normal;
+  }
+}
+
+.participation-meter {
+	width: 200px;
+	border-radius: 2px;
+  background-color: transparent;
+}
+
+.participation-progress {
+	height: 12px;
+	float: left;
+  border-radius: 2px;
+  max-width: 101%;
+}
+
+.written-progress {
+  display: inline-block;
+  color: #757575;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: -0.2px;
+}
+
+.committed {
+  color: rgb(255, 116, 85);
+  font-size: 10px;
+  font-style: italic;
+  position: relative;
+  top: -4px;
+}
+
+#propose-activity {
+  margin-bottom: 10px;
+  padding: 4px;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.roll-progress {
+  div {
+    display: inline-block;
+  }
+}
+
+
+.dissent-activity {
+  background-color: $offwhite;
+  width: 200px;
+  float: right;
+  display: none;
+}
+
+.commit-button {
+  display: inline-block;
+  background-color: #ff9494;
+  border: 1px solid;
+  font-size: 12px;
+  line-height: 12px;
+  position: relative;
+  top: -4px;
+  padding: 2px 4px;
+  color: white;
+  letter-spacing: -0.2px;
+  border-radius: 2px;
+  color: white !important;
+
+  i {
+    color: white !important;
+  }
+
+  &:hover {
+    background-color: #f66262;
+  }
+}
+
+// FORM
+.main > * {
+  width: 100%;
+}
+
+.activation input {
+  width: 60px;
+}
+
+#activity_description {
+  height: 200px;
+}
+
+#submit_action {
+  margin-top: 12px;
+  background-color: $success-red;
+  border: 1px solid #ddd;
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: none;
+
+  &:hover {
+    background-color: #cc5d44;
+  }
+}
+
+#action-columns {
+  column-count: 2;
+}
+
+@media only screen and (max-width: 700px) {
+  #action-columns {
+    column-count: 1;
+  }
+}
+
+#action-details > p {
+  min-height: 302px;
+  background-color: white;
+  border-radius: 2px;
+  padding: 10px;
+  color: #3a3a3a;
+  overflow-wrap: break-word;
+  box-shadow: 0px 3px 6px 0px #d0d0d0;
+  border: 1px solid #efefef;
+}
+
+#mark-complete {
+  float: right;
+  color: #3a3a3a !important;
+}

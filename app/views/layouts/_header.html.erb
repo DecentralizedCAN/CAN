@@ -1,0 +1,18 @@
+<header>
+  <div class="converge-container converge-header">
+    <nav>
+      <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
+      <%= link_to group_name, root_path, id: "logo" %>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "About", documentation_path %></li>
+        <% if logged_in? %>
+          <li><%= link_to "Members", users_path %></li>
+          <li><%= link_to current_user.name, current_user %></li>
+        <% else %>
+          <li><%= link_to "Log in", login_path %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>
