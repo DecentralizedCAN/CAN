@@ -4,6 +4,6 @@ This is platform for decentralized organization. It can be used for groups of va
 
 For more information on how the system works see [GUIDE.md](GUIDE.md)
 
-For questions or comments email DecentralizedCAN@gmail.com
-
 To help out see [CONTRIBUTING.md](CONTRIBUTING.md)
+
+For questions or comments email DecentralizedCAN@gmail.com
