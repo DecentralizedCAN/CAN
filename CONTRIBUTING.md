@@ -20,3 +20,23 @@ Before reporting an issue:
 ## Want to help develop DCAN?
 
 This is a new project and help is welcome. I will work to expand this developer documentation.
+
+Specs
+* Ruby 2.5.1
+* Rails 5.1.4
+* PostgreSQL
+
+Config variables
+* ADMIN_EMAIL
+* ADMIN_PASSWORD
+* SERVER_HOST
+* GROUP_NAME
+* GROUP_ABBREVIATION
+
+Setup
+* Start Postgres
+* Run 'bundle install'
+* Run 'rails db:create'
+* Run 'rails db:migrate'
+* Run 'rails db:seed'
+* Run 'rails server'
