@@ -22,7 +22,6 @@
 	</li>
 	<li><a href="#discussions">Discussions</a></li>
 	<li><a href="#posting">Posting</a></li>
-	<li><a href="#rules">Community rules</a></li>
 </ol>
 
 <h1 id="brainstorming">Brainstorming</h1>
@@ -52,13 +51,5 @@
 </div>
 
 <h1 id="crowdacting">Actions</h1>
-
-<h1 id="rules">Community rules</h1>
-<p>The following may result in content being removed and/or users being banned:</p>
-<div>- Threats of violence</div>
-<div>- NSFW content</div>
-<div>- Bigotry</div>
-<div>- Irrelevant content</div>
-<br>
 
 </div>
