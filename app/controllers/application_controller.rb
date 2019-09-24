@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 	  end
 
     def check_activity
-      if Time.now - current_user.last_posted < 100
+      if current_user.last_posted && Time.now - current_user.last_posted < 100
         redirect_to root_path, notice: 'Please wait a minute and try again'
       end
     end
