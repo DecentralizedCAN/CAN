@@ -48,7 +48,7 @@
 		<li>a = polling average</li>
 		<li>c = criterion</li>
 	</ul>
-	<%= image_tag("scoring-algorithm.png") %>
+	[View diagram](app/assets/images/scoring-algorithm.png)
 </div>
 
 <h1 id="crowdacting">Actions</h1>
