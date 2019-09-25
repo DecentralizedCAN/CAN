@@ -5,7 +5,7 @@
       <%= link_to group_name, root_path, id: "logo" %>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "About", documentation_path %></li>
+        <li><%= link_to "Guide", documentation_path %></li>
         <% if logged_in? %>
           <li><%= link_to "Members", users_path %></li>
           <li><%= link_to current_user.name, current_user %></li>

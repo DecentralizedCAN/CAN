@@ -2,7 +2,7 @@
 
 <h1>Introduction</h1>
 <p>Welcome to this Collective Action Network (CAN). This is platform for decentralized organization, which primarily relies on two processes: criteria-driven problem solving and crowdacting.</p>
-<p>Criteria-driven problem solving is a process for finding solutions to problems, or developing specific strategies around a general goal. This process centers around finding collectively accepted criteria that can serve as a guide for creating solutions that serve the needs of as many people as possible. Along with adding new criteria, users can add support for, or express objections to preexisting criteria. Less controversial options can also be suggested in place of unpopular criteria. When users suggest solutions, these are collectively scored based on how well they meet the criteria. This allows users to sort out the solutions that are most effective for the group.</p>
+<p>Criteria-driven problem solving is a process for finding solutions to problems, or developing specific strategies around a general goal. This process centers around finding collectively accepted criteria that can serve as a guide for creating proposals that serve the needs of as many people as possible. Along with adding new criteria, users can add support for, or express objections to preexisting criteria. Less controversial options can also be suggested in place of unpopular criteria. When users suggest proposals, these are collectively scored based on how well they meet the criteria. This allows users to sort out the proposals that are most effective for the group.</p>
 <p>Crowdacting is a solution to the collective action problem of perceived efficacy. When people have the option to take action that will only succeed if there is a critical mass of participants, and it is unclear whether this critical mass will be reached, potential participants face a dilemma in which they must decide whether to exert effort for an unsure goal. Crowdacting addresses this problem by allowing users to suggest collective actions and specify the minimum participation required for the action to be successful. Individuals can then safely agree to participate in collective action with the security of knowing that the action will only take place if it reaches that threshold.</p>
 
 <h1>Sections</h1>
@@ -10,35 +10,34 @@
 	<li><a href="#brainstorming">Brainstorming</a>
 		<ol>
 			<li><a href="#criteria">Finding criteria</a></li>
-			<li><a href="#solution_scoring">Scoring solutions</a></li>
-			<li><a href="#solution_activation">Activating solutions</a></li>
+			<li><a href="#proposal_scoring">Scoring proposals</a></li>
+			<li><a href="#proposal_activation">Activating proposals</a></li>
 		</ol>
 	</li>
 	<li><a href="#crowdacting">Actions</a>
 		<ol>
 			<li><a href="#action-participation">Participation</a></li>
-			<li><a href="#action-deadlines">Deadlines</a></li>
+			<li><a href="#action-expiration">Expiration</a></li>
 		</ol>
 	</li>
 	<li><a href="#discussions">Discussions</a></li>
-	<li><a href="#posting">Posting</a></li>
 </ol>
 
 <h1 id="brainstorming">Brainstorming</h1>
-<p>Brainstorms are a way of finding innovative and widely supported strategies. If there is an issue or goal you want to address with collective action, you can post a community brainstorm. This will activate a process by which anyone who wants to participate can help establish the criteria by which a solution must be evaluated, and propose solutions to address the topic.</p>
+<p>Brainstorms are a way of finding innovative and widely supported strategies. If there is an issue or goal you want to address with collective action, you can post a community brainstorm. This will activate a process by which anyone who wants to participate can help establish the criteria by which a proposal must be evaluated, and propose proposal to address the topic.</p>
 <h2 id="criteria">Finding criteria</h2>
-<p>Criteria are most effective when they are acceptable to as many people as possible. For this reason, it is more effective to use general criteria than specific ones. Using general criteria also allows solutions to be more creative. For example, say you are planning an event and want to make sure you don't get rained out. You might want to add to the criteria "The even must take place indoors". However, some people might prefer an outdoor venue, and there might be a way to deal with rain other than using an indoor venue, like using an outdoor venue with cover, or having a backup plan for rain. Therefore, a more effective criteria might be something like "The event plan must account for the possibility of rain". This gives flexibility for solutions to find more unique and creative ways to approach this issue.</p>
+<p>Criteria are most effective when they are acceptable to as many people as possible. For this reason, it is more effective to use general criteria than specific ones. Using general criteria also allows proposal to be more creative. For example, say you are planning an event and want to make sure you don't get rained out. You might want to add to the criteria "The even must take place indoors". However, some people might prefer an outdoor venue, and there might be a way to deal with rain other than using an indoor venue, like using an outdoor venue with cover, or having a backup plan for rain. Therefore, a more effective criteria might be something like "The event plan must account for the possibility of rain". This gives flexibility for proposal to find more unique and creative ways to approach this issue.</p>
 <p>If there is a criterion that you object to, you can log that objection on that individual criterion's page. Any supporters of that criterion will receive a notification, and if they want, they can transfer there support to a less controversial or more general criterion.</p>
 <p>To transfer support from one criterion to another, the alternative must first be added to the alternatives list. Anyone can add to this list at any time. Once it is on that list, you can click "Transfer to this" to remove support for the original criterion and add support to the alternative. This transfer gets recorded, and alternatives are ranked by how many people have transfered to each one.</p>
-<p>Asside from helping to further the community goal of approaching consensus, transfering to less controversial criteria also serves individual incentives. Due to the nature of the scoring algorithm (explained below), a criterion that has a significant percentage of objections in contrast to supporters will have less effect on the solution scores than an uncontroversial criterion. Therefore it is in both the community's and individuals' interestes to find criteria that have the fewest objections.</p>
+<p>Asside from helping to further the community goal of approaching consensus, transfering to less controversial criteria also serves individual incentives. Due to the nature of the scoring algorithm (explained below), a criterion that has a significant percentage of objections in contrast to supporters will have less effect on the proposal scores than an uncontroversial criterion. Therefore it is in both the community's and individuals' interestes to find criteria that have the fewest objections.</p>
 
-<h2 id="solution_scoring">Scoring solutions</h2>
-<p>Solutions are scored in order to help make it clear which ones are more likely to be the most effective at serving a group's needs. The scoring algorithm considers how well a solution meets each criteria, as well as how many supporters and objections each criteria has.</p>
-<p>Criteria support is encorporated in order to give more weight to criteria that are important to more people. The more supporters a criterion has, the more importance it is given when solutions are polled. Objections are encorporated in order to prevent the appearance of a consensus when there is not one. The more objections a criterion has, the less high of a score a solution can get for meeting it.</p>
+<h2 id="proposal_scoring">Scoring proposal</h2>
+<p>Proposals are scored in order to help make it clear which ones are more likely to be the most effective at serving a group's needs. The scoring algorithm considers how well a proposal meets each criteria, as well as how many supporters and objections each criteria has.</p>
+<p>Criteria support is encorporated in order to give more weight to criteria that are important to more people. The more supporters a criterion has, the more importance it is given when proposal are polled. Objections are encorporated in order to prevent the appearance of a consensus when there is not one. The more objections a criterion has, the less high of a score a proposal can get for meeting it.</p>
 <p>Below is a mathematical representation of the scoring algorithm.</p>
 
-<h2 id="solution_activation">Activating solutions</h2>
-<p>Solutions should always be framed as collective action. When writing a solution, you must specify all of the same parameters as you would when posting an action. This allows solutions to be sent directly from a brainstorm to the front page, where it can potentially gather enough support to be realized. This can happen if enough people suggest it. When creating a brainstorm, you must specify the number of people who have to suggest a solution before it is turned into an action. Specifying a higher number prevents the main feed from getting cluttered with actions. Actions that come out of brainstorms display their solution score, so potential participants can see how how much support they have before they decide whether to participate.</p>
+<h2 id="proposal_activation">Activating proposals</h2>
+<p>Proposals should always be framed as collective action. When writing a proposal, you must specify all of the same parameters as you would when posting an action. This allows proposals to be sent directly from a brainstorm to the front page, where it can potentially gather enough support to be realized. This can happen if enough people suggest it. When creating a brainstorm, you must specify the number of people who have to suggest a proposal before it is turned into an action. Specifying a higher number prevents the main feed from getting cluttered with actions. Actions that come out of brainstorms display their proposal score, so potential participants can see how how much support they have before they decide whether to participate.</p>
 
 <div id="scoring-visual">
 	<ul>
@@ -51,5 +50,16 @@
 </div>
 
 <h1 id="crowdacting">Actions</h1>
+<p>Actions are specific agreements or events that people can collectively agree to.</p>
+<h2 id="action-participation">Participation</h2>
+<p>When you create an action, you must set a minimum participation number. This is the smallest number of people with which the action will be effective in its purpose. Once this number is reached, all participants will receive a notificaiton stating that the action will take place.</p>
+<p>You can also optionally select a maximum participation. If you do not specify one, it will default to infinity.</p>
+<h2 id="action-expiration">Expiration</h2>
+<p>If you choose to, when you create an action you can specify a date after which people cannot sign up. This prevents, for example, people signing up for an event at the last minute.</p>
+<p>If you do not specify an expiration, it will default to infinity.</p>
+
+<h1 id="discussions">Discussions</h1>
+<p>Discussions function much like a chatroom, but do not update live. Actions, brainstorms, and proposals all have their own discussions. Discussions can also be created on their own.</p>
+<p>When enough comments have been made in a discussion, a list of the comments with the most likes will appear. You can hover over and like a comment.</p>
 
 </div>
