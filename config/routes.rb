@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   get 'commitments', to: 'static#commitments', :as => :commitment
   get 'notifications', to: 'static#notifications', :as => :notifications
   get '', to: 'static#main_feed', :as => :main_feed
-  get 'documentation', to: 'static#documentation', :as => :documentation
+  get 'guide', to: 'static#documentation', :as => :documentation
   get 'manage', to: 'static#manage', :as => :manage
 
   get '/criteria/show/:criterium_id', to: 'criteria#show', :as => :show_criterium
