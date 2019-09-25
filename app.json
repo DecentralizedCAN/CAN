@@ -1,0 +1,54 @@
+{
+  "addons": [
+    "heroku-postgresql",
+    "sendgrid"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "env": {
+    "ADMIN_EMAIL": {
+      "required": true
+    },
+    "ADMIN_PASSWORD": {
+      "required": true
+    },
+    "GROUP_ABBREVIATION": "DCAN",
+    "GROUP_NAME": "Decentralized CAN",
+    "LANG": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "SENDGRID_PASSWORD": {
+      "required": true
+    },
+    "SENDGRID_USERNAME": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "CAN",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
