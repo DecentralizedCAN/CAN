@@ -32,6 +32,8 @@ Config variables
 * SERVER_HOST
 * GROUP_NAME
 * GROUP_ABBREVIATION
+* MAILER_DOMAIN
+* SERVER_HOST
 
 Setup
 * Start Postgres
