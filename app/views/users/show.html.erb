@@ -11,7 +11,6 @@
       <% if current_user.admin? %> 
         <%= @user.email %> <br>
         Activation: <%= @user.activated %> <br>
-        Token: <%= @user.activation_token %> <br>
         <%= link_to 'Resend activation', retry_activation_path(:id => @user.id), method: :post, data: { confirm: 'Send activation email?' } %> <br>
         <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
       <% end %> 
