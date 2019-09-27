@@ -54,6 +54,7 @@
 <h2 id="action-participation">Participation</h2>
 <p>When you create an action, you must set a minimum participation number. This is the smallest number of people with which the action will be effective in its purpose. Once this number is reached, all participants will receive a notificaiton stating that the action will take place.</p>
 <p>You can also optionally select a maximum participation. If you do not specify one, it will default to infinity.</p>
+<p>Actions that you agree to will be listed on your homepage. Once you have completed an action, you can mark it complete and it will disappear from that list.</p>
 <h2 id="action-expiration">Expiration</h2>
 <p>If you choose to, when you create an action you can specify a date after which people cannot sign up. This prevents, for example, people signing up for an event at the last minute.</p>
 <p>If you do not specify an expiration, it will default to infinity.</p>
