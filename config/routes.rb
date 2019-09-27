@@ -73,7 +73,6 @@ Rails.application.routes.draw do
 
   get 'password_resets/new'
   get 'password_resets/edit'
-  get 'password_resets/instant', to: 'password_resets#instant', :as => :retry_activation
 
   # root   'static#commitments'
   root   'static#main_feed'
@@ -82,6 +81,7 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   post '/logout',  to: 'sessions#destroy'
   post '/user/:id/update_settings',  to: 'users#update_settings', :as => :update_settings
+  post '/user/instant_activation/:id', to: 'users#instant_activation', :as => :retry_activation
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
