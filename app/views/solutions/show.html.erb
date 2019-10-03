@@ -75,7 +75,7 @@
             </td>
 
             <td>
-            <% if criterium.poll.where(solution_id: @solution.id).where(user_id: @user.id).count == 0 %>
+            <% if logged_in? && criterium.poll.where(solution_id: @solution.id).where(user_id: @user.id).count == 0 %>
               <div class="score-bar-outer">
                 <div class="score-bar-inner" style="width: 0"></div>
                 <div class="written-criterion-score">
