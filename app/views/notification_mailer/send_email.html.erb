@@ -24,9 +24,9 @@
 	  </p>
 		<% end %>
 	<% elsif @notification.discussion.solution %>
-		<%= link_to solution_url(:problem_id => @notification.discussion.solution.problem.hashid, :solution_id => @notificaiton.discussion.solution.hashid) do %>
+		<%= link_to solution_url(:problem_id => @notification.discussion.solution.problem.hashid, :solution_id => @notification.discussion.solution.hashid) do %>
 	  <p>
-			<%= @notification.details %> on the proposal <em><%= @notification.discussion.solution.title %></em> 
+			<%= @notification.details %> on the proposal <em><%= @notification.discussion.solution.title %></em>
 	  </p>
 		<% end %>
 	<% else %>
