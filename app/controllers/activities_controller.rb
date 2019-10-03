@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
-  before_action :require_login
+  before_action :require_login, except: [:show]
 
   require 'time'
   require 'date'

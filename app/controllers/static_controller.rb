@@ -1,5 +1,5 @@
 class StaticController < ApplicationController
-	before_action :require_login, except: [:documentation]
+	before_action :require_login, except: [:documentation, :main_feed]
 
 	def home
 	end

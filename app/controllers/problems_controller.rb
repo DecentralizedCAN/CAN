@@ -1,7 +1,7 @@
 class ProblemsController < ApplicationController
   before_action :set_problem, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create]
-  before_action :require_login
+  before_action :require_login, except: [:show]
 
   # GET /problems
   # GET /problems.json
@@ -20,13 +20,24 @@ class ProblemsController < ApplicationController
       .joins(:user)
       .group("criteria.id").count.count
 
-    @my_criteria = current_user.criterium
-      .where(problem_id: @problem.id)
+    if logged_in?
+      @my_criteria = current_user.criterium
+        .where(problem_id: @problem.id)
 
-    @criteria = @problem.criterium
-      .joins(:user)
-      .group("criteria.id")
-      .order("COUNT(user_id) DESC").first(16) - @my_criteria
+      @criteria = @problem.criterium
+        .joins(:user)
+        .group("criteria.id")
+        .order("COUNT(user_id) DESC").first(16) - @my_criteria
+
+      @user = this_user
+    else
+      @my_criteria = []
+
+      @criteria = @problem.criterium
+        .joins(:user)
+        .group("criteria.id")
+        .order("COUNT(user_id) DESC").first(16)
+    end
 
     @discussion = @problem.discussion
     @comment = @discussion.comment.new
@@ -47,7 +58,6 @@ class ProblemsController < ApplicationController
     #                     .having('count(user_id) > 0')
     #                     .order('COUNT(user_id) DESC')
 
-    @user = this_user
 
     if !@problem.updated || Time.now - @problem.updated > 600000 #if time since last done is more than ten minutes
       # update last time for problem

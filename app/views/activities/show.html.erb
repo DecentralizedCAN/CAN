@@ -52,7 +52,7 @@
   </div>
 
   
-  <% if current_user.admin %>
+  <% if logged_in? && current_user.admin %>
     <%= @activity.creator %>
     | <%= link_to 'Destroy', @activity, method: :delete, data: { confirm: 'Are you sure?' } %>
   <% end %>
