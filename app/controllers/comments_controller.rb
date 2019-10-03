@@ -55,7 +55,7 @@ class CommentsController < ApplicationController
         elsif @comment.discussion.activity
           format.html { redirect_to action_path(@comment.discussion.activity.hashid, :anchor => "main-discussion") }
         elsif @comment.discussion.solution
-          format.html { redirect_to solution_path(@comment.discussion.solution.hashid, :anchor => "main-discussion") }
+          format.html { redirect_to solution_path(:problem_id => @comment.discussion.solution.problem.hashid, :solution_id => @comment.discussion.solution.hashid, :anchor => "main-discussion") }
         else
           format.html { redirect_to @comment.discussion }
           format.json { render :show, status: :created, location: @comment }

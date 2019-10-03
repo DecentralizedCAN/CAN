@@ -1,3 +1,4 @@
+<% if post %>
 <% if current_user && current_user.admin? %>
 <div class="delete-button">
 	<%= link_to "Ø", delete_post_path(:post_id => post.id), method: :delete,
@@ -49,3 +50,4 @@
   });
 
 </script>
+<% end %>

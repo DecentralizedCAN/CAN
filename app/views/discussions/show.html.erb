@@ -17,6 +17,15 @@
       </div>
     <% end %>
   </div>
+<% elsif @discussion.solution %>
+  <div class="back-button">
+    <%= link_to solution_path(:problem_id => @discussion.solution.problem.hashid, :solution_id => @discussion.solution.hashid) do %>
+      <div class="back-button-arrow"></div>
+      <div class="back-button-content">
+        Back to solution
+      </div>
+    <% end %>
+  </div>
 <% else %>
   <div class="back-button">
     <%= link_to main_feed_path do %>
