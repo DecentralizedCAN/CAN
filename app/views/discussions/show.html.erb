@@ -179,7 +179,7 @@
 </div>
 
 
-<% if current_user.admin %>
+<% if logged_in? && current_user.admin %>
   <%= @discussion.creator %>
   | <%= link_to 'Destroy', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>

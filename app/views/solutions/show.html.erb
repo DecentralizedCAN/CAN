@@ -27,7 +27,7 @@
   <% end %>
 <% end %>
 
-<% if current_user.admin %>
+<% if logged_in? && current_user.admin %>
   <%= @solution.creator %>
   | <%= link_to "Destroy", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>

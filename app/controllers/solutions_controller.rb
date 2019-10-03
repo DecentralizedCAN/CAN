@@ -3,7 +3,7 @@ class SolutionsController < ApplicationController
 
   before_action :set_solution, only: [:show, :edit, :update, :destroy, :poll]
   before_action :check_activity, only: [:create]
-  before_action :require_login
+  before_action :require_login, except: [:show]
 
   # GET /solutions
   # GET /solutions.json
@@ -14,7 +14,7 @@ class SolutionsController < ApplicationController
   # GET /solutions/1
   # GET /solutions/1.json
   def show
-    @user = this_user
+    @user = this_user if logged_in?
     @problem = @solution.problem
 
     polls = @solution.poll

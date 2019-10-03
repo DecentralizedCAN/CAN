@@ -1,7 +1,7 @@
 class DiscussionsController < ApplicationController
   before_action :set_discussion, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create]
-  before_action :require_login
+  before_action :require_login, except: [:show]
 
   # GET /discussions
   # GET /discussions.json
