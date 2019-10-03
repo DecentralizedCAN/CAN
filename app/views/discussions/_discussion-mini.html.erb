@@ -16,7 +16,7 @@
         <% @top_liked.each do |comment| %>
           <% if comment.content %>
             <li>
-              <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} %>
+              <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id}  if logged_in? %>
               <div class="like-div">
                 <% if pre_upvote %>
                   <%= button_to unlike_path(comment), method: :post, :class => "red-like" do %>
@@ -49,7 +49,7 @@
               <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
             </div>
             <div class="comment"><%= comment.content.html_safe  %></div>
-            <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} %>
+            <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} if logged_in? %>
 
             <% if comment.upvotes.count > 0 %>
               <div class="like-div active">
