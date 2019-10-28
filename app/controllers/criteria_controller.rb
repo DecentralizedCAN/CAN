@@ -1,6 +1,6 @@
 class CriteriaController < ApplicationController
   before_action :set_criterium, only: [:show, :dissent_form, :edit, :update]
-  before_action :require_login, except: [:show]
+  before_action :require_login
 
   # GET /criteria
   # GET /criteria.json

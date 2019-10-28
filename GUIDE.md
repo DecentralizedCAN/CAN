@@ -47,6 +47,7 @@
 		<li>c = criterion</li>
 	</ul>
 	<a href="https://github.com/DecentralizedCAN/CAN/blob/master/app/assets/images/scoring-algorithm.png">View Diagram</a>
+	![Diagram](https://github.com/DecentralizedCAN/CAN/blob/master/app/assets/images/scoring-algorithm.png)
 </div>
 
 <h1 id="crowdacting">Actions</h1>
