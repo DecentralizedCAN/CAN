@@ -14,12 +14,16 @@
   <% end %>
 
   <div class="proposal">
+    <% if logged_in? %>
+
     <% if @activity.roll.first.user.include?(@user) %>
     <% unless @activity.roll.last.user.include?(@user) %>
       <%= link_to "Mark complete", complete_path(:activity_id => @activity.id), :method => "post", :id => "mark-complete" %>
     <% else %>
       <em id="mark-complete"> completed </em>
     <% end %>
+    <% end %>
+
     <% end %>
     
     <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
@@ -39,6 +43,8 @@
     </div>
     
 
+    <% if logged_in? %>
+
     <% if @roll.user.include?(@user) %>
     <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
         <br>
@@ -49,6 +55,7 @@
         <% end %>
     <% end %>
 
+    <% end %>
   </div>
 
   
