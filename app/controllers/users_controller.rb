@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    if current_user.admin?
+    if current_user && current_user.admin?
       @user.activated = true
       if @user.save
         flash[:info] = "User created."
