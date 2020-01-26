@@ -1,7 +1,9 @@
 class ProblemsController < ApplicationController
   before_action :set_problem, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create]
-  before_action :require_login, except: [:show]
+  before_action :require_login, except: [:show], if: -> { public_viewable? }
+  before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_admin_or_anarchy, only: [:new, :create]
 
   # GET /problems
   # GET /problems.json
@@ -27,7 +29,8 @@ class ProblemsController < ApplicationController
       @criteria = @problem.criterium
         .joins(:user)
         .group("criteria.id")
-        .order("COUNT(user_id) DESC").first(16) - @my_criteria
+        .order("COUNT(user_id) DESC") - @my_criteria
+        # .order("COUNT(user_id) DESC").first(16) - @my_criteria
 
       @user = this_user
     else
@@ -85,6 +88,7 @@ class ProblemsController < ApplicationController
   def create
     @user = this_user
     @problem = Problem.new(problem_params)
+    @problem.suggestion_min = 1 if @problem.suggestion_min == nil
     @problem.creator = current_user.name
 
     respond_to do |format|
@@ -167,6 +171,10 @@ class ProblemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def problem_params
       params.require(:problem).permit(:title, :description, :suggestion_min)
+    end
+
+    def public_viewable?
+      Setting.find(6).state
     end
 
     # def this_user

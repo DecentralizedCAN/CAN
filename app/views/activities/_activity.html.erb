@@ -45,7 +45,9 @@
         </div>
       </div>
 
-      <% if activity.roll.first.user.include?(@user) %>
+      <% if activity.roll.last.user.include?(@user) %>
+        <span class="committed"><i class="fa fa-check"></i> completed</span>
+      <% elsif activity.roll.first.user.include?(@user) %>
         <span class="committed"><i class="fa fa-check"></i> you are committed</span>
       <% end %>
 

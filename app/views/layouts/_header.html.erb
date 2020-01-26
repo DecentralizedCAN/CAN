@@ -1,6 +1,96 @@
 <header>
-  <div class="converge-container converge-header">
-    <nav>
+<!--   <div class="navbar">
+    
+    <div id="toolbar" class="navbar-expand{-sm|-md|-lg|-xl}">
+      <ul id="toolbar-1">
+        <li id="logo">
+          <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
+          <%= link_to group_name, root_path, id: "logo" %>
+        </li>
+        <li>
+          <%= link_to main_feed_path do %>
+            All posts
+          <% end %>
+        </li>
+        <li>Brainstorms</li>
+        <li>Actions</li>
+      </ul>
+      <ul id="toolbar-2" class="navbar-right">
+        <li>
+          <%= link_to "Guide", documentation_path %>
+        </li>
+      </ul>
+    </div>
+</div> -->
+
+
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid converge-header">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
+      <%= link_to group_name, root_path, id: "logo", :class => "navbar-brand" %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse toolbar-1" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!-- <li class="active"><a href="#">All posts <span class="sr-only">(current)</span></a></li> -->
+        <li>
+          <%= link_to main_feed_path do %>
+            All posts
+          <% end %>
+        </li>
+        <li>
+          <%= link_to 'Create', post_problem_path if logged_in? && (Setting.first.state || current_user.admin?) %>
+        </li>
+        <li>
+          <%= link_to 'Settings', settings_path if logged_in? && current_user.admin? %>
+        </li>
+
+        <!-- <li><a>Brainstorms</a></li>
+        <li><a>Actions</a></li> -->
+      </ul>
+      <!-- <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form> -->
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Guide", documentation_path %></li>
+        <% if logged_in? %>
+          <li><%= link_to "Members", users_path %></li>
+          <li><%= link_to current_user.name.capitalize, current_user %></li>
+        <% else %>
+          <li><%= link_to "Log in", login_path %></li>
+        <% end %>
+        <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+  <!-- <div class="converge-container converge-header">
+
+     <nav>
       <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
       <%= link_to group_name, root_path, id: "logo" %>
 
@@ -14,5 +104,5 @@
         <% end %>
       </ul>
     </nav>
-  </div>
+  </div> -->
 </header>

@@ -4,12 +4,12 @@
   <%= link_to issue_path(:problem_id => @criterium.problem.id) do %>
     <div class="back-button-arrow"></div>
     <div class="back-button-content">
-      Back
+      <%= @criterium.problem.title %>
     </div>
   <% end %>
 </div>
 
-<div class="form-tab">
+<div class="form-tab form-full">
 
 <h1>Add a criterion to inform and evaluate proposals for <span class="problem-title"><%=  @criterium.problem.title %></span></h1>
 
@@ -22,7 +22,7 @@
 
     <%= form.hidden_field :problem_id, id: :id %>
 
-    <%= form.submit "Add to criteria", id: :submit_form %>
+    <%= form.submit "Submit", id: :submit_form, :class => "button" %>
 
   <% end %>
 </div>

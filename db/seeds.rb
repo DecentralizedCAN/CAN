@@ -12,14 +12,21 @@ User.create!(name:  "admin",
              activated: true,
              activated_at: Time.zone.now)
 
-# 10.times do |n|
-#   name  = "example-#{n+1}" #Faker::Name.name
-#   email = "example-#{n+1}@fakeemail.org"
-#   password = "password"
-#   User.create!(name:  name,
-#                email: email,
-#                password:              password,
-#                password_confirmation: password,
-#                activated: true,
-#                activated_at: Time.zone.now)
-# end
+Setting.create!(title: "Allow any member to post", state: false)
+Setting.create!(title: "Limit multiple posts within a short amount of time", state: false)
+Setting.create!(title: "Allow users to sign up on their own", state: false)
+Setting.create!(title: "Include a discussion section for brainstorms", state: false)
+Setting.create!(title: "Include a discussion section for actions", state: false)
+Setting.create!(title: "Make content viewable without an account", state: false)
+
+10.times do |n|
+  name  = "example-#{n+1}" #Faker::Name.name
+  email = "example-#{n+1}@fakeemail.org"
+  password = "password"
+  User.create!(name:  name,
+               email: email,
+               password:              password,
+               password_confirmation: password,
+               activated: true,
+               activated_at: Time.zone.now)
+end

@@ -1,13 +1,13 @@
 <div id="solver">
 
-  <div class="back-button">
+  <!-- <div class="back-button">
     <%= link_to main_feed_path do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
         Feed
       </div>
     <% end %>
-  </div>
+  </div> -->
 
 
   <% if @problem.post %>
@@ -21,16 +21,15 @@
         <span class="feed-label">Brainstorm</span>
       </div>
 
-      <div id="issue-sponsorship">
-        <%if @problem.user.include?(@user)%>
-          <em><%= link_to "Leave this Brainstorm", unsponsor_problem_path(:problem_id => @problem.id), :method => "post" %></em>
-        <%else%>
-          <em><%= link_to "Join this Brainstorm", sponsor_problem_path(:problem_id => @problem.id), :method => "post" %></em>
-        <%end%>
-      </div>
-
     </div>
 
+    <!-- <div class="right-buttons">
+      <%if @problem.user.include?(@user)%>
+        <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+      <%else%>
+        <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+      <%end%>
+    </div> -->
 
     <div class="issue-info">
       <div>
@@ -57,8 +56,10 @@
       <% end %>
     </div>
 
-      <p class="issue-description"><%= @problem.description %></p>
     </div>
+
+    <p class="issue-description"><%= @problem.description %></p>
+
 
     <!-- DETAILS ENDS -->
 
@@ -70,16 +71,14 @@
 
       <h1 id="criteria">
         <i class="fas fa-clipboard-list"></i>
-        <%= @criteria_count %> Active criteria
+        <%= @criteria_count %> Criteria
       </h1>
 
-      <em>
-        <%= link_to "View all", full_criterium_path( :problem_id => @problem.id) %>
-      </em>
-      |
-      <em>
-        <%= link_to "Add to criteria", new_criterium_path( :problem_id => @problem.id) %>
-      </em>
+      <div>
+       <!--  <%= link_to "View all", full_criterium_path( :problem_id => @problem.id), :class => "button" %> -->
+
+        <%= link_to "Add criterion", new_criterium_path( :problem_id => @problem.id), :class => "button"  %>
+      </div>
 
       <div id="issue-criteria">
 
@@ -108,8 +107,10 @@
       <%= @solutions.count %> Proposals
     </h1>
 
-    <em><%= link_to 'Add proposal', new_solution_path(:problem_id => @problem.id) %></em>
-
+    <div>
+      <%= link_to 'Add proposal', new_solution_path(:problem_id => @problem.id), :class => "button"  %>
+    </div>
+    
     <ol class="solutions">
       <% @solutions.each do |solution| %>
         <li>
@@ -118,7 +119,7 @@
             <%= link_to solution_path(:problem_id => solution.problem.hashid, :solution_id => solution.hashid) do %>
 
               <div>
-                <%= solution.title %>                 
+                <strong><%= solution.title %></strong>
               </div>
 
               <div class="score-bar-outer">
@@ -130,6 +131,7 @@
 
             <% end %>
            
+           <!-- 
             <% if solution.user.count < @problem.suggestion_min - 1 %>
               <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
                 Suggest (<%= solution.user.count %>/<%= @problem.suggestion_min %>)
@@ -147,7 +149,8 @@
                 Post as action
               <% end %>
             <% end %>
-            
+             -->
+
           </div>
         </li>
       <% end %>
@@ -162,7 +165,7 @@
 
 <!-- DISCUSSION -->
   
-<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion})%>
+<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
 
 <!-- DISCUSSION ENDS -->
 
@@ -171,9 +174,12 @@
 </div>
 <!-- EXTRA-SECTIONS ENDS -->
 
-<% if logged_in? && current_user.admin %>
-  <%= @problem.creator %>
-  | <%= link_to 'Destroy', @problem, method: :delete, data: { confirm: 'Are you sure?' } %>
-<% end %>
-
 </div>
+
+<% if logged_in? && current_user.admin %>
+  <span class="admin-section">
+    <br><br>
+    Created by <%= @problem.creator %> –
+    <%= link_to 'Remove', @problem, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </span>
+<% end %>

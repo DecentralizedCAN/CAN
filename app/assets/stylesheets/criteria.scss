@@ -13,13 +13,15 @@ $label-blue: #81c4ff;
 	margin-bottom: 10px;
 	border-radius: 2px;
   height: 300px;
-  max-width: 400px;
+  // min-width: 300px;
+  // max-width: 400px;
+  width: 24em;
   display: inline-block;
   vertical-align: text-top;
   border: 1px solid black;
   box-shadow: 0px 3px 6px 0px #d0d0d0;
   border: 1px solid #efefef;
-  margin-left: 4px;
+  margin-right: 4px;
   overflow: auto;
 
   h3 {
@@ -57,32 +59,38 @@ $label-blue: #81c4ff;
 }
 
 .suggest-link {
-  background-color: $neutral-blue;
+  // background-color: $neutral-blue;
+  background-color: #5db9ff !important;
   &:hover {
-  	background-color: #0382e2;
+  	background-color: #87c7f7 !important;
   }
 }
 
 .submit-dissent > input {
   padding: 0px 6px;
   background-color: $dissent-green;
+  border: 1px solid #30bac1;
+  text-transform: uppercase;
+
   &:hover {
-    background-color: #04908e;
+    background-color: #48eef7 !important;
   }
 }
 
 #submit_form {
-  background-color: #292929;;
+  // background-color: #292929;
   border-radius: 2.8px;
   &:hover {
-    background-color: black;
+    // background-color: black;
   }
 }
 
 .transfer-link {
-  background-color: $neutral-blue;
+  // background-color: $neutral-blue;
+  background-color: #5db9ff !important;
+
   &:hover {
-  	background-color: #0382e2;
+  	background-color: #87c7f7 !important;
   }
 }
 
@@ -99,4 +107,18 @@ $label-blue: #81c4ff;
     display: inline-block;
     vertical-align: top;
   }
+}
+
+.dissent-title > textarea {
+  min-width: 26em;
+  min-height: 8em;
+}
+
+.cancel-support, .sponsor-criteria {
+  margin: 10px 0px;
+}
+
+.criterion-title {
+  display: inline-block;
+  font-style: italic;
 }

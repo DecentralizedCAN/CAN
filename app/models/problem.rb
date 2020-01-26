@@ -10,7 +10,7 @@ class Problem < ApplicationRecord
   
   validates :title, presence: true, length: { minimum: 6, maximum: 2000 }
   validates :description, presence: true, length: { minimum: 6, maximum: 2000 }
-  validates :suggestion_min, presence: true
+  # validates :suggestion_min, presence: true
 
   # Sends new problem email.
   def send_problem_email

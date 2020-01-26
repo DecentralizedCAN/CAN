@@ -40,6 +40,21 @@ body {
   background-color: #f5f5f5;
 }
 
+.button {
+  font-style: normal;
+  border: 1px solid #505050;
+  padding: 2px 5px;
+  background-color: #8e8e8e;
+  color: whitesmoke !important;
+  border-radius: 2px;
+  font-size: 10px;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #bbb9b9;
+  }
+}
+
 p {
   white-space: pre-wrap;
 }
@@ -51,6 +66,10 @@ p {
   @media (max-width: 768px) {
     flex-direction: column;
   }
+}
+
+textarea:focus {
+  outline: 0;
 }
 
 .backdrop, #activator, #solver, #dashboard, #main-feed {
@@ -85,6 +104,14 @@ p {
 
   * {
     color: #423f3f;
+  }
+}
+
+.form-full {
+  border-top: 1px solid #ddd;
+
+  h1 {
+    margin-top: 0px;
   }
 }
 
@@ -208,15 +235,91 @@ header {
     }
   } 
 
-  .nav {
-    display: inline-block;
-    float: right;
+  // .nav {
+  //   display: inline-block;
+  //   float: right;
 
-    li {
-      display: inline-block;
-    }
+  //   li {
+  //     display: inline-block;
+  //   }
+  // }
+}
+
+// #toolbar {
+//   border: 1px solid;
+//   background-color: transparent;
+
+//   > * {
+//     display: inline-block;
+//   }
+  
+//   ul {
+//     padding: 0;
+//     margin: 0;
+//     display: table-cell;
+//   }
+
+//   #logo {
+//     font-style: normal;
+//     font-family: 'Oswald', sans-serif;
+//     font-size: 3em;
+//     font-weight: bold;
+//     font-size: 20px;
+//   }
+
+//   li {
+//     list-style: none;
+//     padding: 2px 8px;
+//     display: table-cell;
+//     height: 100%;
+//     // float: left;
+//     vertical-align: middle;
+//   }
+
+//   li#logo {
+//     background-color: transparent !important;
+//   }
+
+//   ul#toolbar-1 li:nth-child(even) {
+//     background-color: #828080;
+//     color: #dedddd;
+//   }
+
+//   ul#toolbar-1 li:nth-child(odd) {
+//     background-color: #dedddd;
+//     color: #828080;
+//   }
+// }
+
+
+// reduce navbar height
+
+.navbar {
+  min-height: 20px;
+}
+
+.navbar-brand {
+  padding: 0 10px;
+  height: 20px;
+  line-height: 30px;
+}
+
+.navbar-toggle {
+  /* (80px - button height 34px) / 2 = 23px */
+  margin-top: 9px;
+  padding: 9px 10px !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    /* (80px - line-height of 27px) / 2 = 26.5px */
+    padding-top: 10.5px;
+    padding-bottom: 10.5px;
+    line-height: 11px;
   }
 }
+// end reduce navbar height
+
 
 body {
 	margin: 0;
@@ -260,10 +363,14 @@ hr {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 20px;
 }
 
 .converge-header {
-  margin-top: 3em;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .converge-container:before, .converge-container:after {
@@ -276,20 +383,26 @@ hr {
 }
 
 @media (min-width: 768px) {
-  .converge-container {
+  .converge-container, .converge-header {
     width: 750px;
   }
 }
 @media (min-width: 992px) {
   /* line 10, /Users/leo/.rvm/gems/ruby-2.5.1/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_grid.scss */
-  .converge-container {
+  .converge-container, .converge-header {
     width: 970px;
   }
 }
 @media (min-width: 1200px) {
   /* line 10, /Users/leo/.rvm/gems/ruby-2.5.1/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_grid.scss */
-  .converge-container {
+  .converge-container, .converge-header {
     width: 1000px;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar #logo {
+    margin: 10px;
   }
 }
 
@@ -306,38 +419,43 @@ hr {
   width: auto;
 }
 
-#logo {
+nav #logo {
   font-style: normal;
   font-family: 'Oswald', sans-serif;
   float: left;
-  font-size: 3em;
+  font-size: 2em;
   font-weight: bold;
   letter-spacing: -1px;
 }
 
-.nav li {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.2em;
-  text-transform: uppercase;
-}
+// .nav li {
+//   font-family: 'Montserrat', sans-serif;
+//   font-size: 1.2em;
+//   text-transform: uppercase;
+// }
 
-.nav.nav-tabs {
-	width: 100%;
-	margin: auto;
+// .nav.nav-tabs {
+// 	width: 100%;
+// 	margin: auto;
 
-  a {
-    font-style: normal;
-  }
-}
+//   a {
+//     font-style: normal;
+//   }
+// }
 
-.navbar-nav > li > a {
-  padding-top: 10px;
-  padding-left: 0;
-  padding-right: 12px;
-}
+// .navbar-nav > li > a {
+//   padding-top: 10px;
+//   padding-left: 0;
+//   padding-right: 12px;
+// }
 
-.nav-tabs .active a {
-  background-color: #1a1a1a !important;
+// .nav-tabs .active a {
+//   background-color: #1a1a1a !important;
+// }
+
+.navbar {
+  background-color: #f1f1f1;
+  border-color: #e2e1e1;
 }
 
 .back-button {
@@ -393,4 +511,11 @@ hr {
   .pagination {
     margin: 0;    
   }
+}
+
+.admin-section {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  margin: 10px;
 }

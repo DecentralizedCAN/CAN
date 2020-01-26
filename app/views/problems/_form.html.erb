@@ -18,12 +18,14 @@
     <h1>Details</h1>
     <%= form.text_area :description, id: :problem_description, placeholder: "Explain the issue in detail" %>
 
-    <div class="number-field-outer">
-      <h1>Activation minimum</h1>
-      <p>This is the number of people who must suggest a solution before it is posted as an action to the main feed.</p>
-      <%= form.number_field :suggestion_min, value: 1, id: :suggestion_min %>
-    </div>
-  
+    <% if Setting.first.state %>
+      <div class="number-field-outer">
+        <h1>Activation minimum</h1>
+        <p>This is the number of people who must suggest a solution before it is posted as an action to the main feed.</p>
+        <%= form.number_field :suggestion_min, value: 1, id: :suggestion_min %>
+      </div>
+    <% end %>
+
   </div>
 
   <%= form.submit "Post", id: :submit_goal %>

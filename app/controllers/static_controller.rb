@@ -1,20 +1,24 @@
 class StaticController < ApplicationController
-	before_action :require_login, except: [:documentation, :main_feed]
+	before_action :require_login, except: [:documentation, :main_feed], if: -> { public_viewable? }
+	before_action :require_login, except: [:documentation], unless: -> { public_viewable? }
 
 	def home
 	end
 
 	def main_feed
 
-		if true
+		if params[:sort] == "new"
+			@posts = Post.left_joins(:upvotes)
+			  .group(:id)
+			  .having('count(upvotes.id) > 0')
+			  .paginate(:page => params[:page], :per_page => 12)
+			  .order('created_at DESC')
+		else
 			@posts = Post.left_joins(:upvotes)
 			  .group(:id)
 				.having('count(upvotes.id) > 0')
 			  .paginate(:page => params[:page], :per_page => 12)
 			  .order("COUNT(upvotes.id) / (( extract(epoch from now()) - extract(epoch from posts.created_at) / 1.002) ) DESC")
-		else
-			@posts = Post.paginate(:page => params[:page], :per_page => 12)
-			  .order('created_at DESC')
 		end
 
     @current_time = Time.now.to_i
@@ -49,14 +53,14 @@ class StaticController < ApplicationController
 		# @problems = Problem.last(5)
 		# @activities = Activity.last(5)
 		@proposals = @user.solution
-    @current_time = Time.now.to_i
+    	@current_time = Time.now.to_i
 	end
 
 	def manage
 		if current_user.admin?
-	    @problems = Problem.paginate(:page => params[:page], :per_page => 100).order('created_at DESC')
-	    @activities = Activity.paginate(:page => params[:page], :per_page => 100).order('created_at DESC')
-	    @discussions = Discussion.paginate(:page => params[:page], :per_page => 100).order('created_at DESC')
+	    	@problems = Problem.paginate(:page => params[:page], :per_page => 100).order('created_at DESC')
+	    	@activities = Activity.paginate(:page => params[:page], :per_page => 100).order('created_at DESC')
+	    	@discussions = Discussion.paginate(:page => params[:page], :per_page => 100).order('created_at DESC')
 		else
 			redirect_to root_url			
 		end
@@ -65,5 +69,10 @@ class StaticController < ApplicationController
 	def wakemydyno
 		render "wakemydyno.txt"
 	end
+
+	private
+    def public_viewable?
+      Setting.find(6).state
+    end
 
 end

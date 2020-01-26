@@ -1,31 +1,20 @@
 <div id="activator">
 
-  <div class="back-button">
+<!--   <div class="back-button">
     <%= link_to main_feed_path do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
         Feed
       </div>
     <% end %>
-  </div>
+  </div> -->
 
   <% if @activity.post %>
     <%= render(:partial => 'static/post-stuff', :locals => {:post => @activity.post})%>
   <% end %>
 
   <div class="proposal">
-    <% if logged_in? %>
 
-    <% if @activity.roll.first.user.include?(@user) %>
-    <% unless @activity.roll.last.user.include?(@user) %>
-      <%= link_to "Mark complete", complete_path(:activity_id => @activity.id), :method => "post", :id => "mark-complete" %>
-    <% else %>
-      <em id="mark-complete"> completed </em>
-    <% end %>
-    <% end %>
-
-    <% end %>
-    
     <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
 
     <div>
@@ -37,32 +26,34 @@
         <br>
         View proposal: <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid) do %>
           <%= @activity.solution.title %>
-        <% end %>        
-      <% end %> 
+        <% end %>
+      <% end %>
 
     </div>
     
 
-    <% if logged_in? %>
-
+    <% if logged_in? && !@activity.roll.last.user.include?(@user) %>
     <% if @roll.user.include?(@user) %>
+        <%= link_to "Uncommit", unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" %>
     <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
-        <br>
-        <%= link_to commit_path(:roll_id => @roll.id) do %>
-          <div class="commit-button">
+        <%= link_to commit_path(:roll_id => @roll.id), :class => "button" do %>
+          <!-- <div class="commit-button"> -->
             <i class="fas fa-user-plus"></i> Participate
-          </div>
+          <!-- </div> -->
         <% end %>
     <% end %>
 
     <% end %>
-  </div>
 
-  
-  <% if logged_in? && current_user.admin %>
-    <%= @activity.creator %>
-    | <%= link_to 'Destroy', @activity, method: :delete, data: { confirm: 'Are you sure?' } %>
-  <% end %>
+    <% if logged_in? %>
+      <% if @activity.roll.first.user.include?(@user) %>
+      <% unless @activity.roll.last.user.include?(@user) %>
+        <%= link_to "Mark complete", complete_path(:activity_id => @activity.id), :method => "post", :class => "button" %>
+      <% end %>
+      <% end %>
+    <% end %>
+    
+  </div>
 
   <div class="dissent-activity">
     <%if @activity.actdissent.find_by(user: @user)%>
@@ -94,13 +85,22 @@
     </div>
   <% end %>
 
-
+  <% if Setting.find(5).state %>
   <div id="action-columns">
+  <% else %>
+  <div>
+  <% end %>
+
     <div id="action-details">
       <h1>Details</h1>
       <p><%= @activity.description %></p>
     </div>
-    <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion})%>  
+    <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>  
   </div>
 
+  <% if logged_in? && current_user.admin %>
+    <br><br>
+    Created by <%= @activity.creator %> –
+    <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
 </div>

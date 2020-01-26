@@ -1,7 +1,9 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
-  before_action :require_login, except: [:show]
+  before_action :require_login, except: [:show], if: -> { public_viewable? }
+  before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_admin_or_anarchy, only: [:new, :create, :suggest]
 
   require 'time'
   require 'date'
@@ -179,7 +181,9 @@ class ActivitiesController < ApplicationController
           @solution.user.each do |user|
             notification = user.notification.create(:details => "was created from the brainstorm \"" + @problem.title + "\"",
               :activity_id => @activity.id)
-            notification.send_email
+              if user.email_notifications
+                notification.send_email
+              end
           end
               # @activity.send_activated_email
             # end  
@@ -215,11 +219,13 @@ class ActivitiesController < ApplicationController
       @roll.user << @user
 
       # Notifications
-      if @roll.user.count == @roll.minimum && @user.email_notifications
+      if @roll.user.count == @roll.minimum
         @roll.user.each do |user|
           notification = user.notification.create(:details => "has reached minimum participation and will take place",
             :activity_id => @activity.id)
-          notification.send_email
+          if user.email_notifications
+            notification.send_email
+          end
         end
         # @activity.send_activated_email
       end  
@@ -230,6 +236,27 @@ class ActivitiesController < ApplicationController
 
   def cancel
     
+  end
+
+  def unparticipate
+    @roll = Roll.find(params[:roll_id])
+    if @roll.user.include?(current_user)
+      @roll.user.delete(current_user)
+      redirect_to action_path(:activity_id => @roll.activity.id)
+
+      # Notifications
+      if @roll.user.count < @roll.minimum
+        @roll.user.each do |user|
+          notification = user.notification.create(:details => "no longer reaches minimum participation and cannot take place",
+            :activity_id => @activity.id)
+          if user.email_notifications
+            notification.send_email
+          end
+        end
+        # @activity.send_activated_email
+      end  
+      # End notifications
+    end
   end
 
   def complete
@@ -298,5 +325,9 @@ class ActivitiesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
       params.require(:activity).permit(:title, :description, :activation, :participants, :activation_minimum, :activation_maximum, :deadline, :expiration)
+    end
+
+    def public_viewable?
+      Setting.find(6).state
     end
 end

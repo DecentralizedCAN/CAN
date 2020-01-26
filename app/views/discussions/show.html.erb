@@ -27,14 +27,14 @@
     <% end %>
   </div>
 <% else %>
-  <div class="back-button">
+  <!-- <div class="back-button">
     <%= link_to main_feed_path do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
         Feed
       </div>
     <% end %>
-  </div>
+  </div> -->
 
     <%= render(:partial => 'static/post-stuff', :locals => {:post => @discussion.post})%>
 
@@ -50,14 +50,17 @@
               <%= pluralize(@discussion.comment.count, "comment") %>
             </div>
           </div>
-        <div class="discussion-content"><%= @discussion.content %></div>
       </div>
+
+      <p class="discussion-content"><%= @discussion.content %></p>
 
 <% end %>
 <!-- </div> -->
 <div class="discussion-column discussion-large" id="main-discussion">
 <!--   <h1>New</h1>
- -->  <ul id="scroll-div">
+ -->  
+
+    <ul id="scroll-div">
   	<% @discussion.comment.last(200).each do |comment| %>
   		<% if comment.content %>
   		  <li>
@@ -178,10 +181,11 @@
   <% end %>
 </div>
 
-
 <% if logged_in? && current_user.admin %>
-  <%= @discussion.creator %>
-  | <%= link_to 'Destroy', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <span class="admin-section">
+    Created by <%= @discussion.creator %> –
+    <%= link_to 'Remove', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </span>
 <% end %>
 
 <script type="text/javascript">

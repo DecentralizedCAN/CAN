@@ -1,0 +1,7 @@
+<% @settings.each do |setting| %>
+	<div>
+		<%= link_to "Turn on", setting_on_path(:setting_id => setting.id), :method => "post", :class => "button" unless setting.state %>
+		<%= link_to "Turn off", setting_off_path(:setting_id => setting.id), :method => "post", :class => "button active-button" if setting.state %>
+		<%= setting.title %>
+	</div><br>
+<% end %>

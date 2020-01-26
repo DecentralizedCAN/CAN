@@ -17,7 +17,22 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    if Setting.find(3).state || (current_user && current_user.admin?)
+      @user = User.new      
+    else
+      flash[:info] = "The admin has disallowed user signup."
+      redirect_to login_path
+    end
+  end
+
+  # GET /users/add
+  def add
+    if Setting.find(3).state || (current_user && current_user.admin?)
+      @user = User.new      
+    else
+      flash[:info] = "Only admins can view this page."
+      redirect_to login_path
+    end
   end
 
   # GET /users/1/edit
@@ -33,7 +48,13 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    if @user.save
+    if current_user.admin?
+      @user.activated = true
+      if @user.save
+        flash[:info] = "User created."
+        redirect_to root_url
+      end
+    elsif @user.save
       @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
@@ -59,6 +80,34 @@ class UsersController < ApplicationController
     else
       flash[:info] = "Couldn't send email"
       redirect_to user
+    end
+  end
+
+  def make_admin
+    user = User.find(params[:id])
+    if current_user.admin?
+      user.admin = true
+      if user.save
+        flash[:info] = "This user is now an admin"
+        redirect_to user
+      else
+        flash[:info] = "Couldn't give this user admin privileges"
+        redirect_to user
+      end
+    end
+  end
+
+  def remove_admin
+    user = User.find(params[:id])
+    if current_user.admin?
+      user.admin = false
+      if user.save && user.email != ENV['ADMIN_EMAIL']
+        flash[:info] = "This user is no longer an admin"
+        redirect_to user
+      else
+        flash[:info] = "Couldn't remove admin privileges from this user"
+        redirect_to user
+      end
     end
   end
 

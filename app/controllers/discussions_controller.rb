@@ -1,7 +1,9 @@
 class DiscussionsController < ApplicationController
   before_action :set_discussion, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create]
-  before_action :require_login, except: [:show]
+  before_action :require_login, except: [:show], if: -> { public_viewable? }
+  before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_admin_or_anarchy, only: [:new, :create]
 
   # GET /discussions
   # GET /discussions.json
@@ -97,5 +99,9 @@ class DiscussionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def discussion_params
       params.require(:discussion).permit(:title, :content, :problem_id)
+    end
+
+    def public_viewable?
+      Setting.find(6).state
     end
 end

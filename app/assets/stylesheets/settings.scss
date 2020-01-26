@@ -1,0 +1,12 @@
+// Place all the styles related to the settings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.active-button {
+    background-color: #58c55c !important;
+    border-color: #459e48 !important;
+
+    &:hover {
+    	background-color: #5fd863 !important;
+    }
+}

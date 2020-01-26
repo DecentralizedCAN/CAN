@@ -46,7 +46,10 @@ class CommentsController < ApplicationController
         # Notifications
         if @linked_user
           notification = @linked_user.notification.create(:details => "You were mentioned in a comment", :discussion_id => @comment.discussion.id)
-          notification.send_email
+          
+          if @linked_user.email_notifications
+            notification.send_email
+          end
         end
         # Notifications ends
 

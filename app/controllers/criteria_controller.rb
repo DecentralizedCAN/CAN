@@ -1,4 +1,6 @@
 class CriteriaController < ApplicationController
+  include SolutionsHelper
+
   before_action :set_criterium, only: [:show, :dissent_form, :edit, :update]
   before_action :require_login
 
@@ -62,6 +64,9 @@ class CriteriaController < ApplicationController
 
     if @criterium.save
       @criterium.user << @user
+      
+      # update_all_solution_scores(@criterium.problem.id)
+
       redirect_to issue_path(:problem_id => @criterium.problem.hashid)
     end
   end
@@ -72,6 +77,9 @@ class CriteriaController < ApplicationController
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
     @dissenter.destroy if @dissenter
     @criterium.user << @user unless @criterium.user.include?(@user)
+
+    update_all_solution_scores(@criterium.problem.id)
+
     redirect_to issue_path(:problem_id => @criterium.problem.hashid, :anchor => "criteria")
   end
 
@@ -79,6 +87,9 @@ class CriteriaController < ApplicationController
     @criterium = Criterium.find(params[:criterium_id])
     @user = this_user
     @criterium.user.delete(@user)
+
+    update_all_solution_scores(@criterium.problem.id)
+
     redirect_to issue_path(:problem_id => @criterium.problem.hashid, :anchor => "criteria")
   end
 
@@ -95,10 +106,15 @@ class CriteriaController < ApplicationController
             @criterium.user.each do |user|
               notification = user.notification.create(:details => "which you support has an objection",
                 :criterium_id => @criterium.id)
-              notification.send_email
+              if user.email_notifications
+                notification.send_email
+              end
             end
             # @criterium.send_dissent_email          
           end
+
+        update_all_solution_scores(@criterium.problem.id)
+
         redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
       end
     end
@@ -109,6 +125,9 @@ class CriteriaController < ApplicationController
     @user = this_user
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
     @dissenter.destroy
+
+    update_all_solution_scores(@criterium.problem.id)
+    
     # if params[:page] == "criteria"
       redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
     # else
@@ -141,6 +160,8 @@ class CriteriaController < ApplicationController
     end
 
     if @crialt.save
+      update_all_solution_scores(@criterium.problem.id)
+
       redirect_to show_criterium_path(:criterium_id => @from.hashid)
     end
   end
@@ -166,6 +187,9 @@ class CriteriaController < ApplicationController
       @criterium = Criterium.find(params[:id])
       @problem = @criterium.problem
       @criterium.destroy
+
+      update_all_solution_scores(@criterium.problem.id)
+
       respond_to do |format|
         format.html { redirect_to issue_path(:problem_id => @problem.hashid), notice: 'Criterium was successfully destroyed.' }
         format.json { head :no_content }
@@ -182,5 +206,12 @@ class CriteriaController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def criterium_params
       params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters)
+    end
+
+    def update_all_solution_scores(problem_id)
+      solutions = Problem.find(problem_id).solution.all
+      solutions.each do |solution|
+        solution.update(:score => solution_score(solution.id) * 100)
+      end
     end
 end

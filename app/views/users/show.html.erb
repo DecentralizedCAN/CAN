@@ -10,9 +10,16 @@
       </h1>
       <% if current_user.admin? %> 
         <%= @user.email %> <br>
-        Activation: <%= @user.activated %> <br>
-        <%= link_to 'Resend activation', retry_activation_path(:id => @user.id), method: :post, data: { confirm: 'Send activation email?' } %> <br>
-        <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+
+        <%= link_to 'Make admin', make_admin_path(:id => @user.id), method: :post, data: { confirm: 'Make this user an admin?' } if !@user.admin? %> 
+        <%= link_to 'Remove admin privileges', remove_admin_path(:id => @user.id), method: :post, data: { confirm: 'Remove admin privileges from this user?' } if @user.admin? %>
+        <br><br>
+
+        Account activated: <%= @user.activated %> <br>
+        <%= link_to 'Resend activation', retry_activation_path(:id => @user.id), method: :post, data: { confirm: 'Send activation email?' } %> <br><br>
+
+        <%= link_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
       <% end %> 
     </section>
   </aside>

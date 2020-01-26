@@ -17,8 +17,9 @@ $neutral-blue: #0091ff;
   background-color: white;
   padding: 1em;
   margin-bottom: .5em;
-  box-shadow: 0px 3px 6px 0px #d0d0d0;
-  border: 1px solid #efefef;
+  // box-shadow: 0px 3px 6px 0px #d0d0d0;
+  // border: 1px solid #efefef;
+  border: 1px solid #d8d8d8;
 
 	li {
 		list-style: none;
@@ -211,8 +212,12 @@ $neutral-blue: #0091ff;
 }
 
 .discussion-content {
+  margin-top: 8px;
+  margin-bottom: 8px;
   font-size: 12px;
-  margin-top: 6px;
+  padding: 6px 10px;
+  border: 1px solid #d8d8d8;
+  background: white;
 }
 
 #top-liked-mini {

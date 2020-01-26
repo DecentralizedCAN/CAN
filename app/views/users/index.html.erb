@@ -3,6 +3,10 @@
 <% provide(:title, 'All users') %>
 <h1>All members</h1>
 
+<% if current_user.admin? %> 
+  <%= link_to "Add user", signup_path, :class => "button" %>
+<% end %>
+
 <ul class="users">
   <% @users.each do |user| %>
     <li>

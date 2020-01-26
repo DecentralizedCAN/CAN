@@ -33,6 +33,9 @@ $success-red: #ff7455;
   margin-top: 8px;
   font-size: 12px;
   margin-bottom: 0;
+  padding: 6px 10px;
+  border: 1px solid #d8d8d8;
+  background: white;
 }
 
 #solver{
@@ -50,13 +53,17 @@ $success-red: #ff7455;
   background-color: white;
 }
 
-#issue-sponsorship {
+.right-buttons {
   display: inline-block;
   float: right;
 
-  a {
-    color: #3a3a3a !important;
-  }
+  // a {
+    // color: #3a3a3a !important;
+  // }
+}
+
+#criteria {
+  display: inline-block;
 }
 
 #issue-criteria {
@@ -114,6 +121,11 @@ $success-red: #ff7455;
   display: inline-block;
   border-radius: 2px;
   width: 100%;
+  padding: 4px 10px;
+  border: 1px solid #d8d8d8;
+  margin: 10px 0px;
+  background: white;
+  min-height: 100px;
 }
 
 .criterium {
