@@ -4,13 +4,13 @@
 ENV['ADMIN_EMAIL'] != nil ? admin_email = ENV['ADMIN_EMAIL'] : admin_email = "admin@fakeemail.com"
 ENV['ADMIN_PASSWORD'] != nil ? admin_password = ENV['ADMIN_PASSWORD'] : admin_password = "adminpassword"
 
-User.create!(name:  "admin",
-             email: admin_email,
-             password:              admin_password,
-             password_confirmation: admin_password,
-             admin: true,
-             activated: true,
-             activated_at: Time.zone.now)
+# User.create!(name:  "admin",
+#              email: admin_email,
+#              password:              admin_password,
+#              password_confirmation: admin_password,
+#              admin: true,
+#              activated: true,
+#              activated_at: Time.zone.now)
 
 Setting.create!(title: "Allow any member to post", state: false)
 Setting.create!(title: "Limit multiple posts within a short amount of time", state: false)
