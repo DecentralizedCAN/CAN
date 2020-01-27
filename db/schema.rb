@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200124181558) do
+ActiveRecord::Schema.define(version: 20200127182830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20200124181558) do
     t.bigint "comment_id"
     t.bigint "solution_id"
     t.string "creator"
+    t.text "content_ciphertext"
     t.index ["activity_id"], name: "index_discussions_on_activity_id"
     t.index ["comment_id"], name: "index_discussions_on_comment_id"
     t.index ["post_id"], name: "index_discussions_on_post_id"
@@ -240,6 +241,8 @@ ActiveRecord::Schema.define(version: 20200124181558) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.datetime "last_posted"
+    t.string "email_bidx"
+    t.index ["email_bidx"], name: "index_users_on_email_bidx", unique: true
   end
 
   add_foreign_key "actdissents", "activities"

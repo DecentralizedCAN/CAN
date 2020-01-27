@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :comment, dependent: :destroy
   has_many :notification, dependent: :destroy
 
+  blind_index :email, slow: true
+
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
