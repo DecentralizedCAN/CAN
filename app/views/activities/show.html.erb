@@ -34,7 +34,8 @@
 
     <% if logged_in? && !@activity.roll.last.user.include?(@user) %>
     <% if @roll.user.include?(@user) %>
-        <%= link_to "Uncommit", unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" %>
+        <%= link_to "Uncommit", unparticipate_path(:roll_id => @roll.id), :method => "post",
+                                  data: { confirm: "Are you sure? Others may be counting on you." }, :class => "button" %>
     <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
         <%= link_to commit_path(:roll_id => @roll.id), :class => "button" do %>
           <!-- <div class="commit-button"> -->

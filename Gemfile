@@ -16,6 +16,7 @@ gem 'jbuilder',     '2.7.0'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem "hashid-rails", "~> 1.0"
 gem 'pg', '0.18.4'
+# gem 'lockbox', '~> 0.1.1'
 # gem 'dotenv-rails', '2.7.5'
 
 group :development, :test do

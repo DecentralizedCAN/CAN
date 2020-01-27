@@ -223,9 +223,7 @@ class ActivitiesController < ApplicationController
         @roll.user.each do |user|
           notification = user.notification.create(:details => "has reached minimum participation and will take place",
             :activity_id => @activity.id)
-          if user.email_notifications
-            notification.send_email
-          end
+          notification.send_email
         end
         # @activity.send_activated_email
       end  
@@ -242,21 +240,20 @@ class ActivitiesController < ApplicationController
     @roll = Roll.find(params[:roll_id])
     if @roll.user.include?(current_user)
       @roll.user.delete(current_user)
-      redirect_to action_path(:activity_id => @roll.activity.id)
 
       # Notifications
       if @roll.user.count < @roll.minimum
+
         @roll.user.each do |user|
           notification = user.notification.create(:details => "no longer reaches minimum participation and cannot take place",
-            :activity_id => @activity.id)
-          if user.email_notifications
-            notification.send_email
-          end
+            :activity_id => @roll.activity.id)
+          notification.send_email
         end
         # @activity.send_activated_email
       end  
       # End notifications
     end
+    redirect_to action_path(:activity_id => @roll.activity.id)
   end
 
   def complete

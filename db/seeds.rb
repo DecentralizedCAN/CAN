@@ -13,7 +13,7 @@ User.create!(name:  "admin",
              activated_at: Time.zone.now)
 
 Setting.create!(title: "Allow any member to post", state: false)
-Setting.create!(title: "Limit multiple posts within a short amount of time", state: false)
+Setting.create!(title: "Limit rapid posting", state: false)
 Setting.create!(title: "Allow users to sign up on their own", state: false)
 Setting.create!(title: "Include a discussion section for brainstorms", state: false)
 Setting.create!(title: "Include a discussion section for actions", state: false)
