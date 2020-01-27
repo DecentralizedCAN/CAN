@@ -30,7 +30,10 @@
 
   <% provide(:title, 'Edit user') %>
   <% provide(:button_text, 'Save changes') %>
-  <h2>Update your profile</h2>
+  
+  <br><br>
+  <h3>Update your profile</h3>
+  <br>
   <div class="row">
     <div class="col-md-6 col-md-offset-0">
       <%= render 'form', user: @user %>
@@ -41,15 +44,17 @@
     </div>
   </div>
 
-  <div>
-    <h2>Preferences</h2>
-    <%= form_with(model: @user, local: true) do |form| %>
-      <%= form.check_box :email_notifications, id: :email_notifications %> receive updates by email
-      <div>
-        <%= form.submit "Save preferences" %>      
-      </div>
-    <% end %>
-  </div>
+  <% if Setting.find(8).state %>
+    <div>
+      <h2>Preferences</h2>
+      <%= form_with(model: @user, local: true) do |form| %>
+        <%= form.check_box :email_notifications, id: :email_notifications %> receive updates by email
+        <div>
+          <%= form.submit "Save preferences", :class => "button" %>      
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
 
 </div>

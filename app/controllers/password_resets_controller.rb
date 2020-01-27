@@ -8,7 +8,10 @@ class PasswordResetsController < ApplicationController
 
   def create
     @user = User.find_by(email: params[:password_reset][:email].downcase)
-    if @user
+    if Setting.find(8).state == false
+      flash[:info] = "You cannot reset your password because emails have been turned off by the admin."
+      redirect_to root_url
+    elsif @user
       @user.create_reset_digest
       @user.send_password_reset_email
       flash[:info] = "Email sent with password reset instructions"

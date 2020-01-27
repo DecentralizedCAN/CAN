@@ -13,21 +13,23 @@
 
   <div class="field">
     <%= form.label :username %>
-    <%= form.text_field :name, id: :user_name %>
+    <%= form.text_field :name, id: :user_name, :class => "form-mini" %>
   </div>
 
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
+    <label>
+      Email <%= "(optional)" if Setting.find(7).state == false %>
+    </label>
+    <%= form.text_field :email, id: :user_email, :class => "form-mini" %>
   </div>
 
   <%= form.label :password %>
-  <%= form.password_field :password %>
+  <%= form.password_field :password, :class => "form-mini" %>
 
   <%= form.label :password_confirmation, "Confirm password" %>
-  <%= form.password_field :password_confirmation %>
+  <%= form.password_field :password_confirmation, :class => "form-mini" %>
 
 
   <br><br>
-  <%= form.submit "Submit" %>
+  <%= form.submit "Submit", :class => "button" %>
 <% end %>

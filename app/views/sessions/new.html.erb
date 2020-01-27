@@ -8,21 +8,29 @@
     <%= form_for(:session, url: login_path) do |f| %>
 
       <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
+      <%= f.email_field :email, class: 'form-mini' %>
+
+      <br><br>
 
       <%= f.label :password %>
-      <%= link_to "(forgot password)", new_password_reset_path %>
-      <%= f.password_field :password, class: 'form-control' %>
+      <%= f.password_field :password, class: 'form-mini' %>
 
-      <br>
+      <br><br>
+
       <%= f.label :remember_me do %>
         <%= f.check_box :remember_me %>
         <span>Remember me on this computer</span>
       <% end %>
-      
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+
+      <br>
+
+      <%= f.submit "Log in", class: "button" %>
     <% end %>
 
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+    <br>
+
+    <p>Can't log in? <%= link_to "Reset password", new_password_reset_path %></p>
+
+    <p>New user? <%= link_to "Sign up", signup_path %></p>
   </div>
 </div>

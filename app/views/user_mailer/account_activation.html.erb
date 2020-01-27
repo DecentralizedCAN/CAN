@@ -5,4 +5,4 @@ Welcome to the Decentralized Collective Action Network! Click on the link below 
 </p>
 
 <%= link_to "Activate", edit_account_activation_url(@user.activation_token,
-                                                    email: @user.email) %>
+                                                    email: @user.email, :protocol => "https") %>

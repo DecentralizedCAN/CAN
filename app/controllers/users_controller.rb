@@ -49,14 +49,24 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if current_user && current_user.admin?
-      @user.activated = true
       if @user.save
+        @user.activate
         flash[:info] = "User created."
         redirect_to root_url
+      else
+        render 'new'
+      end
+    elsif Setting.find(8).state == false
+      if @user.save
+        @user.activate
+        log_in @user
+        redirect_to root_url
+      else
+        render 'new'
       end
     elsif @user.save
       @user.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
+      flash[:info] = "Please check your email (and spam folder) to activate your account."
       redirect_to root_url
     else
       render 'new'

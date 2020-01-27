@@ -18,6 +18,8 @@ Setting.create!(title: "Allow users to sign up on their own", state: false)
 Setting.create!(title: "Include a discussion section for brainstorms", state: false)
 Setting.create!(title: "Include a discussion section for actions", state: false)
 Setting.create!(title: "Make content viewable without an account", state: false)
+Setting.create!(title: "Require new members to provide an email address", state: false)
+Setting.create!(title: "Allow users to receive emails (reduced security)", state: false)
 
 10.times do |n|
   name  = "example-#{n+1}" #Faker::Name.name
