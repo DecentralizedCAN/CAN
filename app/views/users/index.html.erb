@@ -1,10 +1,10 @@
 <div class="backdrop">
 
-<% provide(:title, 'All users') %>
+<% provide(:title, 'All Members') %>
 <h1>All members</h1>
 
 <% if current_user.admin? %> 
-  <%= link_to "Add user", signup_path, :class => "button" %>
+  <%= link_to "Add Member", signup_path, :class => "button" %>
 <% end %>
 
 <ul class="users">
@@ -14,7 +14,7 @@
       <%= link_to user.name, user %>
         <% if current_user.admin? && !current_user?(user) %> 
         	| <%= link_to "delete", user, method: :delete,
-                                  data: { confirm: "Delete user?" } %>
+                                  data: { confirm: "Delete member?" } %>
   <% end %>
     </li>
   <% end %>

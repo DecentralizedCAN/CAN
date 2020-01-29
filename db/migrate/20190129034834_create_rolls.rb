@@ -1,10 +1,10 @@
 class CreateRolls < ActiveRecord::Migration[5.1]
   def change
     create_table :rolls do |t|
-      t.string :title
-      t.text :description
-      t.integer :minimum
-      t.integer :maximum
+      t.text :title_ciphertext
+      t.text :description_ciphertext
+      t.text :minimum_ciphertext
+      t.text :maximum_ciphertext
       t.belongs_to :activity, foreign_key: true
       t.belongs_to :solution, foreign_key: true
 

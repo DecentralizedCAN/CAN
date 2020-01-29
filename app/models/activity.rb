@@ -14,6 +14,15 @@ class Activity < ApplicationRecord
   # validates :expiration, presence: true
   # validates :deadline, presence: true
 
+  encrypts :title
+  encrypts :description
+  encrypts :activation
+  encrypts :creator
+  encrypts :deadline, type: :integer
+  blind_index :deadline
+  encrypts :expiration, type: :integer
+  blind_index :expiration
+
   # Sends new activity email.
   def send_activity_email
     ActivityMailer.new_activity(self).deliver_now

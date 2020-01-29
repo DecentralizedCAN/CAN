@@ -10,6 +10,8 @@ class Discussion < ApplicationRecord
   
   validates :title, presence: true, length: { minimum: 6, maximum: 2000 }
 
-  encrypts :content, migrating: true
+  encrypts :title
+  encrypts :content
+  encrypts :creator
 
 end

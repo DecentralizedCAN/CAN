@@ -12,7 +12,13 @@ class User < ApplicationRecord
   has_many :comment, dependent: :destroy
   has_many :notification, dependent: :destroy
 
+  encrypts :name
+  blind_index :name, slow: true
+  encrypts :email
   blind_index :email, slow: true
+  encrypts :admin
+  encrypts :superadmin
+  encrypts :last_posted, type: :integer
 
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
@@ -85,6 +91,14 @@ class User < ApplicationRecord
   # Forgets a user.
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  def admin?
+    self.admin == 'true'
+  end
+
+  def superadmin?
+    self.superadmin == 'true'
   end
 
   private

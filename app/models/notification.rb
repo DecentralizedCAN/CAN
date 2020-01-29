@@ -5,6 +5,8 @@ class Notification < ApplicationRecord
   belongs_to :problem, optional: true
   belongs_to :discussion, optional: true
 
+  encrypts :details
+
   def send_email
     NotificationMailer.send_email(self).deliver_now
   end

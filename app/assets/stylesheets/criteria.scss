@@ -44,8 +44,10 @@ $label-blue: #81c4ff;
 .criterion-outer {
 	.criterion-action-box {
 		color: #3a3a3a;
+    color: #525252;
 		* {
-			color: #3a3a3a;
+			// color: #3a3a3a;
+      color: #525252;
 		}
 	}
 }

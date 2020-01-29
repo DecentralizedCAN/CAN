@@ -48,6 +48,9 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.admin = false
+    @user.superadmin = false
+    
     if current_user && current_user.admin?
       if @user.save
         @user.activate
@@ -95,8 +98,8 @@ class UsersController < ApplicationController
 
   def make_admin
     user = User.find(params[:id])
-    if current_user.admin?
-      user.admin = true
+    if current_user.superadmin?
+      user.admin = 'true'
       if user.save
         flash[:info] = "This user is now an admin"
         redirect_to user
@@ -109,8 +112,8 @@ class UsersController < ApplicationController
 
   def remove_admin
     user = User.find(params[:id])
-    if current_user.admin?
-      user.admin = false
+    if current_user.superadmin? && current_user != user
+      user.admin = 'false'
       if user.save && user.email != ENV['ADMIN_EMAIL']
         flash[:info] = "This user is no longer an admin"
         redirect_to user
@@ -145,11 +148,14 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    if current_user.admin?
-      User.find(params[:id]).destroy
+    user = User.find(params[:id])
+    if current_user.admin? && current_user != user && !user.superadmin?
+      user.destroy
       flash[:success] = "User deleted"
-      redirect_to users_url
+    else
+      flash[:danger] = "User not deleted"
     end
+    redirect_to users_url
   end
 
   private

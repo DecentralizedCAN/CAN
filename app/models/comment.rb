@@ -4,4 +4,6 @@ class Comment < ApplicationRecord
 	has_many :upvotes, dependent: :destroy
 
   validates :content, presence: true, length: { minimum: 1, maximum: 1000 }
+
+  encrypts :content
 end

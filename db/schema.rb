@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200127182830) do
+ActiveRecord::Schema.define(version: 20200124181558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "actdissents", force: :cascade do |t|
-    t.string "title"
+    t.text "title_ciphertext"
     t.bigint "activity_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -26,16 +26,19 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.text "activation"
-    t.text "participants"
-    t.integer "deadline"
-    t.integer "expiration"
+    t.text "title_ciphertext"
+    t.text "description_ciphertext"
+    t.text "activation_ciphertext"
+    t.string "deadline_ciphertext"
+    t.string "deadline_bidx"
+    t.string "expiration_ciphertext"
+    t.string "expiration_bidx"
     t.bigint "solution_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "creator"
+    t.text "creator_ciphertext"
+    t.index ["deadline_bidx"], name: "index_activities_on_deadline_bidx"
+    t.index ["expiration_bidx"], name: "index_activities_on_expiration_bidx"
     t.index ["solution_id"], name: "index_activities_on_solution_id"
   end
 
@@ -47,7 +50,7 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text "content"
+    t.text "content_ciphertext"
     t.bigint "discussion_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -57,7 +60,7 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "crialts", force: :cascade do |t|
-    t.string "alternative"
+    t.text "alternative_ciphertext"
     t.bigint "criterium_id"
     t.integer "transferred_user_count"
     t.datetime "created_at", null: false
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "cridissents", force: :cascade do |t|
-    t.string "title"
+    t.text "title_ciphertext"
     t.bigint "criterium_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -76,12 +79,12 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "criteria", force: :cascade do |t|
-    t.string "title"
-    t.text "alternatives"
+    t.text "title_ciphertext"
+    t.text "alternatives_ciphertext"
     t.bigint "problem_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "creator"
+    t.text "creator_ciphertext"
     t.index ["problem_id"], name: "index_criteria_on_problem_id"
   end
 
@@ -93,8 +96,8 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "discussions", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
+    t.text "title_ciphertext"
+    t.text "content_ciphertext"
     t.bigint "post_id"
     t.bigint "problem_id"
     t.bigint "activity_id"
@@ -102,8 +105,7 @@ ActiveRecord::Schema.define(version: 20200127182830) do
     t.datetime "updated_at", null: false
     t.bigint "comment_id"
     t.bigint "solution_id"
-    t.string "creator"
-    t.text "content_ciphertext"
+    t.text "creator_ciphertext"
     t.index ["activity_id"], name: "index_discussions_on_activity_id"
     t.index ["comment_id"], name: "index_discussions_on_comment_id"
     t.index ["post_id"], name: "index_discussions_on_post_id"
@@ -112,7 +114,7 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.text "details"
+    t.text "details_ciphertext"
     t.bigint "user_id"
     t.bigint "criterium_id"
     t.bigint "activity_id"
@@ -152,13 +154,13 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "problems", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.integer "suggestion_min"
+    t.text "title_ciphertext"
+    t.text "description_ciphertext"
+    t.text "suggestion_min_ciphertext"
     t.integer "updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "creator"
+    t.text "creator_ciphertext"
   end
 
   create_table "problems_users", id: false, force: :cascade do |t|
@@ -169,10 +171,10 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "rolls", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.integer "minimum"
-    t.integer "maximum"
+    t.text "title_ciphertext"
+    t.text "description_ciphertext"
+    t.text "minimum_ciphertext"
+    t.text "maximum_ciphertext"
     t.bigint "activity_id"
     t.bigint "solution_id"
     t.datetime "created_at", null: false
@@ -196,14 +198,14 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "solutions", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
+    t.text "title_ciphertext"
+    t.text "description_ciphertext"
     t.integer "score"
     t.bigint "problem_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "discussion_id"
-    t.string "creator"
+    t.text "creator_ciphertext"
     t.index ["discussion_id"], name: "index_solutions_on_discussion_id"
     t.index ["problem_id"], name: "index_solutions_on_problem_id"
   end
@@ -227,22 +229,25 @@ ActiveRecord::Schema.define(version: 20200127182830) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
+    t.string "name_ciphertext"
+    t.string "name_bidx"
+    t.string "email_ciphertext"
+    t.string "email_bidx"
     t.boolean "email_notifications", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
-    t.boolean "admin", default: false
+    t.text "admin_ciphertext"
+    t.text "superadmin_ciphertext"
     t.string "activation_digest"
     t.boolean "activated", default: false
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
-    t.datetime "last_posted"
-    t.string "email_bidx"
+    t.text "last_posted_ciphertext"
     t.index ["email_bidx"], name: "index_users_on_email_bidx", unique: true
+    t.index ["name_bidx"], name: "index_users_on_name_bidx", unique: true
   end
 
   add_foreign_key "actdissents", "activities"

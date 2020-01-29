@@ -9,4 +9,9 @@ class Criterium < ApplicationRecord
   has_many :notification, dependent: :destroy
   
   validates :title, presence: true, length: { minimum: 1, maximum: 300 }
+
+  encrypts :title
+  encrypts :alternatives
+  encrypts :creator
+
 end
