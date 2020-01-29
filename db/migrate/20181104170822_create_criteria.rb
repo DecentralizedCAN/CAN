@@ -1,8 +1,8 @@
 class CreateCriteria < ActiveRecord::Migration[5.1]
   def change
     create_table :criteria do |t|
-      t.string :title
-      t.text :alternatives
+      t.text :title_ciphertext
+      t.text :alternatives_ciphertext
       t.belongs_to :problem, foreign_key: true
       t.timestamps
     end

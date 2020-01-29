@@ -11,6 +11,10 @@ class Solution < ApplicationRecord
   validates :title, presence: true, length: { minimum: 6, maximum: 2000 }
   validates :description, presence: true, length: { minimum: 6, maximum: 2000 }
 
+  encrypts :title
+  encrypts :description
+  encrypts :creator
+
   # Sends new activity email.
   def send_solution_email
     SolutionMailer.new_solution(self).deliver_now

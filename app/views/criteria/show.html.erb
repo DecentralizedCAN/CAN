@@ -9,14 +9,12 @@
   <% end %>
 </div>
 
-
-<div class="criterion-outer">
-
 <h1 class="criterion-title">
   <%= @criterium.title %>
 </h1>
 <span>- Criterion for <strong><%= @criterium.problem.title %></strong></span>
 
+<div class="criterion-outer">
 
 <% if !@criterium.cridissent.find_by(user: @user) %>
   <%if @criterium.user.include?(@user)%>

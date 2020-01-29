@@ -12,6 +12,11 @@ class Problem < ApplicationRecord
   validates :description, presence: true, length: { minimum: 6, maximum: 2000 }
   # validates :suggestion_min, presence: true
 
+  encrypts :title
+  encrypts :description
+  encrypts :suggestion_min, type: :integer
+  encrypts :creator
+
   # Sends new problem email.
   def send_problem_email
     ProblemMailer.new_problem(self).deliver_now

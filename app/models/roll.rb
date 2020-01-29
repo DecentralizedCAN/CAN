@@ -5,4 +5,10 @@ class Roll < ApplicationRecord
 
   # validates :minimum, presence: true
   # validates :maximum, presence: true
+
+  encrypts :title
+  encrypts :description
+  encrypts :minimum, type: :integer
+  encrypts :maximum, type: :integer
+
 end

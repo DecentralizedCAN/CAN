@@ -16,8 +16,9 @@ gem 'jbuilder',     '2.7.0'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem "hashid-rails", "~> 1.0"
 gem 'pg', '0.18.4'
-# gem 'lockbox', '~> 0.1.1'
-# gem 'dotenv-rails', '2.7.5'
+gem 'lockbox', '~> 0.3.1'
+gem 'dotenv-rails', '2.7.5'
+gem 'blind_index', '~> 1.0.2'
 
 group :development, :test do
   # gem 'sqlite3', '1.3.13'

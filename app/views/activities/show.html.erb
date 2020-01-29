@@ -17,34 +17,37 @@
 
     <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
 
-    <div>
-      <% if @activity.solution && @activity.solution.problem %>
-        View brainstorm: <%= link_to issue_path(@activity.solution.problem.hashid) do %>
-          <%= @activity.solution.problem.title %>
-        <% end %>
-
-        <br>
-        View proposal: <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid) do %>
-          <%= @activity.solution.title %>
-        <% end %>
-      <% end %>
-
-    </div>
-    
 
     <% if logged_in? && !@activity.roll.last.user.include?(@user) %>
-    <% if @roll.user.include?(@user) %>
-        <%= link_to "Uncommit", unparticipate_path(:roll_id => @roll.id), :method => "post",
-                                  data: { confirm: "Are you sure? Others may be counting on you." }, :class => "button" %>
-    <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
-        <%= link_to commit_path(:roll_id => @roll.id), :class => "button" do %>
-          <!-- <div class="commit-button"> -->
-            <i class="fas fa-user-plus"></i> Participate
-          <!-- </div> -->
-        <% end %>
+      <% if @roll.user.include?(@user) %>
+          <%= link_to "Uncommit", unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" %>
+      <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
+          <%= link_to commit_path(:roll_id => @roll.id), :class => "button" do %>
+            <!-- <div class="commit-button"> -->
+              <i class="fas fa-user-plus"></i> Participate
+            <!-- </div> -->
+          <% end %>
+      <% end %>
     <% end %>
 
+    &nbsp;
+
+    <% if @activity.solution && @activity.solution.problem %>
+
+      <%= link_to issue_path(@activity.solution.problem.hashid), :class => "button" do %>
+        <i class="fas fa-handshake"></i>
+
+        View original brainstorm
+      <% end %>
+
+      &nbsp;
+
+      <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid), :class => "button" do %>
+        <i class="fas fa-comment-alt"></i> 
+        View original proposal
+      <% end %>
     <% end %>
+
 
     <% if logged_in? %>
       <% if @activity.roll.first.user.include?(@user) %>
@@ -102,6 +105,6 @@
   <% if logged_in? && current_user.admin %>
     <br><br>
     Created by <%= @activity.creator %> –
-    <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>
   <% end %>
 </div>

@@ -1,9 +1,9 @@
 class CreateProblems < ActiveRecord::Migration[5.1]
   def change
     create_table :problems do |t|
-      t.string :title
-      t.text :description
-      t.integer :suggestion_min
+      t.text :title_ciphertext
+      t.text :description_ciphertext
+      t.text :suggestion_min_ciphertext
       t.integer :updated
 
       t.timestamps

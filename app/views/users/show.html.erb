@@ -8,25 +8,36 @@
         <!-- <%= gravatar_for @user %> -->
         <%= @user.name %>
       </h1>
-      <% if current_user.admin? %> 
+      <% if current_user.admin? %>
         <%= @user.email %> <br>
 
+        <br>
 
-        <%= link_to 'Make admin', make_admin_path(:id => @user.id), method: :post, data: { confirm: 'Make this user an admin?' } if !@user.admin? %> 
-        <%= link_to 'Remove admin privileges', remove_admin_path(:id => @user.id), method: :post, data: { confirm: 'Remove admin privileges from this user?' } if @user.admin? %>
-        <br><br>
+        <% if @user != current_user %>
+          
+          Account activated: <%= @user.activated %> <br>
+          <%= link_to 'Resend activation', retry_activation_path(:id => @user.id), method: :post, :class => 'button', data: { confirm: 'Send activation email?' } if !@user.activated%> <br>
 
-        Account activated: <%= @user.activated %> <br>
-        <%= link_to 'Resend activation', retry_activation_path(:id => @user.id), method: :post, data: { confirm: 'Send activation email?' } %> <br><br>
+            <% if current_user.superadmin? %> 
+              
+              <%= link_to 'Make admin', make_admin_path(:id => @user.id), method: :post, :class => 'button', data: { confirm: 'Make this user an admin?' } if !@user.admin? %> 
+              <%= link_to 'Remove admin privileges', remove_admin_path(:id => @user.id), method: :post, :class => 'button', data: { confirm: 'Remove admin privileges from this user?' } if @user.admin? %>
+      
+              <br><br>
+            <% end %> 
 
-        <%= link_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'button' %>
+
+          <br><br>
+
+        <% end %>
       <% end %> 
     </section>
   </aside>
 </div>
 
 <% if current_user?(@user) %>
-  <%= link_to "Log out", logout_path, method: :post %>
+  <%= link_to "Log out", logout_path, method: :post, :class => 'button' %>
 
   <% provide(:title, 'Edit user') %>
   <% provide(:button_text, 'Save changes') %>
