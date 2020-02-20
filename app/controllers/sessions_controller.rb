@@ -7,6 +7,10 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
 
     if !user
+      user = User.find_by(email: params[:session][:email])      
+    end
+
+    if !user
       user = User.find_by(name: params[:session][:email])      
     end
 
