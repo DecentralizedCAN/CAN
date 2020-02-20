@@ -3,12 +3,22 @@ $label-blue: #81c4ff;
 
 // MAIN FEED
 
-#main-feed > ol {
+#main-feed ol {
 	padding: 0px;
 	margin: auto;
 
   a {
     font-style: normal;
+
+    .issue-title {
+      display: inline-block;
+    }
+
+    &:hover {
+      .issue-title {
+        text-decoration: underline;
+      }
+    }
   }
 }
 

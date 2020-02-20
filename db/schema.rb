@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20200124181558) do
   end
 
   create_table "crialts", force: :cascade do |t|
-    t.text "alternative_ciphertext"
+    t.text "alternative"
     t.bigint "criterium_id"
     t.integer "transferred_user_count"
     t.datetime "created_at", null: false

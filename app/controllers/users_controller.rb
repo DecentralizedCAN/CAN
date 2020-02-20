@@ -48,8 +48,8 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    @user.admin = false
-    @user.superadmin = false
+    @user.admin = String(rand(382132))
+    @user.superadmin = String(rand(382130))
     
     if current_user && current_user.admin?
       if @user.save
@@ -113,7 +113,7 @@ class UsersController < ApplicationController
   def remove_admin
     user = User.find(params[:id])
     if current_user.superadmin? && current_user != user
-      user.admin = 'false'
+      user.admin = String(rand(382132))
       if user.save && user.email != ENV['ADMIN_EMAIL']
         flash[:info] = "This user is no longer an admin"
         redirect_to user

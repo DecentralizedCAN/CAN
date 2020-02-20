@@ -15,7 +15,9 @@ $label-blue: #81c4ff;
   height: 300px;
   // min-width: 300px;
   // max-width: 400px;
-  width: 24em;
+  // width: 24em;
+  width: 48%;
+  min-width: 24em;
   display: inline-block;
   vertical-align: text-top;
   border: 1px solid black;
@@ -35,10 +37,27 @@ $label-blue: #81c4ff;
 		padding: 0;
 		
 		li {
-      max-width: 280px;
-			margin: 2px 0;
+      // max-width: 280px;
+			margin: 4px 0;
 		}
 	}
+
+  .dropright .button {
+    border: 1px solid #505050;
+    padding: 2px 5px;
+    border-radius: 2px;
+    background-color: #8e8e8e;
+    color: whitesmoke;
+    outline: none;
+
+    i {
+      color: whitesmoke;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 4px;
+  }
 }
 
 .criterion-outer {
@@ -101,6 +120,7 @@ $label-blue: #81c4ff;
   padding: 2px;
   vertical-align: top;
   display: inline-block;
+  width: 100%;
   textarea {
     height: 40px;
     margin-bottom: 4px;

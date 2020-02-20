@@ -66,7 +66,7 @@ class CriteriaController < ApplicationController
       @criterium.user << @user
       
       # update_all_solution_scores(@criterium.problem.id)
-
+      flash[:success] = "You created a criterion. Thanks for your contribution!"
       redirect_to issue_path(:problem_id => @criterium.problem.hashid)
     end
   end
@@ -80,7 +80,7 @@ class CriteriaController < ApplicationController
 
     update_all_solution_scores(@criterium.problem.id)
 
-    redirect_to issue_path(:problem_id => @criterium.problem.hashid, :anchor => "criteria")
+    redirect_back fallback_location: root_path
   end
 
   def unsponsor
@@ -90,7 +90,7 @@ class CriteriaController < ApplicationController
 
     update_all_solution_scores(@criterium.problem.id)
 
-    redirect_to issue_path(:problem_id => @criterium.problem.hashid, :anchor => "criteria")
+    redirect_back fallback_location: root_path
   end
 
   def dissent
@@ -115,6 +115,7 @@ class CriteriaController < ApplicationController
 
         update_all_solution_scores(@criterium.problem.id)
 
+        flash[:success] = "You made an objection. Thanks for your input!"
         redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
       end
     end
@@ -128,11 +129,7 @@ class CriteriaController < ApplicationController
 
     update_all_solution_scores(@criterium.problem.id)
     
-    # if params[:page] == "criteria"
-      redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
-    # else
-      # redirect_to issue_path(:problem_id => @criterium.problem_id)
-    # end
+    redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
   end
 
   def alt
@@ -141,6 +138,7 @@ class CriteriaController < ApplicationController
     if Crialt.where(criterium_id: params[:from]).where(alternative: params[:to]).count > 0
       redirect_to show_criterium_path(:criterium_id => params[:from])
     elsif @alternative.save
+      flash[:success] = "Thanks for your suggestion!"
       redirect_to show_criterium_path(:criterium_id => params[:from])
     end
   end
@@ -161,7 +159,8 @@ class CriteriaController < ApplicationController
 
     if @crialt.save
       update_all_solution_scores(@criterium.problem.id)
-
+      
+      flash[:success] = "You accepted a alternative criteria. Thanks for working towards convergence!"
       redirect_to show_criterium_path(:criterium_id => @from.hashid)
     end
   end
