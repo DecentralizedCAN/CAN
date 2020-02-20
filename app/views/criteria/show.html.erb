@@ -78,9 +78,9 @@
 				<li>
 					<% if @criterium.user.include?(@user) %>
 						<%= link_to "Accept alternative", accept_alt_path(:crialt => suggestion.id), :class => "transfer-link", :method => "post"%>
-		  				<%= Criterium.find(suggestion.alternative).title %>
-						(<%= suggestion.transferred_user_count %> <i class="fas fa-sync-alt"></i>) 
 					<% end %>
+	  				<%= Criterium.find(suggestion.alternative).title %>
+					(<%= suggestion.transferred_user_count %> <i class="fas fa-sync-alt"></i>) 
 				</li>
 		<%end%>
 	</ul>

@@ -153,12 +153,12 @@ class CriteriaController < ApplicationController
       @from.user.delete(@user)
       if !@to.user.include?(@user)
         @to.user << @user 
+        @crialt.transferred_user_count += 1
       end
-      @crialt.transferred_user_count += 1
     end
 
     if @crialt.save
-      update_all_solution_scores(@criterium.problem.id)
+      update_all_solution_scores(@crialt.criterium.problem.id)
       
       flash[:success] = "You accepted a alternative criteria. Thanks for working towards convergence!"
       redirect_to show_criterium_path(:criterium_id => @from.hashid)
