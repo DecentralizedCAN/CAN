@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200124181558) do
+ActiveRecord::Schema.define(version: 20200226050435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,39 @@ ActiveRecord::Schema.define(version: 20200124181558) do
     t.index ["post_id"], name: "index_discussions_on_post_id"
     t.index ["problem_id"], name: "index_discussions_on_problem_id"
     t.index ["solution_id"], name: "index_discussions_on_solution_id"
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.text "title_ciphertext"
+    t.bigint "activities_id"
+    t.bigint "problems_id"
+    t.bigint "discussions_id"
+    t.bigint "links_id"
+    t.index ["activities_id"], name: "index_goals_on_activities_id"
+    t.index ["discussions_id"], name: "index_goals_on_discussions_id"
+    t.index ["links_id"], name: "index_goals_on_links_id"
+    t.index ["problems_id"], name: "index_goals_on_problems_id"
+  end
+
+  create_table "goals_users", id: false, force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["goal_id", "user_id"], name: "index_goals_users_on_goal_id_and_user_id"
+    t.index ["user_id", "goal_id"], name: "index_goals_users_on_user_id_and_goal_id"
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.bigint "parent_id"
+    t.bigint "child_id"
+    t.index ["child_id"], name: "index_links_on_child_id"
+    t.index ["parent_id"], name: "index_links_on_parent_id"
+  end
+
+  create_table "links_users", id: false, force: :cascade do |t|
+    t.bigint "link_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["link_id", "user_id"], name: "index_links_users_on_link_id_and_user_id"
+    t.index ["user_id", "link_id"], name: "index_links_users_on_user_id_and_link_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -263,6 +296,12 @@ ActiveRecord::Schema.define(version: 20200124181558) do
   add_foreign_key "discussions", "posts"
   add_foreign_key "discussions", "problems"
   add_foreign_key "discussions", "solutions"
+  add_foreign_key "goals", "activities", column: "activities_id"
+  add_foreign_key "goals", "discussions", column: "discussions_id"
+  add_foreign_key "goals", "links", column: "links_id"
+  add_foreign_key "goals", "problems", column: "problems_id"
+  add_foreign_key "links", "goals", column: "child_id"
+  add_foreign_key "links", "goals", column: "parent_id"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "criteria"
   add_foreign_key "notifications", "discussions"

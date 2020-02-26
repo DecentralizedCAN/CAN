@@ -55,6 +55,9 @@ Rails.application.routes.draw do
   post '/criteria/alt', to: 'criteria#alt', :as => :alt_criterium
   post '/criteria/accept_alt', to: 'criteria#accept_alt', :as => :accept_alt
 
+  get '/goals', to: 'goals#index', :as => :goals
+  get '/goal/:goal_id', to: 'goals#show', :as => :goal
+
   # TEMPORARY
   # resources :posts do
   #   resources :upvotes

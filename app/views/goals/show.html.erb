@@ -1,0 +1,41 @@
+<h2 class="goal-list-title">This helps achieve</h2>
+
+<div class="btn-group dropright">
+  <button type="button" class="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<i class="fas fa-plus"></i>
+  </button>
+  <div class="dropdown-menu">
+	<ul>
+		<% @my_goals.each do |goal| %>
+			<%= link_to goal.title, goal_path(goal) %><br>
+		<% end %>
+	</ul>
+  </div>
+</div>
+<br>
+
+<% @parents.each do |link| %>
+	<%= link_to link.parent.title, goal_path(link.parent) %><br>
+<% end %>
+
+<h1><%= @goal.title %></h1>
+
+<h2 class="goal-list-title">How to achieve this</h2>
+
+<div class="btn-group dropright">
+  <button type="button" class="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<i class="fas fa-plus"></i>
+  </button>
+  <div class="dropdown-menu">
+	<ul>
+		<% @my_goals.each do |goal| %>
+			<%= link_to goal.title, goal_path(goal) %><br>
+		<% end %>
+	</ul>
+  </div>
+</div>
+<br>
+
+<% @children.each do |link| %>
+	<%= link_to link.child.title, goal_path(link.child) %><br>
+<% end %>
