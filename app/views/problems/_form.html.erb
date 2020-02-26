@@ -24,6 +24,9 @@
         <p>This is the number of people who must suggest a solution before it is posted as an action to the main feed.</p>
         <%= form.number_field :suggestion_min, value: 1, id: :suggestion_min %>
       </div>
+      
+      <%= link_to "(See how this works)", documentation_path(:anchor => "proposal_activation") %>
+
     <% end %>
 
   </div>

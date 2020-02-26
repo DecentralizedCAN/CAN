@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  ENV['GROUP_NAME'] = 'Local CAN'
+  ENV['GROUP_NAME'] = 'DemoCAN'
   ENV['LOCKBOX_MASTER_KEY'] = '0000000000000000000000000000000000000000000000000000000000000000'
   ENV['BLIND_INDEX_MASTER_KEY']='ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 

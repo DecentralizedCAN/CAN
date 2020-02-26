@@ -57,6 +57,11 @@ $label-blue: #81c4ff;
 
   .dropdown-menu {
     padding: 4px;
+    min-width: 252px;
+
+    li {
+      margin-bottom: 8px !important;
+    }
   }
 }
 

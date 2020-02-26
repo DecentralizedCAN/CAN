@@ -89,7 +89,7 @@
 
 </div>
 
-<% if current_user.admin %>
+<% if current_user.admin? %>
   Added by <%= @criterium.creator %>
   – <%= link_to 'Remove', @criterium, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>

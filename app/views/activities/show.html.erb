@@ -102,7 +102,7 @@
     <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>  
   </div>
 
-  <% if logged_in? && current_user.admin %>
+  <% if logged_in? && current_user.admin? %>
     <br><br>
     Created by <%= @activity.creator %> –
     <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>

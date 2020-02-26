@@ -136,7 +136,6 @@ class SolutionsController < ApplicationController
     if @poll.count > 0
       # @poll.update(:answer => score)
       if @poll.update(:answer => @answer)
-        puts "==============eys"
         puts @poll.to_json
       end
     else
@@ -146,7 +145,7 @@ class SolutionsController < ApplicationController
       @poll.save
     end
 
-    redirect_to solution_path(:solution_id => @solution.id, :problem_id => @solution.problem_id, :anchor => "proposal-polling")
+    redirect_to solution_path(:solution_id => @solution.id, :problem_id => @solution.problem_id, :anchor => @criterium.hash)
   end
 
 
