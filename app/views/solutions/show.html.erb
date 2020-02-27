@@ -25,7 +25,7 @@
 
     <% if Setting.first.state || (current_user && current_user.admin?) %>
       <% if @solution.user.count < @solution.problem.suggestion_min - 1 %>
-        <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "suggest" do %>
+        <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button" do %>
           Suggest (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
         <% end %>
       <% elsif @solution.user.count >= @solution.problem.suggestion_min %>
@@ -49,7 +49,7 @@
   <h1>Evaluation</h1><br>
 
   Estimated benefit of this solution
-  <%= link_to "How is this calculated?", documentation_path(:anchor => "solution_scoring") %>
+  <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
 
   <div class="score-bar-outer">
     <div class="score-bar-inner" style="background-color: #ff6c52; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
@@ -68,7 +68,7 @@
       <% @criteria.each do |criterium| %>
       <% if criterium.user.count > 0 %>
           <tr>
-            <td>
+            <td id="<%= criterium.hash %>">
               <%= link_to show_criterium_path(:criterium_id => criterium.id) do %>
                 <%= criterium.title %>
               <% end %>
@@ -142,7 +142,7 @@
 
 </div>
 
-<% if logged_in? && current_user.admin %>
+<% if logged_in? && current_user.admin? %>
   <br>
   <span class="admin-section">
     Created by <%= @solution.creator %> –

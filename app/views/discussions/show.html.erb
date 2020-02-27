@@ -65,7 +65,6 @@
   		<% if comment.content %>
   		  <li>
           <div>
-            <!-- <%= gravatar_for comment.user, :class => "gravatar" %> -->
             <strong><%= comment.user.name %></strong>
             <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
           </div>
@@ -181,7 +180,7 @@
   <% end %>
 </div>
 
-<% if logged_in? && current_user.admin %>
+<% if logged_in? && current_user.admin? %>
   <span class="admin-section">
     Created by <%= @discussion.creator %> –
     <%= link_to 'Remove', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>

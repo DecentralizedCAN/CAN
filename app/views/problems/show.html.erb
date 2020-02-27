@@ -175,7 +175,7 @@
 
 </div>
 
-<% if logged_in? && current_user.admin %>
+<% if logged_in? && current_user.admin? %>
   <span class="admin-section">
     <br><br>
     Created by <%= @problem.creator %> –

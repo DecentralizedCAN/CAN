@@ -194,16 +194,17 @@ class ActivitiesController < ApplicationController
           format.html { redirect_to action_path(@activity.id) }
           format.json { render :show, status: :created, location: @activity }
         else
-          format.html { redirect_to issue_path(@problem, :anchor => "solutions") }
+          format.html { redirect_to solution_path(@solution)}
           format.json { render json: @activity.errors, status: :unprocessable_entity }
         end
       end
 
     elsif !already_suggested
       @solution.user << @user
-      redirect_to issue_path(@problem, :anchor => "solutions")
+      flash[:success] = "You suggested a proposal for activation."
+      redirect_to solution_path(@solution)
     else
-      redirect_to issue_path(@problem, :anchor => "solutions")
+      redirect_to solution_path(@solution)
     end
   end
 

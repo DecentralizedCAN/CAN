@@ -33,7 +33,7 @@
         <li><%= link_to "Guide", documentation_path if logged_in? || Setting.find(6).state %></li>
         <% if logged_in? %>
           <li><%= link_to "Members", users_path %></li>
-          <li><%= link_to current_user.name.capitalize, current_user %></li>
+          <li><%= link_to current_user.name, current_user %></li>
         <% else %>
           <li><%= link_to "Log in", login_path if Setting.find(6).state %></li>
         <% end %>
