@@ -1,0 +1,20 @@
+<div class="backdrop">
+
+<ul class="nav nav-tabs">
+  <li><%= link_to 'Brainstorm', post_problem_path %></li>
+  <li><%= link_to 'Action', post_action_path %></li>
+  <li><%= link_to 'Discussion', new_discussion_path %></li>
+  <li class="active"><%= link_to 'Goal', new_goal_path %></li>
+</ul>
+
+<div class="form-tab">
+  
+<%= form_for(@goal, remote: true) do |form| %>
+
+  <div class="main-field">
+    <%= form.text_area :title, id: :goal_title, placeholder: "What do you want to achieve?" %>
+  </div>
+
+  <%= form.submit "Post", id: :submit_goal%>
+
+<% end %>

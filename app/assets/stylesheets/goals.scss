@@ -1,36 +1,230 @@
+.goal-node-outer {
+  position: absolute;
+  width: 100vw;
+  left: 0;
+  text-align: center;
+  overflow: auto;
+}
+
+.goal-node{
+  text-align: center;
+
+  h1 {
+    max-width: 400px;
+    margin: auto;
+  }
+
+  .dropdown-menu {
+    padding: 10px;
+    margin: 0;
+    font-size: 10px;
+    max-height: 300px;
+    overflow: auto;
+  }
+
+  .button.add {
+    background: transparent;
+    border: 1px solid #a9a9a9;
+    outline: none;
+    position: relative;
+    top: -3px;
+    padding: 0px 4px;
+
+    &:hover {
+      background-color: #dedede;
+    }
+
+    .fas {
+      // line-height: 0;
+      // position: relative;
+      // top: -2px;
+    }
+  }
+
+  #new_goal {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  #goal_title {
+    width: 100%;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  .branches, .roots {
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .branches {
+    list-style: none;
+    // display: flex;
+
+    li {
+      display: inline-block;
+      margin: 4px;
+      margin-bottom: 0;
+
+      // flex: 1 1 100%;
+      text-align: center;
+    }
+  }
+
+  .roots {
+    list-style: none;
+    // display: flex;
+
+    li {
+      display: inline-block;
+      // width: 20%;
+      // border: 1px solid gray;
+      border-bottom: none;
+
+      font-size: 12px;
+
+      flex: 1 1 100%;
+      // display: table-cell;
+      margin-right: -1px;
+      margin-left: -1px;
+
+      margin-right: 4px;
+      margin-left: 4px;
+
+      border-collapse:collapse;
+
+      vertical-align: top;
+
+      a {
+        // background-color: gray;
+        // color: white;
+        // padding: 2px 4px;
+        color: black
+      }
+    }
+  }
+
+  .roots0 {
+    margin: auto;
+    width: max-content;
+
+  //   // display: inline-block;
+  //   position: absolute;
+  //   width: 90vw;
+  //   left: 5vw;
+
+  //   // li {
+  //   //   flex: 0;
+  //   // }
+  }
+
+  .unlink {
+    color: transparent !important;
+    transition: none;
+
+    &:hover {
+      color: black !important;
+      text-decoration: none !important;
+    }
+  }
+
+  // .roots1 {
+  //   width: 90vw;
+  //   position: absolute;
+  //   left: 5vw;
+  // }
+
+  hr {
+    margin: 0;
+    border-width: 2px;
+    border-color: #dcdcdc;
+  }
+
+  .line {
+    height: 30px;
+    border-right: 4px solid black;
+    text-align: center;
+    width: 1px;
+    margin: auto;
+    border-color: #dcdcdc;
+  }
+
+  .highlight {
+    background: gainsboro;
+    width: calc(100% + 13px);
+    position: relative;
+    left: -4px;
+    
+    a {
+      max-width: 100px;  
+    }
+
+    .highlight-title {
+      max-width: 120px;
+      margin: auto;
+    }
+  }
+
+  .highlight.short {
+    width: fit-content;
+    margin: auto;
+    padding: 2px 4px;
+  }
+
+  // .roots2 {
+  //   color: red;
+  // }
+
+  // .roots3 {
+  //   color: green;
+  // }
+
+  // .roots4 {
+  //   color: purple;
+  // }
+
+  .dropdown-menu {
+    left: -112px;
+    width: 246px;
+  }
+}
+
 .goal-list-title {
   display: inline-block;
 }
 
-#myInput {
+#myInput, #myInput2 {
   background-image: url('/css/searchicon.png'); /* Add a search icon to input */
   background-position: 10px 12px; /* Position the search icon */
   background-repeat: no-repeat; /* Do not repeat the icon image */
   width: 100%; /* Full-width */
-  font-size: 16px; /* Increase font-size */
-  padding: 12px 20px 12px 40px; /* Add some padding */
+  font-size: 12px; /* Increase font-size */
+  padding: 2px 4px 2px 4px; /* Add some padding */
   border: 1px solid #ddd; /* Add a grey border */
-  margin-bottom: 12px; /* Add some space below the input */
+  margin-bottom: 2px; /* Add some space below the input */
 }
 
-#myUL {
+#myUL, #myUL2 {
   /* Remove default list styling */
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-#myUL li a {
+#myUL li a, #myUL2 li a {
   border: 1px solid #ddd; /* Add a border to all links */
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6; /* Grey background color */
-  padding: 12px; /* Add some padding */
+  margin-top: 2px; /* Prevent double borders */
+  background-color: #bfbfbf; /* Grey background color */
+  padding: 2px 4px; /* Add some padding */
   text-decoration: none; /* Remove default text underline */
-  font-size: 18px; /* Increase the font-size */
-  color: black; /* Add a black text color */
+  font-size: 12px; /* Increase the font-size */
+  // color: black; /* Add a black text color */
   display: block; /* Make it into a block element to fill the whole list */
 }
 
-#myUL li a:hover:not(.header) {
-  background-color: #eee; /* Add a hover effect to all links, except for headers */
+#myUL li a:hover:not(.header), #myUL2 li a:hover:not(.header) {
+  background-color: #c7c7c7; /* Add a hover effect to all links, except for headers */
 }

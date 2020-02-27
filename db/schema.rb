@@ -114,15 +114,15 @@ ActiveRecord::Schema.define(version: 20200226050435) do
   end
 
   create_table "goals", force: :cascade do |t|
-    t.text "title_ciphertext"
+    t.string "title_ciphertext"
+    t.string "title_bidx"
     t.bigint "activities_id"
     t.bigint "problems_id"
     t.bigint "discussions_id"
-    t.bigint "links_id"
     t.index ["activities_id"], name: "index_goals_on_activities_id"
     t.index ["discussions_id"], name: "index_goals_on_discussions_id"
-    t.index ["links_id"], name: "index_goals_on_links_id"
     t.index ["problems_id"], name: "index_goals_on_problems_id"
+    t.index ["title_bidx"], name: "index_goals_on_title_bidx", unique: true
   end
 
   create_table "goals_users", id: false, force: :cascade do |t|
@@ -298,7 +298,6 @@ ActiveRecord::Schema.define(version: 20200226050435) do
   add_foreign_key "discussions", "solutions"
   add_foreign_key "goals", "activities", column: "activities_id"
   add_foreign_key "goals", "discussions", column: "discussions_id"
-  add_foreign_key "goals", "links", column: "links_id"
   add_foreign_key "goals", "problems", column: "problems_id"
   add_foreign_key "links", "goals", column: "child_id"
   add_foreign_key "links", "goals", column: "parent_id"
