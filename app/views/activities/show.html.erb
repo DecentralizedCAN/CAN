@@ -20,7 +20,10 @@
 
     <% if logged_in? && !@activity.roll.last.user.include?(@user) %>
       <% if @roll.user.include?(@user) %>
-          <%= link_to "Uncommit", unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" %>
+          <%= link_to unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" do %>
+            <i class="fa fa-times"></i>
+            Uncommit
+          <% end %>
       <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
           <%= link_to commit_path(:roll_id => @roll.id), :class => "button" do %>
             <!-- <div class="commit-button"> -->
@@ -52,7 +55,10 @@
     <% if logged_in? %>
       <% if @activity.roll.first.user.include?(@user) %>
       <% unless @activity.roll.last.user.include?(@user) %>
-        <%= link_to "Mark complete", complete_path(:activity_id => @activity.id), :method => "post", :class => "button" %>
+        <%= link_to complete_path(:activity_id => @activity.id), :method => "post", :class => "button" do %>
+          <i class="fa fa-check"></i>
+          Mark complete
+        <% end %>
       <% end %>
       <% end %>
     <% end %>
