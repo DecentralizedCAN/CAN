@@ -41,6 +41,30 @@
                         <ul class="branches branches4">
                           <% @uplinks_4.each do |link4| %>
                             <li>
+
+
+                            <% @uplinks_5 = @user.links.where(child_id: link4.parent.id).where.not(parent_id: @goal.id).last(9) %>
+                            <% if @uplinks_5.length > 0  %>
+
+                              <!-- ======================== -->
+
+                              <ul class="branches branches5">
+                                <% @uplinks_5.each do |link5| %>
+                                  <li>
+                                    <div class="highlight">
+                                      <%= link_to goal_path(link4.parent) do %>
+                                        <div class="highlight-title"><%= link5.parent.title %></div>
+                                      <% end %>
+                                    </div>
+                                    
+                                  </li>
+                                <% end %>
+                              </ul>
+                              <div class="line"></div>
+                              <% end %>
+
+                              <!-- ======================== -->
+
                               <div class="highlight">
                                 <%= link_to goal_path(link4.parent) do %>
                                   <div class="highlight-title"><%= link4.parent.title %></div>
@@ -294,6 +318,23 @@
                                 </div>
                               </div>
                               
+                              <% @sublinks_5 = @user.links.where(parent_id: link4.child.id).where.not(child_id: @goal.id).last(9) %>
+                              <% if @sublinks_5.length > 0  %>
+                                <div class="line"></div>
+                                <ul class="roots roots5">
+                                  <% @sublinks_5.each do |link5| %>
+                                    <li>
+                                      <div class="highlight">
+                                        <div class="highlight">
+                                          <%= link_to link5.child.title, goal_path(link5.child) %>
+                                        </div>
+                                      </div>
+                                      
+                                    </li>
+                                  <% end %>
+                                </ul>
+                              <% end %>
+
                             </li>
                           <% end %>
                         </ul>
