@@ -32,8 +32,17 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }, 
                     if: -> { Setting.find(7).state }
+
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+
+  # make sure blank emails are saved as nil, not encrypted code
+  old_setter = instance_method(:email=)
+  define_method(:email=) do |val|
+    val = nil if val.blank?
+    old_setter.bind(self).call(val)
+  end
 
   # Returns the hash digest of the given string.
   def User.digest(string)
