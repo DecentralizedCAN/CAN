@@ -6,7 +6,7 @@ class GoalsController < ApplicationController
 
 	def show
 		@user = current_user
-		@goal = @user.goals.find(params[:goal_id])
+		@goal = Goal.find(params[:goal_id])
 		@my_goals = @user.goals.all.reverse
 		@parents = @user.links.where(child_id: @goal.id)
 		@children = @user.links.where(parent_id: @goal.id)

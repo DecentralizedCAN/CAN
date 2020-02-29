@@ -116,7 +116,7 @@
           <div class="highlight-title">
             <%= link.parent.title %>
             <%= link_to unlink_path(:link_id => link.id), :method => 'post', :class => 'unlink' do %>
-              <i class="fas fa-times"></i>
+              <!-- <i class="fas fa-times"></i> -->
             <% end %>
           </div>
         <% end %>
@@ -219,6 +219,7 @@
 
       <%= form.hidden_field :parent_id, :value => @goal.id %>
 
+      <!-- <%= form.check_box :title, id: :post_goal, :checked => true %> Post to feed<br> -->
       <%= form.submit "Add", id: :submit_goal, :class => 'button'%>
     <% end %>
 
