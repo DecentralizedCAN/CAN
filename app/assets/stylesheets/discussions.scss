@@ -6,6 +6,10 @@ $label-blue: #81c4ff;
 $neutral-blue: #0091ff;
 
 
+p > a, .comment > a {
+  color: #1491ff !important;
+}
+
 .discussion-sidebar {
   background-color: white;
 }
