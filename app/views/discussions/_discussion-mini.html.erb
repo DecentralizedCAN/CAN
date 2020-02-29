@@ -30,7 +30,7 @@
                   <% end %>
                 <% end %>
               </div>
-              <%= comment.content.html_safe  %>
+              <%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe  %>
               –<%= comment.user.name %>
             </li>
           <% end %>
@@ -48,7 +48,7 @@
               <strong><%= comment.user.name %></strong>
               <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
             </div>
-            <div class="comment"><%= comment.content.html_safe  %></div>
+            <div class="comment"><%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe  %></div>
             <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} if logged_in? %>
 
             <% if comment.upvotes.count > 0 %>

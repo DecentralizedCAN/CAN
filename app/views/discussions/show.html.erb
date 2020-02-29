@@ -52,7 +52,7 @@
           </div>
       </div>
 
-      <p class="discussion-content"><%= @discussion.content %></p>
+      <p class="discussion-content"><%= @discussion.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe %></p>
 
 <% end %>
 <!-- </div> -->
@@ -69,7 +69,7 @@
             <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
           </div>
   		  	<div class="comment">
-            <%= comment.content.html_safe %>
+            <%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe %>
           </div>
           <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} if logged_in? %>
           
@@ -141,7 +141,7 @@
                   <% end %>
                 <% end %>
               </div>
-              <%= comment.content.html_safe  %>
+              <%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe  %>
               <em>–<%= comment.user.name %></em>
             </li>
           <% end %>
@@ -170,7 +170,7 @@
                   <% end %>
                 <% end %>
               </div>
-              <%= comment.content.html_safe  %>
+              <%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe  %>
               <em>–<%= comment.user.name %></em>
             </li>
           <% end %>
