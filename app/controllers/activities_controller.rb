@@ -322,7 +322,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:title, :description, :activation, :participants, :activation_minimum, :activation_maximum, :deadline, :expiration)
+      params.require(:activity).permit(:title, :description, :activation, :participants, :activation_minimum, :activation_maximum, :roll_title, :deadline, :expiration)
     end
 
     def public_viewable?
