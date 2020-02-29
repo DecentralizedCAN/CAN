@@ -19,6 +19,26 @@
   </div>
 
   <div class="activation">
+    <!-- <b> Participants </b><br> -->
+    <b>Role title:</b>
+    <%= form.text_field :role_title, id: :role_title, placeholder: "Participant" %>
+    &nbsp;
+    <b>Participation:</b>
+    Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
+    Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
+  </div>
+
+  <div class="activation">
+    <!-- <b> Participants </b><br> -->
+    <b>Role title:</b>
+    <%= form.text_field :role_name, id: :role_title, placeholder: "Participant" %>
+    &nbsp;
+    <b>Participation:</b>
+    Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
+    Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
+  </div>
+
+  <div class="activation">
     <b> Participants </b><br>
     Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
     Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
