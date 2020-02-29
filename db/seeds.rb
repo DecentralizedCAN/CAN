@@ -9,6 +9,7 @@ Setting.create!(title: "Include a discussion section for actions", state: false)
 Setting.create!(title: "Make content viewable without an account", state: false)
 Setting.create!(title: "Require new members to provide an email address", state: false)
 Setting.create!(title: "Allow users to receive emails (reduced security)", state: false)
+Setting.create!(title: "Hide proposal participation and default to 1", state: false)
 
 ENV['ADMIN_EMAIL'] != nil ? admin_email = ENV['ADMIN_EMAIL'] : admin_email = "admin@fakeemail.com"
 ENV['ADMIN_PASSWORD'] != nil ? admin_password = ENV['ADMIN_PASSWORD'] : admin_password = "adminpassword"
