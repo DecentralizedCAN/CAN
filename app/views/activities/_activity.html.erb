@@ -1,6 +1,6 @@
 
     <div class="proposal-block-one">
-      <div class="activity-title"><%= activity.title %></div> <span class="feed-label">Action</span>
+      <div class="activity-title"><span class="underline"><%= activity.title %></span> <span class="feed-label">Action</span></div>
 
 			<% if activity.solution %>
 				<div class="proposal-activity-description">
@@ -9,34 +9,36 @@
 				</div>
 			<% end %>
 
-      <br>
-
       <div class="activity-info">
-        <div>
+        <div class="post-signature">
           <!-- <i class="fas fa-calendar"></i> -->
-          created <%= time_ago_in_words(activity.created_at) %> ago
+          Created <%= time_ago_in_words(activity.created_at) %> ago
           by <em><%= activity.creator %></em>
 
         </div>
+
+        <br>
+
         <div>
           <% if activity.expiration && activity.expiration > @current_time %>
             <i class="fas fa-clock"></i>
             expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
           <% end %>
         </div>
+
+        <div class="written-progress">
+          <i class="fas fa-users"></i>
+          <% if !activity.roll.first.maximum %>
+            <%= activity.roll.first.user.count %>/<%= activity.roll.first.minimum %>-∞
+          <% elsif activity.roll.first.minimum < activity.roll.first.maximum %>
+            <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>-<%=activity.roll.first.maximum %>
+          <% else %>
+            <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>
+          <% end %>
+          participants
+        </div>
       </div>
 
-      <div class="written-progress">
-        <i class="fas fa-users"></i>
-        <% if !activity.roll.first.maximum %>
-          <%= activity.roll.first.user.count %>/<%= activity.roll.first.minimum %>-∞
-        <% elsif activity.roll.first.minimum < activity.roll.first.maximum %>
-          <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>-<%=activity.roll.first.maximum %>
-        <% else %>
-          <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>
-        <% end %>
-        participants
-      </div>
     </div>
 
     <div class="roll-progress">
@@ -47,12 +49,20 @@
         background-color: rgba(255, 116, 85, <%= activity.roll.first.user.count.to_f / activity.roll.first.minimum.to_f %>);
         ">
         </div>
+
+        <% if activity.roll.first.user.count >= activity.roll.first.minimum %>
+        <div class="activated-tag">
+          <!-- <i class="fas fa-check"></i> -->
+          Activated
+        </div>
+        <% end %>
+
       </div>
 
       <% if activity.roll.last.user.include?(@user) %>
-        <span class="committed"><i class="fa fa-check"></i> completed</span>
+        <div class="committed">Completed</div>
       <% elsif activity.roll.first.user.include?(@user) %>
-        <span class="committed"><i class="fa fa-check"></i> you are committed</span>
+        <div class="committed">You are committed</div>
       <% end %>
 
     </div>

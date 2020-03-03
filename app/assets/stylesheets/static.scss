@@ -12,7 +12,9 @@ $label-blue: #81c4ff;
 
     &:hover {
       .issue-title, .activity-title, .discussion-title {
-        text-decoration: underline;
+        .underline {
+          text-decoration: underline;          
+        }
       }
     }
   }
@@ -20,18 +22,27 @@ $label-blue: #81c4ff;
 
 .issue-title, .activity-title, .discussion-title {
   display: inline-block;
-  // font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
 }
 
 .issue-info, .activity-info, .discussion-info, .written-progress {
-  line-height: 10px;
-  display: block;
+  line-height: 12px;
+  display: inline-block;
   // margin-left: 22px;
   font-weight: normal;
+  font-size: 11px;
+  display: block;
 
   div {
     font-weight: normal;
+    font-size: 11px;
+    // display: inline-block;
   }
+}
+
+.post-signature {
+  font-size: 10px !important;
 }
 
 #main-feed {
@@ -132,7 +143,7 @@ h2 {
   background-color: #fd9f8c;
   padding: 2px 4px;
   border-radius: 2px;
-  line-height: 0px;
+  line-height: 18px;
 }
 
 .issue .feed-label {
@@ -209,9 +220,9 @@ h2 {
         margin-left: 0;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding: 2px 4px;
-        margin: 8px 4px;
-        margin-left: 0;
+        // padding: 2px 4px;
+        // margin: 8px 4px;
+        margin-left: 2px;
         /* box-shadow: 0px 3px 6px 0px #d0d0d0; */
         // border: 1px solid #cacaca;
         // background-color: #f7f7f7;

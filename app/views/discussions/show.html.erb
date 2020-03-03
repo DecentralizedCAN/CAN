@@ -41,9 +41,9 @@
       <div class="discussion">
         <div class="discussion-title"><%= @discussion.title %> <span class="feed-label">Discussion</span></div>
         <div class="issue-info">
-            <div>
+            <div class="post-signature">
               <!-- <i class="fas fa-calendar"></i> -->
-              created <%= time_ago_in_words(@discussion.created_at) %> ago
+              Created <%= time_ago_in_words(@discussion.created_at) %> ago
               by <em><%= @discussion.creator %></em>
             </div>
             <br>

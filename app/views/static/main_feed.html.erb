@@ -21,11 +21,11 @@
 				<%= link_to issue_path(post.problem) do %>
 	        <% #if post.problem.user.count > 0 %>
 	          <div class="issue">
-	            <div class="issue-title"><%= post.problem.title %></div> <span class="feed-label">Brainstorm</span>
+	            <div class="issue-title"><span class="underline"><%= post.problem.title %></span> <span class="feed-label">Brainstorm</span></div>
 		            <div class="issue-info">
-		              <div>
+		              <div class="post-signature">
 		                <!-- <i class="fas fa-calendar"></i> -->
-		                created <%= time_ago_in_words(post.problem.created_at) %> ago
+		                Created <%= time_ago_in_words(post.problem.created_at) %> ago
           					by <em><%= post.problem.creator %></em>
 		              </div>
 		              <br>
@@ -54,13 +54,13 @@
 					<%= link_to discussion_path(post.discussion) do %>
 	          <div class="discussion">
 
-							<div class="discussion-title"><%= post.discussion.title %></div>
-							<span class="feed-label">Discussion</span>
+							<div class="discussion-title"><span class="underline"><%= post.discussion.title %></span>
+							<span class="feed-label">Discussion</span></div>
 
 							<div class="issue-info">
-		              <div>
+		              <div class="post-signature">
 		                <!-- <i class="fas fa-calendar"></i> -->
-		                created <%= time_ago_in_words(post.discussion.created_at) %> ago
+		                Created <%= time_ago_in_words(post.discussion.created_at) %> ago
           					by <em><%= post.discussion.creator %></em>
 		              </div>
 		              <br>

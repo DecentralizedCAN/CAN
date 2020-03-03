@@ -72,12 +72,25 @@ $offwhite: #f5f5f5;
   letter-spacing: -0.2px;
 }
 
+.activated-tag {
+  position: relative;
+  top: -16px;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bolder;
+  left: 66px;
+  font-style: italic;
+  display: inline;
+}
+
 .committed {
   color: rgb(255, 116, 85);
   font-size: 10px;
   font-style: italic;
   position: relative;
-  top: -4px;
+  vertical-align: top;
+  top: -2px;
 }
 
 #propose-activity {
@@ -88,6 +101,8 @@ $offwhite: #f5f5f5;
 }
 
 .roll-progress {
+  max-height: 20px;
+
   div {
     display: inline-block;
   }
