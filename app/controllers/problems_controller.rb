@@ -1,4 +1,5 @@
 class ProblemsController < ApplicationController
+  include UpvoteHelper
   before_action :set_problem, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create]
   before_action :require_login, except: [:show], if: -> { public_viewable? }
@@ -146,6 +147,10 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:problem_id])
     @user = current_user
     @problem.user << @user unless @problem.user.include?(@user)
+    begin
+      upvote_post(@problem.post.id, @user.id)
+    rescue
+    end
     redirect_to issue_path(:problem_id => @problem.id)
   end
 

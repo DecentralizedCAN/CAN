@@ -1,4 +1,5 @@
 class CriteriaController < ApplicationController
+  include UpvoteHelper
   include SolutionsHelper
 
   before_action :set_criterium, only: [:show, :dissent_form, :edit, :update]
@@ -65,6 +66,11 @@ class CriteriaController < ApplicationController
     if @criterium.save
       @criterium.user << @user
       
+      begin
+        upvote_post(@criterium.problem.post.id, @user.id)
+      rescue
+      end
+          
       # update_all_solution_scores(@criterium.problem.id)
       flash[:success] = "You created a criterion. Thanks for your contribution!"
       redirect_to issue_path(:problem_id => @criterium.problem.hashid)
