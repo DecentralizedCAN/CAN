@@ -1,4 +1,6 @@
 class ActivitiesController < ApplicationController
+  include UpvoteHelper
+
   before_action :set_activity, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
   before_action :require_login, except: [:show], if: -> { public_viewable? }
@@ -218,6 +220,11 @@ class ActivitiesController < ApplicationController
     @activity = @roll.activity
     unless @roll.user.include?(@user) || (@roll.maximum && @roll.user.count >= @roll.maximum)
       @roll.user << @user
+
+      begin
+        upvote_post(@activity.post.id, @user.id)
+      rescue
+      end
 
       # Notifications
       if @roll.user.count == @roll.minimum
