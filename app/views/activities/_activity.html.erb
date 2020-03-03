@@ -1,6 +1,6 @@
 
     <div class="proposal-block-one">
-      <div class="activity-title"><%= activity.title %> <span class="feed-label">Action</span></div>
+      <div class="activity-title"><%= activity.title %></div> <span class="feed-label">Action</span>
 
 			<% if activity.solution %>
 				<div class="proposal-activity-description">
@@ -9,10 +9,14 @@
 				</div>
 			<% end %>
 
+      <br>
+
       <div class="activity-info">
         <div>
-          <i class="fas fa-calendar"></i>
+          <!-- <i class="fas fa-calendar"></i> -->
           created <%= time_ago_in_words(activity.created_at) %> ago
+          by <em><%= activity.creator %></em>
+
         </div>
         <div>
           <% if activity.expiration && activity.expiration > @current_time %>

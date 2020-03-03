@@ -14,24 +14,28 @@
 	<% if notification.criterium %>
 		<%= link_to show_criterium_path(:criterium_id => notification.criterium.hashid) do %>
 	  <li>
+      <i class="fas fa-clipboard-list"></i>
   		The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
 	  </li>
 		<% end %>
 	<% elsif notification.problem %>
 		<%= link_to show_criterium_path(:criterium_id => notification.problem.hashid) do %>
 	  <li>
+      <i class="fas fa-brain"></i>
   		The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
 	  </li>
 		<% end %>
 	<% elsif notification.discussion %>
 		<%= link_to discussion_path(notification.discussion.hashid) do %>
 	  <li>
+      <i class="fas fa-comments"></i>
   		<%= notification.details %>
 	  </li>
 		<% end %>
 	<% elsif notification.activity %>
 		<%= link_to action_path(notification.activity.hashid) do %>
 	  <li>
+      <i class="fas fa-calendar"></i>
   		The action <em><%= notification.activity.title %></em> <%= notification.details %>
 	  </li>
 		<% end %>

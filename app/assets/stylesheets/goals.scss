@@ -9,9 +9,60 @@
 .goal-node{
   text-align: center;
 
-  h1 {
-    max-width: 400px;
+  h2.goals-title {
+    // display: inline-block;
+  }
+
+  .goal-middle {
+    // position: relative;
+    // right: -58px;
+  }
+
+
+  .back-button {
     margin: auto;
+    width: fit-content;
+    // display: inline-block;
+    // height: 0;
+    // vertical-align: top;
+  }
+
+
+  h1 {
+    max-width: 280px;
+    margin: auto;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.6em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .strikethrough {
+    text-decoration: line-through;
+    color: gray !important;
+  }
+
+  .goal-actionables {
+    display: inline-block;
+    list-style: none;
+    vertical-align: middle;
+    margin: 0;
+    position: relative;
+    padding: 2px 4px;
+    border-radius: 2px;
+    background: gainsboro;
+  }
+
+  .actionables-right {
+    left: -6px;
+    // text-align: left;
+  }
+
+  .actionables-left {
+    right: -6px;
+    // text-align: right;
   }
 
   .dropdown-menu {
@@ -22,16 +73,60 @@
     overflow: auto;
   }
 
+  .mark-accomplished {
+    background-color: #dcdcdc;
+    padding: 2px 4px;
+    right: 12px;
+    border: 1px solid #a9a9a9;
+    width: fit-content;
+    margin: auto;
+    color: gray;
+
+    &:hover {
+      background-color: #c3c3c3;
+    }
+  }
+
+  .view-goal-details {
+    display: inline-block;
+    background-color: #dcdcdc;
+    padding: 2px 4px;
+    position: relative;
+    right: 12px;
+    border: 1px solid #a9a9a9;
+    color: gray;
+
+    &:hover {
+      background-color: #c3c3c3;
+    }
+  }
+
+  .view-actionables {
+    display: inline-block;
+    background-color: #dcdcdc;
+    padding: 2px 4px;
+    position: relative;
+    left: 12px;
+    border: 1px solid #a9a9a9;
+    color: gray;
+
+    &:hover {
+      background-color: #c3c3c3;
+    }
+  }
+
   .button.add {
     background: transparent;
     border: 1px solid #a9a9a9;
     outline: none;
     position: relative;
     top: -3px;
-    padding: 0px 4px;
+    padding: 2px 6px;
+    color: gray;
+    background-color: #dcdcdc;
 
     &:hover {
-      background-color: #dedede;
+      background-color: #c3c3c3;
     }
 
     .fas {
@@ -62,6 +157,8 @@
 
   .branches {
     list-style: none;
+    bottom: -4px;
+    position: relative;
     // display: flex;
 
     li {
@@ -102,7 +199,7 @@
         // background-color: gray;
         // color: white;
         // padding: 2px 4px;
-        color: black
+        // color: black
       }
     }
   }
@@ -121,12 +218,22 @@
   //   // }
   }
 
-  .unlink {
-    color: transparent !important;
+  .link {
+    color: #9e9e9e !important;
     transition: none;
 
     &:hover {
-      color: black !important;
+      color: #797979 !important;
+      text-decoration: none !important;
+    }
+  }
+
+  .unlink {
+    color: #797979 !important;
+    transition: none;
+
+    &:hover {
+      color: #9e9e9e !important;
       text-decoration: none !important;
     }
   }
@@ -145,11 +252,25 @@
 
   .line {
     height: 30px;
-    border-right: 4px solid black;
+    border-right: 4px solid #dcdcdc;
     text-align: center;
     width: 1px;
     margin: auto;
-    border-color: #dcdcdc;
+  }
+
+  .horizontal {
+    height: 1px;
+    width: 30px;
+    display: inline-block;
+    border-top: 4px solid #dcdcdc;
+  }
+
+  .line-right {
+    margin-left: 14px;
+  }
+
+  .line-left {
+    margin-right: 14px;
   }
 
   .highlight {
@@ -157,15 +278,21 @@
     width: calc(100% + 13px);
     position: relative;
     left: -4px;
+    border-radius: 2px;
+    color: #787878;
     
     a {
       max-width: 100px;  
+      color: #3c3c3c;
     }
 
     .highlight-title {
       max-width: 120px;
       margin: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+
   }
 
   .highlight.short {
@@ -190,6 +317,43 @@
     left: -112px;
     width: 246px;
   }
+
+  .goal-details-section {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    max-width: 26%;
+    border: 1px solid #d8d8d8;
+    background-color: white;
+    padding: 0px 8px;
+
+    ul {
+      list-style: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 2px 4px;
+
+      li {
+        box-shadow: 0px 3px 6px 0px #d0d0d0;
+        padding: 0 2px;
+        border: 1px solid #efefef;
+        margin-bottom: 6px;
+        margin-top: 6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    h2 {
+      margin-top: 8px;
+    }
+
+    h3 {
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+
 }
 
 .goal-list-title {
@@ -212,6 +376,8 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #myUL li a, #myUL2 li a {

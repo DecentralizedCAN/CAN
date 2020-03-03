@@ -6,18 +6,14 @@ $dissent-green: #3be1ea;
 $success-red: #ff7455;
 
 .issue {
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: block;
-  background-color: #343536;
+  // border-radius: 2px;
+  // margin-bottom: 10px;
+  // display: block;
+  // background-color: #343536;
 }
 
 .issue-title {
   font-size: 14px;
-}
-
-.issue-info, .activity-info, .discussion-info {
-  line-height: 14px;
 }
 
 .issue-info > div {

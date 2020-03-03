@@ -24,9 +24,11 @@
 	            <div class="issue-title"><%= post.problem.title %></div> <span class="feed-label">Brainstorm</span>
 		            <div class="issue-info">
 		              <div>
-		                <i class="fas fa-calendar"></i>
+		                <!-- <i class="fas fa-calendar"></i> -->
 		                created <%= time_ago_in_words(post.problem.created_at) %> ago
+          					by <em><%= post.problem.creator %></em>
 		              </div>
+		              <br>
 		              <div>
 		                <i class="fas fa-handshake"></i>
 		                <%= post.problem.user.count %> collaborators
@@ -51,14 +53,17 @@
 					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
 					<%= link_to discussion_path(post.discussion) do %>
 	          <div class="discussion">
-							<div class="discussion-title"><%= post.discussion.title %>
-							<span class="feed-label">Discussion</span></div>
+
+							<div class="discussion-title"><%= post.discussion.title %></div>
+							<span class="feed-label">Discussion</span>
 
 							<div class="issue-info">
 		              <div>
-		                <i class="fas fa-calendar"></i>
+		                <!-- <i class="fas fa-calendar"></i> -->
 		                created <%= time_ago_in_words(post.discussion.created_at) %> ago
+          					by <em><%= post.discussion.creator %></em>
 		              </div>
+		              <br>
 		              <div>
 		                <i class="fas fa-comment-dots"></i>
 		                <%= pluralize(post.discussion.comment.count, "comment") %>
@@ -93,24 +98,28 @@
 					<% if notification.criterium %>
 			  		<%= link_to show_criterium_path(:criterium_id => notification.criterium.hashid) do %>
 					  <li>
+      				<i class="fas fa-clipboard-list"></i>
 				  		The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
 					  </li>
 						<% end %>
 					<% elsif notification.problem %>
 			  		<%= link_to show_criterium_path(:criterium_id => notification.problem.hashid) do %>
 					  <li>
+      				<i class="fas fa-brain"></i>
 				  		The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
 					  </li>
 						<% end %>
 					<% elsif notification.discussion %>
 			  		<%= link_to discussion_path(notification.discussion.hashid) do %>
 					  <li>
+      				<i class="fas fa-comments"></i>
 				  		<%= notification.details %>
 					  </li>
 						<% end %>
 					<% elsif notification.activity %>
 			  		<%= link_to action_path(notification.activity.hashid) do %>
 					  <li>
+      				<i class="fas fa-calendar"></i>
 				  		The action <em><%= notification.activity.title %></em> <%= notification.details %>
 					  </li>
 						<% end %>

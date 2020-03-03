@@ -10,20 +10,46 @@ $label-blue: #81c4ff;
   a {
     font-style: normal;
 
-    .issue-title {
-      display: inline-block;
-    }
-
     &:hover {
-      .issue-title {
+      .issue-title, .activity-title, .discussion-title {
         text-decoration: underline;
       }
     }
   }
 }
 
+.issue-title, .activity-title, .discussion-title {
+  display: inline-block;
+  // font-weight: bold;
+}
+
+.issue-info, .activity-info, .discussion-info, .written-progress {
+  line-height: 10px;
+  display: block;
+  // margin-left: 22px;
+  font-weight: normal;
+
+  div {
+    font-weight: normal;
+  }
+}
+
+#main-feed {
+  .proposal, .issue, .discussion {
+    // box-shadow: 0px 3px 6px 0px #d0d0d0;
+    // background-color: white;
+    // border: 1px solid #dadada;
+    // margin-left: -8px;
+    // padding: 4px 0px;
+    // padding-left: 26px !important;
+    // margin-bottom: 10px;
+  }
+}
+
 .proposal, .issue, .discussion {
-  margin-left: 20px;
+  margin-left: 0px;
+  padding-left: 26px !important;
+  margin-bottom: 10px;
 }
 
 .upvote-div {
@@ -91,13 +117,13 @@ h2 {
   font-family: 'Oswald', sans-serif;
 }
 
-.discussion {
-  padding: 12px;
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: block;
-  background-color: #343536;
-}
+// .discussion {
+//   padding: 12px;
+//   border-radius: 2px;
+//   margin-bottom: 10px;
+//   display: block;
+//   background-color: #343536;
+// }
 
 .feed-label {
   color: white !important;
@@ -106,6 +132,7 @@ h2 {
   background-color: #fd9f8c;
   padding: 2px 4px;
   border-radius: 2px;
+  line-height: 0px;
 }
 
 .issue .feed-label {
@@ -147,7 +174,7 @@ h2 {
   ol.new-posts {
     padding: 0;
     margin-right: 1em; 
-    margin-top: 14px;
+    margin-top: 0px;
     width: 75%;
   }
 
@@ -162,21 +189,32 @@ h2 {
 
     .card-item {
       margin-bottom: 2em;
-      background-color: $offwhite;
+      // background-color: $offwhite;
       list-style: none;
       vertical-align: top;
+
+      .flex-container {
+        max-width: 176px;
+        margin: 2px;
+      }
 
       h2 {
         margin: 0;
         color: #525252;
-        font-weight: bold;
+        // font-weight: bold;
       }
 
-      > a > li {
+      a > li {
         margin: 4px;
         margin-left: 0;
         overflow: hidden;
         text-overflow: ellipsis;
+        padding: 2px 4px;
+        margin: 8px 4px;
+        margin-left: 0;
+        /* box-shadow: 0px 3px 6px 0px #d0d0d0; */
+        // border: 1px solid #cacaca;
+        // background-color: #f7f7f7;
 
         em {
           color: black;
@@ -222,6 +260,20 @@ h2 {
 
 
 // NOTIFICATIONS
+#notifications {
+  background-color: white;
+  padding: 6px 20px !important;
+  border: 1px solid gray;
+
+  li {
+    // list-style: none;
+    padding: 2px 4px;
+    margin: 8px 4px;
+    box-shadow: 0px 3px 6px 0px #d0d0d0;
+    border: 1px solid #efefef;
+  }
+}
+
 .side-card {
   h2 {
     display: inline-block;
@@ -229,6 +281,9 @@ h2 {
 
   #all-notifications {
     color: #525252;
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 0.8em;
   }
 }
 

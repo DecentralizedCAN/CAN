@@ -1,4 +1,5 @@
 class GoalsController < ApplicationController
+  before_action :require_login
 
 	def index
 		@goals = Goal.all.reverse
@@ -7,10 +8,43 @@ class GoalsController < ApplicationController
 	def show
 		@user = current_user
 		@goal = Goal.find(params[:goal_id])
-		@my_goals = @user.goals.all.reverse
-		@parents = @user.links.where(child_id: @goal.id)
-		@children = @user.links.where(parent_id: @goal.id)
+		# @my_goals = @user.goals.all.reverse
+		@my_goals = Goal.all.reverse
+		@parents = @user.link.where(child_id: @goal.id)
+		@children = @user.link.where(parent_id: @goal.id)
+
+		@public_parents = Link.where(child_id: @goal.id)
+			.joins(:user)
+      .group("links.id")
+      .order("COUNT(user_id) DESC")
+      .last(9)
+
+		@public_children = Link.where(parent_id: @goal.id)
+			.joins(:user)
+      .group("links.id")
+      .order("COUNT(user_id) DESC")
+      .last(9)
+
 		@new_goal = Goal.new
+	end
+
+	def details
+		@user = current_user
+		@goal = Goal.find(params[:goal_id])
+		# @my_goals = @user.goals.all.reverse
+		@my_goals = Goal.all.reverse
+		@parents = @user.link.where(child_id: @goal.id)
+		@children = @user.link.where(parent_id: @goal.id)
+
+		@public_parents = Link.where(child_id: @goal.id)
+			.joins(:user)
+      .group("links.id")
+      .order("COUNT(user_id) DESC")
+
+		@public_children = Link.where(parent_id: @goal.id)
+			.joins(:user)
+      .group("links.id")
+      .order("COUNT(user_id) DESC")
 	end
 
 	def new
@@ -19,38 +53,58 @@ class GoalsController < ApplicationController
 
 	def create
 		@goal = Goal.new(:title => params[:goal][:title])
-		@goal.users << current_user
+		# @goal.users << current_user unless @goal.users.include?(current_user)
+
 
 		if @goal.save
 
 			if params[:goal][:parent_id]
 				@link = Link.create(:child_id => @goal.id, :parent_id => params[:goal][:parent_id])
-				@link.users << current_user
+				@link.user << current_user unless @link.user.include?(current_user)
 				
-				redirect_to Goal.find(params[:goal][:parent_id])
+				# redirect_to @goal
 			elsif params[:goal][:child_id]
 				@link = Link.create(:parent_id => @goal.id, :child_id => params[:goal][:child_id])
-				@link.users << current_user
+				@link.user << current_user unless @link.user.include?(current_user)
 
-				redirect_to Goal.find(params[:goal][:child_id])
+				# redirect_to @goal
 			else
-				redirect_to @goal
+				# redirect_to @goal
 			end
 
-		else
-    	redirect_back fallback_location: root_path
+		elsif Goal.find_by(:title => params[:goal][:title]).present?
+
+			@goal = Goal.find_by(:title => params[:goal][:title])
+			# @goal.users << current_user unless @goal.users.include?(current_user)
+
+			if Link.find_by(:child_id => @goal.id, :parent_id => params[:goal][:parent_id]).present?
+				@link = Link.find_by(:child_id => @goal.id, :parent_id => params[:goal][:parent_id])
+				@link.user << current_user unless @link.user.include?(current_user)
+			else
+				# ONLY MAKES CHILD LINK, NOT PARENT LINK, CHANGE IF USING PARENT LINKS AGAIN
+				@link = Link.create(:child_id => @goal.id, :parent_id => params[:goal][:parent_id])
+				@link.user << current_user unless @link.user.include?(current_user)
+			end
+
+			# redirect_to @goal
 		end
+
+  	redirect_back fallback_location: root_path
 	end
 
-	def adopt
-		
+	def complete_goal
+		@goal = Goal.find(params[:goal_id])
+		@goal.users << current_user unless @goal.users.include?(current_user)
+  	redirect_back fallback_location: root_path
 	end
 
-	def abandon
-
+	def uncomplete_goal
+		@goal = Goal.find(params[:goal_id])
+		@goal.users.delete(current_user)
+  	redirect_back fallback_location: root_path
 	end
 
-	def link
+	def newlink
 		if params[:child_id] != params[:parent_id]
 			@link = Link.find_by(:child_id => params[:child_id], :parent_id => params[:parent_id])
 
@@ -58,14 +112,23 @@ class GoalsController < ApplicationController
 				@link = Link.create(:child_id => params[:child_id], :parent_id => params[:parent_id])
 			end
 
-			@link.users << current_user
+			@link.user << current_user unless @link.user.include?(current_user)
 		end
 
     redirect_back fallback_location: root_path
 	end
 
+	def link
+		@link = Link.find(params[:link_id])
+		@link.user << current_user unless @link.user.include?(current_user)
+		# @goal = Goal.find(@link.child_id)
+		# @goal.users << current_user unless @goal.users.include?(current_user)
+  	redirect_back fallback_location: root_path
+	end
+
 	def unlink
-		Link.find(params[:link_id]).users.delete(current_user)
+		@link = Link.find(params[:link_id])
+		@link.user.delete(current_user)
   	redirect_back fallback_location: root_path
 	end
 

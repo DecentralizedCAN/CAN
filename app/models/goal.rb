@@ -9,6 +9,6 @@ class Goal < ApplicationRecord
   encrypts :title
   blind_index :title
 
-  validates :title, presence: true, uniqueness: { case_sensitive: true }, length: { minimum: 2, maximum: 2000 }
+  validates :title, presence: true, uniqueness: { case_sensitive: true }, length: { maximum: 2000 }
 
 end

@@ -42,9 +42,11 @@
         <div class="discussion-title"><%= @discussion.title %> <span class="feed-label">Discussion</span></div>
         <div class="issue-info">
             <div>
-              <i class="fas fa-calendar"></i>
+              <!-- <i class="fas fa-calendar"></i> -->
               created <%= time_ago_in_words(@discussion.created_at) %> ago
+              by <em><%= @discussion.creator %></em>
             </div>
+            <br>
             <div>
               <i class="fas fa-comment-dots"></i>
               <%= pluralize(@discussion.comment.count, "comment") %>
