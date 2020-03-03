@@ -1,4 +1,3 @@
-
 <% if @public_children.length > 0 %>
 
   <div class="line"></div>
@@ -10,7 +9,8 @@
 
 
   <ul class="roots roots1">
-  <% @public_children.last(6).each do |link| %>
+
+  <% @public_children.each do |link| %>
     <li>
       <div class="highlight">
         <div class="highlight-title">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div>
-        <% @sublinks_2 = Link.where(parent_id: link.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").last(6) %>
+        <% @sublinks_2 = Link.where(parent_id: link.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(6) %>
       </div>
       <!-- <hr> -->
       <% if @sublinks_2.length > 0 %>
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <!-- <hr> -->
-              <% @sublinks_3 = Link.where(parent_id: link2.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").last(6) %>
+              <% @sublinks_3 = Link.where(parent_id: link2.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(6) %>
               <% if @sublinks_3.length > 0  %>
                 <div class="line"></div>
                 <ul class="roots roots3">
@@ -47,7 +47,7 @@
                       </div>
 
                       <!-- <hr> -->
-                      <% @sublinks_4 = Link.where(parent_id: link3.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").last(6) %>
+                      <% @sublinks_4 = Link.where(parent_id: link3.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(6) %>
                       <% if @sublinks_4.length > 0  %>
                         <div class="line"></div>
                         <ul class="roots roots4">
@@ -59,7 +59,7 @@
                                 </div>
                               </div>
                               
-                              <% @sublinks_5 = Link.where(parent_id: link4.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").last(6) %>
+                              <% @sublinks_5 = Link.where(parent_id: link4.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(6) %>
                               <% if @sublinks_5.length > 0  %>
                                 <div class="line"></div>
                                 <ul class="roots roots5">

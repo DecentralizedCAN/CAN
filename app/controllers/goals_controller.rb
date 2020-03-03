@@ -17,13 +17,13 @@ class GoalsController < ApplicationController
 			.joins(:user)
       .group("links.id")
       .order("COUNT(user_id) DESC")
-      .last(9)
+      .first(6)
 
 		@public_children = Link.where(parent_id: @goal.id)
 			.joins(:user)
       .group("links.id")
       .order("COUNT(user_id) DESC")
-      .last(9)
+      .first(6)
 
 		@new_goal = Goal.new
 	end

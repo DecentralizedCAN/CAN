@@ -23,7 +23,7 @@
 <br><br>
 
 <% if params[:view] == 'public' %>
-  <%= render(:partial => 'public_branches', :locals => {:@parents => @parents})%>
+  <%= render(:partial => 'public_branches', :locals => {:@parents => @public_parents})%>
 <% else %>
   <%= render(:partial => 'personal_branches', :locals => {:@parents => @parents})%>
 <% end %>
@@ -135,9 +135,9 @@
   <!-- TITLE -->
 
   <% if @goal.users.include?(@user) %>
-    <h1 class="strikethrough"><%= @goal.title %></h1> 
+    <h1 id='<%= @goal.hashid %>' class="strikethrough"><%= @goal.title %></h1> 
   <% else %>
-    <h1><%= @goal.title %></h1> 
+    <h1 id='<%= @goal.hashid %>'><%= @goal.title %></h1> 
   <% end %>
 
   <!-- END TITLE -->
@@ -243,9 +243,9 @@
 
 
 <% if params[:view] == 'public' %>
-  <%= render(:partial => 'public_roots', :locals => {:@children => @children})%>
+  <%= render(:partial => 'public_roots')%>
 <% else %>
-  <%= render(:partial => 'personal_roots', :locals => {:@children => @children})%>
+  <%= render(:partial => 'personal_roots')%>
 <% end %>
 
 </div>
