@@ -37,13 +37,13 @@
 
     <% if @activity.solution && @activity.solution.problem %>
 
-      <%= link_to issue_path(@activity.solution.problem.hashid), :class => "button" do %>
+<!--       <%= link_to issue_path(@activity.solution.problem.hashid), :class => "button" do %>
         <i class="fas fa-handshake"></i>
 
         View original brainstorm
-      <% end %>
+      <% end %> -->
 
-      &nbsp;
+      <!-- &nbsp; -->
 
       <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid), :class => "button" do %>
         <i class="fas fa-comment-alt"></i> 
