@@ -150,7 +150,7 @@
   <% if @goal.id != 1 %>
 
   <div class="view-actionables">
-    <%= link_to post_problem_path do %>
+    <%= link_to post_problem_path(:goal => @goal.id) do %>
       <i class="fas fa-pen"></i>
     <% end %>
   </div>

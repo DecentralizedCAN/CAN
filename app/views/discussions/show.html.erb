@@ -40,6 +40,12 @@
 
       <div class="discussion">
         <div class="discussion-title"><%= @discussion.title %> <span class="feed-label">Discussion</span></div>
+        <% if @discussion.goal %>
+          <div class="proposal-activity-description">
+            <i class="fas fa-link"></i>
+            Attached to goal <%= @discussion.goal.title %>
+          </div>
+        <% end %>
         <div class="issue-info">
             <div class="post-signature">
               <!-- <i class="fas fa-calendar"></i> -->

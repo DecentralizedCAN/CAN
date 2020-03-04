@@ -17,7 +17,6 @@
 
     <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
 
-
     <% if logged_in? && !@activity.roll.last.user.include?(@user) %>
       <% if @roll.user.include?(@user) %>
           <%= link_to unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" do %>

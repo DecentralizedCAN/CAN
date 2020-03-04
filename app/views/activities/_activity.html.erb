@@ -6,8 +6,15 @@
 				<div class="proposal-activity-description">
 					Proposal for <em><%= activity.solution.problem.title %></em>
 					with <%= activity.solution.score %>% estimated support
-				</div>
 			<% end %>
+
+      <% if activity.goal %>
+        <div class="proposal-activity-description">
+          <i class="fas fa-link"></i>
+          Attached to goal <strong><%= activity.goal.title %></strong>
+        </div>
+      <% end %>
+
 
       <div class="activity-info">
         <div class="post-signature">

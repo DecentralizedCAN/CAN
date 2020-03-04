@@ -78,6 +78,7 @@ class ActivitiesController < ApplicationController
                             :description => activity_params[:description],
                             :expiration => expiration,
                             :deadline => deadline,
+                            :goal_id => activity_params[:goal_id],
                             :creator => current_user.name)
 
     puts "---------------------------------"
@@ -329,7 +330,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:title, :description, :activation, :participants, :activation_minimum, :activation_maximum, :deadline, :expiration)
+      params.require(:activity).permit(:title, :description, :activation, :participants, :activation_minimum, :activation_maximum, :deadline, :expiration, :goal_id)
     end
 
     def public_viewable?

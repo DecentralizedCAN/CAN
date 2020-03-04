@@ -98,7 +98,7 @@ class DiscussionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def discussion_params
-      params.require(:discussion).permit(:title, :content, :problem_id)
+      params.require(:discussion).permit(:title, :content, :problem_id, :goal_id)
     end
 
     def public_viewable?

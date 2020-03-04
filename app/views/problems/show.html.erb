@@ -30,6 +30,13 @@
       <%end%>
     </div> -->
 
+    <% if @problem.goal %>
+      <div class="proposal-activity-description">
+        <i class="fas fa-link"></i>
+        Attached to goal <%= @problem.goal.title %>
+      </div>
+    <% end %>
+
     <div class="issue-info">
       <div class="post-signature">
         <!-- <i class="fas fa-calendar"></i> -->

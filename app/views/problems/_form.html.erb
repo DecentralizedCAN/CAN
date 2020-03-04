@@ -11,12 +11,19 @@
     </div>
   <% end %>
 
+  <% if params[:goal] %>
+    <% @goal = Goal.find(params[:goal]) %>
+    <p><i class="fas fa-link"></i> Attached to goal <strong><%= link_to @goal.title, goal_path(:goal_id => @goal.id) %> </strong></p>
+  <% end %>
+
   <div class="main-field">
     <h1>Title</h1>
     <%= form.text_area :title, id: :problem_title, placeholder: "Briefly summarize the issue you want to find solutions for" %>
 
     <h1>Details</h1>
     <%= form.text_area :description, id: :problem_description, placeholder: "Explain the issue in detail" %>
+
+    <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
 
     <% if Setting.first.state %>
       <div class="number-field-outer">

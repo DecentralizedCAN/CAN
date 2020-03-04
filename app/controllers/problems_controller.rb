@@ -175,7 +175,7 @@ class ProblemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def problem_params
-      params.require(:problem).permit(:title, :description, :suggestion_min)
+      params.require(:problem).permit(:title, :description, :suggestion_min, :goal_id)
     end
 
     def public_viewable?

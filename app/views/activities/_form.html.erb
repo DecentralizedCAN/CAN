@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="main">
+    <% if params[:goal] %>
+      <% @goal = Goal.find(params[:goal]) %>
+      <p><i class="fas fa-link"></i> Attached to goal <strong><%= link_to @goal.title, goal_path(:goal_id => @goal.id) %> </strong></p>
+    <% end %>
+    
     <h1>Title</h1>
     <%= form.text_area :title, id: :activity_title, placeholder: "Title" %>
     <h1>Details</h1>
@@ -23,6 +28,8 @@
     Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
     Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
   </div>
+
+  <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
 
   <div class="activation">
     <!-- <%= form.number_field :deadline, placeholder: 1, value: 1, min: 1 %>  -->
