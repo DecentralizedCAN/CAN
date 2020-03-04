@@ -160,17 +160,17 @@
   <ul class="goal-actionables actionables-right">
     <li>
       <!-- <a href=""><i class="fas fa-plus"></i></a> -->
-       0 
+       <%= Problem.where(:goal_id => @goal.id).count %>
       <i class="fas fa-brain"></i>
      </li>
     <li>
-       12 
+       <%= Activity.where(:goal_id => @goal.id).count %>
       <i class="fas fa-calendar"></i>
       <!-- &nbsp;<a href=""><i class="fas fa-plus"></i></a> -->
     </li>
     <li>
       <!-- <a href=""><i class="fas fa-plus"></i></a> -->
-       0 
+       <%= Discussion.where(:goal_id => @goal.id).count %>
       <i class="fas fa-comments"></i>
     </li>
   </ul>

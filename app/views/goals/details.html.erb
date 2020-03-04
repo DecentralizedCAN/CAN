@@ -58,30 +58,30 @@
 
   <h3>Brainstorms</h3>
   <ul>
-  <% @children.each do |link| %>
+  <% Problem.where(:goal_id => @goal.id).each do |brainstorm| %>
     <li>
       <i class="fas fa-brain"></i>
-      <%= link_to link.child.title, goal_path(link.child) %>    
+      <%= link_to brainstorm.title, issue_path(brainstorm) %>    
     </li>
   <% end %>
   </ul>  
 
   <h3>Actions</h3>
   <ul>
-  <% @children.each do |link| %>
+  <% Activity.where(:goal_id => @goal.id).each do |action| %>
     <li>
       <i class="fas fa-calendar"></i>
-      <%= link_to link.child.title, goal_path(link.child) %>
+      <%= link_to action.title, action_path(action) %>
     </li>
   <% end %>
   </ul>  
 
   <h3>Discussions</h3>
   <ul>
-  <% @children.each do |link| %>
+  <% Discussion.where(:goal_id => @goal.id).each do |discussion| %>
     <li>
       <i class="fas fa-comments"></i>
-      <%= link_to link.child.title, goal_path(link.child) %>
+      <%= link_to discussion.title, discussion_path(discussion) %>
     </li>
   <% end %>
   </ul>  
