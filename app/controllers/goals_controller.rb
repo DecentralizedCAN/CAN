@@ -59,12 +59,12 @@ class GoalsController < ApplicationController
 		if @goal.save
 
 			if params[:goal][:parent_id]
-				@link = Link.create(:child_id => @goal.id, :parent_id => params[:goal][:parent_id])
+				@link = Link.create(:child_id => @goal.id, :parent_id => params[:goal][:parent_id], :validate => false)
 				@link.user << current_user unless @link.user.include?(current_user)
 				
 				# redirect_to @goal
 			elsif params[:goal][:child_id]
-				@link = Link.create(:parent_id => @goal.id, :child_id => params[:goal][:child_id])
+				@link = Link.create(:parent_id => @goal.id, :child_id => params[:goal][:child_id], :validate => false)
 				@link.user << current_user unless @link.user.include?(current_user)
 
 				# redirect_to @goal
@@ -82,7 +82,7 @@ class GoalsController < ApplicationController
 				@link.user << current_user unless @link.user.include?(current_user)
 			else
 				# ONLY MAKES CHILD LINK, NOT PARENT LINK, CHANGE IF USING PARENT LINKS AGAIN
-				@link = Link.create(:child_id => @goal.id, :parent_id => params[:goal][:parent_id])
+				@link = Link.create(:child_id => @goal.id, :parent_id => params[:goal][:parent_id], :validate => false)
 				@link.user << current_user unless @link.user.include?(current_user)
 			end
 
@@ -109,7 +109,7 @@ class GoalsController < ApplicationController
 			@link = Link.find_by(:child_id => params[:child_id], :parent_id => params[:parent_id])
 
 			if !@link
-				@link = Link.create(:child_id => params[:child_id], :parent_id => params[:parent_id])
+				@link = Link.create(:child_id => params[:child_id], :parent_id => params[:parent_id], :validate => false)
 			end
 
 			@link.user << current_user unless @link.user.include?(current_user)
