@@ -80,44 +80,49 @@
 
   <% if @goal.id != 1 %>
 
-  <div class="mark-accomplished">
-    <% if @goal.users.include?(@user) %>
-      <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
-        <i class="fas fa-check-double"></i>
-      <% end %>
-    <% else %>
-      <%= link_to complete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
-        <i class="fas fa-check"></i>
-      <% end %>
+  <% if @goal.users.include?(@user) %>
+    <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
+      <div class="mark-accomplished">
+        <%= @goal.users.count if @goal.users.count > 0%>
+        <i class="fas fa-check-double"></i> Marked complete
+      </div>
     <% end %>
-  </div>
+  <% else %>
+    <%= link_to complete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
+      <div class="mark-accomplished">
+        <%= @goal.users.count if @goal.users.count > 0%>
+        <i class="fas fa-check"></i> Mark complete
+      </div>
+    <% end %>
+  <% end %>
+
   <br>
 
-  <ul class="goal-actionables actionables-left">
+  <!-- <div href="#" >Hover over me</div> -->
+
+  <!-- <ul class="goal-actionables actionables-left">
     <li>
-      <i class="fas fa-network-wired fa-rotate-180"></i>
-      <%= @parents.count %>
-      <!-- <a href=""><i class="fas fa-eye"></i></a> -->
-    </li>
-    <li>
-      <!-- <a href=""><i class="fas fa-eye"></i></a>&nbsp; -->
       <i class="fas fa-check-double"></i>
       <%= @goal.users.count %>
+      Marked achieved
+    </li>
+    <li>
+      <i class="fas fa-network-wired fa-rotate-180"></i>
+      <%=pluralize(@parents.count, 'Supergoal')%>
     </li>
     <li>
       <i class="fas fa-network-wired"></i>
-      <%= @children.count %>
-      <!-- <a href=""><i class="fas fa-eye"></i></a> -->
+      <%=pluralize(@children.count, 'Subgoal')%>
     </li>
-  </ul>
+  </ul> -->
 
-  <div class="line horizontal line-left"></div>
+  <!-- <div class="line horizontal line-left"></div> -->
 
-  <div class="view-goal-details">
-    <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
-      <i class="fas fa-list"></i>
-    <% end %>
-  </div>
+  <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
+    <div class="view-goal-details">
+      <i class="fas fa-list"></i> View details
+    </div>
+  <% end %>
 
 <% else %>
 
@@ -149,31 +154,28 @@
 
   <% if @goal.id != 1 %>
 
-  <div class="view-actionables">
-    <%= link_to post_problem_path(:goal => @goal.id) do %>
-      <i class="fas fa-pen"></i>
-    <% end %>
-  </div>
+  <%= link_to post_problem_path(:goal => @goal.id) do %>
+    <div class="view-actionables">
+      <i class="fas fa-pen"></i> Do something
+    </div>
+  <% end %>
 
-  <div class="line horizontal line-right"></div>
+  <!-- <div class="line horizontal line-right"></div> -->
 
-  <ul class="goal-actionables actionables-right">
+  <!-- <ul class="goal-actionables actionables-right">
     <li>
-      <!-- <a href=""><i class="fas fa-plus"></i></a> -->
-       <%= Problem.where(:goal_id => @goal.id).count %>
       <i class="fas fa-brain"></i>
-     </li>
+      <%= pluralize(Problem.where(:goal_id => @goal.id).count, 'Brainstorm') %>
+    </li>
     <li>
-       <%= Activity.where(:goal_id => @goal.id).count %>
       <i class="fas fa-calendar"></i>
-      <!-- &nbsp;<a href=""><i class="fas fa-plus"></i></a> -->
+      <%= pluralize(Activity.where(:goal_id => @goal.id).count, 'Action') %>
     </li>
     <li>
-      <!-- <a href=""><i class="fas fa-plus"></i></a> -->
-       <%= Discussion.where(:goal_id => @goal.id).count %>
       <i class="fas fa-comments"></i>
+      <%= pluralize(Discussion.where(:goal_id => @goal.id).count, 'Discussion') %>
     </li>
-  </ul>
+  </ul> -->
 
   <% end %>
 
@@ -193,7 +195,7 @@
 
 <div class="btn-group dropright">
   <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-plus"></i>
+    <i class="fas fa-plus"></i> Add subgoal
   </button>
   <div class="dropdown-menu">
     

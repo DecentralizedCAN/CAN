@@ -6,8 +6,12 @@
   overflow: auto;
 }
 
-.goal-node{
+.goal-node {
   text-align: center;
+
+  &.details {
+    color: #7f7f7f;
+  }
 
   h2.goals-title {
     // display: inline-block;
@@ -53,15 +57,16 @@
     padding: 2px 4px;
     border-radius: 2px;
     background: gainsboro;
+    text-align: left;
   }
 
   .actionables-right {
-    left: -6px;
+    // left: -6px;
     // text-align: left;
   }
 
   .actionables-left {
-    right: -6px;
+    // right: -6px;
     // text-align: right;
   }
 
@@ -92,7 +97,7 @@
     background-color: #dcdcdc;
     padding: 2px 4px;
     position: relative;
-    right: 12px;
+    // right: 12px;
     border: 1px solid #a9a9a9;
     color: gray;
 
@@ -106,7 +111,7 @@
     background-color: #dcdcdc;
     padding: 2px 4px;
     position: relative;
-    left: 12px;
+    // left: 12px;
     border: 1px solid #a9a9a9;
     color: gray;
 
