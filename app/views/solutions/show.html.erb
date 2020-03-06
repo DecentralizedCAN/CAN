@@ -48,7 +48,7 @@
 <div id="proposal-polling">
   <h1>Evaluation</h1><br>
 
-  Estimated support of this solution
+  Estimated collective support for this proposal
   <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
 
   <div class="score-bar-outer">
@@ -80,9 +80,17 @@
                 <div class="poll-bar-inner" style="width: 0"></div>
                 <span class="criterion-poll-text">Does the proposal meet this criteria?</span><br>
                 <div class="criterion-poll">
-                  <%= link_to "√ YES", set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 1), :method => "post", :class => "poll-yes" %>
                   
-                  <%= link_to "X NO", set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 0), :method => "post", :class => "poll-no" %>
+                  <%= link_to set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 1), :method => "post", :class => "poll-yes" do %>
+                    <i class="fas fa-check"></i>
+                    YES
+                  <% end %>
+                  
+                  <%= link_to set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 0), :method => "post", :class => "poll-no" do %>
+                    <i class="fas fa-times"></i>
+                    NO
+                  <% end %>
+
                 </div>
               </div>
             <% else %>
