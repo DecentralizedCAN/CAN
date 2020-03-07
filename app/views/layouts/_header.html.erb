@@ -22,7 +22,7 @@
           <%= link_to "All posts", main_feed_path if logged_in? || Setting.find(6).state %>
         </li>
         <li>
-          <%= link_to "Goals", goal_path(Goal.first) if logged_in? || Setting.find(6).state %>
+          <%= link_to "Goals", goal_path(Goal.first, :view => 'public') if logged_in? || Setting.find(6).state %>
         </li>
         <li>
           <%= link_to 'Create', post_problem_path if logged_in? && (Setting.first.state || current_user.admin?) %>

@@ -1,7 +1,7 @@
 <div class="goal-node details">
 
 <div class="back-button">
-  <%= link_to goal_path(:goal_id => @goal.hashid) do %>
+  <%= link_to goal_path(:goal_id => @goal.hashid, :view => 'public') do %>
     <div class="back-button-arrow"></div>
     <div class="back-button-content">
       View tree
@@ -31,10 +31,10 @@
   <h2>Leads to</h2>
   <ul>
   <% @public_parents.each do |link| %>
-    <li>
+    <li class="details-subgoal">
+      <%= link_to link.parent.title, goal_path(link.parent) %><br>
       <i class="fas fa-user-friends"></i>
       <%= link.user.count %>
-      <%= link_to link.parent.title, goal_path(link.parent) %>
     </li>
   <% end %>
   </ul>
@@ -44,10 +44,11 @@
   <h2>Helped by</h2>
   <ul>
   <% @public_children.each do |link| %>
-    <li>
-      <i class="fas fa-user-friends"></i>
+    <li class="details-subgoal">
+      <!-- <i class="fas fa-user-friends"></i>
       <%= link.user.count %>
-      <%= link_to link.child.title, goal_path(link.child) %>    
+      <%= link_to link.child.title, goal_path(link.child) %>   -->
+      <%= render(:partial => 'link_unlink_links', :locals => {:link => link, :@goal => @goal, :view => 'public'})%>
     </li>
   <% end %>
   </ul>

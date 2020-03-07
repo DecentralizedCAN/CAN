@@ -6,11 +6,11 @@
   <!-- ======================== -->
 
   <ul class="branches branches1">
-  <% @parents.last(9).each do |link| %>
+  <% @parents.each do |link| %>
     <li>
 
       <div>
-        <% @uplinks_2 = @user.link.where(child_id: link.parent.id).where.not(parent_id: @goal.id).last(9) %>      
+        <% @uplinks_2 = @user.link.where(child_id: link.parent.id).where.not(parent_id: @goal.id) %>      
       </div>
       <!-- <hr> -->
       <% if @uplinks_2.length > 0 %>
@@ -21,7 +21,7 @@
           <% @uplinks_2.each do |link2| %>
             <li>
               <!-- <hr> -->
-              <% @uplinks_3 = @user.link.where(child_id: link2.parent.id).where.not(parent_id: @goal.id).last(9) %>
+              <% @uplinks_3 = @user.link.where(child_id: link2.parent.id).where.not(parent_id: @goal.id) %>
               <% if @uplinks_3.length > 0  %>
                 
                 <!-- ======================== -->
@@ -30,7 +30,7 @@
                   <% @uplinks_3.each do |link3| %>
                     <li>
                       <!-- <hr> -->
-                      <% @uplinks_4 = @user.link.where(child_id: link3.parent.id).where.not(parent_id: @goal.id).last(9) %>
+                      <% @uplinks_4 = @user.link.where(child_id: link3.parent.id).where.not(parent_id: @goal.id) %>
                       <% if @uplinks_4.length > 0  %>
 
                         <!-- ======================== -->
@@ -40,7 +40,7 @@
                             <li>
 
 
-                            <% @uplinks_5 = @user.link.where(child_id: link4.parent.id).where.not(parent_id: @goal.id).last(9) %>
+                            <% @uplinks_5 = @user.link.where(child_id: link4.parent.id).where.not(parent_id: @goal.id) %>
                             <% if @uplinks_5.length > 0  %>
 
                               <!-- ======================== -->
