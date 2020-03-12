@@ -78,6 +78,11 @@ class UsersController < ApplicationController
 
   def resend_activation
     user = User.find_by(email: params[:session][:email].downcase)
+
+    if !user
+      user = User.find_by(email: params[:session][:email])      
+    end
+
     user.send_activation_email
   end
 
