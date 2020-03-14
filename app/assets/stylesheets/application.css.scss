@@ -47,7 +47,6 @@ video {
   width: 50%;
 }
 
-
 a {
   font-style: italic;
   color: inherit;
@@ -78,6 +77,10 @@ a.button, input.button {
 
 p {
   white-space: pre-wrap;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .flex-container {

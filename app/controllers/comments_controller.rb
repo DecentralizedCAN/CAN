@@ -45,7 +45,7 @@ class CommentsController < ApplicationController
       if @comment.save
 
         begin
-          upvote_post(@comment.discussion.post.id, current_user.id)
+          auto_upvote_post(@comment.discussion.post.id, current_user.id)
         rescue
         end
 

@@ -1,4 +1,24 @@
 <div id="main-feed">
+
+  <%= link_to main_feed_path do %>
+	  <!-- <i class="fas fa-sort"></i> -->
+    <% if params[:sort] == 'new' %>
+    	popular
+    <% else %>
+    	<span class="underline">popular</span>
+    <% end %>
+  <% end %>
+
+	&nbsp;
+
+  <%= link_to main_feed_path(:sort => 'new') do %>
+    <% if params[:sort] == 'new' %>
+    	<span class="underline">new</span>
+    <% else %>
+    	new
+    <% end %>
+  <% end %>
+
 	<div class="flex-container">
 		<ol class="new-posts">
 	  <% @posts.each do |post| %>
