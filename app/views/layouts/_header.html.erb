@@ -27,10 +27,18 @@
           <% end %>
         </li>
         <li>
-          <% if logged_in? && current_user.admin? %>
-            <%= link_to settings_path do %>
-              <i class="fas fa-cog"></i>
-              Settings
+          <% if logged_in? && (Setting.first.state || current_user.admin?) %>
+            <%= link_to post_problem_path do %>
+              <i class="fas fa-pen"></i>
+              Create
+            <% end %>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to users_path do %>
+            <% if logged_in? %>
+              <i class="fas fa-users"></i>
+              Members
             <% end %>
           <% end %>
         </li>
@@ -43,29 +51,29 @@
           <% end %>
         </li>
         <li>
-          <%= link_to users_path do %>
-            <i class="fas fa-users"></i>
-            Members
-          <% end %>
-        </li>
-        <li>
-          <% if logged_in? && (Setting.first.state || current_user.admin?) %>
-            <%= link_to post_problem_path do %>
-              <i class="fas fa-pen"></i>
-              Create
+          <% if logged_in? && current_user.admin? %>
+            <%= link_to settings_path do %>
+              <i class="fas fa-cog"></i>
+              Settings
             <% end %>
           <% end %>
         </li>
-
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <%= link_to notifications_path do %>
+          <% if logged_in? %>
+
+            <%= link_to notifications_path do %>
+
             <% if current_user.notification.where(:read => nil).count > 0 %>
-              <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
+                <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
             <% end %>
+
             <i class="fas fa-bell"></i>
             Notifications 
+
+            <% end %>
+
           <% end %>
         </li>
 
