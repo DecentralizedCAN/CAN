@@ -70,6 +70,16 @@ a.button, input.button {
   text-transform: uppercase;
   vertical-align: middle;
 
+  // font-style: normal;
+  // border: 1px solid #868686;
+  // padding: 2px 5px;
+  // background-color: #e4e4e4;
+  // color: #3a3a3a !important;
+  // border-radius: 2px;
+  // font-size: 10px;
+  // text-transform: uppercase;
+  // vertical-align: middle;
+
   &:hover {
     background-color: #bbb9b9;
   }
@@ -79,7 +89,7 @@ p {
   white-space: pre-wrap;
 }
 
-.underline {
+.underline-permanent {
   text-decoration: underline;
 }
 

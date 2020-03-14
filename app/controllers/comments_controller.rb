@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
 
     @comment = Comment.new(comment_params)
 
-    respond_to do |format|
+    # respond_to do |format|
       if @comment.save
 
         begin
@@ -59,22 +59,25 @@ class CommentsController < ApplicationController
         end
         # Notifications ends
 
-        if @comment.discussion.problem
-          format.html { redirect_to issue_path(@comment.discussion.problem.hashid, :anchor => "main-discussion") }
-        elsif @comment.discussion.activity
-          format.html { redirect_to action_path(@comment.discussion.activity.hashid, :anchor => "main-discussion") }
-        elsif @comment.discussion.solution
-          format.html { redirect_to solution_path(:problem_id => @comment.discussion.solution.problem.hashid, :solution_id => @comment.discussion.solution.hashid, :anchor => "main-discussion") }
-        else
-          format.html { redirect_to @comment.discussion }
-          format.json { render :show, status: :created, location: @comment }
-        end
+        # if @comment.discussion.problem
+        #   format.html { redirect_to issue_path(@comment.discussion.problem.hashid, :anchor => "main-discussion") }
+        # elsif @comment.discussion.activity
+        #   format.html { redirect_to action_path(@comment.discussion.activity.hashid, :anchor => "main-discussion") }
+        # elsif @comment.discussion.solution
+        #   format.html { redirect_to solution_path(:problem_id => @comment.discussion.solution.problem.hashid, :solution_id => @comment.discussion.solution.hashid, :anchor => "main-discussion") }
+        # else
+        #   format.html { redirect_to @comment.discussion }
+        #   format.json { render :show, status: :created, location: @comment }
+        # end
       else
-        format.html { redirect_to @comment.discussion, notice: 'Comment invalid' }
+        # format.html { redirect_to @comment.discussion, notice: 'Comment invalid' }
         # format.html { render :new }
         # format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
-    end
+
+      redirect_back fallback_location: root_path
+
+    # end
   end
 
   # PATCH/PUT /comments/1

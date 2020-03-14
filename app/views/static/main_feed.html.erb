@@ -5,7 +5,7 @@
     <% if params[:sort] == 'new' %>
     	popular
     <% else %>
-    	<span class="underline">popular</span>
+    	<span class="underline-permanent">popular</span>
     <% end %>
   <% end %>
 
@@ -13,7 +13,7 @@
 
   <%= link_to main_feed_path(:sort => 'new') do %>
     <% if params[:sort] == 'new' %>
-    	<span class="underline">new</span>
+    	<span class="underline-permanent">new</span>
     <% else %>
     	new
     <% end %>
@@ -143,7 +143,7 @@
 				      </li>
 				    <% elsif notification.discussion %>
 				      <li <%= 'class=unread' if !notification.read %> >
-				        The discussion <em><%= notification.discussion.title %></em> <%= notification.details %>
+				        <%= notification.details %>
 				      </li>
 				    <% elsif notification.activity %>
 				      <li <%= 'class=unread' if !notification.read %> >

@@ -4,10 +4,12 @@
   <h1>
     <!-- <%= @discussion.title %> -->
     Discussion
+
+    <%= link_to "Full view", discussion_path(@discussion), :id => "full-discussion-view" %>
+  
   </h1>
 
   <div class="discussion-column mini" id="main-discussion">
-    <!-- <%= link_to "Full view", discussion_path(@discussion), :id => "full-discussion-view" %> -->
 
     <% if @top_liked.length > 0 && @discussion.comment.count > 15 %>
 

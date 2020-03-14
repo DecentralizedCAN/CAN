@@ -28,7 +28,7 @@
       </li>
     <% elsif notification.discussion %>
       <li <%= 'class=unread' if !notification.read %> >
-        The discussion <em><%= notification.discussion.title %></em> <%= notification.details %>
+        <%= notification.details %>
       </li>
     <% elsif notification.activity %>
       <li <%= 'class=unread' if !notification.read %> >

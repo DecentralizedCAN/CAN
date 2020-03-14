@@ -4,27 +4,30 @@
     <%= link_to issue_path(@discussion.problem) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to brainstorm
+        <%= @discussion.problem.title %>
       </div>
     <% end %>
+    <h3> &nbsp; Discussion</h3>
   </div>
 <% elsif @discussion.activity %>
   <div class="back-button">
     <%= link_to action_path(@discussion.activity.hashid) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to action
+        <%= @discussion.activity.title %>
       </div>
     <% end %>
+    <h3> &nbsp; Discussion</h3>
   </div>
 <% elsif @discussion.solution %>
   <div class="back-button">
     <%= link_to solution_path(:problem_id => @discussion.solution.problem.hashid, :solution_id => @discussion.solution.hashid) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to solution
+        <%= @discussion.solution.title %>
       </div>
     <% end %>
+    <h3> &nbsp; Discussion</h3>
   </div>
 <% else %>
   <!-- <div class="back-button">
