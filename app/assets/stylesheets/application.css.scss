@@ -330,6 +330,10 @@ header {
   line-height: 30px;
 }
 
+.nav > li > a {
+  padding: 10px;
+}
+
 .navbar-toggle {
   /* (80px - button height 34px) / 2 = 23px */
   margin-top: 9px;
