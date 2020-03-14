@@ -106,6 +106,24 @@ class ProblemsController < ApplicationController
         # keep record of user activity
         @user.update(:last_posted => Time.now)
 
+        # Notifications
+        if problem_params[:goal_id].length > 0
+          @goal = Goal.find(problem_params[:goal_id])
+
+          @links = Link.where(:child_id => problem_params[:goal_id])
+
+          @links.each do |link|
+            link.user.each do |user|
+              notification = user.notification.create(:details => "was created for the goal \"" + @goal.title + "\"",
+                :problem_id => @problem.id)
+              if user.email_notifications
+                notification.send_email
+              end
+            end
+          end
+        end
+        # End notifications
+
         # @problem.send_problem_email
         format.html { redirect_to issue_path(@problem) }
         format.json { render :show, status: :created, location: @problem }

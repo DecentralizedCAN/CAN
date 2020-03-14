@@ -205,7 +205,7 @@ h2 {
       vertical-align: top;
 
       .flex-container {
-        max-width: 176px;
+        // max-width: 176px;
         margin: 2px;
       }
 
@@ -280,6 +280,7 @@ h2 {
   border: 1px solid gray;
   list-style: none;
   padding: 2px 4px !important;
+  margin-bottom: 10px !important;
 
   li {
     max-width: 600px;

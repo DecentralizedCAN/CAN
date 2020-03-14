@@ -128,6 +128,24 @@ class ActivitiesController < ApplicationController
         # track user activity
         current_user.update(:last_posted => Time.now)
 
+        # Notifications
+        if activity_params[:goal_id].length > 0
+          @goal = Goal.find(activity_params[:goal_id])
+
+          @links = Link.where(:child_id => activity_params[:goal_id])
+
+          @links.each do |link|
+            link.user.each do |user|
+              notification = user.notification.create(:details => "was created for the goal \"" + @goal.title + "\"",
+                :activity_id => @activity.id)
+              if user.email_notifications
+                notification.send_email
+              end
+            end
+          end
+        end
+        # End notifications
+
       # if @roll.save
 
         # @activity.send_activity_email
