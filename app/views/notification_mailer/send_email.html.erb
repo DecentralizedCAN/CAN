@@ -12,7 +12,7 @@
 	<% end %>
 <% elsif @notification.discussion %>
 	<% if @notification.discussion.problem %>
-		<%= link_to show_criterium_url(:criterium_id => @notification.discussion.problem.hashid) do %>
+		<%= link_to show_problem_url(:criterium_id => @notification.discussion.problem.hashid) do %>
 	  <p>
 			<%= @notification.details %> on the brainstorm <em><%= @notification.discussion.problem.title %></em> 
 	  </p>

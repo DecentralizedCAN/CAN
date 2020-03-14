@@ -21,6 +21,8 @@ class StaticController < ApplicationController
 			  .order("COUNT(upvotes.id) / (( extract(epoch from now()) - extract(epoch from posts.created_at) / 1.002) ) DESC")
 		end
 
+		# User.first.notification.create(:details => "test", :activity_id => 1)
+
     @current_time = Time.now.to_i
     @notifications = current_user.notification.order("created_at DESC").first(6) if logged_in?
 
@@ -33,6 +35,31 @@ class StaticController < ApplicationController
 	def notifications
     @notifications = current_user.notification.order("created_at DESC")
     .paginate(:page => params[:page], :per_page => 20)
+	end
+
+	def notification_redirect
+		@notification = Notification.find(params[:notification_id])
+		@notification.read = true
+		@notification.save
+
+		if @notification.activity
+			redirect_to action_path(@notification.activity.hashid)
+		elsif @notification.problem
+			redirect_to show_problem_path(:criterium_id => @notification.problem.hashid)
+		elsif @notification.criterium
+			redirect_to show_criterium_path(:criterium_id => @notification.criterium.hashid)
+		elsif @notification.discussion
+			redirect_to discussion_path(@notification.discussion.hashid)
+		end
+	end
+
+	def clear_notifications
+		current_user.notification.where(:read => nil).each do |notification|
+			notification.read = true
+			notification.save
+		end
+
+		redirect_to notifications_path
 	end
 
 	def destroy
