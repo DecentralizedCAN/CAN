@@ -222,7 +222,7 @@ class ActivitiesController < ApplicationController
       @roll.user << @user
 
       begin
-        upvote_post(@activity.post.id, @user.id)
+        auto_upvote_post(@activity.post.id, @user.id)
       rescue
       end
 

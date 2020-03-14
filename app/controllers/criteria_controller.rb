@@ -67,7 +67,7 @@ class CriteriaController < ApplicationController
       @criterium.user << @user
       
       begin
-        upvote_post(@criterium.problem.post.id, @user.id)
+        auto_upvote_post(@criterium.problem.post.id, @user.id)
       rescue
       end
           

@@ -22,13 +22,13 @@
 
     </div>
 
-    <!-- <div class="right-buttons">
+    <div class="right-buttons">
       <%if @problem.user.include?(@user)%>
         <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
       <%else%>
         <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
       <%end%>
-    </div> -->
+    </div>
 
     <div class="issue-info">
       <div>

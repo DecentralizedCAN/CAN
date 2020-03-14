@@ -148,7 +148,7 @@ class ProblemsController < ApplicationController
     @user = current_user
     @problem.user << @user unless @problem.user.include?(@user)
     begin
-      upvote_post(@problem.post.id, @user.id)
+      auto_upvote_post(@problem.post.id, @user.id)
     rescue
     end
     redirect_to issue_path(:problem_id => @problem.id)
