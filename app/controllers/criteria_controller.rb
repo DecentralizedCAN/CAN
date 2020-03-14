@@ -61,7 +61,7 @@ class CriteriaController < ApplicationController
   def create
     @user = current_user
     @criterium = Criterium.new(criterium_params)
-    @criterium.creator = @user.name
+    @criterium.creator = @user.id
 
     if @criterium.save
       @criterium.user << @user

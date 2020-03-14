@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200304051151) do
+ActiveRecord::Schema.define(version: 20200314032837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 20200304051151) do
     t.bigint "discussion_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "read"
     t.index ["activity_id"], name: "index_notifications_on_activity_id"
     t.index ["criterium_id"], name: "index_notifications_on_criterium_id"
     t.index ["discussion_id"], name: "index_notifications_on_discussion_id"

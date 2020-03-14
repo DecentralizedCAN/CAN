@@ -79,7 +79,7 @@ class ActivitiesController < ApplicationController
                             :expiration => expiration,
                             :deadline => deadline,
                             :goal_id => activity_params[:goal_id],
-                            :creator => current_user.name)
+                            :creator => current_user.id)
 
     puts "---------------------------------"
     puts activity_params
@@ -153,7 +153,7 @@ class ActivitiesController < ApplicationController
       @activity = Activity.new(:title => @solution.title,
                             :description => @solution.description,
                             :solution_id => @solution.id,
-                            :creator => @user.name)
+                            :creator => @user.id)
 
       respond_to do |format|
         if @activity.save

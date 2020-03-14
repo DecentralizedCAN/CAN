@@ -9,39 +9,34 @@
   <% end %>
 </div> -->
 
-<h1>Notifications</h1>
+<h1>
+  Notifications
+  <%= link_to 'Clear all', clear_notifications_path, :method => "post", :class => "button" %>
+</h1>
 
 <ol id="notifications">
 <% @notifications.each do |notification| %>
-	<% if notification.criterium %>
-		<%= link_to show_criterium_path(:criterium_id => notification.criterium.hashid) do %>
-	  <li>
-      <i class="fas fa-clipboard-list"></i>
-  		The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
-	  </li>
-		<% end %>
-	<% elsif notification.problem %>
-		<%= link_to show_criterium_path(:criterium_id => notification.problem.hashid) do %>
-	  <li>
-      <i class="fas fa-brain"></i>
-  		The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
-	  </li>
-		<% end %>
-	<% elsif notification.discussion %>
-		<%= link_to discussion_path(notification.discussion.hashid) do %>
-	  <li>
-      <i class="fas fa-comments"></i>
-  		<%= notification.details %>
-	  </li>
-		<% end %>
-	<% elsif notification.activity %>
-		<%= link_to action_path(notification.activity.hashid) do %>
-	  <li>
-      <i class="fas fa-calendar"></i>
-  		The action <em><%= notification.activity.title %></em> <%= notification.details %>
-	  </li>
-		<% end %>
-	<% end %>
+  <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+
+    <% if notification.criterium %>
+      <li <%= 'class=unread' if !notification.read %> >
+        The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
+      </li>
+    <% elsif notification.problem %>
+      <li <%= 'class=unread' if !notification.read %> >
+        The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
+      </li>
+    <% elsif notification.discussion %>
+      <li <%= 'class=unread' if !notification.read %> >
+        <%= notification.details %>
+      </li>
+    <% elsif notification.activity %>
+      <li <%= 'class=unread' if !notification.read %> >
+        The action <em><%= notification.activity.title %></em> <%= notification.details %>
+      </li>
+    <% end %>
+
+  <% end %>
 <% end %>
 </ol>
 

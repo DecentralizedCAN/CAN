@@ -191,7 +191,7 @@
 
 <% if logged_in? && current_user.admin? %>
   <span class="admin-section">
-    Created by <%= @discussion.creator %> –
+    Created by user <%= @discussion.creator %> –
     <%= link_to 'Remove', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>
   </span>
 <% end %>

@@ -25,17 +25,30 @@
           <%= link_to "Goals", goal_path(Goal.first, :view => 'public') if logged_in? || Setting.find(6).state %>
         </li>
         <li>
-          <%= link_to 'Create', post_problem_path if logged_in? && (Setting.first.state || current_user.admin?) %>
+          <%= link_to 'Settings', settings_path if logged_in? && current_user.admin? %>
         </li>
         <li>
-          <%= link_to 'Settings', settings_path if logged_in? && current_user.admin? %>
+          <%= link_to "Guide", documentation_path if logged_in? || Setting.find(6).state %>
+        </li>
+        <li>
+          <%= link_to "Members", users_path %>
+        </li>
+        <li>
+          <%= link_to 'Create', post_problem_path if logged_in? && (Setting.first.state || current_user.admin?) %>
         </li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Guide", documentation_path if logged_in? || Setting.find(6).state %></li>
+        <li>
+          <%= link_to notifications_path do %>
+            <% if current_user.notification.where(:read => nil).count > 0 %>
+              <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
+            <% end %>
+            Notifications 
+          <% end %>
+        </li>
+
         <% if logged_in? %>
-          <li><%= link_to "Members", users_path %></li>
           <li><%= link_to current_user.name, current_user %></li>
         <% else %>
           <li><%= link_to "Log in", login_path if Setting.find(6).state %></li>

@@ -109,7 +109,7 @@
 
   <% if logged_in? && current_user.admin? %>
     <br><br>
-    Created by <%= @activity.creator %> –
+    Created by user <%= @activity.creator %> –
     <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>
   <% end %>
 </div>

@@ -153,7 +153,7 @@
 <% if logged_in? && current_user.admin? %>
   <br>
   <span class="admin-section">
-    Created by <%= @solution.creator %> –
+    Created by user <%= @solution.creator %> –
     <%= link_to "Remove", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
   </span>
 <% end %>
