@@ -54,7 +54,12 @@
 		              <div class="post-signature">
 		                <!-- <i class="fas fa-calendar"></i> -->
 		                Created <%= time_ago_in_words(post.problem.created_at) %> ago
-          					by <em><%= post.problem.creator %></em>
+          					by
+          					<em><%= 
+				            begin 
+				              User.find(post.problem.creator).name
+				            rescue 
+				            end  %></em>
 		              </div>
 		              <br>
 		              <div>
@@ -96,7 +101,12 @@
 	              <div class="post-signature">
 	                <!-- <i class="fas fa-calendar"></i> -->
 	                Created <%= time_ago_in_words(post.discussion.created_at) %> ago
-        					by <em><%= post.discussion.creator %></em>
+        					by
+        					<em><%= 
+			            begin 
+			              User.find(post.discussion.creator).name
+			            rescue 
+			            end  %></em>
 	              </div>
 	              <br>
 	              <div>

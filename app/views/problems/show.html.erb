@@ -41,7 +41,12 @@
       <div class="post-signature">
         <!-- <i class="fas fa-calendar"></i> -->
         Created <%= time_ago_in_words(@problem.created_at) %> ago
-        by <em><%= @problem.creator %></em>
+        by
+        <em><%= 
+        begin 
+          User.find(@problem.creator).name
+        rescue 
+        end  %></em>
       </div>
       <br>
       <div>

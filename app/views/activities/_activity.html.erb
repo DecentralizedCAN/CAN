@@ -26,7 +26,11 @@
         <div class="post-signature">
           <!-- <i class="fas fa-calendar"></i> -->
           Created <%= time_ago_in_words(activity.created_at) %> ago
-          by <em><%= activity.creator %></em>
+          by <em><%= 
+            begin 
+              User.find(activity.creator).name
+            rescue 
+            end  %></em>
 
         </div>
 

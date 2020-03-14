@@ -15,9 +15,8 @@
     <%= form.text_area :title, id: :solution_title, placeholder: "Title" %>
     <%= form.text_area :description, id: :solution_description, placeholder: "Description" %>
 
-    <% if Setting.find(9) %>
+    <% if Setting.find(9).state %>
       <div class="activation">
-        <b> Participants </b><br>
         <%= form.hidden_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
         <%= form.hidden_field :activation_maximum, placeholder: "∞", min: 1 %>
       </div>
