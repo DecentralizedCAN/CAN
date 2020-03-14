@@ -42,7 +42,7 @@ class DiscussionsController < ApplicationController
   # POST /discussions.json
   def create
     @discussion = Discussion.new(discussion_params)
-    @discussion.creator = current_user.name
+    @discussion.creator = current_user.id
 
     respond_to do |format|
       if @discussion.save

@@ -90,7 +90,7 @@ class ProblemsController < ApplicationController
     @user = this_user
     @problem = Problem.new(problem_params)
     @problem.suggestion_min = 1 if @problem.suggestion_min == nil
-    @problem.creator = current_user.name
+    @problem.creator = current_user.id
 
     respond_to do |format|
       if @problem.save
@@ -101,7 +101,7 @@ class ProblemsController < ApplicationController
         @post.upvotes.create(user_id: current_user.id)
 
         # create discussion
-        @discussion = Discussion.create(:problem => @problem, :title => "Discussion", :content => "Discussion for #{@problem.title}", :creator => @user.name)
+        @discussion = Discussion.create(:problem => @problem, :title => "Discussion", :content => "Discussion for #{@problem.title}", :creator => @user.id)
 
         # keep record of user activity
         @user.update(:last_posted => Time.now)
