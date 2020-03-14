@@ -17,6 +17,16 @@
 
     <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
 
+    <% if @activity.solution && @activity.solution.problem %>
+      <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid), :class => "button" do %>
+        <i class="fas fa-comment-alt"></i> 
+        View original proposal
+      <% end %>
+      
+      &nbsp;
+      
+    <% end %>
+
     <% if logged_in? && !@activity.roll.last.user.include?(@user) %>
       <% if @roll.user.include?(@user) %>
           <%= link_to unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" do %>
@@ -33,23 +43,6 @@
     <% end %>
 
     &nbsp;
-
-    <% if @activity.solution && @activity.solution.problem %>
-
-<!--       <%= link_to issue_path(@activity.solution.problem.hashid), :class => "button" do %>
-        <i class="fas fa-handshake"></i>
-
-        View original brainstorm
-      <% end %> -->
-
-      <!-- &nbsp; -->
-
-      <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid), :class => "button" do %>
-        <i class="fas fa-comment-alt"></i> 
-        View original proposal
-      <% end %>
-    <% end %>
-
 
     <% if logged_in? %>
       <% if @activity.roll.first.user.include?(@user) %>
