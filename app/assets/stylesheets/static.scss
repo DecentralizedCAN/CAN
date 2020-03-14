@@ -273,15 +273,15 @@ h2 {
 // NOTIFICATIONS
 #notifications {
   background-color: white;
-  padding: 6px 20px !important;
   border: 1px solid gray;
+  list-style: none;
+  padding: 2px 4px !important;
 
   li {
-    // list-style: none;
-    padding: 2px 4px;
-    margin: 8px 4px;
-    box-shadow: 0px 3px 6px 0px #d0d0d0;
-    border: 1px solid #efefef;
+    max-width: 600px;
+    width: fit-content;
+    margin: 4px 0px;
+    padding: 0px 2px;
   }
 }
 
@@ -300,17 +300,6 @@ h2 {
 
 .vertical {
   flex-direction: column;
-}
-
-#notifications{ 
-  list-style: none;
-
-  li {
-    max-width: 600px;
-    width: fit-content;
-    margin: 4px 0px;
-    padding: 0px 2px;
-  }
 }
 
 .notification-number {
