@@ -258,6 +258,10 @@ h2 {
 	margin: 4px;
   margin-left: 0;
 	background-color: $offwhite;
+  
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .dashboard-item li a {
@@ -282,6 +286,10 @@ h2 {
     width: fit-content;
     margin: 4px 0px;
     padding: 0px 2px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

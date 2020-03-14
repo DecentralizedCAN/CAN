@@ -152,12 +152,11 @@
 
 
   <% if @goal.id != 1 %>
-
-  <%= link_to post_problem_path(:goal => @goal.id) do %>
-    <div class="view-actionables">
-      <i class="fas fa-pen"></i>
-    </div>
-  <% end %>
+    <%= link_to post_problem_path(:goal => @goal.id) do %>
+      <div class="view-actionables">
+        <i class="fas fa-pen"></i>
+      </div>
+    <% end %>
 
   <!-- <div class="line horizontal line-right"></div> -->
 

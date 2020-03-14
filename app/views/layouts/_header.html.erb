@@ -21,19 +21,24 @@
         <li>
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to main_feed_path do %>
-              <i class="fas fa-th-list"></i>
+              <i class="fas fa-bullhorn"></i>
               Posts
             <% end %>
           <% end %>
-        </li>
-        <li>
-          <%= link_to "Goals", goal_path(Goal.first, :view => 'public') if logged_in? || Setting.find(6).state %>
         </li>
         <li>
           <% if logged_in? && (Setting.first.state || current_user.admin?) %>
             <%= link_to post_problem_path do %>
               <i class="fas fa-pen"></i>
               Create
+            <% end %>
+          <% end %>
+        </li>
+        <li>
+          <% if logged_in? || Setting.find(6).state %>
+            <%= link_to goal_path(Goal.first, :view => 'public') do %>
+              <i class="fas fa-project-diagram"></i>
+              Goals
             <% end %>
           <% end %>
         </li>
@@ -49,7 +54,7 @@
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to documentation_path do %>
               <i class="fas fa-book"></i>
-              Documentation
+              Guide
             <% end %>
           <% end %>
         </li>
