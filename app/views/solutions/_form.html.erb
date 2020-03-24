@@ -15,11 +15,18 @@
     <%= form.text_area :title, id: :solution_title, placeholder: "Title" %>
     <%= form.text_area :description, id: :solution_description, placeholder: "Description" %>
 
-    <div class="activation">
-      <b> Participants </b><br>
-      Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
-      Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
-    </div>
+    <% if Setting.find(9).state %>
+      <div class="activation">
+        <%= form.hidden_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
+        <%= form.hidden_field :activation_maximum, placeholder: "∞", min: 1 %>
+      </div>
+    <% else %>
+      <div class="activation">
+        <b> Participants </b><br>
+        Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
+        Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
+      </div>
+    <% end %>
 
   </div>
 

@@ -19,21 +19,71 @@
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="#">All posts <span class="sr-only">(current)</span></a></li> -->
         <li>
-          <%= link_to "All posts", main_feed_path if logged_in? || Setting.find(6).state %>
+          <% if logged_in? || Setting.find(6).state %>
+            <%= link_to main_feed_path do %>
+              <i class="fas fa-th-list"></i>
+              Posts
+            <% end %>
+          <% end %>
         </li>
         <li>
-          <%= link_to 'Create', post_problem_path if logged_in? && (Setting.first.state || current_user.admin?) %>
+          <% if logged_in? && (Setting.first.state || current_user.admin?) %>
+            <%= link_to post_problem_path do %>
+              <i class="fas fa-pen"></i>
+              Create
+            <% end %>
+          <% end %>
         </li>
         <li>
-          <%= link_to 'Settings', settings_path if logged_in? && current_user.admin? %>
+          <%= link_to users_path do %>
+            <% if logged_in? %>
+              <i class="fas fa-users"></i>
+              Members
+            <% end %>
+          <% end %>
         </li>
-
+        <li>
+          <% if logged_in? || Setting.find(6).state %>
+            <%= link_to documentation_path do %>
+              <i class="fas fa-book"></i>
+              Guide
+            <% end %>
+          <% end %>
+        </li>
+        <li>
+          <% if logged_in? && current_user.admin? %>
+            <%= link_to settings_path do %>
+              <i class="fas fa-cog"></i>
+              Settings
+            <% end %>
+          <% end %>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Guide", documentation_path if logged_in? || Setting.find(6).state %></li>
+        <li>
+          <% if logged_in? %>
+
+            <%= link_to notifications_path do %>
+
+            <% if current_user.notification.where(:read => nil).count > 0 %>
+                <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
+            <% end %>
+
+            <i class="fas fa-bell"></i>
+            Notifications 
+
+            <% end %>
+
+          <% end %>
+        </li>
+
         <% if logged_in? %>
-          <li><%= link_to "Members", users_path %></li>
-          <li><%= link_to current_user.name, current_user %></li>
+          <li>
+            <%= link_to current_user do %>
+              <i class="fas fa-user-cog"></i>
+              <%= current_user.name %>
+            <% end %>
+          </li>
         <% else %>
           <li><%= link_to "Log in", login_path if Setting.find(6).state %></li>
         <% end %>

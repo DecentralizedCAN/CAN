@@ -56,7 +56,7 @@ class SolutionsController < ApplicationController
     @solution = Solution.new(:title => solution_params[:title],
                             :description => solution_params[:description],
                             :problem_id => solution_params[:problem_id],
-                            :creator => current_user.name)
+                            :creator => current_user.id)
 
     if solution_params[:activation_minimum].to_i > 0 
       minimum = solution_params[:activation_minimum]

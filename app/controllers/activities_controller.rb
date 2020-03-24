@@ -1,4 +1,6 @@
 class ActivitiesController < ApplicationController
+  include UpvoteHelper
+
   before_action :set_activity, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
   before_action :require_login, except: [:show], if: -> { public_viewable? }
@@ -76,7 +78,7 @@ class ActivitiesController < ApplicationController
                             :description => activity_params[:description],
                             :expiration => expiration,
                             :deadline => deadline,
-                            :creator => current_user.name)
+                            :creator => current_user.id)
 
     puts "---------------------------------"
     puts activity_params
@@ -150,7 +152,7 @@ class ActivitiesController < ApplicationController
       @activity = Activity.new(:title => @solution.title,
                             :description => @solution.description,
                             :solution_id => @solution.id,
-                            :creator => @user.name)
+                            :creator => @user.id)
 
       respond_to do |format|
         if @activity.save
@@ -218,6 +220,11 @@ class ActivitiesController < ApplicationController
     @activity = @roll.activity
     unless @roll.user.include?(@user) || (@roll.maximum && @roll.user.count >= @roll.maximum)
       @roll.user << @user
+
+      begin
+        auto_upvote_post(@activity.post.id, @user.id)
+      rescue
+      end
 
       # Notifications
       if @roll.user.count == @roll.minimum

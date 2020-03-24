@@ -16,7 +16,7 @@ $label-blue: #81c4ff;
 
     &:hover {
       .issue-title {
-        text-decoration: underline;
+        // text-decoration: underline;
       }
     }
   }
@@ -234,6 +234,31 @@ h2 {
 
 .vertical {
   flex-direction: column;
+}
+
+#notifications{ 
+  list-style: none;
+
+  li {
+    max-width: 600px;
+    width: fit-content;
+    margin: 4px 0px;
+    padding: 0px 2px;
+  }
+}
+
+.notification-number {
+  position: relative;
+  left: 4px;
+  top: -4px;
+  background-color: #61e2ff;
+  border-radius: 10px;
+  padding: 2px 6px;
+}
+
+.unread {
+  border: 1px solid gray;
+  background-color: lightgray;
 }
 
 // ABOUT

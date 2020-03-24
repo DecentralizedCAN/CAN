@@ -1,4 +1,24 @@
 <div id="main-feed">
+
+  <%= link_to main_feed_path do %>
+	  <!-- <i class="fas fa-sort"></i> -->
+    <% if params[:sort] == 'new' %>
+    	popular
+    <% else %>
+    	<span class="underline">popular</span>
+    <% end %>
+  <% end %>
+
+	&nbsp;
+
+  <%= link_to main_feed_path(:sort => 'new') do %>
+    <% if params[:sort] == 'new' %>
+    	<span class="underline">new</span>
+    <% else %>
+    	new
+    <% end %>
+  <% end %>
+
 	<div class="flex-container">
 		<ol class="new-posts">
 	  <% @posts.each do |post| %>
@@ -89,33 +109,33 @@
 		  		<%= link_to "view all", notifications_path, :id => "all-notifications" %>
 		  	</div>
 
-			  <% @notifications.each do |notification| %>
-					<% if notification.criterium %>
-			  		<%= link_to show_criterium_path(:criterium_id => notification.criterium.hashid) do %>
-					  <li>
-				  		The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
-					  </li>
-						<% end %>
-					<% elsif notification.problem %>
-			  		<%= link_to show_criterium_path(:criterium_id => notification.problem.hashid) do %>
-					  <li>
-				  		The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
-					  </li>
-						<% end %>
-					<% elsif notification.discussion %>
-			  		<%= link_to discussion_path(notification.discussion.hashid) do %>
-					  <li>
-				  		<%= notification.details %>
-					  </li>
-						<% end %>
-					<% elsif notification.activity %>
-			  		<%= link_to action_path(notification.activity.hashid) do %>
-					  <li>
-				  		The action <em><%= notification.activity.title %></em> <%= notification.details %>
-					  </li>
-						<% end %>
-					<% end %>
-			  <% end %>
+				<ol id="notifications">
+				<% @notifications.each do |notification| %>
+				  <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+
+				    <% if notification.criterium %>
+				      <li <%= 'class=unread' if !notification.read %> >
+				        The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
+				      </li>
+				    <% elsif notification.problem %>
+				      <li <%= 'class=unread' if !notification.read %> >
+				        The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
+				      </li>
+				    <% elsif notification.discussion %>
+				      <li <%= 'class=unread' if !notification.read %> >
+				        <%= notification.details %>
+				      </li>
+				    <% elsif notification.activity %>
+				      <li <%= 'class=unread' if !notification.read %> >
+				        The action <em><%= notification.activity.title %></em> <%= notification.details %>
+				      </li>
+				    <% end %>
+
+				  <% end %>
+				<% end %>
+				</ol>
+
+
 			</div>
 	  	<% end %>
 

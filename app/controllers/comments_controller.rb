@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include UpvoteHelper
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :require_login
 
@@ -42,6 +43,11 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+
+        begin
+          auto_upvote_post(@comment.discussion.post.id, current_user.id)
+        rescue
+        end
 
         # Notifications
         if @linked_user

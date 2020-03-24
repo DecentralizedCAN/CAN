@@ -1,4 +1,5 @@
 class ProblemsController < ApplicationController
+  include UpvoteHelper
   before_action :set_problem, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create]
   before_action :require_login, except: [:show], if: -> { public_viewable? }
@@ -89,7 +90,7 @@ class ProblemsController < ApplicationController
     @user = this_user
     @problem = Problem.new(problem_params)
     @problem.suggestion_min = 1 if @problem.suggestion_min == nil
-    @problem.creator = current_user.name
+    @problem.creator = current_user.id
 
     respond_to do |format|
       if @problem.save
@@ -100,7 +101,7 @@ class ProblemsController < ApplicationController
         @post.upvotes.create(user_id: current_user.id)
 
         # create discussion
-        @discussion = Discussion.create(:problem => @problem, :title => "Discussion", :content => "Discussion for #{@problem.title}", :creator => @user.name)
+        @discussion = Discussion.create(:problem => @problem, :title => "Discussion", :content => "Discussion for #{@problem.title}", :creator => @user.id)
 
         # keep record of user activity
         @user.update(:last_posted => Time.now)
@@ -146,6 +147,10 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:problem_id])
     @user = current_user
     @problem.user << @user unless @problem.user.include?(@user)
+    begin
+      auto_upvote_post(@problem.post.id, @user.id)
+    rescue
+    end
     redirect_to issue_path(:problem_id => @problem.id)
   end
 

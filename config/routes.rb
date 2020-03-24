@@ -35,8 +35,11 @@ Rails.application.routes.draw do
   post '/solver/suggest/:solution_id', to: 'activities#suggest', :as => :suggest
   resources :activities, only: [:create, :destroy]
 
-  get 'commitments', to: 'static#commitments', :as => :commitment
   get 'notifications', to: 'static#notifications', :as => :notifications
+  get 'notification_redirect/:notification_id', to: 'static#notification_redirect', :as => :notification_redirect
+  post 'notifications/clear', to: 'static#clear_notifications', :as => :clear_notifications
+
+  get 'commitments', to: 'static#commitments', :as => :commitment
   get '', to: 'static#main_feed', :as => :main_feed
   get 'guide', to: 'static#documentation', :as => :documentation
   get 'manage', to: 'static#manage', :as => :manage

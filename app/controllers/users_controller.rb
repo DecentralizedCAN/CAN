@@ -48,6 +48,8 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.email = user_params[:email].downcase
+
     @user.admin = String(rand(382132))
     @user.superadmin = String(rand(382130))
     
@@ -78,6 +80,11 @@ class UsersController < ApplicationController
 
   def resend_activation
     user = User.find_by(email: params[:session][:email].downcase)
+
+    if !user
+      user = User.find_by(email: params[:session][:email])      
+    end
+
     user.send_activation_email
   end
 

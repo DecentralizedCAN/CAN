@@ -46,7 +46,6 @@ video {
   width: 50%;
 }
 
-
 a {
   font-style: italic;
   color: inherit;
@@ -68,6 +67,7 @@ a.button, input.button {
   border-radius: 2px;
   font-size: 10px;
   text-transform: uppercase;
+  vertical-align: middle;
 
   &:hover {
     background-color: #bbb9b9;
@@ -76,6 +76,10 @@ a.button, input.button {
 
 p {
   white-space: pre-wrap;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .flex-container {
@@ -327,6 +331,10 @@ header {
   padding: 0 10px;
   height: 20px;
   line-height: 30px;
+}
+
+.nav > li > a {
+  padding: 10px;
 }
 
 .navbar-toggle {
