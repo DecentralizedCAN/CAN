@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200314032837) do
+ActiveRecord::Schema.define(version: 20200325215034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,24 @@ ActiveRecord::Schema.define(version: 20200314032837) do
     t.datetime "updated_at", null: false
     t.index ["discussion_id"], name: "index_comments_on_discussion_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "completed", force: :cascade do |t|
+    t.bigint "roll_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roll_id"], name: "index_completed_on_roll_id"
+    t.index ["user_id"], name: "index_completed_on_user_id"
+  end
+
+  create_table "completions", force: :cascade do |t|
+    t.bigint "roll_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roll_id"], name: "index_completions_on_roll_id"
+    t.index ["user_id"], name: "index_completions_on_user_id"
   end
 
   create_table "crialts", force: :cascade do |t|
@@ -341,6 +359,10 @@ ActiveRecord::Schema.define(version: 20200314032837) do
   add_foreign_key "blinks", "problems", column: "brainstorm_id"
   add_foreign_key "comments", "discussions"
   add_foreign_key "comments", "users"
+  add_foreign_key "completed", "rolls"
+  add_foreign_key "completed", "users"
+  add_foreign_key "completions", "rolls"
+  add_foreign_key "completions", "users"
   add_foreign_key "crialts", "criteria"
   add_foreign_key "cridissents", "criteria"
   add_foreign_key "cridissents", "users"

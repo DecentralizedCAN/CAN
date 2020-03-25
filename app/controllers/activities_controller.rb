@@ -119,7 +119,7 @@ class ActivitiesController < ApplicationController
           minimum = 1 unless role['minimum'].to_i > 0          
 
           maximum = role['maximum'].to_i
-          maximum = nil unless role['maximum'].to_i > minimum
+          maximum = nil unless role['maximum'].to_i >= minimum
 
           Roll.create(:title => role['title'],
                       :description => role['description'],
@@ -183,12 +183,11 @@ class ActivitiesController < ApplicationController
 
           @solution.roll.first.update(:activity_id => @activity.id)
 
-          # create completed roll
-          @roll = Roll.create(:title => "completed",
-                          :description => "completed",
-                          :minimum => 1,
-                          :maximum => nil,
-                          :activity_id => @activity.id)
+          # migrate roles
+          @solution.roll.each do |role|
+            role.activity_id = @activity.id
+            role.save
+          end
 
           @post = Post.create(:activity => @activity)
           @post.upvotes.create(user_id: current_user.id)
@@ -284,12 +283,20 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
-    @activity = Activity.find(params[:activity_id])
-    @roll = @activity.roll.last
-    unless @roll.user.include?(current_user)
-      @roll.user << current_user
-      redirect_to action_path(:activity_id => @roll.activity.id)
+    @role = Roll.find(params[:roll_id])
+
+    unless Completion.where(user_id: current_user.id).where(roll_id: @role.id).count > 0
+      Completion.create(user_id: current_user.id, roll_id: @role.id)
+
+      redirect_back fallback_location: root_path      
     end
+
+    # @activity = Activity.find(params[:activity_id])
+    # @roll = @activity.roll.last
+    # unless @roll.user.include?(current_user)
+    #   @roll.user << current_user
+    #   redirect_to action_path(:activity_id => @roll.activity.id)
+    # end
   end
 
   def dissent

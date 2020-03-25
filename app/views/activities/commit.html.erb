@@ -5,6 +5,8 @@
 
 <% if @roll.description.length > 0 %>
   <strong>Description: </strong><p><%= @roll.description %></p>
+________________
+
 <% end %>
 
 <p>You are about to commit to a role in this collective action.
@@ -14,7 +16,7 @@ Right now, <%= @roll.user.count %> people out of the required <%= @roll.minimum 
 
 <strong>If activated I agree to fulfill the following role: "<%= @roll.title %>"</strong>
 
-<br>
+<br><br>
 
 <%= link_to action_path(@roll.activity.hashid), :class => "button" do %>
 	<i class="fa fa-times"></i> Cancel

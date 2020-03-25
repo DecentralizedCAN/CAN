@@ -18,7 +18,7 @@
     <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
 
     <% if @activity.solution && @activity.solution.problem %>
-      <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid), :class => "button" do %>
+      <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid) do %>
         <i class="fas fa-comment-alt"></i>
         View original proposal
       <% end %>
@@ -89,9 +89,7 @@
         <% @activity.roll.each do |role| %>
           <li>
 
-            <div><strong><%= role.title %></strong></div>
-
-            <div><%= role.description %></div>
+            <div><strong><%= role.title %></strong> &nbsp;<%= role.description %></div>
 
             <div class="role-progress">
               
@@ -103,33 +101,43 @@
                 </div>
               </div>
 
+              <div class="written-progress-overlay">
+                <i class="fas fa-users"></i>
+                <% if !role.maximum %>
+                  <%= role.user.count %> committed/<%= role.minimum %>-∞
+                <% elsif role.minimum < role.maximum %>
+                  <%= role.user.count %> committed/<%= role.minimum %>-<%= role.maximum %>
+                <% else %>
+                  <%= role.user.count %> committed/<%= role.minimum %>
+                <% end %>
+                needed
+              </div>
+
             </div>
 
-            <% if role.user.include?(@user) %>
-              <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
-                <i class="fa fa-times"></i>
-                Uncommit
+            <% if Completion.where(user_id: @user.id).where(roll_id: role.id).count > 0 %>
+              <span class="completed"><i class="fa fa-check"></i>completed</span>
+            <% else %>
+
+              <% if role.user.include?(@user) %>
+                <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
+                  <i class="fa fa-times"></i>
+                  Uncommit
+                <% end %>
+
+                <%= link_to complete_path(:roll_id => role.id), :method => "post", :class => "button complete" do %>
+                  <i class="fa fa-check"></i>
+                  Mark complete
+                <% end %>
+
+              <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
+                <%= link_to commit_path(:roll_id => role.id), :class => "button commit" do %>
+                  <i class="fas fa-user-plus"></i>
+                  Commit
+                <% end %>
               <% end %>
-            <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
-              <%= link_to commit_path(:roll_id => role.id), :class => "button commit" do %>
-                <!-- <div class="commit-button"> -->
-                <i class="fas fa-user-plus"></i>
-                Commit
-                <!-- </div> -->
-              <% end %>
+
             <% end %>
-
-            <div class="written-progress-overlay">
-              <i class="fas fa-users"></i>
-              <% if !role.maximum %>
-                <%= role.user.count %> committed/<%= role.minimum %>-∞
-              <% elsif role.minimum < role.maximum %>
-                <%= role.user.count %> committed/<%= role.minimum %>-<%= role.maximum %>
-              <% else %>
-                <%= role.user.count %> committed/<%= role.minimum %>
-              <% end %>
-              needed
-            </div>
 
           </li>
         <% end %>

@@ -75,11 +75,29 @@ class SolutionsController < ApplicationController
       if @solution.save
         # @solution.send_solution_email
 
-        @roll = Roll.create(:title => "participant",
-                        :description => "participant",
-                        :minimum => minimum,
-                        :maximum => maximum,
-                        :solution_id => @solution.id)
+        # @roll = Roll.create(:title => "participant",
+        #                 :description => "participant",
+        #                 :minimum => minimum,
+        #                 :maximum => maximum,
+        #                 :solution_id => @solution.id)
+
+        @roles = JSON.parse(solution_params[:role_json])
+
+        @roles.each do |role|
+
+          minimum = role['minimum'].to_i
+          minimum = 1 unless role['minimum'].to_i > 0          
+
+          maximum = role['maximum'].to_i
+          maximum = nil unless role['maximum'].to_i >= minimum
+
+          Roll.create(:title => role['title'],
+                      :description => role['description'],
+                      :minimum => minimum,
+                      :maximum => maximum,
+                      :solution_id => @solution.id)
+
+        end
 
         # create discussion
         @discussion = Discussion.create(:solution => @solution, :title => "Discussion", :content => "Discussion for #{@solution.title}")
@@ -157,6 +175,6 @@ class SolutionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def solution_params
-      params.require(:solution).permit(:title, :description, :problem_id, :activation_minimum, :activation_maximum)
+      params.require(:solution).permit(:title, :description, :problem_id, :role_json)
     end
 end
