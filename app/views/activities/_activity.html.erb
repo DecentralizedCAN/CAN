@@ -24,14 +24,14 @@
 
       <div class="written-progress">
         <i class="fas fa-users"></i>
-        <% if !activity.roll.first.maximum %>
-          <%= activity.roll.first.user.count %>/<%= activity.roll.first.minimum %>-∞
-        <% elsif activity.roll.first.minimum < activity.roll.first.maximum %>
-          <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>-<%=activity.roll.first.maximum %>
+        <% if !total_maximum(activity) %>
+          <%= total_committed(activity) %>/<%= total_minimum(activity) %>-∞
+        <% elsif total_minimum(activity) < total_maximum(activity) %>
+          <%= total_committed(activity) %>/<%=total_minimum(activity) %>-<%= total_maximum(activity) %>
         <% else %>
-          <%= activity.roll.first.user.count %>/<%=activity.roll.first.minimum %>
+          <%= total_committed(activity) %>/<%=total_minimum(activity) %>
         <% end %>
-        participants
+        filled roles
       </div>
     </div>
 
@@ -39,18 +39,18 @@
       
       <div class="participation-meter">
         <div class="participation-progress" style="
-        width: <%= activity.roll.first.user.count.to_f / activity.roll.first.minimum.to_f * 100 + 1%>%; 
-        background-color: rgba(255, 116, 85, <%= activity.roll.first.user.count.to_f / activity.roll.first.minimum.to_f %>);
+        width: <%= total_committed(activity).to_f / total_minimum(activity).to_f * 100 + 1%>%; 
+        background-color: rgba(255, 116, 85, <%= total_committed(activity).to_f / total_minimum(activity).to_f %>);
         ">
         </div>
       </div>
 
-      <% if activity.roll.last.user.include?(@user) %>
+<!--       <% if activity.roll.last.user.include?(@user) %>
         <span class="committed"><i class="fa fa-check"></i> completed</span>
       <% elsif activity.roll.first.user.include?(@user) %>
         <span class="committed"><i class="fa fa-check"></i> you are committed</span>
       <% end %>
-
+ -->
     </div>
 
     <% if activity.actdissent.count > 0 %>

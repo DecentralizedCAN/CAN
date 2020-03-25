@@ -1,13 +1,21 @@
 <div class="backdrop">
 
-<h1>Become a <%= @roll.title %> for <strong><%= @roll.activity.title %></strong></h1>
-<!-- @roll.description -->
-<p>You are about to commit to participate in this collective action.
-The action will only take place if there are enough participants. 
-Right now, <%= @roll.user.count %> participants have committed, and <%= @roll.minimum %> are needed.
+<h2>Commit to a role</h2>
+<h1 <%= @roll.title %> for <strong><%= @roll.activity.title %></strong></h1>
+
+<% if @roll.description.length > 0 %>
+  <strong>Description: </strong><p><%= @roll.description %></p>
+<% end %>
+
+<p>You are about to commit to a role in this collective action.
+The action will only take place if all roles in this action are filled. 
+Right now, <%= @roll.user.count %> people out of the required <%= @roll.minimum %> people have committed to this role.
 </p>
-If activated I commit to being a <%= @roll.title %>:
-<br><br>
+
+<strong>If activated I agree to fulfill the following role: "<%= @roll.title %>"</strong>
+
+<br>
+
 <%= link_to action_path(@roll.activity.hashid), :class => "button" do %>
 	<i class="fa fa-times"></i> Cancel
 <% end %>

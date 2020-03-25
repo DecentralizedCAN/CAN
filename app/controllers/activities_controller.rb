@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
   include UpvoteHelper
+  include ActivitiesHelper
 
   before_action :set_activity, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
@@ -9,6 +10,7 @@ class ActivitiesController < ApplicationController
 
   require 'time'
   require 'date'
+  require 'json'
 
   # GET /activities
   # GET /activities.json
@@ -103,18 +105,35 @@ class ActivitiesController < ApplicationController
       if @activity.save
 
         # create participant roll
-        @roll = Roll.create(:title => "participant",
-                        :description => "participant",
-                        :minimum => minimum,
-                        :maximum => maximum,
-                        :activity_id => @activity.id)
+        # @roll = Roll.create(:title => "participant",
+        #                 :description => "participant",
+        #                 :minimum => minimum,
+        #                 :maximum => maximum,
+        #                 :activity_id => @activity.id)
+
+        @roles = JSON.parse(activity_params[:role_json])
+
+        @roles.each do |role|
+
+          minimum = role['minimum'].to_i
+          minimum = 1 unless role['minimum'].to_i > 0          
+
+          maximum = role['maximum'].to_i
+          maximum = nil unless role['maximum'].to_i > minimum
+
+          Roll.create(:title => role['title'],
+                      :description => role['description'],
+                      :minimum => minimum,
+                      :maximum => maximum,
+                      :activity_id => @activity.id)
+        end
 
         # create completed roll
-        @roll = Roll.create(:title => "completed",
-                        :description => "completed",
-                        :minimum => 1,
-                        :maximum => nil,
-                        :activity_id => @activity.id)
+        # @role = Roll.create(:title => "completed",
+        #                 :description => "completed",
+        #                 :minimum => 1,
+        #                 :maximum => nil,
+        #                 :activity_id => @activity.id)
 
 
         # create post and upvote
@@ -227,9 +246,9 @@ class ActivitiesController < ApplicationController
       end
 
       # Notifications
-      if @roll.user.count == @roll.minimum
+      if total_committed(@roll.activity) == total_minimum(@roll.activity)
         @roll.user.each do |user|
-          notification = user.notification.create(:details => "has reached minimum participation and will take place",
+          notification = user.notification.create(:details => "has enough participants to take place",
             :activity_id => @activity.id)
           notification.send_email
         end
@@ -329,7 +348,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:title, :description, :activation, :participants, :activation_minimum, :activation_maximum, :roll_title, :deadline, :expiration)
+      params.require(:activity).permit(:title, :description, :role_json, :deadline, :expiration)
     end
 
     def public_viewable?

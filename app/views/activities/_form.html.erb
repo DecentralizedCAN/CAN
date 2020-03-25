@@ -18,41 +18,86 @@
     <%= form.text_area :description, id: :activity_description, placeholder: "Description" %>
   </div>
 
-  <div class="activation">
-    <!-- <b> Participants </b><br> -->
-    <b>Roll title:</b>
-    <%= form.text_field :roll_title, id: :roll_title, placeholder: "Participant" %>
-    &nbsp;
-    <b>Participation:</b>
-    Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
-    Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
-    <i class="fas fa-times"></i>
+  <div id="activation">
+    <h1>Roles</h1>
+
+    <%= form.hidden_field :role_json, id: :role_json %>
+
+    <div class="role">
+      <b>Title:</b>
+      <%= form.text_field :role_title, id: :role_title, placeholder: "Participant" %>
+      <b>Description:</b>
+      <%= form.text_field :role_description, id: :role_description %>
+      <b>Needed:</b>
+      Min <%= form.number_field :activation_minimum, id: :role_minimum, placeholder: 1, value: 1, min: 1 %> 
+      Max <%= form.number_field :activation_maximum, id: :role_maximum, placeholder: "∞", min: 1 %>
+    </div>
+
   </div>
 
-  <div class="activation">
-    <!-- <b> Participants </b><br> -->
-    <b>Roll title:</b>
-    <%= form.text_field :roll_title, id: :roll_title, placeholder: "Participant" %>
-    &nbsp;
-    <b>Participation:</b>
-    Min <%= form.number_field :activation_minimum, placeholder: 1, value: 1, min: 1 %> 
-    Max <%= form.number_field :activation_maximum, placeholder: "∞", min: 1 %>
-    <i class="fas fa-times"></i>
-  </div>
 
-  <i class="fas fa-plus"></i>
+  <div id="add-role"><i class="fas fa-plus"></i> Add role</div>
 
 
   <div class="activation">
     <!-- <%= form.number_field :deadline, placeholder: 1, value: 1, min: 1 %>  -->
     <!-- <%= form.number_field :deadline, placeholder: 0, min: 1 %> -->
     <!-- <br> -->
-    <b>Days until action expires</b>
+
+    <!-- <b>Days until action expires</b> -->
     <!-- <%= form.number_field :expiration, placeholder: 1, value: 1, min: 1 %> -->
-    <%= form.number_field :expiration, placeholder: "∞", min: 1 %>
+    <!-- <%= form.number_field :expiration, placeholder: "∞", min: 1 %> -->
+
   </div>
 
   <%= form.submit value: "Post", id: :submit_action do %>
   <% end %>
 
 <% end %>
+
+
+<script type="text/javascript">
+  
+  $('#add-role').click(function(){
+    $('#activation').append('<div class="role"><b>Title: </b><input id="role_title" placeholder="Participant" type="text" name="activity[role_title]"><b> Description: </b><input id="role_description" type="text" name="activity[role_description]"><b> Needed: </b>Min <input id="role_minimum" placeholder="1" value="1" min="1" type="number" name="activity[activation_minimum]"> Max <input id="role_maximum" placeholder="∞" min="1" type="number" name="activity[activation_maximum]"> <i class="fas fa-times remove-role button"></i></div>')
+
+      $('.remove-role').click(function(){
+        console.log('hi')
+        $(this).parent().remove()
+      })
+  })
+
+  $('.form-tab > form').submit(function(){
+
+      role_json = []
+      roles = $('.role')
+
+      for (var i = 0; i < roles.length; i++) {
+        role = {}
+
+        title = $(roles[i]).find("#role_title")[0].value
+        description = $(roles[i]).find("#role_description")[0].value
+        minimum = $(roles[i]).find("#role_minimum")[0].value
+        maximum = $(roles[i]).find("#role_maximum")[0].value
+
+        role["title"] = title
+        if (title == "") {role["title"] = "Participant"}
+
+        role["description"] = description
+        if (description == "") {role["description"] = ""}
+
+        role["minimum"] = minimum
+        if (minimum == "") {role["minimum"] = 1}
+
+        role["maximum"] = maximum
+        if (maximum == "") {role["maximum"] = 0}
+
+        role_json.push(role)
+      }
+
+      $('#role_json').val(JSON.stringify(role_json))
+
+      return
+  })
+
+</script>

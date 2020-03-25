@@ -19,7 +19,7 @@
 
     <% if @activity.solution && @activity.solution.problem %>
       <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid), :class => "button" do %>
-        <i class="fas fa-comment-alt"></i> 
+        <i class="fas fa-comment-alt"></i>
         View original proposal
       <% end %>
       
@@ -27,24 +27,9 @@
       
     <% end %>
 
-    <% if logged_in? && !@activity.roll.last.user.include?(@user) %>
-      <% if @roll.user.include?(@user) %>
-          <%= link_to unparticipate_path(:roll_id => @roll.id), :method => "post", :class => "button" do %>
-            <i class="fa fa-times"></i>
-            Uncommit
-          <% end %>
-      <% elsif !@activity.actdissent.find_by(user: @user) && (!@roll.maximum || @roll.user.count < @roll.maximum) %>
-          <%= link_to commit_path(:roll_id => @roll.id), :class => "button" do %>
-            <!-- <div class="commit-button"> -->
-              <i class="fas fa-user-plus"></i> Participate
-            <!-- </div> -->
-          <% end %>
-      <% end %>
-    <% end %>
+    <!-- &nbsp; -->
 
-    &nbsp;
-
-    <% if logged_in? %>
+  <!--   <% if logged_in? %>
       <% if @activity.roll.first.user.include?(@user) %>
       <% unless @activity.roll.last.user.include?(@user) %>
         <%= link_to complete_path(:activity_id => @activity.id), :method => "post", :class => "button" do %>
@@ -53,9 +38,11 @@
         <% end %>
       <% end %>
       <% end %>
-    <% end %>
+    <% end %> -->
     
   </div>
+
+  <p class="discussion-content"><%= @activity.description %></p>
 
   <div class="dissent-activity">
     <%if @activity.actdissent.find_by(user: @user)%>
@@ -93,11 +80,65 @@
   <div>
   <% end %>
 
-    <div id="action-details">
-      <h1>Details</h1>
-      <p><%= @activity.description %></p>
+  <div id="action-details">
+
+    <h1>Roles</h1>
+    <div>
+      <ul class="all-roles">
+        <% if logged_in? %>
+        <% @activity.roll.each do |role| %>
+          <li>
+
+            <div><strong><%= role.title %></strong></div>
+
+            <div><%= role.description %></div>
+
+            <div class="role-progress">
+              
+              <div class="participation-meter participation-meter-outer">
+                <div class="participation-progress" style="
+                width: <%= role.user.count.to_f / role.minimum.to_f * 100 + 1%>%; 
+                background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
+                ">
+                </div>
+              </div>
+
+            </div>
+
+            <% if role.user.include?(@user) %>
+              <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
+                <i class="fa fa-times"></i>
+                Uncommit
+              <% end %>
+            <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
+              <%= link_to commit_path(:roll_id => role.id), :class => "button commit" do %>
+                <!-- <div class="commit-button"> -->
+                <i class="fas fa-user-plus"></i>
+                Commit
+                <!-- </div> -->
+              <% end %>
+            <% end %>
+
+            <div class="written-progress-overlay">
+              <i class="fas fa-users"></i>
+              <% if !role.maximum %>
+                <%= role.user.count %> committed/<%= role.minimum %>-∞
+              <% elsif role.minimum < role.maximum %>
+                <%= role.user.count %> committed/<%= role.minimum %>-<%= role.maximum %>
+              <% else %>
+                <%= role.user.count %> committed/<%= role.minimum %>
+              <% end %>
+              needed
+            </div>
+
+          </li>
+        <% end %>
+        <% end %>
+      
+      </ul>
     </div>
-    <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>  
+
+    <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>
   </div>
 
   <% if logged_in? && current_user.admin? %>

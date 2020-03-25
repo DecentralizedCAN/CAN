@@ -58,7 +58,7 @@ $offwhite: #f5f5f5;
 }
 
 .participation-progress {
-	height: 12px;
+	height: 100%;
 	float: left;
   border-radius: 2px;
   max-width: 101%;
@@ -70,6 +70,54 @@ $offwhite: #f5f5f5;
   font-weight: 600;
   font-size: 10px;
   letter-spacing: -0.2px;
+
+  // display: inline-block;
+  // color: black;
+  // font-weight: 600;
+  // font-size: 10px;
+  // letter-spacing: -0.2px;
+  // width: 200px;
+  // text-align: center;
+  // position: relative;
+  // top: -21px;
+}
+
+.role-progress {
+  width: fit-content;
+  display: inline-block;
+}
+
+.commit {
+  position: relative;
+  top: -5.5px;
+}
+
+.participation-meter-outer {
+  height: 18px !important;
+}
+
+.all-roles {
+  margin-top: 6px;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin-bottom: 4px;
+  }
+}
+
+.written-progress-overlay {
+  position: relative;
+  top: -5px;
+  left: -274px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.white {
+  color: white;
 }
 
 .committed {
@@ -91,6 +139,8 @@ $offwhite: #f5f5f5;
   div {
     display: inline-block;
   }
+
+  line-height: 15px;
 }
 
 #role_title {
@@ -153,6 +203,41 @@ $offwhite: #f5f5f5;
   &:hover {
     background-color: #cc5d44;
   }
+}
+
+.role {
+  margin-top: 4px;
+
+  input {
+    margin: 2px;
+  }
+
+  #role_description {
+    width: 200px;
+  }
+
+  #role_minimum, #role_maximum {
+    width: 40px;
+  }
+}
+
+#add-role {
+  width: fit-content;
+  padding: 0px 4px;
+  border: 1px solid #5a5757;
+  color: #5a5757;
+  background-color: #dadada;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+
+  i {
+    color: #5a5757;
+  }
+}
+
+.remove-role {
+  cursor: pointer;
 }
 
 #action-columns {

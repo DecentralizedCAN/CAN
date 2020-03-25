@@ -30,6 +30,7 @@ html, body {
     margin: 0px;
     padding: 0px;
     overflow-x: hidden; 
+    // line-height: 15px;
 }
 
 * {
@@ -116,7 +117,7 @@ textarea:focus, input:focus {
 
 
 .participation-meter {
-	height: 14px;
+	height: 12px;
 	border: 1px solid;
 }
 
