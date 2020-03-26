@@ -8,7 +8,13 @@ class ApplicationController < ActionController::Base
 
 	  def require_login
 	    unless current_user
-	      redirect_to login_url
+
+	    	if Setting.find(6)
+        	flash[:warning] = "You must log in to do that"
+    			redirect_back fallback_location: root_path
+	    	else
+		      redirect_to login_url
+	    	end
 	    end
 	  end
 

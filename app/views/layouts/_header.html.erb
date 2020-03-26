@@ -26,30 +26,32 @@
             <% end %>
           <% end %>
         </li>
-        <li>
-          <% if logged_in? && (Setting.first.state || current_user.admin?) %>
-            <%= link_to post_problem_path do %>
-              <i class="fas fa-pen"></i>
-              Create
-            <% end %>
-          <% end %>
-        </li>
+        <% if logged_in? && (Setting.first.state || current_user.admin?) %>
+          <li>
+              <%= link_to post_problem_path do %>
+                <i class="fas fa-pen"></i>
+                Create
+              <% end %>
+          </li>
+        <% end %>
+        
+        <% if logged_in? %>
         <li>
           <%= link_to users_path do %>
-            <% if logged_in? %>
               <i class="fas fa-users"></i>
               Members
             <% end %>
-          <% end %>
         </li>
-        <li>
-          <% if logged_in? || Setting.find(6).state %>
-            <%= link_to documentation_path do %>
-              <i class="fas fa-book"></i>
-              Guide
-            <% end %>
-          <% end %>
-        </li>
+        <% end %>
+
+        <% if logged_in? || Setting.find(6).state %>
+          <li>
+              <%= link_to documentation_path do %>
+                <i class="fas fa-book"></i>
+                Guide
+              <% end %>
+          </li>
+        <% end %>
         <li>
           <% if logged_in? && current_user.admin? %>
             <%= link_to settings_path do %>
@@ -85,7 +87,7 @@
             <% end %>
           </li>
         <% else %>
-          <li><%= link_to "Log in", login_path if Setting.find(6).state %></li>
+          <!-- <li><%= link_to "Log in", login_path if Setting.find(6).state %></li> -->
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
