@@ -1,0 +1,16 @@
+<% if Setting.find(6) && !logged_in? %>
+
+<%= form_for(:session, url: login_path) do |f| %>
+  Name <%= f.text_field :email, class: 'form-mini' %>
+
+  Email 
+  <%= "(optional)" if Setting.find(7).state == false %>
+
+  <%= f.text_field :add_email, id: :user_email, :class => "form-mini" %>
+
+  Password <%= f.password_field :password, class: 'form-mini' %>
+
+  <%= f.submit "Sign up/in", class: "button" %>
+<% end %>
+
+<% end %>
