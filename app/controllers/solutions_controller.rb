@@ -3,7 +3,7 @@ class SolutionsController < ApplicationController
 
   before_action :set_solution, only: [:show, :edit, :update, :destroy, :poll]
   before_action :check_activity, only: [:create]
-  before_action :require_login
+  before_action :require_login, except: [:show]
 
   # GET /solutions
   # GET /solutions.json
