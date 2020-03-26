@@ -174,9 +174,10 @@ textarea:focus, input:focus {
     content: attr(aria-label);
     left: -5px;
     padding: 2px;
+    padding-right: 4px !important;
     position: absolute;
     text-transform: none;
-    top: -26px;
+    top: -24px;
     z-index: 4;
   }
 
@@ -235,12 +236,24 @@ textarea:focus, input:focus {
   color: gray;
 }
 
+.lightgray {
+  color: #b9b9b9;
+}
+
 .red {
   color: #ff7455;
 }
 
 .green {
   color: $dissent-green;
+}
+
+.darkgreen {
+  color: #049aa2;
+}
+
+.crimson {
+  color: #983333;
 }
 
 

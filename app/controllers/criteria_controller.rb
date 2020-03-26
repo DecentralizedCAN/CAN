@@ -1,6 +1,7 @@
 class CriteriaController < ApplicationController
   include UpvoteHelper
   include SolutionsHelper
+  include CommentsHelper
 
   before_action :set_criterium, only: [:show, :dissent_form, :edit, :update]
   before_action :require_login
@@ -86,6 +87,8 @@ class CriteriaController < ApplicationController
 
     update_all_solution_scores(@criterium.problem.id)
 
+    auto_upvote_post(@criterium.problem.post.id, @user.id)
+
     redirect_back fallback_location: root_path
   end
 
@@ -107,6 +110,16 @@ class CriteriaController < ApplicationController
     if @criterium.cridissent.where(user_id: @user.id).empty?
       @dissenter = @criterium.cridissent.new(:user_id => @user.id, :title => params[:cridissent][:title])
       if @dissenter.save
+
+        # log in chat
+        if params[:cridissent][:title].length > 0
+          content = ': ' + params[:cridissent][:title]
+        else
+          content = ''
+        end
+
+        new_comment('!chatlog objected to a criterion (' + @criterium.title + ')' + content, @criterium.problem.discussion.id)
+
         # send notifications
           if @criterium.cridissent.count == 1
             @criterium.user.each do |user|
@@ -122,7 +135,8 @@ class CriteriaController < ApplicationController
         update_all_solution_scores(@criterium.problem.id)
 
         flash[:success] = "You made an objection. Thanks for your input!"
-        redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
+        # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
+        redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
       end
     end
   end
@@ -133,17 +147,24 @@ class CriteriaController < ApplicationController
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
     @dissenter.destroy
 
+    new_comment('!chatlog no longer objects to a criterion (' + @criterium.title + ')', @criterium.problem.discussion.id)
+
     update_all_solution_scores(@criterium.problem.id)
     
-    redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
+    # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
+    redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
   end
 
   def alt
+    @criterium = Criterium.find(params[:from])
     @alternative = Crialt.new(:criterium_id => params[:from], :alternative => params[:to], :transferred_user_count => 0)
     
     if Crialt.where(criterium_id: params[:from]).where(alternative: params[:to]).count > 0
       redirect_to show_criterium_path(:criterium_id => params[:from])
     elsif @alternative.save
+
+      new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @criterium.title + '"', @criterium.problem.discussion.id)
+
       flash[:success] = "Thanks for your suggestion!"
       redirect_to show_criterium_path(:criterium_id => params[:from])
     end

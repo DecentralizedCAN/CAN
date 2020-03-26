@@ -1,7 +1,6 @@
-.comment {
+.comment, .chatlog {
 	min-height: 18px;
 	min-width: 10px;
-	display: inline-block;
 	margin: 0;
 	max-width: calc(100% - 34px);
 	background-color: transparent;
@@ -9,4 +8,21 @@
  	a {
  		color: #3a3a3a !important;
  	}
+}
+
+.chatlog {
+  color: gray !important;
+  font-style: italic;
+}
+
+.discussion-column {
+  li {
+    div {
+      display: inline;
+    }
+  }
+}
+
+.time {
+  color: gray !important;
 }

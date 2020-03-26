@@ -8,7 +8,7 @@ class Discussion < ApplicationRecord
   has_many :comment, dependent: :destroy
   has_many :notification, dependent: :destroy
   
-  validates :title, presence: true, length: { minimum: 6, maximum: 2000 }
+  validates :title, presence: true, length: { minimum: 1, maximum: 2000 }
 
   encrypts :title
   encrypts :content

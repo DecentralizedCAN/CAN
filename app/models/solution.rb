@@ -8,8 +8,8 @@ class Solution < ApplicationRecord
   has_one :activity
   has_one :discussion, dependent: :destroy
 
-  validates :title, presence: true, length: { minimum: 6, maximum: 2000 }
-  validates :description, presence: true, length: { minimum: 6, maximum: 2000 }
+  validates :title, presence: true, length: { minimum: 1, maximum: 2000 }
+  validates :description, presence: true, length: { minimum: 1, maximum: 2000 }
 
   encrypts :title
   encrypts :description

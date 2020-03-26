@@ -14,12 +14,11 @@
 <div class="criterion-outer">
 
 <div class="criterion-action-box">
-	<h3>Objections (<%= @criterium.cridissent.count %>)</h3>
 	<div class="criterium-dissent">
 		<%if @criterium.cridissent.find_by(user: @user)%>
 	    <div>
-	      you objected: <%= @criterium.cridissent.find_by(user: @user).title %>
-	      <em><%= link_to "remove objection", assent_criteria_path(:criterium_id => @criterium.id), :method => "post" %></em>
+	      <strong>You objected</strong> <%= @criterium.cridissent.find_by(user: @user).title %>
+	      <em>(<%= link_to "remove objection", assent_criteria_path(:criterium_id => @criterium.id), :method => "post" %>)</em>
 	    </div>
 	  <%else%>
 		  <%= form_for(@criterium.cridissent.new, :url => dissent_criteria_path, remote: true) do |form| %>
@@ -28,17 +27,27 @@
 		    <div class="dissent-title"><%= form.text_area :title, placeholder: "I cannot support a proposal that meets this criterion because" %></div>
 		    <!-- <div class="submit-dissent"> -->
 		    <div>
-		    	<%= form.submit "Object", :class => "button" %>
+		    	<%= form.submit "Object to this criterion", :class => "button object-button" %>
 	    	</div>
 		  <% end %>
 	  <%end%>
 
 	</div>
 	<!-- <hr> -->
+	<h3>Objections (<%= @criterium.cridissent.count %>)</h3>
+
 	<ul><% @criterium.cridissent.each do |dissent| %>
-  	<%if dissent.title%>
-  	<li><%= dissent.title %></li>
-  	<%end%>
+		<li>
+	  	<%if dissent.user%>
+				<strong><%= dissent.user.name %></strong>
+
+		  	<% if dissent.title.length > 0 %>
+			  	<%= dissent.title %>
+		  	<% else %>
+		  		objected to this criterion
+		  	<%end%>
+	  	<%end%>
+  	</li>
 	<% end %>
 </div>
 

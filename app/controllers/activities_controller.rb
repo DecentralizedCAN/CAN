@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
   include UpvoteHelper
+  include CommentsHelper
 
   before_action :set_activity, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
@@ -178,6 +179,8 @@ class ActivitiesController < ApplicationController
           # create discussion
           @discussion = Discussion.create(:activity => @activity, :title => "Activity", :content => "Discussion for #{@activity.title}")
 
+          new_comment('!chatlog posted the solution "' + @solution.title + '" as an action', @solution.problem.discussion.id)
+
           # Notifications
             # if @roll.user.count == @roll.minimum && @user.email_notifications
           @solution.user.each do |user|
@@ -221,6 +224,8 @@ class ActivitiesController < ApplicationController
     unless @roll.user.include?(@user) || (@roll.maximum && @roll.user.count >= @roll.maximum)
       @roll.user << @user
 
+      new_comment('!chatlog committed to the role "' + @roll.title + '"', @activity.discussion.id)
+
       begin
         auto_upvote_post(@activity.post.id, @user.id)
       rescue
@@ -248,6 +253,8 @@ class ActivitiesController < ApplicationController
     @roll = Roll.find(params[:roll_id])
     if @roll.user.include?(current_user)
       @roll.user.delete(current_user)
+
+      new_comment('!chatlog can no longer commit to the role "' + @roll.title + '"', @roll.activity.discussion.id)
 
       # Notifications
       if @roll.user.count < @roll.minimum
