@@ -81,22 +81,24 @@ class SolutionsController < ApplicationController
         #                 :maximum => maximum,
         #                 :solution_id => @solution.id)
 
-        @roles = JSON.parse(solution_params[:role_json])
+        if solution_params[:role_json]
+          @roles = JSON.parse(solution_params[:role_json])
 
-        @roles.each do |role|
+          @roles.each do |role|
 
-          minimum = role['minimum'].to_i
-          minimum = 1 unless role['minimum'].to_i > 0          
+            minimum = role['minimum'].to_i
+            minimum = 1 unless role['minimum'].to_i > 0          
 
-          maximum = role['maximum'].to_i
-          maximum = nil unless role['maximum'].to_i >= minimum
+            maximum = role['maximum'].to_i
+            maximum = nil unless role['maximum'].to_i >= minimum
 
-          Roll.create(:title => role['title'],
-                      :description => role['description'],
-                      :minimum => minimum,
-                      :maximum => maximum,
-                      :solution_id => @solution.id)
+            Roll.create(:title => role['title'],
+                        :description => role['description'],
+                        :minimum => minimum,
+                        :maximum => maximum,
+                        :solution_id => @solution.id)
 
+          end
         end
 
         # create discussion

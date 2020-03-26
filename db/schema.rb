@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200325215034) do
+ActiveRecord::Schema.define(version: 20200326032536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -260,6 +260,7 @@ ActiveRecord::Schema.define(version: 20200325215034) do
     t.datetime "updated_at", null: false
     t.text "creator_ciphertext"
     t.bigint "goal_id"
+    t.boolean "require_action"
     t.index ["goal_id"], name: "index_problems_on_goal_id"
   end
 

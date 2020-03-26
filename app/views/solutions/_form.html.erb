@@ -22,6 +22,8 @@
       </div>
     <% else %>
 
+    <% if @problem.require_action %>
+
       <div id="activation">
         <h1>Roles</h1>
 
@@ -41,6 +43,8 @@
 
       <div id="add-role"><i class="fas fa-plus"></i> Add role</div>
 
+      <% end %>
+
     <% end %>
 
   </div>
@@ -50,6 +54,14 @@
   <%= form.submit "Propose", id: :submit_action %>
 <% end %>
 
+
+
+
+
+
+
+
+<% if @problem.require_action %>
 
 <script type="text/javascript">
   
@@ -96,3 +108,4 @@
   })
 
 </script>
+<% end %>

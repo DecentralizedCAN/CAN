@@ -15,34 +15,63 @@
 
     <p class="discussion-content"><%= @solution.description %></p>
 
-    <br>
-    <% if @solution.roll.first.maximum %>
-      <p>Participation requirement: <%=@solution.roll.first.minimum %> to <%=@solution.roll.first.maximum %> people</p>
-    <% else %>
-      <p>Participation minimum: <%=pluralize(@solution.roll.first.minimum, 'person')%></p>
-    <% end %>
-    <br>
+    <% if @problem.require_action %>
+      <br>
+      <% if @solution.roll.first.maximum %>
+        <p>Participation requirement: <%=@solution.roll.first.minimum %> to <%=@solution.roll.first.maximum %> people</p>
+      <% else %>
+        <p>Participation minimum: <%=pluralize(@solution.roll.first.minimum, 'person')%></p>
+      <% end %>
+      <br>
 
-    <% if Setting.first.state || (current_user && current_user.admin?) %>
-      <% if @solution.user.count < @solution.problem.suggestion_min - 1 %>
-        <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button" do %>
-          Suggest (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
-        <% end %>
-      <% elsif @solution.user.count >= @solution.problem.suggestion_min %>
-        This was posted as an action
-        <%= link_to action_path(:activity_id => @solution.activity.id), :class => "button" do %>
-          <em>View action</em>
-        <% end %>
-      <% elsif @solution.user.include?(@user) %>
-        Suggested (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
-      <% elsif @solution.user.count == @solution.problem.suggestion_min - 1 %>
-        <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button" do %>
-          Post as action
+      <% if Setting.first.state || (current_user && current_user.admin?) %>
+        <% if @solution.user.count < @solution.problem.suggestion_min - 1 %>
+          <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button" do %>
+            Suggest (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
+          <% end %>
+        <% elsif @solution.user.count >= @solution.problem.suggestion_min %>
+          This was posted as an action
+          <%= link_to action_path(:activity_id => @solution.activity.id), :class => "button" do %>
+            <em>View action</em>
+          <% end %>
+        <% elsif @solution.user.include?(@user) %>
+          Suggested (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
+        <% elsif @solution.user.count == @solution.problem.suggestion_min - 1 %>
+          <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button" do %>
+            Post as action
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    <%end%>
 
   </div>
+
+<!-- ROLES -->
+  <% if @problem.require_action %>
+    <h1>Roles</h1>
+    <div>
+      <ul class="all-roles">
+
+        <% @solution.roll.each do |role| %>
+          <li>
+            <div><strong><%= role.title %></strong> &nbsp;<%= role.description %>
+              <% if !role.maximum %>
+                (<%= role.minimum %>-∞
+              <% elsif role.minimum < role.maximum %>
+                (<%= role.minimum %>-<%= role.maximum %>
+              <% else %>
+                (<%= role.minimum %>
+              <% end %>
+              needed)
+            </div>
+
+
+          </li>
+        <% end %>
+      
+      </ul>
+    </div>
+  <% end %>
 
 <!-- CRITERIA -->
 
