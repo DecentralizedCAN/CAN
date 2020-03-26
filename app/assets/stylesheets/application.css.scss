@@ -142,6 +142,11 @@ textarea:focus, input:focus {
   }
 }
 
+.form-tab.single {
+  border-top: 1px solid #ddd;
+  padding-top: 0;
+}
+
 .form-full {
   border-top: 1px solid #ddd;
 
