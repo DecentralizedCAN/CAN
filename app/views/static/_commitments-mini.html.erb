@@ -22,13 +22,18 @@
       </h2> -->
       <ul>
         <% @commitments.each do |commitment| %>
-          <% if commitment.user.count >= commitment.minimum && !commitment.activity.roll.last.user.include?(@user) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+          <% if commitment.user.count >= commitment.minimum && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+
             <%= link_to  action_path(commitment.activity.id) do %>
               <li> 
                 <i class="fas fa-calendar-check"></i>
-                <%= commitment.activity.title %> 
+                <%= commitment.activity.title %>: 
+                <%= commitment.title %>
               </li>
             <% end %>
+
+          <% end %>
           <% end %>
         <% end %>
       </ul>
@@ -39,14 +44,19 @@
       </h2> -->
       <ul>
       	<% @commitments.each do |commitment| %>
-          <% if commitment.user.count < commitment.minimum && !commitment.activity.roll.last.user.include?(@user) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+          <% if commitment.user.count < commitment.minimum && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+
         		<%= link_to  action_path(commitment.activity.id) do %>
               <li> 
                 <i class="far fa-calendar"></i>
-                <%= commitment.activity.title %> 
-                (<%= commitment.activity.roll.first.user.count %>/<%= commitment.activity.roll.first.minimum %>)
+                (<%= commitment.activity.roll.first.user.count %>/<%= commitment.activity.roll.first.minimum %>) 
+                <%= commitment.activity.title %>:
+                <%= commitment.title %>
               </li>
             <% end %>
+            
+          <% end %>
           <% end %>
       	<% end %>
       </ul>
