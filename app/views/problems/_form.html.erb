@@ -18,7 +18,7 @@
     <h1>Details</h1>
     <%= form.text_area :description, id: :problem_description, placeholder: "Explain the issue in detail" %>
 
-    <%= form.check_box :require_action, {checked: true}, true, false %> Require proposals to be formatted as actions
+    <%= form.check_box :require_action, {checked: true}, true, false %> Format proposals as actions
 
     <% if Setting.first.state && false %>
       <div class="number-field-outer">
