@@ -107,7 +107,8 @@
     </h1>
 
     <div>
-      <%= link_to 'Propose action', new_solution_path(:problem_id => @problem.id), :class => "button"  %>
+      <%= link_to 'Propose action', new_solution_path(:problem_id => @problem.id), :class => "button" if @problem.require_action %>
+      <%= link_to 'New proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if !@problem.require_action %>
     </div>
     
     <ol class="solutions">
