@@ -7,7 +7,7 @@ $offwhite: #f5f5f5;
 
   * {
   	// color: #3a3a3a;
-  	color: #525252;
+  	// color: #525252;
   }
 }
 
@@ -21,6 +21,10 @@ $offwhite: #f5f5f5;
   padding: 2px 4px;
   box-shadow: 0px 3px 6px 0px #d0d0d0;
   border: 1px solid #efefef;
+
+  .button {
+    line-height: 12px;
+  }
 }
 
 .solution-item > a, .solution-item > a > div {
@@ -116,7 +120,7 @@ $offwhite: #f5f5f5;
 
 	#proposal-description {
 		* {
-			color: #3a3a3a;
+			// color: #3a3a3a;
 		}
 	}	
 

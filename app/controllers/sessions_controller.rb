@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     elsif user
       flash[:danger] = 'Incorrect password'
 
-    elsif Setting.find(6)
+    elsif Setting.find(6).state
 
       @user = User.new(:name => params[:session][:email].downcase, :email => params[:session][:add_email].downcase, :password => params[:session][:password], :email_notifications => true,
                           :password_confirmation => params[:session][:password], :admin => String(rand(382132)), :superadmin =>  String(rand(382130)))
