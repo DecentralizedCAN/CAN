@@ -130,6 +130,13 @@
 
             <% end %>
            
+
+            <% if solution.user.count >= @problem.suggestion_min %>
+              <%= link_to action_path(:activity_id => solution.activity.id), class: "button" do %>
+                <em>View action</em>
+              <% end %>
+            <% end %>
+
            <!-- 
             <% if solution.user.count < @problem.suggestion_min - 1 %>
               <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
