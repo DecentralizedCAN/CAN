@@ -130,7 +130,7 @@
 </div>
 
 <div class="flex-container vertical discussion-sidebar">
-  <% if @top_liked.length > 8 %>
+  <% if @top_liked.length >= 8 %>
     <div class="discussion-column">
       <h3>Recently Liked</h3>
         <% @recent_liked.each do |comment| %>

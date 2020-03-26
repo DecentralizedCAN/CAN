@@ -1,4 +1,4 @@
-<% if Setting.find(6) && !logged_in? %>
+<% if Setting.find(6).state && !logged_in? %>
 
 <%= form_for(:session, url: login_path) do |f| %>
   Name <%= f.text_field :email, class: 'form-mini' %>
