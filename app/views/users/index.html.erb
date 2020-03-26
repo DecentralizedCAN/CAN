@@ -1,7 +1,7 @@
 <div class="backdrop">
 
 <% provide(:title, 'All Members') %>
-<h1>All members</h1>
+<h1><%= @users.count %> members</h1>
 
 <% if current_user.admin? %> 
   <%= link_to "Add Member", add_path, :class => "button" %>

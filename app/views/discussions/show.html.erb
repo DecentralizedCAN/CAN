@@ -52,7 +52,7 @@
           </div>
       </div>
 
-      <p class="discussion-content"><%= @discussion.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe %></p>
+      <p class="discussion-content"><%= @discussion.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
 
 <% end %>
 <!-- </div> -->
@@ -66,11 +66,17 @@
   		  <li>
           <div>
             <strong><%= comment.user.name %></strong>
-            <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
           </div>
-  		  	<div class="comment">
-            <%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe %>
+
+          <% if comment.content.include? "!chatlog" %>
+            <% comment_class = "chatlog"%>
+          <% else %>
+            <% comment_class = "comment" %>
+          <% end %>
+          
+          <div class=<%= comment_class%>><%= comment.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').gsub('!chatlog', '').html_safe  %>
           </div>
+
           <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} if logged_in? %>
           
           <% if comment.upvotes.count > 0 %>
@@ -91,6 +97,9 @@
               <% end %>
             <% end %>
           </div>
+
+          <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
+
   	  	</li>
   		<% end %>
   	<% end %>
@@ -141,8 +150,14 @@
                   <% end %>
                 <% end %>
               </div>
-              <%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe  %>
-              <em>–<%= comment.user.name %></em>
+
+            <% if comment.content.include? "!chatlog" %>
+              <% comment_class = "chatlog"%>
+            <% else %>
+              <% comment_class = "comment" %>
+            <% end %>
+            
+            <div class=<%= comment_class%>><%= comment.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').gsub('!chatlog', '').html_safe  %> –<%= comment.user.name %></div>
             </li>
           <% end %>
         <% end %>

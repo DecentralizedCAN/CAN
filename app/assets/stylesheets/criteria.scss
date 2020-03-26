@@ -58,6 +58,8 @@ $label-blue: #81c4ff;
   .dropdown-menu {
     padding: 4px;
     min-width: 252px;
+    max-height: 200px;
+    overflow: auto;
 
     li {
       margin-bottom: 8px !important;
@@ -86,9 +88,9 @@ $label-blue: #81c4ff;
 
 .suggest-link {
   // background-color: $neutral-blue;
-  background-color: #5db9ff !important;
+  background-color: #13a3c3 !important;
   &:hover {
-  	background-color: #87c7f7 !important;
+  	background-color: #27b9da !important;
   }
 }
 
@@ -138,9 +140,18 @@ $label-blue: #81c4ff;
 
 .dissent-title > textarea {
   min-width: 26em;
-  min-height: 8em;
+  min-height: 4em;
 }
 
 .cancel-support, .sponsor-criteria {
   margin: 10px 0px;
+}
+
+.object-button {
+  background-color: #983333 !important;
+  border-color: #611111 !important;
+
+  &:hover {
+    background-color: #c53131 !important;
+  }
 }

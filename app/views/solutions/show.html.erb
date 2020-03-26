@@ -29,7 +29,8 @@
           Suggest (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
         <% end %>
       <% elsif @solution.user.count >= @solution.problem.suggestion_min %>
-        <%= link_to action_path(:activity_id => @solution.activity.id) do %>
+        This was posted as an action
+        <%= link_to action_path(:activity_id => @solution.activity.id), :class => "button" do %>
           <em>View action</em>
         <% end %>
       <% elsif @solution.user.include?(@user) %>

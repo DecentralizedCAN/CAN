@@ -137,9 +137,10 @@ $success-red: #ff7455;
   border-radius: 4px;
   width: 100%;
   max-width: 20vw;
-  padding: 0 2px;
+  padding: 2 4px;
   box-shadow: 0px 3px 6px 0px #d0d0d0;
   border: 1px solid #efefef;
+  line-height: 16px;
 
   * {
     // color: #3a3a3a;
@@ -189,10 +190,11 @@ $success-red: #ff7455;
   overflow: hidden;
   text-overflow: ellipsis;
   font-style: normal;
+  // display: inline-block;
 }
 
 .criterium-response {
-  padding: 4px;
+  // padding: 4px;
   vertical-align: top;
   display: inline-block;
   cursor: default;

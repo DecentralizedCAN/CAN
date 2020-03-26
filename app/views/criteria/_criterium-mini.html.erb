@@ -8,9 +8,9 @@
     <!-- <div class="criterium" style="border-color: <%= status_color %> "> -->
     <div class="criterium" >
       <%= link_to show_criterium_path(:criterium_id => criterium.hashid) do %>
-      <div class="criterium-title">
-        <%= criterium.title %>
-      </div>
+        <div class="criterium-title">
+          <%= criterium.title %>
+        </div>
       <% end %>
 
       <div class="criterium-response">
@@ -37,20 +37,33 @@
 
         <!-- OBJECTIONS -->
         <div class="dissent-stuff">
-          <%if criterium.cridissent.find_by(user: @user)%>
-            <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>   
-              <span class="cridissent-count tooltip-toggle green" href="#" aria-label="Unobject" tabindex="0">
-                <i class="fas fa-hand-point-down green"></i>
-                <%= criterium.cridissent.count %>
-              </span>    
-            <% end %>         
-          <%else%>
-            <%= link_to show_criterium_path(:criterium_id => criterium.id) do %>
-              <span class="cridissent-count tooltip-toggle gray" href="#" aria-label="Objections" tabindex="0">
-                <i class="fas fa-hand-point-down gray"></i>
-                <%= criterium.cridissent.count %>
-              </span>  
+          <%if true #criterium.cridissent.count > 0 %>
+
+            <%if criterium.cridissent.find_by(user: @user)%>
+              <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>   
+                <span class="cridissent-count tooltip-toggle crimson" href="#" aria-label="Unobject" tabindex="0">
+                  <i class="fas fa-hand-point-down crimson"></i>
+                  <%= criterium.cridissent.count %>
+                </span>    
+              <% end %>         
+            <%else%>
+              <%= link_to show_criterium_path(:criterium_id => criterium.id) do %>
+                
+                <% if criterium.cridissent.count > 0 %>
+                  <span class="cridissent-count tooltip-toggle gray" href="#" aria-label="Object" tabindex="0">
+                    <i class="fas fa-hand-point-down gray"></i>
+                    <%= criterium.cridissent.count %>
+                  </span>  
+                <% else %>
+                  <span class="cridissent-count tooltip-toggle lightgray" href="#" aria-label="Object" tabindex="0">
+                    <i class="fas fa-hand-point-down lightgray"></i>
+                    <%= criterium.cridissent.count %>
+                  </span>  
+                <% end %>
+
+              <% end %>
             <% end %>
+
           <% end %>
         </div>
 
