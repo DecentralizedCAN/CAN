@@ -74,7 +74,6 @@
   <% end %>
 
 <!-- CRITERIA -->
-
 <div id="proposal-polling">
   <h1>Evaluation</h1><br>
 
@@ -87,6 +86,8 @@
       <%= (solution_score(@solution.id) * 100).to_i %>%
     </div>
   </div>
+
+<% if logged_in? %>
 
   <h2>Criteria</h2>
 
@@ -168,6 +169,7 @@
       <% end %>
     </tbody>
   </table>
+<% end %>
 
 </div>
 <!-- CRITERIA ENDS -->

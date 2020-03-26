@@ -75,9 +75,9 @@
   <% end %>
 
   <% if Setting.find(5).state %>
-  <div id="action-columns">
+    <div id="action-columns">
   <% else %>
-  <div>
+    <div>
   <% end %>
 
   <div id="action-details">
@@ -85,7 +85,7 @@
     <h1>Roles</h1>
     <div>
       <ul class="all-roles">
-        <% if logged_in? %>
+
         <% @activity.roll.each do |role| %>
           <li>
 
@@ -115,20 +115,20 @@
 
             </div>
 
-            <% if Completion.where(user_id: @user.id).where(roll_id: role.id).count > 0 %>
+            <% if logged_in? && Completion.where(user_id: @user.id).where(roll_id: role.id).count > 0 %>
               <span class="completed"><i class="fa fa-check"></i>completed</span>
             <% else %>
 
-              <% if role.user.include?(@user) %>
-                <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
-                  <i class="fa fa-times"></i>
-                  Uncommit
-                <% end %>
+            <% if role.user.include?(@user) %>
+              <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
+                <i class="fa fa-times"></i>
+                Uncommit
+              <% end %>
 
-                <%= link_to complete_path(:roll_id => role.id), :method => "post", :class => "button complete" do %>
-                  <i class="fa fa-check"></i>
-                  Mark complete
-                <% end %>
+              <%= link_to complete_path(:roll_id => role.id), :method => "post", :class => "button complete" do %>
+                <i class="fa fa-check"></i>
+                Mark complete
+              <% end %>
 
               <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
                 <%= link_to commit_path(:roll_id => role.id), :class => "button commit" do %>
@@ -140,7 +140,6 @@
             <% end %>
 
           </li>
-        <% end %>
         <% end %>
       
       </ul>
