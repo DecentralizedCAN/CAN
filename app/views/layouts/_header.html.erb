@@ -29,7 +29,7 @@
         </li>
         <% if logged_in? && (Setting.first.state || current_user.admin?) %>
           <li>
-              <%= link_to post_problem_path do %>
+              <%= link_to new_discussion_path do %>
                 <i class="fas fa-pen"></i>
                 Create
               <% end %>
@@ -46,6 +46,12 @@
         <% end %>
 
         <% if logged_in? || Setting.find(6).state %>
+          <li>
+              <%= link_to resources_path do %>
+                <i class="fas fa-heart"></i>
+                Resources
+              <% end %>
+          </li>
           <li>
               <%= link_to documentation_path do %>
                 <i class="fas fa-book"></i>

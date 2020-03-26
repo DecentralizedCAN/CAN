@@ -32,6 +32,10 @@ class StaticController < ApplicationController
 		
 	end
 
+	def resources
+		
+	end
+
 	def notifications
     @notifications = current_user.notification.order("created_at DESC")
     .paginate(:page => params[:page], :per_page => 20)

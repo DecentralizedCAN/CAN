@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :activities, only: [:create, :destroy]
 
   get 'notifications', to: 'static#notifications', :as => :notifications
+  get 'resources', to: 'static#resources', :as => :resources
   get 'notification_redirect/:notification_id', to: 'static#notification_redirect', :as => :notification_redirect
   post 'notifications/clear', to: 'static#clear_notifications', :as => :clear_notifications
 
