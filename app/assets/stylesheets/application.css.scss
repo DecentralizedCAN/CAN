@@ -44,6 +44,15 @@ body {
   // background-size: 40px;
 }
 
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  background-color: #e2e1e1;
+}
+
 video {
   outline: none;
   width: 50%;

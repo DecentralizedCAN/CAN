@@ -52,7 +52,9 @@
           </div>
       </div>
 
+      <% if @discussion.content.length > 0 %>
       <p class="discussion-content"><%= @discussion.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+      <% end %>
 
 <% end %>
 <!-- </div> -->

@@ -3,66 +3,22 @@
 <h1>Hello fellow Pittsburgher!</h1>
 <p>Welcome to the Pittsburgh COVID-19 Resilience Network. This is a place to share resources, collect people for projects, and brainstorm ways to help each other get through this crisis.</p>
 
-<h1>Sections</h1>
-<ol id="about-sections">
-	<li><a href="#discussions">How "discussions" work</a></li>
-	<li><a href="#crowdacting">How "actions" work</a>
-		<ol>
-			<li><a href="#action-participation">Roles</a></li>
-			<li><a href="#action-participation">Activation</a></li>
-			<!-- <li><a href="#action-expiration">Expiration</a></li> -->
-		</ol>
-	</li>
-	<li><a href="#brainstorming">How "brainstorms" work</a>
-		<ol>
-			<li><a href="#criteria">Finding criteria</a></li>
-			<li><a href="#proposal_scoring">Scoring proposals</a></li>
-			<li><a href="#proposal_activation">Activating proposals</a></li>
-		</ol>
-	</li>
-</ol>
-
-<h1 id="brainstorming">Brainstorming</h1>
-
-<!-- <%= video_tag "convergent-brainstorming-tutorial.mov", controls: true %> -->
-
-<p>Brainstorms are a way of finding innovative and widely supported strategies. If there is an issue or goal you want to address with collective action, you can post a community brainstorm. This will activate a process by which anyone who wants to participate can help establish the criteria by which a proposal must be evaluated, and propose proposal to address the topic.</p>
-<h2 id="criteria">Finding criteria</h2>
-<p>Criteria are most effective when they are acceptable to as many people as possible. For this reason, it is more effective to use general criteria than specific ones. Using general criteria also allows proposal to be more creative. For example, say you are planning an event and want to make sure you don't get rained out. You might want to add to the criteria "The even must take place indoors". However, some people might prefer an outdoor venue, and there might be a way to deal with rain other than using an indoor venue, like using an outdoor venue with cover, or having a backup plan for rain. Therefore, a more effective criteria might be something like "The event plan must account for the possibility of rain". This gives flexibility for proposal to find more unique and creative ways to approach this issue.</p>
-<p>If there is a criterion that you object to, you can log that objection on that individual criterion's page. Any supporters of that criterion will receive a notification, and if they want, they can transfer there support to a less controversial or more general criterion.</p>
-<p>To transfer support from one criterion to another, the alternative must first be added to the alternatives list. Anyone can add to this list at any time. Once it is on that list, you can click "Transfer to this" to remove support for the original criterion and add support to the alternative. This transfer gets recorded, and alternatives are ranked by how many people have transfered to each one.</p>
-<p>Asside from helping to further the community goal of approaching consensus, transfering to less controversial criteria also serves individual incentives. Due to the nature of the scoring algorithm (explained below), a criterion that has a significant percentage of objections in contrast to supporters will have less effect on the proposal scores than an uncontroversial criterion. Therefore it is in both the community's and individuals' interestes to find criteria that have the fewest objections.</p>
-
-<h2 id="proposal_scoring">Scoring proposals</h2>
-<p>Proposals are scored in order to help make it clear which ones are more likely to be the most effective at serving a group's needs. The scoring algorithm considers how well a proposal meets each criteria, as well as how many supporters and objections each criteria has.</p>
-<p>Criteria support is incorporated in order to give more weight to criteria that are important to more people. The more supporters a criterion has, the more importance it is given when proposal are polled. Objections are incorporated in order to prevent the appearance of a consensus when there is not one. The more objections a criterion has, the less high of a score a proposal can get for meeting it.</p>
-<p>Below is a mathematical representation of the scoring algorithm.</p>
-
-<div id="scoring-visual">
-	<ul>
-		<li>s = supporters</li>
-		<li>d = objections</li>
-		<li>a = polling average</li>
-		<li>c = criterion</li>
-	</ul>
-	<%= image_tag("scoring-algorithm.png") %>
-</div>
-
-<h2 id="proposal_activation">Activating proposals</h2>
-<p>Proposals should always be framed as an action. When writing a proposal, you must specify all of the same parameters as you would when posting an action. This allows proposals to be sent directly from a brainstorm to the front page, where it can potentially gather enough support to be realized. This can happen if enough people suggest it. When creating a brainstorm, you must specify the number of people who have to suggest a proposal before it is turned into an action. Specifying a higher number prevents the main feed from getting cluttered with actions. Actions that come out of brainstorms display their proposal score, so potential participants can see how how much support they have before they decide whether to participate.</p>
+<h1 id="discussions">Discussions</h1>
+<p>Discussions are a good way to talk about news, share resources, or just connect with each other. This is similar to a chatroom or forum. Comments in discussions can be "liked". After there are several comments a "top liked" section will appear. You can tag people in a comment to notify them by writing "@" followed by their username. Once discussions are created they will show up on the front page, and may also be shared outside this site. Actions and brainstorms also have their own mini discussions.</p>
 
 <h1 id="crowdacting">Actions</h1>
-<p>Actions are specific agreements or events that people can collectively agree to.</p>
-<h2 id="action-participation">Participation</h2>
-<p>When you create an action, you must set a minimum participation number. This is the smallest number of people with which the action will be effective in its purpose. Once this number is reached, all participants will receive a notificaiton stating that the action will take place.</p>
-<p>You can also optionally select a maximum participation. If you do not specify one, it will default to infinity.</p>
-<h2 id="action-expiration">Expiration</h2>
-<p>If you choose to, when you create an action you can specify a date after which people cannot sign up. This prevents, for example, people signing up for an event at the last minute.</p>
-<p>If you do not specify an expiration, it will default to infinity.</p>
+<p>Actions are plans that need multiple people to work. This is a way to collect enough people to fill various roles so that an action can take place.</p>
+<p>When you create an action, you may include one or more "roles". For each role, you may specify how many people are needed for that role.</p>
+<p>Once actions are created they will show up on the front page, and may also be shared outside this site. Anyone can sign up to fill a role. Once the minimum required number of people have signed up to fill each role, the action can happen, and everyone who signed up will be notified. If not enough people sign up no one will be expected to fulfill their role.</p>
 
-<h1 id="discussions">Discussions</h1>
-<p>Discussions function much like a chatroom, but do not update live. Actions, brainstorms, and proposals all have their own discussions. Discussions can also be created on their own.</p>
-<p>You can hover over and like a comment. When enough comments have been made in a discussion, a list of the comments with the most likes will appear.</p>
+<h1 id="brainstorming">Brainstorms</h1>
+<p>Brainstorms are a good way to think together with the community about how to address new problems.</p>
+<p>To use this feature, first create a brainstorm proposing a new issue or problem that you think needs to be addressed. Once created, it will show up on the front page, and may also be shared outside this site.</p>
+<p>Anyone who joins the brainstorm can then add "criteria", which are a way to figure out what needs to be considered when trying to address the problem under consideration.</p>
+<p>People can then add "proposals" to the brainstorm. These proposals can be evaluated by anyone according to how accurately they meet the list of criteria. After being evaluated, each proposal receives an automatic score.</p>
+<p>When creating a new brainstorm, you have the option to ask for proposals to be formatted as "actions", so that they can be turned into actions if they seem like good ideas.</p>
+<p>If you would like to see a more detailed explanation of this process, check out this <a target="_blank" href="https://www.youtube.com/watch?v=LCi4svJM5lg">tutorial</a>.</p>
+
 
 </div>
 
