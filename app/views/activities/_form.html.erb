@@ -24,13 +24,21 @@
     <%= form.hidden_field :role_json, id: :role_json %>
 
     <div class="role">
-      <b>Title:</b>
-      <%= form.text_field :role_title, id: :role_title, placeholder: "Participant" %>
-      <b>Description:</b>
-      <%= form.text_field :role_description, id: :role_description %>
-      <b>Needed:</b>
-      Min <%= form.number_field :activation_minimum, id: :role_minimum, placeholder: 1, value: 1, min: 1 %> 
-      Max <%= form.number_field :activation_maximum, id: :role_maximum, placeholder: "∞", min: 1 %>
+      <div>
+        <b>Title:</b>
+        <%= form.text_field :role_title, id: :role_title, placeholder: "Participant" %>
+      </div>
+
+      <div>
+        <b>Description:</b>
+        <%= form.text_field :role_description, id: :role_description %>
+      </div>
+
+      <div>
+        <b>Needed:</b>
+        Min <%= form.number_field :activation_minimum, id: :role_minimum, placeholder: 1, value: 1, min: 1 %> 
+        Max <%= form.number_field :activation_maximum, id: :role_maximum, placeholder: "∞", min: 1 %>
+      </div>
     </div>
 
   </div>
@@ -59,7 +67,7 @@
 <script type="text/javascript">
   
   $('#add-role').click(function(){
-    $('#activation').append('<div class="role"><b>Title: </b><input id="role_title" placeholder="Participant" type="text" name="activity[role_title]"><b> Description: </b><input id="role_description" type="text" name="activity[role_description]"><b> Needed: </b>Min <input id="role_minimum" placeholder="1" value="1" min="1" type="number" name="activity[activation_minimum]"> Max <input id="role_maximum" placeholder="∞" min="1" type="number" name="activity[activation_maximum]"> <i class="fas fa-times remove-role button"></i></div>')
+    $('#activation').append('<div class="role"><div><b>Title: </b><input id="role_title" placeholder="Participant" type="text" name="activity[role_title]"></div><div><b> Description: </b><input id="role_description" type="text" name="activity[role_description]"></div><div><b> Needed: </b>Min <input id="role_minimum" placeholder="1" value="1" min="1" type="number" name="activity[activation_minimum]"> Max <input id="role_maximum" placeholder="∞" min="1" type="number" name="activity[activation_maximum]"> <i class="fas fa-times remove-role button"></i></div></div>')
 
       $('.remove-role').click(function(){
         console.log('hi')
