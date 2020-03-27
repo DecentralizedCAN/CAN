@@ -35,15 +35,6 @@
               <% end %>
           </li>
         <% end %>
-        
-        <% if logged_in? %>
-        <li>
-          <%= link_to users_path do %>
-              <i class="fas fa-users"></i>
-              Members
-            <% end %>
-        </li>
-        <% end %>
 
         <% if logged_in? || Setting.find(6).state %>
           <li>
@@ -59,6 +50,16 @@
               <% end %>
           </li>
         <% end %>
+
+        <% if logged_in? && current_user.admin? %>
+        <li>
+          <%= link_to users_path do %>
+              <i class="fas fa-users"></i>
+              Members
+            <% end %>
+        </li>
+        <% end %>
+        
         <li>
           <% if logged_in? && current_user.admin? %>
             <%= link_to settings_path do %>
