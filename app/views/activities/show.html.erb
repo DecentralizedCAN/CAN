@@ -89,7 +89,7 @@
         <% @activity.roll.each do |role| %>
           <li>
 
-            <div><strong><%= role.title %></strong> &nbsp;<%= role.description %></div>
+            <div><strong><%= role.title %></strong> &nbsp;<%= role.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %> %></div>
 
             <div class="role-progress">
               
