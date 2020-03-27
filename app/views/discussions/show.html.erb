@@ -187,8 +187,14 @@
                   <% end %>
                 <% end %>
               </div>
-              <%= comment.content.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe  %>
-              <em>–<%= comment.user.name %></em>
+  
+              <% if comment.content.include? "!chatlog" %>
+                <% comment_class = "chatlog"%>
+              <% else %>
+                <% comment_class = "comment" %>
+              <% end %>
+              
+              <div class=<%= comment_class%>><%= comment.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').gsub('!chatlog', '').html_safe  %> –<%= comment.user.name %></div>
             </li>
           <% end %>
         <% end %>
