@@ -99,6 +99,14 @@ textarea:focus, input:focus {
   outline: 0;
 }
 
+#quick-login-form {
+  form {
+    div {
+      display: inline-block;
+    }
+  }
+}
+
 .form-mini {
   padding: 2px 6px;
   border-radius: 2px;
