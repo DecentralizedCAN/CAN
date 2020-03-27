@@ -45,7 +45,7 @@ body {
 }
 
 footer {
-  position: absolute;
+  // position: absolute;
   bottom: 0;
   left: 0;
   text-align: center;
@@ -430,6 +430,7 @@ hr {
   padding-left: 15px;
   padding-right: 15px;
   margin-top: 20px;
+  min-height: calc(100vh - 75px);
 }
 
 .converge-header {
