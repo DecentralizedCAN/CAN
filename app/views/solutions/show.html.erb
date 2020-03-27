@@ -13,7 +13,7 @@
     <h1><%= @solution.title %></h1>
     <span>- Proposal for <span class="problem-title"><%= @solution.problem.title %></span></span>
 
-    <p class="discussion-content"><%= @solution.description %></p>
+    <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
 
     <br>
     <% if @solution.roll.first.maximum %>

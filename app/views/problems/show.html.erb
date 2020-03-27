@@ -57,7 +57,7 @@
 
     </div>
 
-    <p class="issue-description"><%= @problem.description %></p>
+    <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
 
 
     <!-- DETAILS ENDS -->

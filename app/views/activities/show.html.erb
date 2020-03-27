@@ -95,7 +95,7 @@
 
     <div id="action-details">
       <h1>Details</h1>
-      <p><%= @activity.description %></p>
+      <p><%= @activity.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
     </div>
     <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>  
   </div>
