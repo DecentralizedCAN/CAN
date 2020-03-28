@@ -21,8 +21,15 @@ class SessionsController < ApplicationController
         flash[:warning] = message
       end
 
+
+      redirect_to root_path if !Setting.find(6).state
+
+      flash[:success] = "Welcome back!"
+      redirect_back fallback_location: root_path if Setting.find(6).state
+
     elsif user
       flash[:danger] = 'Incorrect password'
+      redirect_back fallback_location: root_path
 
     elsif Setting.find(6).state
 
@@ -30,10 +37,12 @@ class SessionsController < ApplicationController
                           :password_confirmation => params[:session][:password], :admin => String(rand(382132)), :superadmin =>  String(rand(382130)))
       @user.save
       @user.activate
+      flash[:success] = "Thanks for joining the Pittsburgh COVID-19 Resilience Network! To get started, check out the guide."
+
       log_in @user
+      redirect_back fallback_location: root_path
     end
 
-    redirect_back fallback_location: root_path
   end
 
   def destroy

@@ -8,7 +8,7 @@ class ActivityMailer < ApplicationMailer
 
       mail(
         bcc: users.map(&:email).uniq, 
-        subject: "New collective action"
+        subject: "New action"
       )
     end
   end
@@ -21,7 +21,7 @@ class ActivityMailer < ApplicationMailer
 
       mail(
         bcc: users.map(&:email).uniq, 
-        subject: "Collective action met necessary participation"
+        subject: "Action met necessary participation"
       )
     end
   end

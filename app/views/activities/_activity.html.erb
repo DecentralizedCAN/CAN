@@ -14,6 +14,10 @@
           <i class="fas fa-calendar"></i>
           created <%= time_ago_in_words(activity.created_at) %> ago
         </div>
+        <div>          
+          <i class="fas fa-user-alt"></i> from
+          <%= User.find(activity.creator).name %>
+        </div>
         <div>
           <% if activity.expiration && activity.expiration > @current_time %>
             <i class="fas fa-clock"></i>

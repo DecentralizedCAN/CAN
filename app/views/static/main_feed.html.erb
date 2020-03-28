@@ -47,6 +47,10 @@
 		                <i class="fas fa-calendar"></i>
 		                created <%= time_ago_in_words(post.problem.created_at) %> ago
 		              </div>
+				          <div>          
+					          <i class="fas fa-user-alt"></i> from
+					          <%= User.find(post.problem.creator).name %>
+					        </div>
 		              <div>
 		                <i class="fas fa-handshake"></i>
 		                <%= post.problem.user.count %> collaborators
@@ -59,7 +63,6 @@
 		                <i class="fas fa-comment-alt"></i>
 		                <%= pluralize(post.problem.solution.count, "proposal") %>
 		              </div>
-		  
 
 		            </div>
 		          </div>
@@ -79,6 +82,10 @@
 		                <i class="fas fa-calendar"></i>
 		                created <%= time_ago_in_words(post.discussion.created_at) %> ago
 		              </div>
+					        <div>          
+					          <i class="fas fa-user-alt"></i> from
+					          <%= User.find(post.discussion.creator).name %>
+					        </div>
 		              <div>
 		                <i class="fas fa-comment-dots"></i>
 		                <%= pluralize(post.discussion.comment.count, "comment") %>

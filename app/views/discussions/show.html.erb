@@ -49,6 +49,10 @@
               <i class="fas fa-comment-dots"></i>
               <%= pluralize(@discussion.comment.count, "comment") %>
             </div>
+            <div>          
+              <i class="fas fa-user-alt"></i> from
+              <%= User.find(@discussion.creator).name %>
+            </div>
           </div>
       </div>
 

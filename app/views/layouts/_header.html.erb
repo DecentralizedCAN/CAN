@@ -51,10 +51,11 @@
           </li>
         <% end %>
 
-        <% if logged_in? && current_user.admin? %>
+        <% if logged_in? %>
         <li>
           <%= link_to users_path do %>
               <i class="fas fa-users"></i>
+              <%= User.count %>
               Members
             <% end %>
         </li>
