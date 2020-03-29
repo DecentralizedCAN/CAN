@@ -88,20 +88,21 @@
   <% end %>
 
   <% if Setting.find(5).state %>
-  <div id="action-columns">
+    <div id="action-columns">
   <% else %>
-  <div>
+    <div>
   <% end %>
 
     <div id="action-details">
       <h1>Details</h1>
       <p>
-        This is an "action". Checkout the <%= link_to "guide", post_problem_path %> for more info.
         <%= @activity.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %>
       </p>
     </div>
     <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>  
   </div>
+
+  <span>This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
 
   <% if logged_in? && current_user.admin? %>
     <br><br>
