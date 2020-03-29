@@ -184,7 +184,7 @@ class ActivitiesController < ApplicationController
           # Notifications
             # if @roll.user.count == @roll.minimum && @user.email_notifications
           @solution.user.each do |user|
-            notification = user.notification.create(:details => "was created from the brainstorm \"" + @problem.title + "\"",
+            notification = user.notification.create(:details => "The action \"" + @activity.title + "\" was created from the brainstorm \"" + @problem.title + "\"",
               :activity_id => @activity.id)
               if user.email_notifications
                 notification.send_email
@@ -234,11 +234,10 @@ class ActivitiesController < ApplicationController
       # Notifications
       if @roll.user.count == @roll.minimum
         @roll.user.each do |user|
-          notification = user.notification.create(:details => "has reached minimum participation and will take place",
+          notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and will take place.",
             :activity_id => @activity.id)
           notification.send_email
         end
-        # @activity.send_activated_email
       end  
       # End notifications
     end
@@ -260,7 +259,7 @@ class ActivitiesController < ApplicationController
       if @roll.user.count < @roll.minimum
 
         @roll.user.each do |user|
-          notification = user.notification.create(:details => "no longer reaches minimum participation and cannot take place",
+          notification = user.notification.create(:details => "The action " + @roll.activity.title + " no longer has enough participants to take place",
             :activity_id => @roll.activity.id)
           notification.send_email
         end

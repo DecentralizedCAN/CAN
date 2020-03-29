@@ -7,7 +7,7 @@ class NotificationsController < ApplicationController
 
     if @discussion
       User.all.each do |user|
-        notification = user.notification.create(:details => @discussion.title + ": check out this new discussion.",
+        notification = user.notification.create(:details => "Here's a new discussion you might be interested in: " + @discussion.title,
           :discussion_id => @discussion.id)
         
           notification.send_email if user.email_notifications
@@ -17,7 +17,7 @@ class NotificationsController < ApplicationController
       User.all.each do |user|
         unless @problem.user.include?(user)
           
-          notification = user.notification.create(:details => @problem.title + "was just created. Check it out!", 
+          notification = user.notification.create(:details => "Here's a new brainstorm you might want to take part in: \"" + @problem.title + "\"", 
             :problem_id => @problem.id)
         
           notification.send_email if user.email_notifications
@@ -26,7 +26,7 @@ class NotificationsController < ApplicationController
 
     elsif @action
       User.all.each do |user|
-        notification = user.notification.create(:details => "was just created. Would you like to participate?",
+        notification = user.notification.create(:details => "A new action, \"" + @action.title + "\", was just created. Would you like to participate?",
           :activity_id => @action.id)
         
           notification.send_email if user.email_notifications
@@ -39,7 +39,7 @@ class NotificationsController < ApplicationController
     @problem = Problem.find(@criterion.problem.id)
 
     @problem.user.each do |user|
-      notification = user.notification.create(:details => "has a new criterion: \"" + @criterion.title + "\". Do you want to support it?",
+      notification = user.notification.create(:details => "The brainstorm \"" + @problem.title + "\" has a new criterion: \"" + @criterion.title + "\". Do you want to support it?",
         :problem_id => @problem.id)
       
       notification.send_email if user.email_notifications
