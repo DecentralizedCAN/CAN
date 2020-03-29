@@ -45,7 +45,7 @@ class StaticController < ApplicationController
 		if @notification.activity
 			redirect_to action_path(@notification.activity.hashid)
 		elsif @notification.problem
-			redirect_to show_problem_path(:criterium_id => @notification.problem.hashid)
+			redirect_to issue_path(:problem_id => @notification.problem.hashid)
 		elsif @notification.criterium
 			redirect_to show_criterium_path(:criterium_id => @notification.criterium.hashid)
 		elsif @notification.discussion

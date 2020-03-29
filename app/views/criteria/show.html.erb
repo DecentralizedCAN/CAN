@@ -99,7 +99,10 @@
 </div>
 
 <% if current_user.admin? %>
+
   Added by user <%= @criterium.creator %>
   – <%= link_to 'Remove', @criterium, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+  <%= link_to "Broadcast", broadcast_criterion_path(:criterion_id => @criterium.id), :method => "post", :class => 'button', data: { confirm: "Broadcast criterion?" } %>
 <% end %>
 </div>
