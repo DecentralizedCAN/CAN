@@ -7,39 +7,29 @@ class NotificationsController < ApplicationController
 
     if @discussion
       User.all.each do |user|
-        begin
-          notification = user.notification.create(:details => @discussion.title + ": check out this new discussion.",
-            :discussion_id => @discussion.id)
-          
-            notification.send_email if user.email_notifications
-        rescue
-        end
+        notification = user.notification.create(:details => @discussion.title + ": check out this new discussion.",
+          :discussion_id => @discussion.id)
+        
+          notification.send_email if user.email_notifications
       end
 
     elsif @problem
       User.all.each do |user|
-        begin
-          unless @problem.user.include?(user)
-            
-            notification = user.notification.create(:details => @problem.title + "was just created. Check it out!", 
-              :problem_id => @problem.id)
+        unless @problem.user.include?(user)
           
-            notification.send_email if user.email_notifications
-          end
-        rescue
+          notification = user.notification.create(:details => @problem.title + "was just created. Check it out!", 
+            :problem_id => @problem.id)
+        
+          notification.send_email if user.email_notifications
         end
-
       end
 
     elsif @action
       User.all.each do |user|
-        begin      
-          notification = user.notification.create(:details => "was just created. Would you like to participate?",
-            :activity_id => @action.id)
-          
-            notification.send_email if user.email_notifications
-        rescue
-        end
+        notification = user.notification.create(:details => "was just created. Would you like to participate?",
+          :activity_id => @action.id)
+        
+          notification.send_email if user.email_notifications
       end
     end
   end
