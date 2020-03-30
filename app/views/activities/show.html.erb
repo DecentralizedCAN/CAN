@@ -80,6 +80,8 @@
     <div>
   <% end %>
 
+  <span>This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
+
   <div id="action-details">
 
     <h1>Roles</h1>
@@ -148,8 +150,6 @@
 
     <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>
   </div>
-
-  <span>This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
 
   <% if logged_in? && current_user.admin? %>
     <br><br>
