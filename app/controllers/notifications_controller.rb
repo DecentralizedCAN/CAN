@@ -45,4 +45,16 @@ class NotificationsController < ApplicationController
       notification.send_email if user.email_notifications
     end
   end
+
+  def broadcast_proposal
+    @proposal = Solution.find(params[:proposal_id])
+    @problem = Problem.find(@proposal.problem.id)
+
+    @problem.user.each do |user|
+      notification = user.notification.create(:details => "The brainstorm \"" + @problem.title + "\" has a new proposal: \"" + @proposal.title + "\". Could you provide an evaluation?",
+        :problem_id => @problem.id)
+      
+      notification.send_email if user.email_notifications
+    end
+  end
 end

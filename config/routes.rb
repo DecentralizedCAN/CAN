@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   post 'notifications/clear', to: 'static#clear_notifications', :as => :clear_notifications
   post 'notifications/broadcast_post/:post_id', to: 'notifications#broadcast_post', :as => :broadcast_post
   post 'notifications/broadcast_criterion/:criterion_id', to: 'notifications#broadcast_criterion', :as => :broadcast_criterion
+  post 'notifications/broadcast_proposal/:proposal_id', to: 'notifications#broadcast_proposal', :as => :broadcast_proposal
 
   get 'commitments', to: 'static#commitments', :as => :commitment
   get '', to: 'static#main_feed', :as => :main_feed

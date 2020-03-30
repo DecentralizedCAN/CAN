@@ -187,5 +187,7 @@
   <span class="admin-section">
     Created by user <%= @solution.creator %> –
     <%= link_to "Remove", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+    <%= link_to "Broadcast", broadcast_proposal_path(:proposal_id => @solution.id), :method => "post", :class => 'button', data: { confirm: "Broadcast proposal?" } %>
   </span>
 <% end %>
