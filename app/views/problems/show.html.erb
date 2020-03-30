@@ -183,10 +183,16 @@
 
 </div>
 
+<span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
+
 <% if logged_in? && current_user.admin? %>
   <span class="admin-section">
     <br><br>
     Created by <%= @problem.creator %> –
     <%= link_to 'Remove', @problem, method: :delete, data: { confirm: 'Delete brainstorm?' } %>
+
+    <% if @problem.post %>
+        <%= link_to "Broadcast", broadcast_post_path(:post_id => @problem.post.id), :method => "post", :class => 'button', data: { confirm: "Broadcast post?" } %>
+    <% end %>
   </span>
 <% end %>

@@ -123,7 +123,7 @@ class CriteriaController < ApplicationController
         # send notifications
           if @criterium.cridissent.count == 1
             @criterium.user.each do |user|
-              notification = user.notification.create(:details => "which you support has an objection",
+              notification = user.notification.create(:details => "A criterion which you support has an objection",
                 :criterium_id => @criterium.id)
               if user.email_notifications
                 notification.send_email
