@@ -43,6 +43,12 @@ class SessionsController < ApplicationController
       redirect_back fallback_location: root_path
     end
 
+    if Setting.find(6).state
+      redirect_back fallback_location: root_path
+    else
+      redirect_to root_path
+    end
+
   end
 
   def destroy
