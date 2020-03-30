@@ -39,7 +39,7 @@ class NotificationsController < ApplicationController
     @problem = Problem.find(@criterion.problem.id)
 
     @problem.user.each do |user|
-      notification = user.notification.create(:details => "The brainstorm \"" + @problem.title + "\" has a new criterion: \"" + @criterion.title + "\". Do you want to support it?",
+      notification = user.notification.create(:details => "The brainstorm \"" + @problem.title + "\" has a new criterion: \"" + @criterion.title + "\". Do you support it?",
         :problem_id => @problem.id)
       
       notification.send_email if user.email_notifications
