@@ -59,6 +59,7 @@
 
     <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
 
+    <span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
 
     <!-- DETAILS ENDS -->
 
@@ -182,8 +183,6 @@
 <!-- EXTRA-SECTIONS ENDS -->
 
 </div>
-
-<span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
 
 <% if logged_in? && current_user.admin? %>
   <span class="admin-section">
