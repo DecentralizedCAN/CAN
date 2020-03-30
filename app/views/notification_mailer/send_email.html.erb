@@ -1,47 +1,6 @@
-<% if @notification.criterium %>
-	<%= link_to show_criterium_url(:criterium_id => @notification.criterium.hashid) do %>
-  <p>
-		<%= @notification.details %>
-  </p>
-	<% end %>
-<% elsif @notification.problem %>
-	<%= link_to show_criterium_url(:problem_id => @notification.problem.hashid) do %>
-  <p>
-		<%= @notification.details %>
-  </p>
-	<% end %>
-<% elsif @notification.discussion %>
-	<% if @notification.discussion.problem %>
-		<%= link_to show_problem_url(:discussion_id => @notification.discussion.problem.hashid) do %>
-	  <p>
-			<%= @notification.details %>
-	  </p>
-		<% end %>
-	<% elsif @notification.discussion.activity %>
-		<%= link_to action_url(@notification.discussion.activity.hashid) do %>
-	  <p>
-			<%= @notification.details %>
-	  </p>
-		<% end %>
-	<% elsif @notification.discussion.solution %>
-		<%= link_to solution_url(:problem_id => @notification.discussion.solution.problem.hashid, :solution_id => @notification.discussion.solution.hashid) do %>
-	  <p>
-			<%= @notification.details %>
-	  </p>
-		<% end %>
-	<% else %>
-		<%= link_to discussion_url(@notification.discussion.hashid) do %>
-	  <p>
-			<%= @notification.details %>
-	  </p>
-		<% end %>
-	<% end %>
-<% elsif @notification.activity %>
-	<%= link_to action_url(@notification.activity.hashid) do %>
-  <p>
-		<%= @notification.details %>
-  </p>
-	<% end %>
+<%= link_to notification_redirect_url(:notification_id => @notification.id) do %>
+  <p><%= @notification.details %></p>
 <% end %>
+
 
 <p>You can update your email preferences in your profile settings</p>
