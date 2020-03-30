@@ -143,15 +143,21 @@
         <% end %>
       
       </ul>
+
     </div>
 
     <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>
   </div>
 
+  <span>This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
+
   <% if logged_in? && current_user.admin? %>
     <br><br>
     Created by user <%= @activity.creator %> –
     <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>
+
+    <% if @activity.post %>
+      <%= link_to "Broadcast", broadcast_post_path(:post_id => @activity.post.id), :method => "post", :class => 'button', data: { confirm: "Broadcast post?" } %>
+    <% end %>
   <% end %>
-</div>
 </div>

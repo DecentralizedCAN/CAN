@@ -20,11 +20,11 @@
 
     <% if notification.criterium %>
       <li <%= 'class=unread' if !notification.read %> >
-        The criterion <em><%= notification.criterium.title %></em> <%= notification.details %>
+        <%= notification.details %>
       </li>
     <% elsif notification.problem %>
       <li <%= 'class=unread' if !notification.read %> >
-        The brainstorm <em><%= notification.problem.title %></em> <%= notification.details %>
+        <%= notification.details %>
       </li>
     <% elsif notification.discussion %>
       <li <%= 'class=unread' if !notification.read %> >
@@ -32,7 +32,7 @@
       </li>
     <% elsif notification.activity %>
       <li <%= 'class=unread' if !notification.read %> >
-        The action <em><%= notification.activity.title %></em> <%= notification.details %>
+        <%= notification.details %>
       </li>
     <% end %>
 

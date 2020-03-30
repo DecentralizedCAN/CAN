@@ -212,6 +212,10 @@
     Created by user <%= @discussion.creator %> –
     <%= link_to 'Remove', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>
   </span>
+
+  <% if @discussion.post %>
+    <%= link_to "Broadcast", broadcast_post_path(:post_id => @discussion.post.id), :method => "post", :class => 'button', data: { confirm: "Broadcast post?" } %>
+  <% end %>
 <% end %>
 
 <script type="text/javascript">

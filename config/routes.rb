@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   get 'resources', to: 'static#resources', :as => :resources
   get 'notification_redirect/:notification_id', to: 'static#notification_redirect', :as => :notification_redirect
   post 'notifications/clear', to: 'static#clear_notifications', :as => :clear_notifications
+  post 'notifications/broadcast_post/:post_id', to: 'notifications#broadcast_post', :as => :broadcast_post
+  post 'notifications/broadcast_criterion/:criterion_id', to: 'notifications#broadcast_criterion', :as => :broadcast_criterion
 
   get 'commitments', to: 'static#commitments', :as => :commitment
   get '', to: 'static#main_feed', :as => :main_feed
