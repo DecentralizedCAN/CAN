@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "notifications@decentralizedCAN.com"
+  default from: "notifications@pittsburghresilience.com"
   layout 'mailer'
 end
