@@ -83,6 +83,8 @@
               <% end %>
             </div>
 
+            <div class="reply">Reply</div>
+
             <div class="time"><%= time_ago_in_words(comment.created_at) %> ago</div>
 
           </li>
@@ -139,6 +141,15 @@
         $(form).attr('action', newAction);
     }, 100);
 
+  });
+
+
+  $(".reply").click(function() {
+    link = "+[" + $(this).parent().find('div').find('strong')[0].innerText + "] "
+
+    $('#comment_content').val(link)
+
+    $("#comment_content").focus()
   });
 </script>
 <!-- DISCUSSION ENDS -->
