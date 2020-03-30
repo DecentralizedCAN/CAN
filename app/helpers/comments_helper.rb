@@ -1,16 +1,18 @@
 module CommentsHelper
   def new_comment(content, discussion_id)
 
-    if content.include?('+')
-      tag = content.split('+')[1].split(' ')[0]
+    processed_content = content
+
+    if processed_content.include?('+[')
+      tag = processed_content.split('+[')[1].split(']')[0]
       @linked_user = User.find_by(name: tag)
 
       if @linked_user
-        content = content.sub!("+#{tag}", "+<a href='/users/#{@linked_user.hashid}'>#{tag}</a>")
+        processed_content = processed_content.sub!("+[#{tag}]", "<a href='/users/#{@linked_user.hashid}'>#{tag}</a>")
       end
     end
 
-    @comment = Comment.new(:content => content, :discussion_id => discussion_id, :user_id => current_user.id)
+    @comment = Comment.new(:content => processed_content, :discussion_id => discussion_id, :user_id => current_user.id)
 
     # respond_to do |format|
       if @comment.save

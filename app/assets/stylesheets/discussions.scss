@@ -73,13 +73,19 @@ p > a, .comment > a {
 	height: 400px;
   overflow: auto;
   padding: 0;
-	.like-div, .time { display:none; }
+	.like-div, .time, .reply { display:none; }
 
 	li {
 		margin-bottom: 6px;
 	}
 }
 
+#scroll-div > li:hover .reply {
+  cursor: pointer;
+  color: gray;
+}
+
+#scroll-div > li:hover .reply,
 #scroll-div > li:hover .time,
 #scroll-div > li:hover .like-div,
 #scroll-div > li > .like-div.active { 
