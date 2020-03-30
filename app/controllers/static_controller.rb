@@ -24,7 +24,7 @@ class StaticController < ApplicationController
 		# User.first.notification.create(:details => "test", :activity_id => 1)
 
     @current_time = Time.now.to_i
-    @notifications = current_user.notification.order("created_at DESC").first(6) if logged_in?
+    @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
 
 	end
 
