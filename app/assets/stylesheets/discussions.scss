@@ -132,8 +132,8 @@ p > a, .comment > a {
   padding: 0;
   background-color: transparent;
 
-	.fa-thumbs-up:before {
-		color: gray;
+	.fa-thumbs-up:before, .gray-like-count {
+		color: gray !important;
 	}
 
 	span {
