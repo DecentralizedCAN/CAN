@@ -1,15 +1,11 @@
   <div class="proposal-block-one">
     <div class="activity-title"><span class="underline"><%= activity.title %></span> <span class="feed-label">Action</span></div>
 
-    <div class="activity-info">
-
   		<% if activity.solution %>
   			<div class="proposal-activity-description">
   				Proposal for <em><%= activity.solution.problem.title %></em>
   				with <%= activity.solution.score %>% estimated support
         </div>
-      
-        <br>
 
   		<% end %>
 
@@ -25,6 +21,8 @@
           </strong>
         </div>
       <% end %>
+
+    <div class="activity-info">
 
       <div class="post-signature">
         <!-- <i class="fas fa-calendar"></i> -->
