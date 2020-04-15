@@ -18,6 +18,7 @@
     <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
 
     <% if @activity.solution && @activity.solution.problem %>
+      <br>
       <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid) do %>
         <i class="fas fa-comment-alt"></i>
         View original proposal

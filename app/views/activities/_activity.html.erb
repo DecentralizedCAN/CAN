@@ -35,26 +35,12 @@
 
       </div>
 
-      <br>
-
       <div>
         <% if activity.expiration && activity.expiration > @current_time %>
+          <br>
           <i class="fas fa-clock"></i>
           expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
         <% end %>
-      </div>
-
-      <div class="written-progress">
-        <i class="fas fa-users"></i>
-        <% if !total_maximum(activity) %>
-          <%= total_committed(activity) %>/<%= total_minimum(activity) %>-∞
-        <% elsif total_minimum(activity) < total_maximum(activity) %>
-          <%= total_committed(activity) %>/<%=total_minimum(activity) %>-<%= total_maximum(activity) %>
-        <% else %>
-          <%= total_committed(activity) %>/<%=total_minimum(activity) %>
-        <% end %>
-        filled roles
-
       </div>
 
     </div>
@@ -70,9 +56,26 @@
       </div>
 
       <% if total_committed(activity) >= total_minimum(activity) %>
-      <div class="activated-tag">
-        Activated
-      </div>
+  
+        <div class="activated-tag">
+          Activated
+        </div>
+
+      <% else %>
+
+        <div class="written-progress">
+          <i class="fas fa-users"></i>
+          <% if !total_maximum(activity) %>
+            <%= total_committed(activity) %>/<%= total_minimum(activity) %>-∞
+          <% elsif total_minimum(activity) < total_maximum(activity) %>
+            <%= total_committed(activity) %>/<%=total_minimum(activity) %>-<%= total_maximum(activity) %>
+          <% else %>
+            <%= total_committed(activity) %>/<%=total_minimum(activity) %>
+          <% end %>
+          filled roles
+
+        </div>
+
       <% end %>
 
     </div>
