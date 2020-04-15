@@ -1,0 +1,145 @@
+<ul class="branches branches0">
+<li>
+
+  <% if @parents.length > 0 %>
+
+  <!-- ======================== -->
+
+  <ul class="branches branches1">
+  <% @parents.each do |link| %>
+    <li>
+
+      <div>
+        <% @uplinks_2 = @user.link.where(child_id: link.parent.id).where.not(parent_id: @goal.id) %>      
+      </div>
+      <!-- <hr> -->
+      <% if @uplinks_2.length > 0 %>
+        
+        <!-- ======================== -->
+
+        <ul class="branches branches2">
+          <% @uplinks_2.each do |link2| %>
+            <li>
+              <!-- <hr> -->
+              <% @uplinks_3 = @user.link.where(child_id: link2.parent.id).where.not(parent_id: @goal.id) %>
+              <% if @uplinks_3.length > 0  %>
+                
+                <!-- ======================== -->
+
+                <ul class="branches branches3">
+                  <% @uplinks_3.each do |link3| %>
+                    <li>
+                      <!-- <hr> -->
+                      <% @uplinks_4 = @user.link.where(child_id: link3.parent.id).where.not(parent_id: @goal.id) %>
+                      <% if @uplinks_4.length > 0  %>
+
+                        <!-- ======================== -->
+
+                        <ul class="branches branches4">
+                          <% @uplinks_4.each do |link4| %>
+                            <li>
+
+
+                            <% @uplinks_5 = @user.link.where(child_id: link4.parent.id).where.not(parent_id: @goal.id) %>
+                            <% if @uplinks_5.length > 0  %>
+
+                              <!-- ======================== -->
+
+                              <ul class="branches branches5">
+                                <% @uplinks_5.each do |link5| %>
+                                  <li>
+                                    <div class="highlight">
+                                      <%= link_to goal_path(link4.parent) do %>
+                                        <div class="highlight-title">
+
+                                          <% if @user.link.where(child_id: link5.parent.id).where.not(parent_id: @goal.id).count > 0 %>
+                                            <i class="fas fa-caret-up"></i>
+                                            <br>
+                                          <% end %>
+
+                                          <%= link5.parent.title %>    
+                                        </div>
+                                      <% end %>
+                                    </div>
+                                    
+                                  </li>
+                                <% end %>
+                              </ul>
+                              <div class="line"></div>
+                              <% end %>
+
+                              <!-- ======================== -->
+
+                              <div class="highlight">
+                                <%= link_to goal_path(link4.parent) do %>
+                                  <div class="highlight-title"><%= link4.parent.title %></div>
+                                <% end %>
+                              </div>
+                              
+                            </li>
+                          <% end %>
+                        </ul>
+
+                        <!-- ======================== -->
+
+                        <div class="line"></div>
+                      <% end %>
+
+                      <div class="highlight">
+                        <%= link_to goal_path(link3.parent) do %>
+                          <div class="highlight-title"><%= link3.parent.title %></div>
+                        <% end %>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+
+                <!-- ======================== -->
+
+                <div class="line"></div>
+
+              <% end %>
+
+              <div class="highlight">
+                <%= link_to goal_path(link2.parent) do %>
+                  <div class="highlight-title"><%= link2.parent.title %></div>
+                <% end %>
+              </div>
+
+            </li>
+          <% end %>
+        </ul>
+      
+        <!-- ======================== -->
+
+        <div class="line"></div>
+
+      <% end %>
+    
+      <div class="highlight">
+        <%= link_to goal_path(link.parent) do %>
+          <div class="highlight-title">
+            <%= link.parent.title %>
+            <%= link_to unlink_path(:link_id => link.id), :method => 'post', :class => 'unlink' do %>
+              <!-- <i class="fas fa-times"></i> -->
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+    </li>
+  <% end %>
+  </ul>
+
+  <!-- ======================== -->
+
+  <div class="line"></div>
+
+<% end %>
+
+<!-- <div class="highlight short">
+  <%= link_to @goal.title, goal_path(@goal) %>
+</div> -->
+
+</li>
+</ul>

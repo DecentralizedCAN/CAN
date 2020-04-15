@@ -85,6 +85,11 @@ class CriteriaController < ApplicationController
     @dissenter.destroy if @dissenter
     @criterium.user << @user unless @criterium.user.include?(@user)
 
+    begin
+      upvote_post(@criterium.problem.post.id, @user.id)
+    rescue
+    end
+      
     update_all_solution_scores(@criterium.problem.id)
 
     auto_upvote_post(@criterium.problem.post.id, @user.id)

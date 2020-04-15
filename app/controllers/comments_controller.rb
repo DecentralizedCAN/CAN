@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     new_comment(comment_params[:content], comment_params[:discussion_id])
-
+    
     redirect_back fallback_location: root_path
   end
 

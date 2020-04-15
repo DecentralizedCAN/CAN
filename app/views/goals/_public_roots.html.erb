@@ -1,0 +1,105 @@
+<% if @public_children.length > 0 %>
+
+  <div class="line"></div>
+
+  <div class="goal-node-outer">
+
+  <ul class="roots roots0">
+  <li>
+
+
+  <ul class="roots roots1">
+
+  <% @public_children.each do |link| %>
+    <li>
+      <div class="highlight">
+        <div class="highlight-title">
+          <%= render(:partial => 'link_unlink_links', :locals => {:link => link, :@goal => @goal, :@goal => @goal, :view => 'public'})%>
+
+        </div>
+      </div>
+      <div>
+        <% @sublinks_2 = Link.where(parent_id: link.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(4) %>
+      </div>
+      <!-- <hr> -->
+      <% if @sublinks_2.length > 0 %>
+        <div class="line"></div>
+  
+        <ul class="roots roots2">
+          <% @sublinks_2.each do |link2| %>
+            <li>
+              <div class="highlight">
+                <div class="highlight-title">
+                  <%= render(:partial => 'link_unlink_links', :locals => {:link => link2, :@goal => @goal, :@goal => @goal, :view => 'public'})%>
+                </div>
+              </div>
+              <!-- <hr> -->
+              <% @sublinks_3 = Link.where(parent_id: link2.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(4) %>
+              <% if @sublinks_3.length > 0  %>
+                <div class="line"></div>
+                <ul class="roots roots3">
+                  <% @sublinks_3.each do |link3| %>
+                    <li>
+                      <div class="highlight">
+                        <div class="highlight-title">
+                          <%= render(:partial => 'link_unlink_links', :locals => {:link => link3, :@goal => @goal, :@goal => @goal, :view => 'public'})%>
+                        </div>
+                      </div>
+
+                      <!-- <hr> -->
+                      <% @sublinks_4 = Link.where(parent_id: link3.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(4) %>
+                      <% if @sublinks_4.length > 0  %>
+                        <div class="line"></div>
+                        <ul class="roots roots4">
+                          <% @sublinks_4.each do |link4| %>
+                            <li>
+                              <div class="highlight">
+                                <div class="highlight-title">
+                                  <%= render(:partial => 'link_unlink_links', :locals => {:link => link4, :@goal => @goal, :view => 'public'})%>
+                                </div>
+                              </div>
+                              
+                              <% @sublinks_5 = Link.where(parent_id: link4.child.id).where.not(child_id: @goal.id).joins(:user).group("links.id").order("COUNT(user_id) DESC").first(4) %>
+                              <% if @sublinks_5.length > 0  %>
+                                <div class="line"></div>
+                                <ul class="roots roots5">
+                                  <% @sublinks_5.each do |link5| %>
+                                    <li>
+                                      <div class="highlight">
+                                        <div class="highlight-title">
+                                          <%= render(:partial => 'link_unlink_links', :locals => {:link => link5, :@goal => @goal, :view => 'public'})%>
+
+                                          <% if Link.where(parent_id: link5.child.id).where.not(child_id: @goal.id).count > 0 %>
+                                            <br>
+                                            <i class="fas fa-caret-down"></i>
+                                          <% end %>
+
+                                        </div>
+                                      </div>
+                                      
+                                    </li>
+                                  <% end %>
+                                </ul>
+                              <% end %>
+
+                            </li>
+                          <% end %>
+                        </ul>
+                      <% end %>
+
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
+
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+</li>
+</ul>
+</div>
+<% end %>

@@ -37,6 +37,14 @@
         
         <% if logged_in? %>
         <li>
+          <% if logged_in? || Setting.find(6).state %>
+            <%= link_to goal_path(Goal.first, :view => 'public') do %>
+              <i class="fas fa-project-diagram"></i>
+              Goals
+            <% end %>
+          <% end %>
+        </li>
+        <li>
           <%= link_to users_path do %>
               <i class="fas fa-users"></i>
               Members

@@ -54,6 +54,24 @@ class DiscussionsController < ApplicationController
         # keep record of user activity
         current_user.update(:last_posted => Time.now)
 
+        # Notifications
+        if discussion_params[:goal_id].length > 0
+          @goal = Goal.find(discussion_params[:goal_id])
+
+          @links = Link.where(:child_id => discussion_params[:goal_id])
+
+          @links.each do |link|
+            link.user.each do |user|
+              notification = user.notification.create(:details => "was created for the goal \"" + @goal.title + "\"",
+                :discussion_id => @discussion.id)
+              if user.email_notifications
+                notification.send_email
+              end
+            end
+          end
+        end
+        # End notifications
+
         format.html { redirect_to @discussion }
         format.json { render :show, status: :created, location: @discussion }
       else
@@ -98,7 +116,7 @@ class DiscussionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def discussion_params
-      params.require(:discussion).permit(:title, :content, :problem_id)
+      params.require(:discussion).permit(:title, :content, :problem_id, :goal_id)
     end
 
     def public_viewable?

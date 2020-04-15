@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       @user = User.new      
     else
       flash[:info] = "The admin has disallowed user signup."
-      redirect_to login_path
+      redirect_back fallback_location: login_path
     end
   end
 
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       @user = User.new      
     else
       flash[:info] = "Only admins can view this page."
-      redirect_to login_path
+      redirect_back fallback_location: root_path
     end
   end
 

@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <% if params[:goal] %>
+    <% @goal = Goal.find(params[:goal]) %>
+    <p><i class="fas fa-link"></i> Attached to goal <strong><%= link_to @goal.title, goal_path(:goal_id => @goal.id) %> </strong></p>
+  <% end %>
+
   <div class="main-field">
     <h1>Title</h1>
     <%= form.text_area :title, id: :problem_title, placeholder: "Briefly summarize the issue you want to find solutions for" %>
@@ -20,7 +25,10 @@
 
     <%= form.check_box :require_action, {checked: true}, true, false %> Format proposals as actions
 
+    <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
+
     <% if Setting.first.state && false %>
+
       <div class="number-field-outer">
         <h1>Activation minimum</h1>
         <p>This is the number of people who must suggest a solution before it is posted as an action to the main feed.</p>
@@ -33,6 +41,6 @@
 
   </div>
 
-  <%= form.submit "Post", id: :submit_goal %>
+  <%= form.submit "Post", id: :submit_brainstorm %>
 
 <% end %>

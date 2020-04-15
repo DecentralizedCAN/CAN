@@ -23,6 +23,7 @@ $dissent-green: #3be1ea;
 $background-gray: #efeeee;
 $success-red: #ff7455;
 $offwhite: #f5f5f5;
+$neutral-blue: #0091ff;
 
 html, body {
     width: 100%;
@@ -74,6 +75,16 @@ a.button, input.button {
   text-transform: uppercase;
   vertical-align: middle;
 
+  // font-style: normal;
+  // border: 1px solid #868686;
+  // padding: 2px 5px;
+  // background-color: #e4e4e4;
+  // color: #3a3a3a !important;
+  // border-radius: 2px;
+  // font-size: 10px;
+  // text-transform: uppercase;
+  // vertical-align: middle;
+
   &:hover {
     background-color: #bbb9b9;
   }
@@ -83,7 +94,7 @@ p {
   white-space: pre-wrap;
 }
 
-.underline {
+.underline-permanent {
   text-decoration: underline;
 }
 
@@ -121,11 +132,6 @@ textarea:focus, input:focus {
   input {
     color: #3a3a3a;
   }
-}
-
-.proposal, .issue, .discussion {
-  padding: 0px 4px;
-  background-color: transparent;
 }
 
 
@@ -250,7 +256,7 @@ textarea:focus, input:focus {
 // TOOLTIP ENDS
 
 
-
+// COLORS
 .gray {
   color: gray;
 }
@@ -275,6 +281,10 @@ textarea:focus, input:focus {
   color: #983333;
 }
 
+.blue {
+  color: $neutral-blue;
+}
+// COLORS ENDS
 
 header {
 
@@ -366,7 +376,7 @@ header {
 }
 
 .nav > li > a {
-  padding: 10px;
+  padding: 8px;
 }
 
 .navbar-toggle {
@@ -522,7 +532,7 @@ nav #logo {
     vertical-align: top;
     float: left;
     // background-color: #424242;
-    background-color: #525252;
+    background-color: #8e8e8e;
     color: white;
     line-height: 12px;
     font-size: 10px;
@@ -535,7 +545,7 @@ nav #logo {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent; 
     // border-right: 10px solid #424242;
-    border-right: 10px solid #525252;
+    border-right: 10px solid #8e8e8e;
     display: inline-block; 
     vertical-align: top;
     float: left;

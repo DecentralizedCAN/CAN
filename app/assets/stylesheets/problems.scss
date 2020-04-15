@@ -6,18 +6,14 @@ $dissent-green: #3be1ea;
 $success-red: #ff7455;
 
 .issue {
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: block;
-  background-color: #343536;
+  // border-radius: 2px;
+  // margin-bottom: 10px;
+  // display: block;
+  // background-color: #343536;
 }
 
 .issue-title {
   font-size: 14px;
-}
-
-.issue-info, .activity-info, .discussion-info {
-  line-height: 14px;
 }
 
 .issue-info > div {
@@ -231,7 +227,7 @@ $success-red: #ff7455;
   height: 200px;
 }
 
-#submit_goal {
+#submit_brainstorm {
   margin-top: 12px;
   background-color: $dissent-green;
   border: 1px solid #ddd;
@@ -305,6 +301,11 @@ $success-red: #ff7455;
 #full-discussion-view {
   float: right;
   color: #3a3a3a !important;
+  font-size: 12px;
+  margin: 8px;
+  font-style: normal;
+  text-transform: uppercase;
+
 }
 
 #suggestion_min {

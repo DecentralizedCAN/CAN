@@ -4,27 +4,30 @@
     <%= link_to issue_path(@discussion.problem) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to brainstorm
+        <%= @discussion.problem.title %>
       </div>
     <% end %>
+    <h3> &nbsp; Discussion</h3>
   </div>
 <% elsif @discussion.activity %>
   <div class="back-button">
     <%= link_to action_path(@discussion.activity.hashid) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to action
+        <%= @discussion.activity.title %>
       </div>
     <% end %>
+    <h3> &nbsp; Discussion</h3>
   </div>
 <% elsif @discussion.solution %>
   <div class="back-button">
     <%= link_to solution_path(:problem_id => @discussion.solution.problem.hashid, :solution_id => @discussion.solution.hashid) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to solution
+        <%= @discussion.solution.title %>
       </div>
     <% end %>
+    <h3> &nbsp; Discussion</h3>
   </div>
 <% else %>
   <!-- <div class="back-button">
@@ -40,11 +43,25 @@
 
       <div class="discussion">
         <div class="discussion-title"><%= @discussion.title %> <span class="feed-label">Discussion</span></div>
+        <% if @discussion.goal %>
+          <div class="proposal-activity-description">
+            <i class="fas fa-link"></i>
+            Attached to goal 
+            <strong><%= link_to @discussion.title, goal_path(@discussion.goal) %></strong>
+          </div>
+        <% end %>
         <div class="issue-info">
-            <div>
-              <i class="fas fa-calendar"></i>
-              created <%= time_ago_in_words(@discussion.created_at) %> ago
+            <div class="post-signature">
+              <!-- <i class="fas fa-calendar"></i> -->
+              Created <%= time_ago_in_words(@discussion.created_at) %> ago
+              by
+              <em><%= 
+              begin 
+                User.find(@discussion.creator).name
+              rescue 
+              end  %></em>
             </div>
+            <br>
             <div>
               <i class="fas fa-comment-dots"></i>
               <%= pluralize(@discussion.comment.count, "comment") %>

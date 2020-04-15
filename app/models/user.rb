@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_and_belongs_to_many :problems
   has_and_belongs_to_many :solutions
   has_and_belongs_to_many :rolls
+  has_and_belongs_to_many :goal
+  has_and_belongs_to_many :link
   has_many :upvotes, dependent: :destroy
   has_many :polls, dependent: :destroy
   has_many :cridissent, dependent: :destroy

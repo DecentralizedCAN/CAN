@@ -7,6 +7,7 @@ class Activity < ApplicationRecord
   has_one :post, dependent: :destroy
   has_one :discussion, dependent: :destroy
   belongs_to :solution, optional: true
+  belongs_to :goal, optional: true
   has_many :notification, dependent: :destroy
 
   validates :title, presence: true, length: { minimum: 1, maximum: 2000 }

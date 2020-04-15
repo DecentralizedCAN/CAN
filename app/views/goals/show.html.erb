@@ -1,0 +1,305 @@
+<div class="goal-node">
+
+<% if params[:view] == 'public' %>
+  <h2 class='goals-title'>
+    <i class='fas fa-users'></i>
+    Group goals
+  </h2>  
+  <%= link_to goal_path(@goal), :class => 'button' do %>
+    <i class="fas fa-eye"></i>
+    View mine
+  <% end %>
+<% else %>
+  <h2 class='goals-title'>
+    <i class='fas fa-user'></i>
+    Personal goals
+  </h2> 
+  <%= link_to goal_path(:goal_id => @goal.hashid, :view => 'public'), :class => 'button' do %>
+    <i class="fas fa-eye"></i>
+    View all
+  <% end %>
+<% end %>
+
+<br><br>
+
+<% if params[:view] == 'public' %>
+  <%= render(:partial => 'public_branches', :locals => {:@parents => @public_parents})%>
+<% else %>
+  <%= render(:partial => 'personal_branches', :locals => {:@parents => @parents})%>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h2 class="goal-list-title">This helps achieve</h2> -->
+
+<!-- <div class="btn-group">
+  <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-plus"></i>
+  </button>
+  <div class="dropdown-menu">
+    
+    <%= form_for(@new_goal, remote: true) do |form| %>
+      <div>
+        <%= form.text_area :title, id: :goal_title, placeholder: "Why do you want to achieve the current goal?" %>
+      </div>
+
+      <%= form.hidden_field :child_id, :value => @goal.id %>
+
+      <%= form.submit "Add", id: :submit_goal, :class => 'button'%>
+    <% end %>
+
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search existing goals...">
+    <ul id="myUL">
+
+      <% @my_goals.each do |goal| %>
+        <li>
+          <%= link_to '+ ' + goal.title, newlink_path(:child_id => @goal.id, :parent_id => goal.id), :method => 'post', :class => 'button' %> 
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<br>
+ -->
+
+<!-- <ul class="branches">
+<% @parents.each do |link| %>
+	<li><%= link_to link.parent.title, goal_path(link.parent) %></li>
+<% end %>
+</ul> -->
+
+<div class="goal-middle">
+
+  <% if @goal.id != 1 %>
+
+  <% if @goal.users.include?(@user) %>
+    <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
+      <div class="mark-accomplished">
+        <%= @goal.users.count if @goal.users.count > 0%>
+        <i class="fas fa-check-double"></i>
+      </div>
+    <% end %>
+  <% else %>
+    <%= link_to complete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
+      <div class="mark-accomplished">
+        <%= @goal.users.count if @goal.users.count > 0%>
+        <i class="fas fa-check"></i>
+      </div>
+    <% end %>
+  <% end %>
+
+  <br>
+
+  <!-- <div href="#" >Hover over me</div> -->
+
+  <!-- <ul class="goal-actionables actionables-left">
+    <li>
+      <i class="fas fa-check-double"></i>
+      <%= @goal.users.count %>
+      Marked achieved
+    </li>
+    <li>
+      <i class="fas fa-network-wired fa-rotate-180"></i>
+      <%=pluralize(@parents.count, 'Supergoal')%>
+    </li>
+    <li>
+      <i class="fas fa-network-wired"></i>
+      <%=pluralize(@children.count, 'Subgoal')%>
+    </li>
+  </ul> -->
+
+  <!-- <div class="line horizontal line-left"></div> -->
+
+  <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
+    <div class="view-goal-details">
+      <i class="fas fa-list"></i>
+    </div>
+  <% end %>
+
+<% else %>
+
+  <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
+    <i class="fas fa-list"></i>
+  <% end %>
+<% end %>
+
+
+
+
+
+
+  <!-- TITLE -->
+
+  <% if @goal.users.include?(@user) %>
+    <h1 id='<%= @goal.hashid %>' class="strikethrough"><%= @goal.title %></h1> 
+  <% else %>
+    <h1 id='<%= @goal.hashid %>'><%= @goal.title %></h1> 
+  <% end %>
+
+  <!-- END TITLE -->
+
+
+
+
+
+
+  <% if @goal.id != 1 %>
+    <%= link_to post_problem_path(:goal => @goal.id) do %>
+      <div class="view-actionables">
+        <i class="fas fa-pen"></i>
+      </div>
+    <% end %>
+
+  <!-- <div class="line horizontal line-right"></div> -->
+
+  <!-- <ul class="goal-actionables actionables-right">
+    <li>
+      <i class="fas fa-brain"></i>
+      <%= pluralize(Problem.where(:goal_id => @goal.id).count, 'Brainstorm') %>
+    </li>
+    <li>
+      <i class="fas fa-calendar"></i>
+      <%= pluralize(Activity.where(:goal_id => @goal.id).count, 'Action') %>
+    </li>
+    <li>
+      <i class="fas fa-comments"></i>
+      <%= pluralize(Discussion.where(:goal_id => @goal.id).count, 'Discussion') %>
+    </li>
+  </ul> -->
+
+  <% end %>
+
+  <!-- <div class="view-actionables"><a href=""><i class="fas fa-plus"></i></a></div> -->
+
+</div>
+
+<!-- <h2 class="goal-list-title">How to achieve this</h2> -->
+
+<!-- <ul class="roots roots0">
+<% @children.each do |link| %>
+  <li><%= link_to link.child.title, goal_path(link.child) %>
+<% end %>
+</ul>  
+ -->
+<br>
+
+<div class="btn-group dropright">
+  <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-plus"></i>
+  </button>
+  <div class="dropdown-menu">
+    
+    <%= form_for(@new_goal, remote: true) do |form| %>
+      <div>
+        <%= form.text_area :title, id: :goal_title, placeholder: "What could help to achieve the current goal?" %>
+      </div>
+
+      <%= form.hidden_field :parent_id, :value => @goal.id %>
+
+      <!-- <%= form.check_box :title, id: :post_goal, :checked => true %> Post to feed<br> -->
+      <%= form.submit "Add", id: :submit_goal, :class => 'button'%>
+    <% end %>
+
+    <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search existing goals...">
+    <ul id="myUL2">
+
+      <% @my_goals.each do |goal| %>
+        <li>
+          <%= link_to '+ ' + goal.title, newlink_path(:parent_id => @goal.id, :child_id => goal.id), :method => 'post', :class => 'button' %> 
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h2 class="goal-list-title">Top node tree</h2> -->
+
+<!-- <div class="highlight short">
+  <%= link_to @goal.title, goal_path(@goal) %>
+</div> -->
+
+
+<% if params[:view] == 'public' %>
+  <%= render(:partial => 'public_roots')%>
+<% else %>
+  <%= render(:partial => 'personal_roots')%>
+<% end %>
+
+</div>
+
+
+
+
+
+
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+function myFunction2() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput2');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL2");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+$(document).ready(function(){
+    var outerContent = $('.goal-node-outer');
+    var innerContent = $('.roots0');
+
+    outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);        
+});
+</script>

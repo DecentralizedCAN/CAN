@@ -60,6 +60,16 @@ Rails.application.routes.draw do
   post '/criteria/alt', to: 'criteria#alt', :as => :alt_criterium
   post '/criteria/accept_alt', to: 'criteria#accept_alt', :as => :accept_alt
 
+  resources :goals, only: [:create, :index]
+  get '/goal/new', to: 'goals#new', :as => :new_goal
+  get '/goal/:goal_id', to: 'goals#show', :as => :goal
+  get '/goal/details/:goal_id', to: 'goals#details', :as => :goal_details
+  post '/newlink', to: 'goals#newlink', :as => :newlink
+  post '/link', to: 'goals#link', :as => :link
+  post '/path/leave/:link_id', to: 'goals#unlink', :as => :unlink
+  post '/goal/complete/:goal_id', to: 'goals#complete_goal', :as => :complete_goal
+  post '/goal/uncomplete/:goal_id', to: 'goals#uncomplete_goal', :as => :uncomplete_goal
+
   # TEMPORARY
   # resources :posts do
   #   resources :upvotes

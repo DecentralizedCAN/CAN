@@ -81,6 +81,7 @@ class ActivitiesController < ApplicationController
                             :description => activity_params[:description],
                             :expiration => expiration,
                             :deadline => deadline,
+                            :goal_id => activity_params[:goal_id],
                             :creator => current_user.id)
 
     puts "---------------------------------"
@@ -146,6 +147,24 @@ class ActivitiesController < ApplicationController
 
         # track user activity
         current_user.update(:last_posted => Time.now)
+
+        # Notifications
+        if activity_params[:goal_id].length > 0
+          @goal = Goal.find(activity_params[:goal_id])
+
+          @links = Link.where(:child_id => activity_params[:goal_id])
+
+          @links.each do |link|
+            link.user.each do |user|
+              notification = user.notification.create(:details => "was created for the goal \"" + @goal.title + "\"",
+                :activity_id => @activity.id)
+              if user.email_notifications
+                notification.send_email
+              end
+            end
+          end
+        end
+        # End notifications
 
       # if @roll.save
 
@@ -361,7 +380,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:title, :description, :role_json, :deadline, :expiration)
+      params.require(:activity).permit(:title, :description, :role_json, :deadline, :expiration, :goal_id)
     end
 
     def public_viewable?

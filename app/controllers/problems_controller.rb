@@ -106,6 +106,24 @@ class ProblemsController < ApplicationController
         # keep record of user activity
         @user.update(:last_posted => Time.now)
 
+        # Notifications
+        if problem_params[:goal_id].length > 0
+          @goal = Goal.find(problem_params[:goal_id])
+
+          @links = Link.where(:child_id => problem_params[:goal_id])
+
+          @links.each do |link|
+            link.user.each do |user|
+              notification = user.notification.create(:details => "was created for the goal \"" + @goal.title + "\"",
+                :problem_id => @problem.id)
+              if user.email_notifications
+                notification.send_email
+              end
+            end
+          end
+        end
+        # End notifications
+
         # @problem.send_problem_email
         format.html { redirect_to issue_path(@problem) }
         format.json { render :show, status: :created, location: @problem }
@@ -175,7 +193,7 @@ class ProblemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def problem_params
-      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action)
+      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action, :goal_id)
     end
 
     def public_viewable?
