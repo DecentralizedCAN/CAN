@@ -67,14 +67,13 @@
         background-color: rgba(255, 116, 85, <%= total_committed(activity).to_f / total_minimum(activity).to_f %>);
         ">
         </div>
-
-        <% if activity.roll.first.user.count >= activity.roll.first.minimum %>
-        <div class="activated-tag">
-          Activated
-        </div>
-        <% end %>
-
       </div>
+
+      <% if total_committed(activity) >= total_minimum(activity) %>
+      <div class="activated-tag">
+        Activated
+      </div>
+      <% end %>
 
     </div>
 
