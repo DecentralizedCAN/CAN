@@ -1,14 +1,5 @@
 <div id="solver">
 
-  <!-- <div class="back-button">
-    <%= link_to main_feed_path do %>
-      <div class="back-button-arrow"></div>
-      <div class="back-button-content">
-        Feed
-      </div>
-    <% end %>
-  </div> -->
-
   <% if @problem.post %>
     <%= render(:partial => 'static/post-stuff', :locals => {:post => @problem.post})%>
   <% end %>
@@ -61,12 +52,7 @@
         <i class="fas fa-comment-alt"></i> 
         <%= @problem.solution.count %> proposals
       </div>
-<!--       <% if logged_in? && current_user.admin? %> 
-        <div>          
-          <i class="fas fa-user-alt"></i> 
-          <%= @problem.creator %>
-        </div>
-      <% end %> -->
+
     </div>
 
     </div>
@@ -123,6 +109,7 @@
     <div>
       <%= link_to 'Propose action', new_solution_path(:problem_id => @problem.id), :class => "button" if @problem.require_action %>
       <%= link_to 'New proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if !@problem.require_action %>
+      <%= link_to "View as table", brainstorm_table_path( :problem_id => @problem.hashid), :class => "button" if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
     </div>
     
     <ol class="solutions">
@@ -147,30 +134,10 @@
            
 
             <% if solution.user.count >= @problem.suggestion_min %>
-              <%= link_to action_path(:activity_id => solution.activity.id), class: "button" do %>
+              <%= link_to action_path(:activity_id => solution.activity.id), class: "button button-view" do %>
                 <em>View action</em>
               <% end %>
             <% end %>
-
-           <!-- 
-            <% if solution.user.count < @problem.suggestion_min - 1 %>
-              <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
-                Suggest (<%= solution.user.count %>/<%= @problem.suggestion_min %>)
-              <% end %>
-            <% elsif solution.user.count >= @problem.suggestion_min %>
-              <%= link_to action_path(:activity_id => solution.activity.id) do %>
-                <em>View action</em>
-              <% end %>
-            <% elsif solution.user.include?(@user) %>
-              <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
-                Suggested (<%= solution.user.count %>/<%= @problem.suggestion_min %>)
-              <% end %>
-            <% elsif solution.user.count == @problem.suggestion_min - 1 %>
-              <%= link_to suggest_path(:solution_id => solution.id), :method => "post", :class => "suggest" do %>
-                Post as action
-              <% end %>
-            <% end %>
-             -->
 
           </div>
         </li>

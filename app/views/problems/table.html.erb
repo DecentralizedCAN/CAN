@@ -1,0 +1,184 @@
+<div id="solver">
+
+  <% if @problem.post %>
+    <%= render(:partial => 'static/post-stuff', :locals => {:post => @problem.post})%>
+  <% end %>
+
+  <div class="issue">
+    <div class="flex-container">
+
+      <div class="issue-title view"><%= @problem.title %>
+        <span class="feed-label">Brainstorm</span>
+      </div>
+
+    </div>
+
+    <div class="right-buttons">
+      <%if @problem.user.include?(@user)%>
+        <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+      <%else%>
+        <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+      <%end%>
+    </div>
+
+    <% if @problem.goal %>
+      <div class="proposal-activity-description">
+        <i class="fas fa-link"></i>
+        Attached to goal <strong><%= link_to @problem.title, goal_path(@problem.goal) %></strong>
+      </div>
+    <% end %>
+
+    <div class="issue-info">
+      <div class="post-signature">
+        <!-- <i class="fas fa-calendar"></i> -->
+        Created <%= time_ago_in_words(@problem.created_at) %> ago
+        by
+        <em><%= 
+        begin 
+          User.find(@problem.creator).name
+        rescue 
+        end  %></em>
+      </div>
+      <br>
+      <div>
+        <i class="fas fa-handshake"></i>
+        <%= @problem.user.count %> collaborators
+      </div>
+      <div>
+        <i class="fas fa-clipboard-list"></i>
+        <%= @problem.criterium.count %> criteria
+      </div>
+      <div>
+        <i class="fas fa-comment-alt"></i> 
+        <%= @problem.solution.count %> proposals
+      </div>
+<!--       <% if logged_in? && current_user.admin? %> 
+        <div>          
+          <i class="fas fa-user-alt"></i> 
+          <%= @problem.creator %>
+        </div>
+      <% end %> -->
+    </div>
+
+    </div>
+
+    <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+
+  <!-- DETAILS ENDS -->
+
+ 
+
+
+<!-- Table -->
+
+<h1>Criteria X Proposals</h1>
+<%= link_to "View as lists", issue_path( :problem_id => @problem.hashid), :class => "button"  %>  
+<br><br>
+
+<div class="outer-table">
+<table class="proposal-grid" cellspacing ="2" cellpadding ="6">
+
+<tr>
+  <th class="table-hidden"></th>
+
+  <% @solutions.each do |solution| %>
+    <th class="table-title" colspan="2"><div><%= solution.title %></div></th>
+  <% end %>
+</tr>
+
+<tr>
+  <th class="table-hidden"></th>
+  <% @solutions.each do |solution| %>
+    <th class="yes">Yes</th>
+    <th class="no">No</th>
+  <% end %>
+</tr>
+
+<% @all_criteria.each do |criterion| %>
+  <tr>
+    <td class="table-title"><div><%= criterion.title %></div></td>
+
+    <% @solutions.each do |solution| %>
+      
+      <% polls = criterion.poll.where(solution_id: solution.id) %>
+
+        <% if logged_in? %>
+
+          <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 1).count == 0 %>
+            <td class="yes-score ">
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 1), :method => "post" do %>
+                <div><%= polls.where(answer: 1).count %></div>
+              <% end %>
+            </td>
+          <% else %>
+            <td class="yes-score answered">
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post" do %>
+                <div><%= polls.where(answer: 1).count %></div>
+              <% end %>
+            </td>
+          <% end %>
+
+          <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 0).count == 0 %>
+            <td class="no-score">
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 0), :method => "post" do %>
+                <div><%= polls.where(answer: 0).count %></div>
+              <% end %>
+            </td>
+        <% else %>
+            <td class="no-score answered">
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post" do %>
+                <div><%= polls.where(answer: 0).count %></div>
+              <% end %>
+            </td>
+        <% end %>
+      
+      <% else %>
+      
+        <td class="yes-score "><div><%= polls.where(answer: 1).count %></div></td>
+        <td class="no-score "><div><%= polls.where(answer: 0).count %></div></td>
+
+      <% end %>
+    <% end %>
+  </tr>
+<% end %>
+
+<tr>
+  <th class="table-hidden">Raw score</th>
+  <% @solutions.each do |solution| %>
+    <% polls = Poll.where(solution_id: solution.id) %>
+    <th class="percentage" colspan="2"><%= (polls.average(:answer) * 100).round %> %</th>
+  <% end %>
+</tr>
+
+<tr>
+  <th class="table-hidden">Weighted score</th>
+  <% @solutions.each do |solution| %>
+    <% polls = Poll.where(solution_id: solution.id) %>
+    <th class="percentage" colspan="2"><%= solution.score %> %</th>
+  <% end %>
+</tr>
+
+</table>
+</div>
+
+<!-- TABLE -->
+
+<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
+
+
+</div>
+
+<br><br><span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
+
+
+<% if logged_in? && current_user.admin? %>
+  <span class="admin-section">
+    <br><br>
+    Created by <%= @problem.creator %> –
+    <%= link_to 'Remove', @problem, method: :delete, data: { confirm: 'Delete brainstorm?' } %>
+
+    <% if @problem.post %>
+        <%= link_to "Broadcast", broadcast_post_path(:post_id => @problem.post.id), :method => "post", :class => 'button', data: { confirm: "Broadcast post?" } %>
+    <% end %>
+  </span>
+<% end %>

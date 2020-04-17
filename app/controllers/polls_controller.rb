@@ -1,4 +1,6 @@
 class PollsController < ApplicationController
+  include SolutionsHelper
+  
   before_action :set_poll, only: [:show, :edit, :update, :destroy]
   before_action :require_login
 
@@ -52,6 +54,32 @@ class PollsController < ApplicationController
     end
   end
 
+  def quiet_set
+    @criterium = Criterium.find(params[:criterium_id])
+    @answer = params[:answer].to_i
+    @solution_id = params[:solution_id]
+
+    @user = this_user
+    @poll = @criterium.poll.where(solution_id: @solution_id).where(user_id: @user.id)
+
+    if params[:answer] == nil
+      @poll.destroy_all
+    elsif @poll.count > 0
+
+      if @poll.update(:answer => @answer)
+        puts @poll.to_json
+      end
+    else
+      @poll = @criterium.poll.new(:user_id => @user.id, :solution_id => @solution_id, 
+                                  :answer => @answer)
+      @poll.save
+    end
+
+    # update_all_solution_scores(@criterium.problem.id)
+
+    redirect_back fallback_location: root_path
+  end
+
   # DELETE /polls/1
   # DELETE /polls/1.json
   def destroy
@@ -72,5 +100,12 @@ class PollsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def poll_params
       params.require(:poll).permit(:answers, :solution_id, :user_id)
+    end
+
+    def update_all_solution_scores(problem_id)
+      solutions = Problem.find(problem_id).solution.all
+      solutions.each do |solution|
+        solution.update(:score => solution_score(solution.id) * 100)
+      end
     end
 end

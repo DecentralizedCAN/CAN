@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/problem/sponsor', to: 'problems#sponsor', :as => :sponsor_problem
   post '/problem/unsponsor', to: 'problems#unsponsor', :as => :unsponsor_problem
   get '/brainstorm/:problem_id', to: 'problems#show', :as => :issue
+  get '/brainstorm/table/:problem_id', to: 'problems#table', :as => :brainstorm_table
   resources :problems, only: [:create, :destroy]
 
   resources :solutions, only: [:create]
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   get '/brainstorm/:problem_id/proposal/:solution_id', to: 'solutions#show', :as => :solution
   delete '/proposal/:proposal', to: 'solutions#destroy', :as => :destroy_solution
   post '/solver/poll', to: 'solutions#poll', :as => :set_poll
+  post '/quietpoll', to: 'polls#quiet_set', :as => :quiet_set_poll
 
   get '/activator', to: 'activities#index', :as => :activator
   get '/action/post', to: 'activities#new', :as => :post_action

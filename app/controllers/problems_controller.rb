@@ -1,9 +1,9 @@
 class ProblemsController < ApplicationController
   include UpvoteHelper
-  before_action :set_problem, only: [:show, :edit, :update]
+  before_action :set_problem, only: [:show, :table, :edit, :update]
   before_action :check_activity, only: [:create]
-  before_action :require_login, except: [:show], if: -> { public_viewable? }
   before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_login, except: [:show, :table], if: -> { public_viewable? }
   before_action :require_admin_or_anarchy, only: [:new, :create]
 
   # GET /problems
@@ -24,13 +24,15 @@ class ProblemsController < ApplicationController
       .group("criteria.id").count.count
 
     if logged_in?
+      @all_criteria = @problem.criterium
+        .joins(:user)
+        .group("criteria.id")
+        .order("COUNT(user_id) DESC")
+
       @my_criteria = current_user.criterium
         .where(problem_id: @problem.id)
 
-      @criteria = @problem.criterium
-        .joins(:user)
-        .group("criteria.id")
-        .order("COUNT(user_id) DESC") - @my_criteria
+      @criteria = @my_criteria - @my_criteria
         # .order("COUNT(user_id) DESC").first(16) - @my_criteria
 
       @user = this_user
@@ -73,6 +75,41 @@ class ProblemsController < ApplicationController
       #   solution.update!(:score => score)
       # end
     end
+  end
+
+  def table
+    @solutions = @problem.solution.paginate(:page => params[:page], :per_page => 12)
+    .order("score DESC")
+
+    @criteria_count = @problem.criterium
+      .joins(:user)
+      .group("criteria.id").count.count
+
+    @all_criteria = @problem.criterium
+        
+    if logged_in?
+      @my_criteria = current_user.criterium
+        .where(problem_id: @problem.id)
+
+      @criteria = @my_criteria - @my_criteria
+
+      @user = this_user
+    else
+      @my_criteria = []
+
+      @criteria = @problem.criterium
+        .joins(:user)
+        .group("criteria.id")
+        .order("COUNT(user_id) DESC").first(16)
+    end
+
+    @discussion = @problem.discussion
+    @comment = @discussion.comment.new
+    @top_liked = @discussion.comment.left_joins(:upvotes)
+      .group(:id)
+      .having('count(upvotes.id) > 0')
+      .order("COUNT(upvotes.id) DESC LIMIT 5")
+
   end
 
   # GET /problems/new

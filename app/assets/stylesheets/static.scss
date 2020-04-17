@@ -24,6 +24,7 @@ $label-blue: #81c4ff;
   display: inline-block;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
+  font-size: 13px;
 }
 
 .issue-info, .activity-info, .discussion-info, .written-progress {
@@ -141,9 +142,9 @@ h2 {
   text-transform: uppercase;
   font-size: 10px;
   background-color: #fd9f8c;
-  padding: 2px 4px;
+  padding: 1px 4px;
   border-radius: 2px;
-  line-height: 18px;
+  line-height: 12px;
 }
 
 .issue .feed-label {

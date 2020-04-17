@@ -90,6 +90,23 @@ a.button, input.button {
   }
 }
 
+a.button-hollow, input.button-hollow {
+  background-color: #d8d8d8 !important;
+  color: #4e4e4e !important;
+}
+
+a.button-view, input.button-view {
+  background-color: #d8d8d8 !important;
+  color: #6b6b6b !important;
+  border: none;
+}
+
+.solution-item .button-view {
+  float: right;
+  position: relative;
+  top: 2px;
+}
+
 p {
   white-space: pre-wrap;
 }

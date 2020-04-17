@@ -30,7 +30,7 @@ class SolutionsController < ApplicationController
       .having('count(upvotes.id) > 0')
       .order("COUNT(upvotes.id) DESC LIMIT 5")
 
-    @solution.update(:score => solution_score(@solution.id) * 100)
+    # @solution.update(:score => solution_score(@solution.id) * 100)
 
 
 
@@ -164,6 +164,8 @@ class SolutionsController < ApplicationController
 
       @poll.save
     end
+
+    @solution.update(:score => solution_score(@solution.id) * 100)
 
     redirect_to solution_path(:solution_id => @solution.id, :problem_id => @solution.problem_id, :anchor => @criterium.hash)
   end
