@@ -151,7 +151,7 @@
 </tr>
 
 <tr>
-  <th class="table-hidden">Weighted score</th>
+  <th class="table-hidden">Weighted (reload to update)</th>
   <% @solutions.each do |solution| %>
     <% polls = Poll.where(solution_id: solution.id) %>
     <th class="percentage" colspan="2"><%= solution.score %> %</th>

@@ -1,5 +1,6 @@
 class ProblemsController < ApplicationController
   include UpvoteHelper
+  include SolutionsHelper
   before_action :set_problem, only: [:show, :table, :edit, :update]
   before_action :check_activity, only: [:create]
   before_action :require_login, unless: -> { public_viewable? }
@@ -79,29 +80,11 @@ class ProblemsController < ApplicationController
 
   def table
     @solutions = @problem.solution.paginate(:page => params[:page], :per_page => 12)
-    .order("score DESC")
-
-    @criteria_count = @problem.criterium
-      .joins(:user)
-      .group("criteria.id").count.count
+    .order('created_at DESC')
 
     @all_criteria = @problem.criterium
         
-    if logged_in?
-      @my_criteria = current_user.criterium
-        .where(problem_id: @problem.id)
-
-      @criteria = @my_criteria - @my_criteria
-
-      @user = this_user
-    else
-      @my_criteria = []
-
-      @criteria = @problem.criterium
-        .joins(:user)
-        .group("criteria.id")
-        .order("COUNT(user_id) DESC").first(16)
-    end
+    @user = this_user if logged_in?
 
     @discussion = @problem.discussion
     @comment = @discussion.comment.new

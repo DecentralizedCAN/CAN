@@ -73,6 +73,7 @@ class CriteriaController < ApplicationController
       end
           
       # update_all_solution_scores(@criterium.problem.id)
+
       flash[:success] = "You created a criterion. Thanks for your contribution!"
       redirect_to issue_path(:problem_id => @criterium.problem.hashid)
     end
@@ -90,7 +91,8 @@ class CriteriaController < ApplicationController
     rescue
     end
       
-    update_all_solution_scores(@criterium.problem.id)
+    # update_all_solution_scores(@criterium.problem.id)
+    UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
     auto_upvote_post(@criterium.problem.post.id, @user.id)
 
@@ -102,7 +104,8 @@ class CriteriaController < ApplicationController
     @user = this_user
     @criterium.user.delete(@user)
 
-    update_all_solution_scores(@criterium.problem.id)
+    # update_all_solution_scores(@criterium.problem.id)
+    UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
     redirect_back fallback_location: root_path
   end
@@ -137,7 +140,8 @@ class CriteriaController < ApplicationController
             # @criterium.send_dissent_email          
           end
 
-        update_all_solution_scores(@criterium.problem.id)
+        # update_all_solution_scores(@criterium.problem.id)
+        UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
         flash[:success] = "You made an objection. Thanks for your input!"
         # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
@@ -154,7 +158,8 @@ class CriteriaController < ApplicationController
 
     new_comment('!chatlog no longer objects to a criterion (' + @criterium.title + ')', @criterium.problem.discussion.id)
 
-    update_all_solution_scores(@criterium.problem.id)
+    # update_all_solution_scores(@criterium.problem.id)
+    UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
     
     # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
     redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
@@ -190,7 +195,8 @@ class CriteriaController < ApplicationController
     end
 
     if @crialt.save
-      update_all_solution_scores(@crialt.criterium.problem.id)
+      # update_all_solution_scores(@crialt.criterium.problem.id)
+      UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
       
       flash[:success] = "You accepted a alternative criteria. Thanks for working towards convergence!"
       redirect_to show_criterium_path(:criterium_id => @from.hashid)
@@ -219,7 +225,8 @@ class CriteriaController < ApplicationController
       @problem = @criterium.problem
       @criterium.destroy
 
-      update_all_solution_scores(@criterium.problem.id)
+      # update_all_solution_scores(@criterium.problem.id)
+      UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
       respond_to do |format|
         format.html { redirect_to issue_path(:problem_id => @problem.hashid), notice: 'Criterium was successfully destroyed.' }
@@ -239,10 +246,10 @@ class CriteriaController < ApplicationController
       params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters)
     end
 
-    def update_all_solution_scores(problem_id)
-      solutions = Problem.find(problem_id).solution.all
-      solutions.each do |solution|
-        solution.update(:score => solution_score(solution.id) * 100)
-      end
-    end
+    # def update_all_solution_scores(problem_id)
+    #   solutions = Problem.find(problem_id).solution.all
+    #   solutions.each do |solution|
+    #     solution.update(:score => solution_score(solution.id) * 100)
+    #   end
+    # end
 end

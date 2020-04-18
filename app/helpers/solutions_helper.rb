@@ -1,4 +1,17 @@
 module SolutionsHelper
+
+  # def quick_calculation(solution_id)
+  #   numerator = 0
+  #   denominator = 0
+
+  #   Solution.find(solution_id).problem.criterium.each do |c|
+  #     numerator += [0, c.user.count-c.cridissent.count].max * c.poll.where(solution_id: solution_id).average(:answer)
+  #     denominator += c.user.count
+  #   end
+
+  #   return numerator / denominator
+  # end
+
   def base_criterium_score(criterium_id)
     criterium = Criterium.find(criterium_id)
 

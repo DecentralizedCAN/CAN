@@ -76,6 +76,7 @@ class PollsController < ApplicationController
     end
 
     # update_all_solution_scores(@criterium.problem.id)
+    UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
     redirect_back fallback_location: root_path
   end
