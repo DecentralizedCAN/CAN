@@ -133,7 +133,7 @@
             <% end %>
            
 
-            <% if solution.user.count >= @problem.suggestion_min %>
+            <% if solution.user.count >= @problem.suggestion_min && solution.activity %>
               <%= link_to action_path(:activity_id => solution.activity.id), class: "button button-view" do %>
                 <em>View action</em>
               <% end %>
