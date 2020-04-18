@@ -31,7 +31,7 @@
           <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button button-hollow" do %>
             Suggest for action (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
           <% end %>
-        <% elsif @solution.user.count >= @solution.problem.suggestion_min %>
+        <% elsif @solution.user.count >= @solution.problem.suggestion_min && solution.activity %>
           <!-- <br> -->
           <!-- This was posted as an action -->
           <%= link_to action_path(:activity_id => @solution.activity.id), :class => "button button-view" do %>
