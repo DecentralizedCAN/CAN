@@ -100,20 +100,20 @@
 
     <% @solutions.each do |solution| %>
       
-      <% polls = criterion.poll.where(solution_id: solution.id) %>
+      <% polls = criterion.poll.where(solution_id: solution.id) if criterion.poll.count > 0 %>
 
         <% if logged_in? %>
 
           <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 1).count == 0 %>
             <td class="yes-score ">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 1), :method => "post" do %>
-                <div><%= polls.where(answer: 1).count %></div>
+                <div><%= polls.where(answer: 1).count if polls %></div>
               <% end %>
             </td>
           <% else %>
             <td class="yes-score answered">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post" do %>
-                <div><%= polls.where(answer: 1).count %></div>
+                <div><%= polls.where(answer: 1).count if polls %></div>
               <% end %>
             </td>
           <% end %>
@@ -121,13 +121,13 @@
           <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 0).count == 0 %>
             <td class="no-score">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 0), :method => "post" do %>
-                <div><%= polls.where(answer: 0).count %></div>
+                <div><%= polls.where(answer: 0).count if polls %></div>
               <% end %>
             </td>
         <% else %>
             <td class="no-score answered">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post" do %>
-                <div><%= polls.where(answer: 0).count %></div>
+                <div><%= polls.where(answer: 0).count if polls %></div>
               <% end %>
             </td>
         <% end %>
