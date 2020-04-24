@@ -71,8 +71,10 @@
 
 <!-- Table -->
 
-<h1>Criteria X Proposals</h1>
-<%= link_to "View as lists", issue_path( :problem_id => @problem.hashid), :class => "button"  %>  
+<div><h1><strong>Criteria <i class="fas fa-times"></i> Proposals</strong></h1></div>
+<%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
+  <i class="fas fa-list"></i> Lists
+<% end %>
 <br><br>
 
 <div class="outer-table">
@@ -143,18 +145,27 @@
 <% end %>
 
 <tr>
-  <th class="table-hidden">Raw score</th>
+  <th class="table-hidden">Total</th>
   <% @solutions.each do |solution| %>
-    <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
-    <th class="percentage" colspan="2"><%= (polls.average(:answer) * 100).round if polls %> %</th>
+    <td class="yes-score total "><div><strong><%= Poll.where(solution_id: solution.id).where(answer: 1).count %></strong></div></td>
+    <td class="no-score total "><div><strong><%= Poll.where(solution_id: solution.id).where(answer: 0).count %></strong></div></td>
   <% end %>
 </tr>
 
 <tr>
-  <th class="table-hidden">Weighted (reload to update)</th>
+  <th class="table-hidden">Dissent</th>
+  <% @solutions.each do |solution| %>
+    <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
+    <th class="percentage" colspan="2"><%= 100 - (polls.average(:answer) * 100).round if polls %> %</th>
+    <!-- <th class="percentage" colspan="2"><%= ( (Poll.where(solution_id: solution.id).where(answer: 0).count * 1.0) / (Poll.where(solution_id: solution.id).count * 1.0) * 100 ).round %> %</th> -->
+  <% end %>
+</tr>
+
+<tr>
+  <th class="table-hidden">Weighted score</th>
   <% @solutions.each do |solution| %>
     <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id) %>
-    <th class="percentage" colspan="2"><%= solution.score if polls %> %</th>
+    <th class="weighted" colspan="2"><%= solution.score if polls %> %</th>
   <% end %>
 </tr>
 

@@ -24,12 +24,12 @@ class ProblemsController < ApplicationController
       .joins(:user)
       .group("criteria.id").count.count
 
-    if logged_in?
-      @all_criteria = @problem.criterium
-        .joins(:user)
-        .group("criteria.id")
-        .order("COUNT(user_id) DESC")
+    # @all_criteria = @problem.criterium
+    #   .joins(:user)
+    #   .group("criteria.id")
+    #   .order("COUNT(user_id) DESC")
 
+    if logged_in?
       @my_criteria = current_user.criterium
         .where(problem_id: @problem.id)
 

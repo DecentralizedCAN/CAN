@@ -430,6 +430,14 @@ $success-red: #ff7455;
     }
   }
 
+  .yes-score.total {
+    background-color: #a3dae6;
+  }
+
+  .no-score.total {
+    background-color: #dca6a6;
+  }
+
   .yes-score, .no-score {
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
@@ -465,6 +473,14 @@ $success-red: #ff7455;
 
     &:hover {
       background-color: #ce9fce;
+    }
+  }
+
+  .weighted {
+    background-color: #8aa8ec;
+
+    &:hover {
+      background-color: #8aa8ec;
     }
   }
 

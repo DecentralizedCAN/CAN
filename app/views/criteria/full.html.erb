@@ -16,13 +16,14 @@
       <%= @criteria_count %> Active criteria for <em><%= @problem.title %></em>
     </h1>
 
+    <br>
     <em>
-      <%= link_to "Add to criteria", new_criterium_path( :problem_id => @problem.id) %>
+      <%= link_to "Add criterion", new_criterium_path( :problem_id => @problem.id), :class => "button" %>
     </em>
 
     <div id="issue-criteria">
-      <% if @my_criteria.count > 0 %>
       <h2>Supported criteria</h2>
+      <% if @my_criteria.count > 0 %>
       <% end %>
       <div class="criteria-list">
       <% @my_criteria.each do |criterium| %>
@@ -30,8 +31,8 @@
       <% end %>
       </div>
 
-      <% if @criteria.count > 0 %>
       <h2>Active criteria</h2>
+      <% if @criteria.count > 0 %>
       <% end %>
       <div class="criteria-list">
       <% @criteria.each do |criterium| %>

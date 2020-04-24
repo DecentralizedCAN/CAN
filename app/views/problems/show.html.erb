@@ -74,7 +74,19 @@
       </h1>
 
       <div>
-       <!--  <%= link_to "View all", full_criterium_path( :problem_id => @problem.id), :class => "button" %> -->
+        <% if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
+          <%= link_to brainstorm_table_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>
+            <i class="fas fa-table"></i> Table
+          <% end %>
+          &nbsp;
+        <% end %>
+
+        <% if @problem.criterium.count > (@my_criteria.count + @criteria.count) %>
+          <%= link_to full_criterium_path( :problem_id => @problem.id), :class => "button button-hollow" do %>
+            <i class="fas fa-clipboard-list"></i> View all
+          <% end %>
+          &nbsp;
+        <% end %>
 
         <%= link_to "Add criterion", new_criterium_path( :problem_id => @problem.id), :class => "button"  %>
       </div>
@@ -109,7 +121,6 @@
     <div>
       <%= link_to 'Propose action', new_solution_path(:problem_id => @problem.id), :class => "button" if @problem.require_action %>
       <%= link_to 'New proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if !@problem.require_action %>
-      <%= link_to "View as table", brainstorm_table_path( :problem_id => @problem.hashid), :class => "button" if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
     </div>
     
     <ol class="solutions">

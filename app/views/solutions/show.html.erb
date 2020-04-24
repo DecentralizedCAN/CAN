@@ -24,14 +24,14 @@
       <% end %>
       <br>
 
-    <%= link_to "View in table", brainstorm_table_path( :problem_id => @problem.id), :class => "button" if @problem.solution.count > 0 && @problem.criterium.count > 0 %>&nbsp;
+   <!--  <%= link_to "View in table", brainstorm_table_path( :problem_id => @problem.id), :class => "button button-hollow" if @problem.solution.count > 0 && @problem.criterium.count > 0 %>&nbsp; -->
 
       <% if Setting.first.state || (current_user && current_user.admin?) %>
         <% if @solution.user.count < @solution.problem.suggestion_min - 1 %>
           <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button button-hollow" do %>
             Suggest for action (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
           <% end %>
-        <% elsif @solution.user.count >= @solution.problem.suggestion_min && solution.activity %>
+        <% elsif @solution.user.count >= @solution.problem.suggestion_min && @solution.activity %>
           <!-- <br> -->
           <!-- This was posted as an action -->
           <%= link_to action_path(:activity_id => @solution.activity.id), :class => "button button-view" do %>
