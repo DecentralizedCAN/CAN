@@ -9,7 +9,7 @@ class Problem < ApplicationRecord
   has_many :notification, dependent: :destroy
   
   validates :title, presence: true, length: { minimum: 1, maximum: 2000 }
-  validates :description, presence: true, length: { minimum: 1, maximum: 2000 }
+  validates :description, length: { maximum: 2000 }
   belongs_to :goal, optional: true
   # validates :suggestion_min, presence: true
 

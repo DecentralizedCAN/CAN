@@ -145,7 +145,7 @@
 <% end %>
 
 <tr>
-  <th class="table-hidden">Total</th>
+  <th class="table-hidden">Poll tallies</th>
   <% @solutions.each do |solution| %>
     <td class="yes-score total "><div><strong><%= Poll.where(solution_id: solution.id).where(answer: 1).count %></strong></div></td>
     <td class="no-score total "><div><strong><%= Poll.where(solution_id: solution.id).where(answer: 0).count %></strong></div></td>
@@ -162,7 +162,7 @@
 </tr>
 
 <tr>
-  <th class="table-hidden">Weighted score</th>
+  <th class="table-hidden">Weighted scores</th>
   <% @solutions.each do |solution| %>
     <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id) %>
     <th class="weighted" colspan="2"><%= solution.score if polls %> %</th>

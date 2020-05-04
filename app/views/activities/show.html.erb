@@ -43,7 +43,9 @@
     
   </div>
 
+  <% if @activity.description.length > 0 %>
   <p class="discussion-content"><%= @activity.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+  <% end %>
 
   <div class="dissent-activity">
     <%if @activity.actdissent.find_by(user: @user)%>

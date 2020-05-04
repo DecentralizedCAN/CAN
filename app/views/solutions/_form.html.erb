@@ -11,6 +11,16 @@
     </div>
   <% end %>
 
+  <% if !solution.problem.require_action && params["format"] == 'action' %>
+    <%= link_to "Don't use action format", new_solution_path(:problem_id => @problem.id), :class => "button button-hollow" if !@problem.require_action %>
+    <br>
+    <br>
+  <% elsif !solution.problem.require_action %>
+    <%= link_to 'Format as action', new_solution_path(:problem_id => @problem.id, :format => 'action'), :class => "button button-hollow" %>
+    <br>
+    <br>
+  <% end %>
+
   <div class="solution-form-body">
     <%= form.text_area :title, id: :solution_title, placeholder: "Title" %>
     <%= form.text_area :description, id: :solution_description, placeholder: "Description" %>
@@ -22,7 +32,7 @@
       </div>
     <% else %>
 
-    <% if @problem.require_action %>
+    <% if @problem.require_action || params["format"] == "action" %>
 
       <div id="activation">
         <h1>Roles</h1>
@@ -61,7 +71,7 @@
 
 
 
-<% if @problem.require_action %>
+<% if @problem.require_action || params["format"] == "action" %>
 
 <script type="text/javascript">
   

@@ -141,6 +141,11 @@
                     <!-- <%= solution_criterium_score(@solution.id, criterium.id) * 100 %>% -->
                   </div>
                 </div>
+                
+                <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => nil), :method => "post", :class => "remove-poll" do %>
+                  <i class="fas fa-times"></i>
+                <% end %>
+
             <% end %>
 
                 <div class="criterion-score-info">

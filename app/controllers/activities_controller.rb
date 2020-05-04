@@ -271,7 +271,7 @@ class ActivitiesController < ApplicationController
       # Notifications
       if total_committed(@roll.activity) == total_minimum(@roll.activity)
         @roll.user.each do |user|
-          notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and will take place.",
+          notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and will happen.",
             :activity_id => @activity.id)
           notification.send_email
         end
@@ -296,7 +296,7 @@ class ActivitiesController < ApplicationController
       if @roll.user.count < @roll.minimum
 
         @roll.user.each do |user|
-          notification = user.notification.create(:details => "The action " + @roll.activity.title + " no longer has enough participants to take place",
+          notification = user.notification.create(:details => "The action " + @roll.activity.title + " no longer has enough participants to happen",
             :activity_id => @roll.activity.id)
           notification.send_email
         end

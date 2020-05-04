@@ -1,7 +1,14 @@
 <% if Setting.find(6).state && !logged_in? %>
 
 <div id = 'quick-login-form'>
+
 <%= form_for(:session, url: login_path) do |f| %>
+  
+  <% if flash['danger'] == 'Incorrect password' %>
+    <%= link_to "Reset password", new_password_reset_path, :class => "button" %>
+    <br><br>
+  <% end %>
+
   <div>
     Name <%= f.text_field :email, class: 'form-mini' %>
   </div>
@@ -16,6 +23,7 @@
   </div>
 
   <%= f.submit "Sign up/in", class: "button" %>
+
 <% end %>
 </div>
 

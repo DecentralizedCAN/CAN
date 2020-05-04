@@ -23,7 +23,7 @@
     <h1>Details</h1>
     <%= form.text_area :description, id: :problem_description, placeholder: "Explain the issue in detail" %>
 
-    <%= form.check_box :require_action, {checked: false}, true, false %> Format proposals as actions
+    <%= form.check_box :require_action, {checked: false}, true, false %> Only allow proposals that are formatted as "actions"
 
     <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
 
