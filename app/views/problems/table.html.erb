@@ -77,6 +77,8 @@
 <% end %>
 <br><br>
 
+<p>Refresh page for current stats</p>
+
 <div class="outer-table">
 <table class="proposal-grid" cellspacing ="2" cellpadding ="6">
 
@@ -108,13 +110,13 @@
 
           <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 1).count == 0 %>
             <td class="yes-score ">
-              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 1), :method => "post" do %>
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 1), :method => "post", :class => 'yes-poll' do %>
                 <div><%= polls.where(answer: 1).count if polls %></div>
               <% end %>
             </td>
           <% else %>
             <td class="yes-score answered">
-              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post" do %>
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post", :class => 'remove-poll' do %>
                 <div><%= polls.where(answer: 1).count if polls %></div>
               <% end %>
             </td>
@@ -122,13 +124,13 @@
 
           <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 0).count == 0 %>
             <td class="no-score">
-              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 0), :method => "post" do %>
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 0), :method => "post", :class => 'no-poll' do %>
                 <div><%= polls.where(answer: 0).count if polls %></div>
               <% end %>
             </td>
         <% else %>
             <td class="no-score answered">
-              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post" do %>
+              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post", :class => 'remove-poll' do %>
                 <div><%= polls.where(answer: 0).count if polls %></div>
               <% end %>
             </td>
@@ -193,3 +195,22 @@
     <% end %>
   </span>
 <% end %>
+
+<script type="text/javascript">
+  $(".yes-poll").click(function() {
+    $(this).parent().addClass('answered')
+    $(this).addClass('answered-tentative')
+  });
+
+  $(".no-poll").click(function() {
+    $(this).parent().addClass('answered')
+    $(this).addClass('answered-tentative')
+  });
+
+  $(".remove-poll").click(function() {
+    console.log('hi')
+    setTimeout(function () {
+      location.reload()
+    }, 10);
+  });
+</script>

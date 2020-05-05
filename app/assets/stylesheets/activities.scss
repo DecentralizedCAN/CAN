@@ -107,6 +107,18 @@ $offwhite: #f5f5f5;
   margin-top: 6px;
   padding: 0;
   list-style: none;
+
+  li {
+    background-color: white;
+    display: inline-block;
+    width: 100%;
+    margin-right: 20px;
+    vertical-align: top;
+    box-shadow: 0px 3px 6px 0px #d0d0d0;
+    border: 1px solid #efefef;
+    padding: 14px 18px;
+    padding-bottom: 0;
+  }
 }
 
 .written-progress-overlay {

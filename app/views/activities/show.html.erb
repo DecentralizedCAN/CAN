@@ -83,8 +83,6 @@
     <div>
   <% end %>
 
-  <span>This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
-
   <div id="action-details">
 
     <h1>Roles</h1>
@@ -154,13 +152,18 @@
     <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>
   </div>
 
-  <% if logged_in? && current_user.admin? %>
-    <br><br>
-    Created by user <%= @activity.creator %> –
-    <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>
+</div>
 
-    <% if @activity.post %>
-      <%= link_to "Broadcast", broadcast_post_path(:post_id => @activity.post.id), :method => "post", :class => 'button', data: { confirm: "Broadcast post?" } %>
-    <% end %>
+<div class="thisisa">This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.
+
+<% if logged_in? && current_user.admin? %>
+  <br><br>
+  Created by user <%= @activity.creator %> –
+  <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>
+
+  <% if @activity.post %>
+    <%= link_to "Broadcast", broadcast_post_path(:post_id => @activity.post.id), :method => "post", :class => 'button', data: { confirm: "Broadcast post?" } %>
   <% end %>
+  <% end %>
+
 </div>

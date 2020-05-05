@@ -78,7 +78,7 @@ class PollsController < ApplicationController
     # update_all_solution_scores(@criterium.problem.id)
     UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
-    redirect_back fallback_location: root_path
+    # redirect_back fallback_location: root_path
   end
 
   # DELETE /polls/1

@@ -430,6 +430,10 @@ $success-red: #ff7455;
     }
   }
 
+  .answered-tentative > div {
+    border-style: dashed !important;
+  }
+
   .yes-score.total {
     background-color: #a3dae6;
   }

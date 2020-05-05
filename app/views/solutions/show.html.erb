@@ -115,12 +115,12 @@
                 <span class="criterion-poll-text">Does the proposal meet this criteria?</span><br>
                 <div class="criterion-poll">
                   
-                  <%= link_to set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 1), :method => "post", :class => "poll-yes" do %>
+                  <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 1), :method => "post", :class => "poll-yes" do %>
                     <i class="fas fa-check"></i>
                     YES
                   <% end %>
                   
-                  <%= link_to set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 0), :method => "post", :class => "poll-no" do %>
+                  <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 0), :method => "post", :class => "poll-no" do %>
                     <i class="fas fa-times"></i>
                     NO
                   <% end %>
@@ -197,3 +197,21 @@
     <%= link_to "Remove", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
   </span>
 <% end %>
+
+
+
+<script type="text/javascript">
+  $(".poll-yes").click(function() {
+    $(this).parent().html("<small>You answered YES. Refresh to view stats.</small>")
+  });
+
+  $(".poll-no").click(function() {
+    $(this).parent().html("<small>You answered NO. Refresh to view stats.</small>")
+  });
+
+  $(".remove-poll").click(function() {
+    setTimeout(function () {
+      location.reload()
+    }, 10);
+  });
+</script>
