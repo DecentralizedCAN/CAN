@@ -60,7 +60,7 @@ $label-blue: #81c4ff;
 
 .proposal, .issue, .discussion {
   margin-left: 0px;
-  padding-left: 26px !important;
+  // padding-left: 26px !important;
   margin-bottom: 10px;
 }
 
@@ -280,6 +280,7 @@ h2 {
   // background-color: white;
   // border: 1px solid gray;
   list-style: none;
+  padding: 0;
   // padding: 2px 4px !important;
   // margin-bottom: 10px !important;
 

@@ -44,7 +44,8 @@ Rails.application.routes.draw do
   post 'notifications/broadcast_criterion/:criterion_id', to: 'notifications#broadcast_criterion', :as => :broadcast_criterion
 
   get 'commitments', to: 'static#commitments', :as => :commitment
-  get '', to: 'static#main_feed', :as => :main_feed
+  get '', to: 'static#home', :as => :home
+  get 'main_feed', to: 'static#main_feed', :as => :main_feed
   get 'guide', to: 'static#documentation', :as => :documentation
   get 'manage', to: 'static#manage', :as => :manage
 
@@ -97,7 +98,7 @@ Rails.application.routes.draw do
   get 'password_resets/edit'
 
   # root   'static#commitments'
-  root   'static#main_feed'
+  root   'static#home'
   get    '/signup',  to: 'users#new'
   get    '/add',  to: 'users#add'
   get    '/login',   to: 'sessions#new'

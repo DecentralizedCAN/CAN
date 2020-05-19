@@ -3,6 +3,12 @@ class StaticController < ApplicationController
 	before_action :require_login, unless: -> { public_viewable? }
 
 	def home
+		@user = current_user
+		@commitments = @user.rolls
+		@sponsored_problems = @user.problems
+		@proposals = @user.solutions
+		@current_time = Time.now.to_i
+    @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
 	end
 
 	def main_feed

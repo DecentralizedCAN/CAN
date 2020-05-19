@@ -1,1 +1,81 @@
-Home
+<ol class="home-actions">
+
+<li>
+  <% if current_user.admin? %>
+    <%= link_to settings_path, :class => "button button-hollow" do %>
+      <i class="fas fa-cog"></i>
+      Settings
+    <% end %>
+  <% end %>
+</li>
+
+<li>
+<%= link_to documentation_path, :class => "button button-hollow" do %>
+  <i class="fas fa-book"></i>
+  Guide
+<% end %>
+</li>
+
+<li>
+<%= link_to post_problem_path, :class => "button" do %>
+  <i class="fas fa-pen"></i>
+  Start converging
+<% end %>
+</li>
+</ol>
+
+<div class="dashboard-item">
+  <h1>
+    <i class="fas fa-handshake"></i>
+    My collaborations
+  </h1>
+  <ul>
+    <% @sponsored_problems.each do |problem| %>
+      <%= link_to issue_path(problem) do %>
+        <li> <%= problem.title %> </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+
+<div class="dashboard-item">
+  <h1>
+    <i class="fas fa-comment-alt"></i>
+    My proposals
+  </h1>
+  <ul>
+    <% @proposals.each do |solution| %>
+      <%= link_to solution_path(:problem_id => solution.problem_id, :solution_id => solution.id) do %>
+        <li> <%= solution.title %> </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+
+
+<div class="flex-container float-right">
+<ol class="side-card">
+
+  <% if logged_in? && @notifications.length > 0 %>
+  <div class="card-item">
+
+    <div class="flex-container">
+      <h2>Notifications</h2>
+      <%= link_to "view all", notifications_path, :id => "all-notifications", :class => "h2-margins" %>
+    </div>
+
+    <ol id="notifications">
+    <% @notifications.each do |notification| %>
+      <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+        <li class="unread" >
+          <%= notification.details %>
+        </li>
+      <% end %>
+    <% end %>
+    </ol>
+
+  </div>
+  <% end %>
+
+</ol>
+</div>
