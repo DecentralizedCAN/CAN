@@ -138,19 +138,13 @@
                 <strong><%= solution.title %></strong>
               </div>
 
-<<<<<<< HEAD
-              <div class="score-bar-outer">
-                <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
-                <div class="written-criterion-score">
-                  <%= (solution_score(solution.id) * 100).to_i %>%
-=======
               <% if !@problem.scoring_method || @problem.scoring_method == 1 %>
                 <div class="score-bar-outer">
                   <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
                   <div class="written-criterion-score">
                     <%= solution.score %>%
                   </div>
->>>>>>> unity
+
                 </div>
               <% elsif @problem.scoring_method == 2 %>
                 (Unmet criteria: 
