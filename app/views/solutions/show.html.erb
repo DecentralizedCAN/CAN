@@ -78,19 +78,26 @@
 <div id="proposal-polling">
   <h1>Evaluation</h1><br>
 
-  Estimated collective support for this proposal
-
-  <br>
-
-  <div class="score-bar-outer">
-    <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
-    <div class="written-criterion-score">
-      <%= (solution_score(@solution.id) * 100).to_i %>%
+  <% if !@problem.scoring_method || @problem.scoring_method == 1 %>
+    Estimated collective support for this proposal
+    <br>
+    <div class="score-bar-outer">
+      <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
+      <div class="written-criterion-score">
+        <%= (solution_score(@solution.id) * 100).to_i %>%
+      </div>
     </div>
-  </div>
-
-  <br>
-  <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
+    <br>
+    <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
+  <% elsif @problem.scoring_method == 2 %>
+    Criteria marked unmet / all polls: 
+    <% polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 %>
+    <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span>
+  <% elsif @problem.scoring_method == 3 %>
+    Criteria marked met / all polls: 
+    <% polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 %>
+    <span class="percentage" colspan="2"><%= ( (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span>
+  <% end %>
 
 <% if logged_in? %>
 
@@ -131,6 +138,8 @@
               </div>
             <% else %>
               
+              <% if !@problem.scoring_method || @problem.scoring_method == 1 %>
+
               <!-- <td> -->
                 <div class="score-bar-outer">
                   <!-- <div class="score-bar-limit" style="width: <%= base_criterium_score(criterium.id) * 100 %>%">
@@ -147,6 +156,16 @@
                 <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => nil), :method => "post", :class => "remove-poll" do %>
                   <i class="fas fa-times"></i>
                 <% end %>
+              <% else %>
+                <div class="poll-bar-outer center">
+                  <div class="criterion-poll-numbers">Yes: <%= criterium.poll.where(solution_id: @solution.id).where(answer: 1).count %></div>
+                  <div class="criterion-poll-numbers">No: <%= criterium.poll.where(solution_id: @solution.id).where(answer: 0).count %></div>
+                  <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => nil), :method => "post", :class => "remove-poll" do %>
+                    <i class="fas fa-times"></i>
+                  <% end %>
+                
+                </div>
+              <% end %>
 
             <% end %>
 

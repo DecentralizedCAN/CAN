@@ -23,6 +23,41 @@
       </div>
     <% end %>
 
+    <div class="issue-info">
+      <div class="post-signature">
+        <!-- <i class="fas fa-calendar"></i> -->
+        Created <%= time_ago_in_words(@problem.created_at) %> ago
+        by
+        <em><%= 
+        begin 
+          User.find(@problem.creator).name
+        rescue 
+        end  %></em>
+      </div>
+      <br>
+      <div>
+        <i class="fas fa-handshake"></i>
+        <%= @problem.user.count %> collaborators
+      </div>
+      <div>
+        <i class="fas fa-clipboard-list"></i>
+        <%= @problem.criterium.count %> criteria
+      </div>
+      <div>
+        <i class="fas fa-comment-alt"></i> 
+        <%= @problem.solution.count %> proposals
+      </div>
+
+    </div>
+
+    <% if @problem.facilitator_id %>
+      <% facilitator = User.find(@problem.facilitator_id) %>
+      Facilitator: 
+      <%= link_to facilitator.name, facilitator %>
+    <% end %>
+
+    </div>
+
     <% if @problem.description.length > 0 %> 
       <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
     <% end %>
@@ -103,12 +138,29 @@
                 <strong><%= solution.title %></strong>
               </div>
 
+<<<<<<< HEAD
               <div class="score-bar-outer">
                 <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
                 <div class="written-criterion-score">
                   <%= (solution_score(solution.id) * 100).to_i %>%
+=======
+              <% if !@problem.scoring_method || @problem.scoring_method == 1 %>
+                <div class="score-bar-outer">
+                  <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
+                  <div class="written-criterion-score">
+                    <%= solution.score %>%
+                  </div>
+>>>>>>> unity
                 </div>
-              </div>
+              <% elsif @problem.scoring_method == 2 %>
+                (Unmet criteria: 
+                <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
+                <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span>)
+              <% elsif @problem.scoring_method == 3 %>
+                (Met criteria: 
+                <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
+                <span class="percentage" colspan="2"><%= ( (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span>)
+              <% end %>
 
             <% end %>
            

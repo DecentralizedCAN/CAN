@@ -83,6 +83,8 @@ class ProblemsController < ApplicationController
     .order('created_at DESC')
 
     @all_criteria = @problem.criterium
+      .joins(:user)
+      .group("criteria.id")
         
     @user = this_user if logged_in?
 
@@ -107,6 +109,9 @@ class ProblemsController < ApplicationController
   # POST /problems
   # POST /problems.json
   def create
+    puts "======================"
+    puts problem_params
+
     @user = this_user
     @problem = Problem.new(problem_params)
     @problem.suggestion_min = 1 if @problem.suggestion_min == nil
@@ -213,7 +218,7 @@ class ProblemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def problem_params
-      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action, :goal_id)
+      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action, :goal_id, :facilitator_id, :scoring_method)
     end
 
     def public_viewable?

@@ -23,6 +23,9 @@
     <h1>Details</h1>
     <%= form.text_area :description, id: :problem_description, placeholder: "Explain the issue in detail" %>
 
+    <br>
+    <%= form.check_box :require_action, {checked: false}, true, false %> Only allow proposals that are formatted as "actions"
+
     <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
 
     <% if Setting.first.state && false %>
@@ -35,6 +38,17 @@
       
       <%= link_to "(See how this works)", documentation_path(:anchor => "proposal_activation") %>
 
+    <% end %>
+
+    <div>
+    <% if Setting.find(10).state %>
+      <%= form.check_box :facilitator_id, {checked: false}, current_user.id, false %> Facilitator mode (no criteria supporting, you must approve all criteria)
+    <% end %>
+    </div>
+
+    <% if Setting.find(11).state %>
+      Scoring method
+      <%= form.select :scoring_method, { 'Weighted positive': 1, 'Negative raw': 2, 'Positive raw': 3 }%>
     <% end %>
 
   </div>
