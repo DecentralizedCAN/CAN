@@ -136,12 +136,22 @@
                 <strong><%= solution.title %></strong>
               </div>
 
-              <div class="score-bar-outer">
-                <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
-                <div class="written-criterion-score">
-                  <%= solution.score %>%
+              <% if !@problem.scoring_method || @problem.scoring_method == 1 %>
+                <div class="score-bar-outer">
+                  <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
+                  <div class="written-criterion-score">
+                    <%= solution.score %>%
+                  </div>
                 </div>
-              </div>
+              <% elsif @problem.scoring_method == 2 %>
+                (Unmet criteria: 
+                <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
+                <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span>)
+              <% elsif @problem.scoring_method == 3 %>
+                (Met criteria: 
+                <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
+                <span class="percentage" colspan="2"><%= ( (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span>)
+              <% end %>
 
             <% end %>
            

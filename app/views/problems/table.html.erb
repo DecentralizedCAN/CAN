@@ -62,7 +62,10 @@
 
     </div>
 
-    <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+    <% if @problem.description.length > 0 %> 
+      <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+    <% end %> 
+
 
   <!-- DETAILS ENDS -->
 
@@ -154,22 +157,37 @@
   <% end %>
 </tr>
 
-<tr>
-  <th class="table-hidden">No's/total</th>
-  <% @solutions.each do |solution| %>
-    <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
-    <th class="percentage" colspan="2"><%= 100 - (polls.average(:answer) * 100).round if polls %> %</th>
-    <!-- <th class="percentage" colspan="2"><%= ( (Poll.where(solution_id: solution.id).where(answer: 0).count * 1.0) / (Poll.where(solution_id: solution.id).count * 1.0) * 100 ).round %> %</th> -->
-  <% end %>
-</tr>
+<% if !@problem.scoring_method || @problem.scoring_method == 1 %>
 
-<tr>
-  <th class="table-hidden">Weighted scores</th>
-  <% @solutions.each do |solution| %>
-    <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id) %>
-    <th class="weighted" colspan="2"><%= solution.score if polls %> %</th>
-  <% end %>
-</tr>
+  <tr>
+    <th class="table-hidden">Weighted scores</th>
+    <% @solutions.each do |solution| %>
+      <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id) %>
+      <th class="weighted" colspan="2"><%= solution.score if polls %> %</th>
+    <% end %>
+  </tr>
+
+<% elsif @problem.scoring_method == 2 %>
+
+  <tr>
+    <th class="table-hidden">No's/total</th>
+    <% @solutions.each do |solution| %>
+      <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
+      <th class="percentage" colspan="2"><%= 100 - (polls.average(:answer) * 100).round if polls %> %</th>
+    <% end %>
+  </tr>
+
+<% elsif @problem.scoring_method == 3 %>
+
+  <tr>
+    <th class="table-hidden">Yes's/total</th>
+    <% @solutions.each do |solution| %>
+      <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
+      <th class="percentage" colspan="2"><%= (polls.average(:answer) * 100).round if polls %> %</th>
+    <% end %>
+  </tr>
+
+<% end %>
 
 </table>
 </div>
