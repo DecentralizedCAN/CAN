@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    unless current_user.admin?
+      redirect_to root_url
+    end
     @users = User.paginate(page: params[:page])
   end
 

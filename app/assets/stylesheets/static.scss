@@ -239,6 +239,7 @@ h2 {
 .dashboard-item {
 	display: inline-block;
 	vertical-align: top;
+  margin-right: 40px;
 
 	h1, h2 {
 		color: #525252;
@@ -379,4 +380,9 @@ ol {
       line-height: 20px;
     }
   }
+}
+
+li.home-item {
+  font-style: normal;
+  font-size: 14px;
 }

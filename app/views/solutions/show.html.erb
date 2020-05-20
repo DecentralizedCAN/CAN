@@ -16,24 +16,22 @@
     <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
 
     <% if @problem.require_action %>
-      <br>
+  <!--     <br>
       <% if @solution.roll.first.maximum %>
         <p>Participation requirement: <%=@solution.roll.first.minimum %> to <%=@solution.roll.first.maximum %> people</p>
       <% else %>
         <p>Participation minimum: <%=pluralize(@solution.roll.first.minimum, 'person')%></p>
       <% end %>
-      <br>
+      <br> -->
 
    <!--  <%= link_to "View in table", brainstorm_table_path( :problem_id => @problem.id), :class => "button button-hollow" if @problem.solution.count > 0 && @problem.criterium.count > 0 %>&nbsp; -->
 
-      <% if Setting.first.state || (current_user && current_user.admin?) %>
+     <!--  <% if Setting.first.state || (current_user && current_user.admin?) %>
         <% if @solution.user.count < @solution.problem.suggestion_min - 1 %>
           <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button button-hollow" do %>
             Suggest for action (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
           <% end %>
         <% elsif @solution.user.count >= @solution.problem.suggestion_min && @solution.activity %>
-          <!-- <br> -->
-          <!-- This was posted as an action -->
           <%= link_to action_path(:activity_id => @solution.activity.id), :class => "button button-view" do %>
             <em>View action</em>
           <% end %>
@@ -45,12 +43,12 @@
           <% end %>
         <% end %>
       <% end %>
-    <%end%>
+    <%end%> -->
 
   </div>
 
 <!-- ROLES -->
-  <% if @problem.require_action %>
+<!--   <% if @problem.require_action %>
     <h1>Roles</h1>
     <div>
       <ul class="all-roles">
@@ -74,14 +72,15 @@
       
       </ul>
     </div>
-  <% end %>
+  <% end %> -->
 
 <!-- CRITERIA -->
 <div id="proposal-polling">
   <h1>Evaluation</h1><br>
 
   Estimated collective support for this proposal
-  <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
+
+  <br>
 
   <div class="score-bar-outer">
     <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
@@ -89,6 +88,9 @@
       <%= (solution_score(@solution.id) * 100).to_i %>%
     </div>
   </div>
+
+  <br>
+  <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
 
 <% if logged_in? %>
 

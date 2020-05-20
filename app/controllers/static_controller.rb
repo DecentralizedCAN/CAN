@@ -4,14 +4,20 @@ class StaticController < ApplicationController
 
 	def home
 		@user = current_user
-		@commitments = @user.rolls
-		@sponsored_problems = @user.problems
-		@proposals = @user.solutions
-		@current_time = Time.now.to_i
-    @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
+
+		if logged_in?
+			@commitments = @user.rolls
+			@sponsored_problems = @user.problems.order("created_at DESC")
+			@proposals = @user.solutions.order("created_at DESC")
+			@current_time = Time.now.to_i
+	    @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
+		end
 	end
 
 	def main_feed
+		unless current_user.admin?
+			redirect_to root_url
+		end
 
 		# require 'net/smtp'
 

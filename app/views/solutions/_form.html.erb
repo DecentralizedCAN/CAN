@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <% if !solution.problem.require_action && params["format"] == 'action' %>
+<!--   <% if !solution.problem.require_action && params["format"] == 'action' %>
     <%= link_to "Don't use action format", new_solution_path(:problem_id => @problem.id), :class => "button button-hollow" if !@problem.require_action %>
     <br>
     <br>
@@ -19,7 +19,7 @@
     <%= link_to 'Format as action', new_solution_path(:problem_id => @problem.id, :format => 'action'), :class => "button button-hollow" %>
     <br>
     <br>
-  <% end %>
+  <% end %> -->
 
   <div class="solution-form-body">
     <%= form.text_area :title, id: :solution_title, placeholder: "Title" %>

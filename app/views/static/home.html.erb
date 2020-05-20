@@ -1,7 +1,9 @@
+<% if logged_in? %>
+
 <ol class="home-actions">
 
 <li>
-  <% if current_user.admin? %>
+  <% if current_user && current_user.admin? %>
     <%= link_to settings_path, :class => "button button-hollow" do %>
       <i class="fas fa-cog"></i>
       Settings
@@ -32,7 +34,7 @@
   <ul>
     <% @sponsored_problems.each do |problem| %>
       <%= link_to issue_path(problem) do %>
-        <li> <%= problem.title %> </li>
+        <li class="home-item"> <%= problem.title %> </li>
       <% end %>
     <% end %>
   </ul>
@@ -46,14 +48,17 @@
   <ul>
     <% @proposals.each do |solution| %>
       <%= link_to solution_path(:problem_id => solution.problem_id, :solution_id => solution.id) do %>
-        <li> <%= solution.title %> </li>
+        <li class="home-item"> <%= solution.title %> </li>
       <% end %>
     <% end %>
   </ul>
 </div>
 
+<% else %>
+  This app is a tool to aid in the Convergent Facilitation process. Sign up/in to use.
+<% end %>
 
-<div class="flex-container float-right">
+<!-- <div class="flex-container float-right">
 <ol class="side-card">
 
   <% if logged_in? && @notifications.length > 0 %>
@@ -78,4 +83,4 @@
   <% end %>
 
 </ol>
-</div>
+</div> -->

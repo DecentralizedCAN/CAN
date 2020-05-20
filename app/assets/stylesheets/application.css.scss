@@ -71,7 +71,7 @@ a.button, input.button {
   background-color: #8e8e8e;
   color: whitesmoke !important;
   border-radius: 2px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   vertical-align: middle;
 
@@ -523,6 +523,14 @@ nav #logo {
   letter-spacing: -1px;
 }
 
+.logo-image {
+  width: 30px;
+  margin: 4px;
+  top: -2px;
+  position: relative;
+  display: inline-block !important;
+}
+
 // .nav li {
 //   font-family: 'Montserrat', sans-serif;
 //   font-size: 1.2em;
@@ -566,7 +574,7 @@ nav #logo {
     background-color: #8e8e8e;
     color: white;
     line-height: 12px;
-    font-size: 10px;
+    font-size: 12px;
     font-style: normal;
   }
 
