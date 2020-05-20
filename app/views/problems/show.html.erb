@@ -55,6 +55,12 @@
 
     </div>
 
+    <% if @problem.facilitator_id %>
+      <% facilitator = User.find(@problem.facilitator_id) %>
+      Facilitator: 
+      <%= link_to facilitator.name, facilitator %>
+    <% end %>
+
     </div>
 
     <% if @problem.description.length > 0 %> 

@@ -65,7 +65,16 @@ class CriteriaController < ApplicationController
     @criterium.creator = @user.id
 
     if @criterium.save
-      @criterium.user << @user
+      @criterium.user << @user unless @criterium.problem.facilitator_id
+
+      if @criterium.problem.facilitator_id
+        facilitator = User.find(@criterium.problem.facilitator_id)
+        notification = facilitator.notification.create(:details => "Someone has suggested a new criterion",
+          :criterium_id => @criterium.id)
+        if facilitator.email_notifications
+          notification.send_email
+        end
+      end
       
       begin
         auto_upvote_post(@criterium.problem.post.id, @user.id)
@@ -74,7 +83,11 @@ class CriteriaController < ApplicationController
           
       # update_all_solution_scores(@criterium.problem.id)
 
-      flash[:success] = "You created a criterion. Thanks for your contribution!"
+      if @criterium.problem.facilitator_id
+        flash[:success] = "You suggested a criterion. Please wait for the facilitator to review it. Thanks for your contribution!"
+      else
+        flash[:success] = "You created a criterion. Thanks for your contribution!"
+      end
       redirect_to issue_path(:problem_id => @criterium.problem.hashid)
     end
   end
