@@ -139,7 +139,7 @@ class ProblemsController < ApplicationController
 
           @links.each do |link|
             link.user.each do |user|
-              notification = user.notification.create(:details => "was created for the goal \"" + @goal.title + "\"",
+              notification = user.notification.create(:details => "A brainstorm was created for the goal \"" + @goal.title + "\"",
                 :problem_id => @problem.id)
               if user.email_notifications
                 notification.send_email
