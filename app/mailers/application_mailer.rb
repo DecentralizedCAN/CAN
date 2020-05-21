@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "notifications@decentralizedCAN.com"
+  default from: "notifications@" + ENV['SERVER_HOST'] + ".com"
   layout 'mailer'
 end
