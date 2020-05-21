@@ -3,7 +3,7 @@ class SettingsController < ApplicationController
   	before_action :require_admin
 
 	def index
-		@settings = Setting.all
+		@settings = Setting.last(100)
 	end
 
 	def turn_on
