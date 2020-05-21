@@ -55,28 +55,31 @@ class PollsController < ApplicationController
   end
 
   def quiet_set
-    @criterium = Criterium.find(params[:criterium_id])
-    @answer = params[:answer].to_i
-    @solution_id = params[:solution_id]
+    begin
+      @criterium = Criterium.find(params[:criterium_id])
+      @answer = params[:answer].to_i
+      @solution_id = params[:solution_id]
 
-    @user = this_user
-    @poll = @criterium.poll.where(solution_id: @solution_id).where(user_id: @user.id)
+      @user = this_user
+      @poll = @criterium.poll.where(solution_id: @solution_id).where(user_id: @user.id)
 
-    if params[:answer] == nil
-      @poll.destroy_all
-    elsif @poll.count > 0
+      if params[:answer] == nil
+        @poll.destroy_all
+      elsif @poll.count > 0
 
-      if @poll.update(:answer => @answer)
-        puts @poll.to_json
+        if @poll.update(:answer => @answer)
+          puts @poll.to_json
+        end
+      else
+        @poll = @criterium.poll.new(:user_id => @user.id, :solution_id => @solution_id, 
+                                    :answer => @answer)
+        @poll.save
       end
-    else
-      @poll = @criterium.poll.new(:user_id => @user.id, :solution_id => @solution_id, 
-                                  :answer => @answer)
-      @poll.save
-    end
 
-    # update_all_solution_scores(@criterium.problem.id)
-    UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
+      # update_all_solution_scores(@criterium.problem.id)
+      UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
+    rescue
+    end
 
     # redirect_back fallback_location: root_path
   end

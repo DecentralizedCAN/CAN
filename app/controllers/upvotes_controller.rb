@@ -22,19 +22,25 @@ class UpvotesController < ApplicationController
 	# end
 
 	def upvote
-	  if already_upvoted?
-	    flash[:notice] = "You already upvoted this"
-	  else
-	    @post.upvotes.create(user_id: current_user.id)
+		begin
+		  if already_upvoted?
+		    flash[:notice] = "You already upvoted this"
+		  else
+		    @post.upvotes.create(user_id: current_user.id)
+		  end
+	  rescue
 	  end
 	end
 
 	def unupvote
-	  if !(already_upvoted?)
-	    flash[:notice] = "Not upvoted"
-	  else
-			@upvote = @post.upvotes.find_by(:user_id => current_user.id)
-	    @upvote.destroy
+		begin
+		  if !(already_upvoted?)
+		    flash[:notice] = "Not upvoted"
+		  else
+				@upvote = @post.upvotes.find_by(:user_id => current_user.id)
+		    @upvote.destroy
+		  end
+	  rescue
 	  end
 	end
 
