@@ -88,8 +88,7 @@ class CriteriaController < ApplicationController
       else
         flash[:success] = "You created a criterion. Thanks for your contribution!"
       end
-      
-      redirect_back fallback_location: root_path
+      redirect_to issue_path(:problem_id => @criterium.problem.hashid)
     end
   end
 
