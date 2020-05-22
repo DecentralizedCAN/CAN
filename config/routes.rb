@@ -6,20 +6,20 @@ Rails.application.routes.draw do
 
 # MAIN STUFF
   get '/solver', to: 'problems#index', :as => :solver
-  get '/brainstorm/post', to: 'problems#new', :as => :post_problem
+  get '/collaboration/post', to: 'problems#new', :as => :post_problem
   post '/solver/sponsor', to: 'criteria#sponsor', :as => :sponsor_criteria
   post '/solver/unsponsor', to: 'criteria#unsponsor', :as => :unsponsor_criteria
   post '/solver/dissent', to: 'criteria#dissent', :as => :dissent_criteria
   post '/solver/assent', to: 'criteria#assent', :as => :assent_criteria
   post '/problem/sponsor', to: 'problems#sponsor', :as => :sponsor_problem
   post '/problem/unsponsor', to: 'problems#unsponsor', :as => :unsponsor_problem
-  get '/brainstorm/:problem_id', to: 'problems#show', :as => :issue
-  get '/brainstorm/table/:problem_id', to: 'problems#table', :as => :brainstorm_table
+  get '/collaboration/:problem_id', to: 'problems#show', :as => :issue
+  get '/collaboration/table/:problem_id', to: 'problems#table', :as => :brainstorm_table
   resources :problems, only: [:create, :destroy]
 
   resources :solutions, only: [:create]
-  get '/brainstorm/:problem_id/proposal/new', to: 'solutions#new', :as => :new_solution
-  get '/brainstorm/:problem_id/proposal/:solution_id', to: 'solutions#show', :as => :solution
+  get '/collaboration/:problem_id/proposal/new', to: 'solutions#new', :as => :new_solution
+  get '/collaboration/:problem_id/proposal/:solution_id', to: 'solutions#show', :as => :solution
   delete '/proposal/:proposal', to: 'solutions#destroy', :as => :destroy_solution
   post '/solver/poll', to: 'solutions#poll', :as => :set_poll
   post '/quietpoll', to: 'polls#quiet_set', :as => :quiet_set_poll
