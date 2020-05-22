@@ -74,7 +74,7 @@
 
       <h1 id="criteria">
         <i class="fas fa-clipboard-list"></i>
-        <%= @criteria_count %> Criteria
+        <%= @criteria_count %> <%= "Active criteria" if @problem.facilitator_id %> <%= "Criteria" unless @problem.facilitator_id %>
       </h1>
 
       <div>

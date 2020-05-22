@@ -30,24 +30,45 @@
 
         <div class="criterium-response">
 
-          <!-- SPONSORSHIP -->
-          <div class="criteria-sponsorship">
-            <%if criterium.user.include?(@user)%>
-              <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Unsupport" tabindex="0">
-                  <i class="fas fa-hand-point-up red"></i>
-                  <%= criterium.user.count %>
-                </span>
-              <% end %>
-            <%else%>
-              <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                <span class="crisupport-count gray tooltip-toggle" href="#" aria-label="Support" tabindex="0">
-                  <i class="fas fa-hand-point-up gray"></i>
-                  <%= criterium.user.count %>
-                </span>
-              <% end %>
+      <% if @problem.facilitator_id && @problem.facilitator_id == current_user.id %>
+        <!-- SPONSORSHIP -->
+        <div class="criteria-sponsorship">
+          <%if criterium.user.include?(@user)%>
+            <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+              <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Unapprove" tabindex="0">
+                <i class="fas fa-hand-point-up red"></i>
+                <%= criterium.user.count %>
+              </span>
             <% end %>
-          </div>
+          <%else%>
+            <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+              <span class="crisupport-count gray tooltip-toggle" href="#" aria-label="Approve" tabindex="0">
+                <i class="fas fa-hand-point-up gray"></i>
+                <%= criterium.user.count %>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <!-- SPONSORSHIP -->
+        <div class="criteria-sponsorship">
+          <%if criterium.user.include?(@user)%>
+            <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+              <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Unsupport" tabindex="0">
+                <i class="fas fa-hand-point-up red"></i>
+                <%= criterium.user.count %>
+              </span>
+            <% end %>
+          <%else%>
+            <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+              <span class="crisupport-count gray tooltip-toggle" href="#" aria-label="Support" tabindex="0">
+                <i class="fas fa-hand-point-up gray"></i>
+                <%= criterium.user.count %>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
 
 
           <!-- OBJECTIONS -->
