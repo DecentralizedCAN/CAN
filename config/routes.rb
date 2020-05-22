@@ -90,6 +90,10 @@ Rails.application.routes.draw do
 
 # MAIN STUFF ENDS
 
+  get "/404", :to => "errors#error"
+  get "/422", :to => "errors#error"
+  get "/500", :to => "errors#error"
+
   get 'wakemydyno.txt', to: 'static#wakemydyno'
 
 
