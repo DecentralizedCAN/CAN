@@ -1,5 +1,3 @@
-<% if logged_in? %>
-
 <div class="home-actions">
   <%= link_to goal_path(Goal.first), :class => 'button button-hollow' do %>
     <i class="fas fa-project-diagram"></i>
@@ -7,11 +5,54 @@
   <% end %>
 </div>
 
+<% if @commitments.length > 0 && Completion.where(user_id: @user.id).count < @commitments.length %>
+  <div class="dashboard-item">
+    <h1>
+      <i class="fas fa-users"></i>
+      My commitments
+    </h1>
+
+    <% if @commitments.count > 0 %>
+      <h2>
+        <i class="fas fa-calendar-check"></i>
+        Activated
+      </h2>
+      <ul>
+        <% @commitments.each do |commitment| %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+          <% if total_committed(commitment.activity) >= total_minimum(commitment.activity) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+            <%= link_to  action_path(commitment.activity.id) do %>
+              <li> <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% end %>
+      </ul>
+
+      <h2>
+        <i class="far fa-calendar"></i>
+        Unactivated
+      </h2>
+      <ul>
+        <% @commitments.each do |commitment| %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+          <% if total_committed(commitment.activity) < total_minimum(commitment.activity) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+            <%= link_to  action_path(commitment.activity.id) do %>
+              <li> <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
+
 <% if @sponsored_problems.length > 0 %>
 <div class="dashboard-item">
   <h1>
     <i class="fas fa-handshake"></i>
-    My collaborations
+    My brainstorms
   </h1>
   <ul>
     <% @sponsored_problems.each do |problem| %>
@@ -22,50 +63,3 @@
   </ul>
 </div>
 <% end %>
-
-<% if @proposals.length > 0 %>
-<div class="dashboard-item">
-  <h1>
-    <i class="fas fa-comment-alt"></i>
-    My proposals
-  </h1>
-  <ul>
-    <% @proposals.each do |solution| %>
-      <%= link_to solution_path(:problem_id => solution.problem_id, :solution_id => solution.id) do %>
-        <li class="home-item"> <%= solution.title %> </li>
-      <% end %>
-    <% end %>
-  </ul>
-</div>
-<% end %>
-
-<% else %>
-  This app is a tool to aid in the Convergent Facilitation process. Sign up/in to use.
-<% end %>
-
-<!-- <div class="flex-container float-right">
-<ol class="side-card">
-
-  <% if logged_in? && @notifications.length > 0 %>
-  <div class="card-item">
-
-    <div class="flex-container">
-      <h2>Notifications</h2>
-      <%= link_to "view all", notifications_path, :id => "all-notifications", :class => "h2-margins" %>
-    </div>
-
-    <ol id="notifications">
-    <% @notifications.each do |notification| %>
-      <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
-        <li class="unread" >
-          <%= notification.details %>
-        </li>
-      <% end %>
-    <% end %>
-    </ol>
-
-  </div>
-  <% end %>
-
-</ol>
-</div> -->

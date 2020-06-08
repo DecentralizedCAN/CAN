@@ -8,7 +8,7 @@ class StaticController < ApplicationController
     if logged_in?
       @commitments = @user.rolls
       @sponsored_problems = @user.problems.order("created_at DESC")
-      @proposals = @user.solutions.order("created_at DESC")
+      @proposals = Solution.all.where(:creator => @user.id).order("created_at DESC")
       @current_time = Time.now.to_i
       @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
     end
