@@ -14,6 +14,7 @@ Setting.create!(id: 10, title: "Allow facilitator mode", state: false)
 Setting.create!(id: 11, title: "Allow multiple scoring methods", state: false)
 Setting.create!(id: 12, title: "Allow anyone to broadcast new posts", state: false)
 Setting.create!(id: 13, title: "Allow new goals to be posted to the feed", state: false)
+Setting.create!(id: 14, title: "Enable dashboard", state: false)
 
 ENV['ADMIN_EMAIL'] != nil ? admin_email = ENV['ADMIN_EMAIL'] : admin_email = "admin@fakeemail.com"
 ENV['ADMIN_PASSWORD'] != nil ? admin_password = ENV['ADMIN_PASSWORD'] : admin_password = "adminpassword"
