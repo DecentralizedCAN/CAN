@@ -98,6 +98,7 @@ Rails.application.routes.draw do
 
   # root   'static#commitments'
   root   'static#main_feed'
+  get    '/dashboard', to: 'static#dashboard'
   get    '/signup',  to: 'users#new'
   get    '/add',  to: 'users#add'
   get    '/login',   to: 'sessions#new'

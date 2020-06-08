@@ -2,8 +2,17 @@ class StaticController < ApplicationController
 	before_action :require_login, except: [:documentation, :main_feed], if: -> { public_viewable? }
 	before_action :require_login, unless: -> { public_viewable? }
 
-	def home
-	end
+  def dashboard
+    @user = current_user
+
+    if logged_in?
+      @commitments = @user.rolls
+      @sponsored_problems = @user.problems.order("created_at DESC")
+      @proposals = @user.solutions.order("created_at DESC")
+      @current_time = Time.now.to_i
+      @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
+    end
+  end
 
 	def main_feed
 

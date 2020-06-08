@@ -1,0 +1,71 @@
+<% if logged_in? %>
+
+<div class="home-actions">
+  <%= link_to goal_path(Goal.first), :class => 'button button-hollow' do %>
+    <i class="fas fa-project-diagram"></i>
+    My goals
+  <% end %>
+</div>
+
+<% if @sponsored_problems.length > 0 %>
+<div class="dashboard-item">
+  <h1>
+    <i class="fas fa-handshake"></i>
+    My collaborations
+  </h1>
+  <ul>
+    <% @sponsored_problems.each do |problem| %>
+      <%= link_to issue_path(problem) do %>
+        <li class="home-item"> <%= problem.title %> </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<% if @proposals.length > 0 %>
+<div class="dashboard-item">
+  <h1>
+    <i class="fas fa-comment-alt"></i>
+    My proposals
+  </h1>
+  <ul>
+    <% @proposals.each do |solution| %>
+      <%= link_to solution_path(:problem_id => solution.problem_id, :solution_id => solution.id) do %>
+        <li class="home-item"> <%= solution.title %> </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<% else %>
+  This app is a tool to aid in the Convergent Facilitation process. Sign up/in to use.
+<% end %>
+
+<!-- <div class="flex-container float-right">
+<ol class="side-card">
+
+  <% if logged_in? && @notifications.length > 0 %>
+  <div class="card-item">
+
+    <div class="flex-container">
+      <h2>Notifications</h2>
+      <%= link_to "view all", notifications_path, :id => "all-notifications", :class => "h2-margins" %>
+    </div>
+
+    <ol id="notifications">
+    <% @notifications.each do |notification| %>
+      <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+        <li class="unread" >
+          <%= notification.details %>
+        </li>
+      <% end %>
+    <% end %>
+    </ol>
+
+  </div>
+  <% end %>
+
+</ol>
+</div> -->
