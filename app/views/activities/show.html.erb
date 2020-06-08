@@ -134,7 +134,7 @@
               <% end %>
 
               <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
-                <%= link_to commit_path(:roll_id => role.id), :class => "button commit" do %>
+                <%= link_to commit_path(:roll_id => role.id), :class => "button complete" do %>
                   <i class="fas fa-user-plus"></i>
                   Commit
                 <% end %>

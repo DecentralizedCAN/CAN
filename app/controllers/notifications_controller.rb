@@ -12,7 +12,6 @@ class NotificationsController < ApplicationController
         
           notification.send_email if user.email_notifications
       end
-
     elsif @problem
       User.all.each do |user|
         unless @problem.user.include?(user)

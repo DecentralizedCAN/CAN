@@ -23,8 +23,34 @@
 		<ol class="new-posts">
 	  <% @posts.each do |post| %>
 			<% #if post.upvotes.count > 0 %>
+				<% if post.link_id %>
+					<%= link_to goal_path(Goal.find(post.link.parent.id)) do %>	
+						<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
+	          <div class="issue">
+	          	<div class="goal-title"><span class="underline"><%= Goal.find(post.link.parent.id).title %> <i class="fas fa-arrow-left"></i> <%= Goal.find(post.link.child.id).title %></span> <span class="feed-label">Goal</span></div>
+		            <div class="issue-info">
 
-				<% if post.activity %>
+		              <div class="post-signature">
+		                Created <%= time_ago_in_words(post.created_at) %> ago
+		      					by <em><%= 
+				            begin 
+				              post.upvotes.first.user.name
+				            rescue 
+				            end  %></em>
+		              </div>
+
+		              <br>
+
+		              <div>
+		                <i class="fas fa-handshake"></i>
+		                <%= Link.find(post.link_id).user.count %> adopters
+		              </div>
+
+	            	</div>
+						</div>
+					<% end %>
+
+				<% elsif post.activity %>
 			  	
 					<% if (post.activity.deadline && post.activity.deadline > @current_time) || (post.activity.expiration && post.activity.expiration > @current_time) || (!post.activity.deadline && !post.activity.expiration) %>
 						<%= render(:partial => 'post-stuff', :locals => {:post => post})%>

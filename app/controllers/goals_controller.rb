@@ -74,6 +74,12 @@ class GoalsController < ApplicationController
 				# redirect_to @goal
 			end
 
+      # create post and upvote
+			if params[:goal][:post_goal] && Setting.find(13).state
+        @post = Post.create(:link_id => @link.id)
+        @post.upvotes.create(user_id: current_user.id)				
+			end
+
 		elsif Goal.find_by(:title => params[:goal][:title]).present?
 
 			@goal = Goal.find_by(:title => params[:goal][:title])

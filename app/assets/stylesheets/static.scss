@@ -11,7 +11,7 @@ $label-blue: #81c4ff;
     font-style: normal;
 
     &:hover {
-      .issue-title, .activity-title, .discussion-title {
+      .issue-title, .activity-title, .discussion-title, .goal-title {
         .underline {
           text-decoration: underline;          
         }
@@ -20,7 +20,7 @@ $label-blue: #81c4ff;
   }
 }
 
-.issue-title, .activity-title, .discussion-title {
+.issue-title, .activity-title, .discussion-title, .goal-title {
   display: inline-block;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
@@ -153,6 +153,10 @@ h2 {
 
 .discussion .feed-label {
   background-color: $label-blue;
+}
+
+.goal-title .feed-label {
+  background-color: #f577df;
 }
 
 .delete-button {

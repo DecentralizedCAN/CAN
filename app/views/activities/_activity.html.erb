@@ -14,9 +14,9 @@
           <i class="fas fa-link"></i>
           Attached to goal <strong>
             <% if @activity %>
-              <%= link_to @activity.title, goal_path(@activity.goal) if @activity %>    
+              <%= link_to @activity.goal.title, goal_path(@activity.goal) %>    
             <% else %>
-              "<%= activity.title if !@activity %>"
+              "<%= activity.goal.title %>"
             <% end %>
           </strong>
         </div>
