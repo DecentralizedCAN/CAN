@@ -4,7 +4,7 @@
     <%= link_to issue_path(:problem_id => @problem.hashid) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Brainstorm
+        Back to collaboration
       </div>
     <% end %>
   </div>
@@ -22,7 +22,15 @@
     </em>
 
     <div id="issue-criteria">
-      <h2>Supported criteria</h2>
+
+    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id == current_user.id ) %>
+
+      <% if @problem.facilitator_id && @problem.facilitator_id == current_user.id %>
+        <h2>Criteria I've approved</h2>
+      <% else %>
+        <h2>Supported criteria</h2>
+      <% end %>
+
       <% if @my_criteria.count > 0 %>
       <% end %>
       <div class="criteria-list">
@@ -30,6 +38,10 @@
         <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
       <% end %>
       </div>
+
+    <% end %>
+
+    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id != current_user.id ) %>
 
       <h2>Active criteria</h2>
       <% if @criteria.count > 0 %>
@@ -39,6 +51,8 @@
         <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
       <% end %>
       </div>
+
+    <% end %>
 
       <% if @inactive_criteria.count > 0 %>
       <h2>Inactive criteria</h2>
