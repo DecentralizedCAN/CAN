@@ -10,8 +10,8 @@
   </div>
 
   <div id="proposal-description">
-    <h1><%= @solution.title %></h1>
-    <span>- Proposal for <span class="problem-title"><%= @solution.problem.title %></span></span>
+    <h1><strong>Proposal: </strong><%= @solution.title %></h1>
+    <!-- <span>- Proposal for <span class="problem-title"><%= @solution.problem.title %></span></span> -->
 
     <% if @solution.description.length > 0 %> 
       <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
@@ -80,7 +80,7 @@
 
 <!-- CRITERIA -->
 <div id="proposal-polling">
-  <h1>Evaluation</h1><br>
+  <h2>Evaluation</h2>
   <% if !@problem.scoring_method || @problem.scoring_method == 1 %>
     Estimated collective support for this proposal
     <br>
@@ -103,7 +103,8 @@
   <% end %>
 <% if logged_in? %>
 
-  <h2>Criteria</h2>
+  <!-- <h2>Criteria</h2> -->
+  <br><br>
 
   <table>
 
