@@ -3,8 +3,8 @@ class ProblemsController < ApplicationController
   include SolutionsHelper
   before_action :set_problem, only: [:show, :table, :edit, :update]
   before_action :check_activity, only: [:create]
-  before_action :require_login, unless: -> { public_viewable? }
   before_action :require_login, except: [:show, :table], if: -> { public_viewable? }
+  before_action :require_login, unless: -> { public_viewable? }
   before_action :require_admin_or_anarchy, only: [:new, :create]
 
   # GET /problems

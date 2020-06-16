@@ -13,7 +13,9 @@
     <h1><%= @solution.title %></h1>
     <span>- Proposal for <span class="problem-title"><%= @solution.problem.title %></span></span>
 
-    <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+    <% if @solution.description.length > 0 %> 
+      <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+    <% end %> 
 
     <% if @problem.require_action %>
       <br>

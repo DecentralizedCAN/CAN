@@ -44,6 +44,11 @@ class SolutionsController < ApplicationController
     @user = this_user
     @solution = Solution.new(:problem_id => params[:problem_id])
     @problem = Problem.find(params[:problem_id])
+
+    @all_criteria = @problem.criterium
+      .joins(:user)
+      .group("criteria.id")
+      .order("COUNT(user_id) DESC")
   end
 
   # GET /solutions/1/edit

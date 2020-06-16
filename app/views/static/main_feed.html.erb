@@ -24,7 +24,7 @@
 	  <% @posts.each do |post| %>
 			<% #if post.upvotes.count > 0 %>
 				<% if post.link_id %>
-					<%= link_to goal_path(Goal.find(post.link.parent.id)) do %>	
+  				<%= link_to goal_details_path(:goal_id => Goal.find(post.link.parent.hashid)) do %>
 						<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
 	          <div class="issue">
 	          	<div class="goal-title"><span class="underline"><%= Goal.find(post.link.parent.id).title %> <i class="fas fa-arrow-left"></i> <%= Goal.find(post.link.child.id).title %></span> <span class="feed-label">Goal</span></div>

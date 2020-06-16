@@ -220,7 +220,7 @@
 
       <% @my_goals.each do |goal| %>
         <li>
-          <%= link_to '+ ' + goal.title, newlink_path(:parent_id => @goal.id, :child_id => goal.id), :method => 'post', :class => 'button' %> 
+          <%= link_to '+ ' + goal.title, newlink_path(:parent_id => @goal.id, :child_id => goal.id), :method => 'post', :class => 'button goal-button' %> 
         </li>
       <% end %>
     </ul>
