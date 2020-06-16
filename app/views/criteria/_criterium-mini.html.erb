@@ -13,7 +13,7 @@
         </div>
       <% end %>
 
-      <% if criterium.problem.facilitator_id && criterium.problem.facilitator_id != current_user.id %>
+      <% if criterium.problem.facilitator_id && current_user && criterium.problem.facilitator_id != current_user.id %>
 
         <% if criterium.cridissent.find_by(user: @user) %>
           <div class="dissent-stuff">

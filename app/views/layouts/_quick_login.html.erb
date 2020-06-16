@@ -10,16 +10,16 @@
   <% end %>
 
   <div>
-    Name <%= f.text_field :email, class: 'form-mini' %>
+    <%= f.text_field :email, class: 'form-mini', :placeholder => 'Name' %>
   </div>
 
   <div>
-    Email <%= "(optional)" if Setting.find(7).state == false %>
-    <%= f.text_field :add_email, id: :user_email, :class => "form-mini" %>
+    <!-- Email <%= "(optional)" if Setting.find(7).state == false %> -->
+    <%= f.text_field :add_email, id: :user_email, :class => "form-mini", :placeholder => 'Email (optional)'  %>
   </div>
 
   <div>
-    Password <%= f.password_field :password, class: 'form-mini' %>
+    <%= f.password_field :password, class: 'form-mini', :placeholder => 'Password'  %>
   </div>
 
   <%= f.submit "Sign up/in", class: "button" %>
