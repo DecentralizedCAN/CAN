@@ -65,7 +65,7 @@ class CriteriaController < ApplicationController
     @criterium.creator = @user.id
 
     if @criterium.save
-      @criterium.user << @user unless @criterium.problem.facilitator_id
+      @criterium.user << @user unless @criterium.problem.facilitator_id && @criterium.problem.facilitator_id != current_user.id
 
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
@@ -83,7 +83,8 @@ class CriteriaController < ApplicationController
           
       # update_all_solution_scores(@criterium.problem.id)
 
-      if @criterium.problem.facilitator_id
+      if @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == current_user.id
+      elsif @criterium.problem.facilitator_id
         flash[:success] = "You suggested a criterion. Please wait for the facilitator to review it. Thanks for your contribution!"
       else
         flash[:success] = "You created a criterion. Thanks for your contribution!"
@@ -209,7 +210,7 @@ class CriteriaController < ApplicationController
 
     if @crialt.save
       # update_all_solution_scores(@crialt.criterium.problem.id)
-      UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
+      UpdateSolutionScoresJob.perform_later(@crialt.criterium.problem.id)
       
       flash[:success] = "You accepted a alternative criteria. Thanks for working towards convergence!"
       redirect_to show_criterium_path(:criterium_id => @from.hashid)

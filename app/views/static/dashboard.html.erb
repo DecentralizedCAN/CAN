@@ -1,0 +1,65 @@
+<div class="home-actions">
+  <%= link_to goal_path(Goal.first), :class => 'button button-hollow' do %>
+    <i class="fas fa-project-diagram"></i>
+    My goals
+  <% end %>
+</div>
+
+<% if @commitments.length > 0 && Completion.where(user_id: @user.id).count < @commitments.length %>
+  <div class="dashboard-item">
+    <h1>
+      <i class="fas fa-users"></i>
+      My commitments
+    </h1>
+
+    <% if @commitments.count > 0 %>
+      <h2>
+        <i class="fas fa-calendar-check"></i>
+        Activated
+      </h2>
+      <ul>
+        <% @commitments.each do |commitment| %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+          <% if total_committed(commitment.activity) >= total_minimum(commitment.activity) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+            <%= link_to  action_path(commitment.activity.id) do %>
+              <li> <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% end %>
+      </ul>
+
+      <h2>
+        <i class="far fa-calendar"></i>
+        Unactivated
+      </h2>
+      <ul>
+        <% @commitments.each do |commitment| %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+          <% if total_committed(commitment.activity) < total_minimum(commitment.activity) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+            <%= link_to  action_path(commitment.activity.id) do %>
+              <li> <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @sponsored_problems.length > 0 %>
+<div class="dashboard-item">
+  <h1>
+    <i class="fas fa-handshake"></i>
+    My brainstorms
+  </h1>
+  <ul>
+    <% @sponsored_problems.each do |problem| %>
+      <%= link_to issue_path(problem) do %>
+        <li class="home-item"> <%= problem.title %> </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+<% end %>

@@ -63,6 +63,14 @@
 
   </div>
 
+
+    <% if Setting.find(12).state %>
+      <br>
+      <%= form.check_box :broadcast_action, {checked: false}, true, false %> Send a notification about this action to all members
+      <br>
+    <% end %>
+
+  
   <%= form.submit value: "Post", id: :submit_action do %>
   <% end %>
 
@@ -76,7 +84,7 @@
 
       $('.remove-role').click(function(){
         console.log('hi')
-        $(this).parent().remove()
+        $(this).parent().parent().remove()
       })
   })
 

@@ -5,8 +5,8 @@ class ActivitiesController < ApplicationController
 
   before_action :set_activity, only: [:show, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
-  before_action :require_login, unless: -> { public_viewable? }
   before_action :require_login, except: [:show], if: -> { public_viewable? }
+  before_action :require_login, unless: -> { public_viewable? }
   before_action :require_admin_or_anarchy, only: [:new, :create, :suggest]
 
   require 'time'
@@ -60,7 +60,6 @@ class ActivitiesController < ApplicationController
   # POST /activities
   # POST /activities.json
   def create
-
     if activity_params[:expiration].to_i > 0
       expiration = activity_params[:expiration].to_i.days.from_now.to_i
     else
@@ -149,6 +148,15 @@ class ActivitiesController < ApplicationController
         current_user.update(:last_posted => Time.now)
 
         # Notifications
+        if activity_params[:broadcast_action]
+          User.all.each do |user|
+            notification = user.notification.create(:details => "A new action, \"" + @activity.title + "\", was just created. Would you like to participate?",
+              :activity_id => @activity.id)
+            
+              notification.send_email if user.email_notifications
+          end
+        end
+
         if activity_params[:goal_id].length > 0
           @goal = Goal.find(activity_params[:goal_id])
 
@@ -380,7 +388,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:title, :description, :role_json, :deadline, :expiration, :goal_id)
+      params.require(:activity).permit(:title, :description, :role_json, :deadline, :expiration, :goal_id, :broadcast_action)
     end
 
     def public_viewable?

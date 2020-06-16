@@ -1,9 +1,4 @@
 <div id="dashboard">
-  <%= link_to main_feed_path, :id=>"feed-path" do %>
-    Feed
-  <% end %>
-    
-
   <%    
     @user = current_user
     @commitments = @user.rolls
@@ -15,7 +10,7 @@
   <div class="dashboard-item">
     <h1>
       <i class="fas fa-users"></i>
-      Commitments
+      My commitments
     </h1>
 
     <% if @commitments.count > 0 %>
@@ -52,7 +47,7 @@
   <div class="dashboard-item">
     <h1>
       <i class="fas fa-handshake"></i>
-      Collaborations
+      My collaborations
     </h1>
     <ul>
       <% @sponsored_problems.each do |problem| %>
@@ -66,7 +61,7 @@
   <div class="dashboard-item">
     <h1>
       <i class="fas fa-comment-alt"></i>
-      Proposals
+      My proposals
     </h1>
     <ul>
       <% @proposals.each do |solution| %>

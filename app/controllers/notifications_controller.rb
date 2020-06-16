@@ -8,17 +8,16 @@ class NotificationsController < ApplicationController
     if @discussion
       User.all.each do |user|
         notification = user.notification.create(:details => "Here's a new discussion you might be interested in: " + @discussion.title,
-          :discussion_id => @discussion.id)
+          :discussion_id => @discussion.hashid)
         
           notification.send_email if user.email_notifications
       end
-
     elsif @problem
       User.all.each do |user|
         unless @problem.user.include?(user)
           
           notification = user.notification.create(:details => "Here's a new brainstorm you might want to take part in: \"" + @problem.title + "\"", 
-            :problem_id => @problem.id)
+            :problem_id => @problem.hashid)
         
           notification.send_email if user.email_notifications
         end
@@ -27,7 +26,7 @@ class NotificationsController < ApplicationController
     elsif @action
       User.all.each do |user|
         notification = user.notification.create(:details => "A new action, \"" + @action.title + "\", was just created. Would you like to participate?",
-          :activity_id => @action.id)
+          :activity_id => @action.hashid)
         
           notification.send_email if user.email_notifications
       end
@@ -40,7 +39,7 @@ class NotificationsController < ApplicationController
 
     @problem.user.each do |user|
       notification = user.notification.create(:details => "The brainstorm \"" + @problem.title + "\" has a new criterion: \"" + @criterion.title + "\". Do you support it?",
-        :problem_id => @problem.id)
+        :problem_id => @problem.hashid)
       
       notification.send_email if user.email_notifications
     end

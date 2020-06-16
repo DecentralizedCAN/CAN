@@ -197,7 +197,7 @@ $offwhite: #f5f5f5;
 
 .commit.button, .complete.button {
   display: inline-block;
-  background-color: #ff5d5d;
+  background-color: #18a57e;
   border: 1px solid;
   font-size: 12px;
   line-height: 12px;
@@ -216,15 +216,15 @@ $offwhite: #f5f5f5;
   }
 
   &:hover {
-    background-color: #dc3e3e;
+    background-color: #0b8a67;
   }
 }
 
 .complete.button {
-  background-color: #18a57e;
+  background-color: #ff5d5d;
 
   &:hover {
-    background-color: #0b8a67;
+    background-color: #dc3e3e;
   }
 }
 

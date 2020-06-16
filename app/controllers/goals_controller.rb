@@ -17,13 +17,13 @@ class GoalsController < ApplicationController
 			.joins(:user)
       .group("links.id")
       .order("COUNT(user_id) DESC")
-      .first(10)
+      # .first(10)
 
 		@public_children = Link.where(parent_id: @goal.id)
 			.joins(:user)
       .group("links.id")
       .order("COUNT(user_id) DESC")
-      .first(10)
+      # .first(10)
 
 		@new_goal = Goal.new
 	end
@@ -45,6 +45,7 @@ class GoalsController < ApplicationController
 			.joins(:user)
       .group("links.id")
       .order("COUNT(user_id) DESC")
+
 	end
 
 	def new
@@ -72,6 +73,12 @@ class GoalsController < ApplicationController
 				# redirect_to @goal
 			else
 				# redirect_to @goal
+			end
+
+      # create post and upvote
+			if params[:goal][:post_goal] && Setting.find(13).state
+        @post = Post.create(:link_id => @link.id)
+        @post.upvotes.create(user_id: current_user.id)				
 			end
 
 		elsif Goal.find_by(:title => params[:goal][:title]).present?

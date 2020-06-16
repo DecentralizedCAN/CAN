@@ -59,6 +59,8 @@
 
   </div>
 
+  <div id="add-criteria">Auto-load criteria list</div>
+
   <%= form.hidden_field :problem_id, id: :solution_problem_id %>
 
   <%= form.submit "Propose", id: :submit_action %>
@@ -67,14 +69,10 @@
 
 
 
-
-
-
-
-<% if @problem.require_action || params["format"] == "action" %>
-
 <script type="text/javascript">
   
+<% if @problem.require_action || params["format"] == "action" %>
+
   $('#add-role').click(function(){
     $('#activation').append('<div class="role"><b>Title: </b><input id="role_title" placeholder="Participant" type="text" name="activity[role_title]"><b> Description: </b><input id="role_description" type="text" name="activity[role_description]"><b> Needed: </b>Min <input id="role_minimum" placeholder="1" value="1" min="1" type="number" name="activity[activation_minimum]"> Max <input id="role_maximum" placeholder="∞" min="1" type="number" name="activity[activation_maximum]"> <i class="fas fa-times remove-role button"></i></div>')
 
@@ -117,5 +115,23 @@
       return
   })
 
+  <% end %>
+
+
+  <% if @all_criteria %>
+
+  $("#add-criteria").click(function() {
+    content = $('#solution_description').val()
+    newcontent = ''
+
+    <% @all_criteria.each do |criterion| %>
+      newcontent += `<%= criterion.title.upcase %>
+`
+    <% end %>
+
+    $('#solution_description').val(content + newcontent)
+  });
+
+  <% end %>
+
 </script>
-<% end %>

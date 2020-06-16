@@ -141,14 +141,18 @@
   <% if @goal.users.include?(@user) %>
     <h1 id='<%= @goal.hashid %>' class="strikethrough"><%= @goal.title %></h1> 
   <% else %>
-    <h1 id='<%= @goal.hashid %>'><%= @goal.title %></h1> 
+    <h1 id='<%= @goal.hashid %>'><%= @goal.title %></h1>
   <% end %>
 
   <!-- END TITLE -->
 
 
 
-
+  <% if @goal.id == 1 %>
+    <%= link_to goals_path do %>
+      <i class="fas fa-search"></i>
+    <% end %>
+  <% end %>
 
 
   <% if @goal.id != 1 %>
@@ -204,7 +208,10 @@
 
       <%= form.hidden_field :parent_id, :value => @goal.id %>
 
-      <!-- <%= form.check_box :title, id: :post_goal, :checked => true %> Post to feed<br> -->
+      <% if Setting.find(13).state %>
+        <%= form.check_box :post_goal, {checked: false}, true, false %> Post to feed<br>
+      <% end %>
+
       <%= form.submit "Add", id: :submit_goal, :class => 'button'%>
     <% end %>
 
@@ -213,7 +220,7 @@
 
       <% @my_goals.each do |goal| %>
         <li>
-          <%= link_to '+ ' + goal.title, newlink_path(:parent_id => @goal.id, :child_id => goal.id), :method => 'post', :class => 'button' %> 
+          <%= link_to '+ ' + goal.title, newlink_path(:parent_id => @goal.id, :child_id => goal.id), :method => 'post', :class => 'button goal-button' %> 
         </li>
       <% end %>
     </ul>

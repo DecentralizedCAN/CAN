@@ -19,7 +19,7 @@
     <% if @problem.goal %>
       <div class="proposal-activity-description">
         <i class="fas fa-link"></i>
-        Attached to goal <strong><%= link_to @problem.title, goal_path(@problem.goal) %></strong>
+        Attached to goal <strong><%= link_to @problem.goal.title, goal_path(@problem.goal) %></strong>
       </div>
     <% end %>
 

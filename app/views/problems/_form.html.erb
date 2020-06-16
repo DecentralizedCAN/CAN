@@ -51,6 +51,12 @@
       <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>
     <% end %>
 
+    <div>
+    <% if Setting.find(12).state %>
+      <%= form.check_box :broadcast_brainstorm, {checked: false}, true, false %> Send a notification about this brainstorm to all members
+    <% end %>
+    </div>
+
   </div>
 
   <%= form.submit "Post", id: :submit_brainstorm %>

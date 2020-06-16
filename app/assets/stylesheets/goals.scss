@@ -36,6 +36,10 @@
     // vertical-align: top;
   }
 
+  .goal-button {
+    text-transform: inherit;
+  }
+
 
   h1 {
     max-width: 280px;
@@ -332,7 +336,8 @@
     display: inline-block;
     vertical-align: top;
     text-align: left;
-    max-width: 26%;
+    width: 30%;
+    min-height: 400px;
     border: 1px solid #d8d8d8;
     padding: 0px 8px;
     // background-color: white;

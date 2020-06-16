@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200520142401) do
+ActiveRecord::Schema.define(version: 20200607233224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,34 +51,6 @@ ActiveRecord::Schema.define(version: 20200520142401) do
     t.index ["user_id", "activity_id"], name: "index_activities_users_on_user_id_and_activity_id"
   end
 
-  create_table "alinks", force: :cascade do |t|
-    t.bigint "goal_id"
-    t.bigint "action_id"
-    t.index ["action_id"], name: "index_alinks_on_action_id"
-    t.index ["goal_id"], name: "index_alinks_on_goal_id"
-  end
-
-  create_table "alinks_users", id: false, force: :cascade do |t|
-    t.bigint "alink_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["alink_id", "user_id"], name: "index_alinks_users_on_alink_id_and_user_id"
-    t.index ["user_id", "alink_id"], name: "index_alinks_users_on_user_id_and_alink_id"
-  end
-
-  create_table "blinks", force: :cascade do |t|
-    t.bigint "goal_id"
-    t.bigint "brainstorm_id"
-    t.index ["brainstorm_id"], name: "index_blinks_on_brainstorm_id"
-    t.index ["goal_id"], name: "index_blinks_on_goal_id"
-  end
-
-  create_table "blinks_users", id: false, force: :cascade do |t|
-    t.bigint "blink_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["blink_id", "user_id"], name: "index_blinks_users_on_blink_id_and_user_id"
-    t.index ["user_id", "blink_id"], name: "index_blinks_users_on_user_id_and_blink_id"
-  end
-
   create_table "comments", force: :cascade do |t|
     t.text "content_ciphertext"
     t.bigint "discussion_id"
@@ -87,15 +59,6 @@ ActiveRecord::Schema.define(version: 20200520142401) do
     t.datetime "updated_at", null: false
     t.index ["discussion_id"], name: "index_comments_on_discussion_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "completed", force: :cascade do |t|
-    t.bigint "roll_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["roll_id"], name: "index_completed_on_roll_id"
-    t.index ["user_id"], name: "index_completed_on_user_id"
   end
 
   create_table "completions", force: :cascade do |t|
@@ -163,20 +126,6 @@ ActiveRecord::Schema.define(version: 20200520142401) do
     t.index ["solution_id"], name: "index_discussions_on_solution_id"
   end
 
-  create_table "dlinks", force: :cascade do |t|
-    t.bigint "goal_id"
-    t.bigint "discussion_id"
-    t.index ["discussion_id"], name: "index_dlinks_on_discussion_id"
-    t.index ["goal_id"], name: "index_dlinks_on_goal_id"
-  end
-
-  create_table "dlinks_users", id: false, force: :cascade do |t|
-    t.bigint "dlink_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["dlink_id", "user_id"], name: "index_dlinks_users_on_dlink_id_and_user_id"
-    t.index ["user_id", "dlink_id"], name: "index_dlinks_users_on_user_id_and_dlink_id"
-  end
-
   create_table "goals", force: :cascade do |t|
     t.string "title_ciphertext"
     t.string "title_bidx"
@@ -199,8 +148,10 @@ ActiveRecord::Schema.define(version: 20200520142401) do
   create_table "links", force: :cascade do |t|
     t.bigint "parent_id"
     t.bigint "child_id"
+    t.bigint "post_id"
     t.index ["child_id"], name: "index_links_on_child_id"
     t.index ["parent_id"], name: "index_links_on_parent_id"
+    t.index ["post_id"], name: "index_links_on_post_id"
   end
 
   create_table "links_users", id: false, force: :cascade do |t|
@@ -246,8 +197,10 @@ ActiveRecord::Schema.define(version: 20200520142401) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "discussion_id"
+    t.bigint "link_id"
     t.index ["activity_id"], name: "index_posts_on_activity_id"
     t.index ["discussion_id"], name: "index_posts_on_discussion_id"
+    t.index ["link_id"], name: "index_posts_on_link_id"
     t.index ["problem_id"], name: "index_posts_on_problem_id"
   end
 
@@ -356,14 +309,8 @@ ActiveRecord::Schema.define(version: 20200520142401) do
   add_foreign_key "actdissents", "activities"
   add_foreign_key "actdissents", "users"
   add_foreign_key "activities", "goals"
-  add_foreign_key "alinks", "activities", column: "action_id"
-  add_foreign_key "alinks", "goals"
-  add_foreign_key "blinks", "goals"
-  add_foreign_key "blinks", "problems", column: "brainstorm_id"
   add_foreign_key "comments", "discussions"
   add_foreign_key "comments", "users"
-  add_foreign_key "completed", "rolls"
-  add_foreign_key "completed", "users"
   add_foreign_key "completions", "rolls"
   add_foreign_key "completions", "users"
   add_foreign_key "crialts", "criteria"
@@ -376,13 +323,12 @@ ActiveRecord::Schema.define(version: 20200520142401) do
   add_foreign_key "discussions", "posts"
   add_foreign_key "discussions", "problems"
   add_foreign_key "discussions", "solutions"
-  add_foreign_key "dlinks", "discussions"
-  add_foreign_key "dlinks", "goals"
   add_foreign_key "goals", "activities", column: "activities_id"
   add_foreign_key "goals", "discussions", column: "discussions_id"
   add_foreign_key "goals", "problems", column: "problems_id"
   add_foreign_key "links", "goals", column: "child_id"
   add_foreign_key "links", "goals", column: "parent_id"
+  add_foreign_key "links", "posts"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "criteria"
   add_foreign_key "notifications", "discussions"
@@ -393,6 +339,7 @@ ActiveRecord::Schema.define(version: 20200520142401) do
   add_foreign_key "polls", "users"
   add_foreign_key "posts", "activities"
   add_foreign_key "posts", "discussions"
+  add_foreign_key "posts", "links"
   add_foreign_key "posts", "problems"
   add_foreign_key "problems", "goals"
   add_foreign_key "rolls", "activities"

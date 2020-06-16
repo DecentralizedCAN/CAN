@@ -16,7 +16,20 @@
 
 <% if @goal.id != 1 %>
 
-  <h2>Marked Achieved</h2>
+  <h2>Adopted by</h2>
+  <ul>
+  <% @public_parents.each do |link| %>
+    <% link.user.each do |user| %>
+      <li>
+        <i class="fas fa-link"></i>
+        <%= user.name %>
+      </li>
+    <% end %>
+  <% end %>
+
+  </ul>
+
+  <h2>Marked Achieved by</h2>
   <ul>
   <% @goal.users.each do |user| %>
     <li>
@@ -28,7 +41,7 @@
 </div>
 
 <div class="goal-details-section">
-  <h2>Leads to</h2>
+  <h2>Parent goals</h2>
   <ul>
   <% @public_parents.each do |link| %>
     <li class="details-subgoal">
@@ -38,10 +51,10 @@
     </li>
   <% end %>
   </ul>
-</div>
+<!-- </div>
 
-<div class="goal-details-section">
-  <h2>Helped by</h2>
+<div class="goal-details-section"> -->
+  <h2>Subgoals</h2>
   <ul>
   <% @public_children.each do |link| %>
     <li class="details-subgoal">
@@ -55,9 +68,9 @@
 </div>
 
 <div class="goal-details-section">
-  <h2>Other</h2>
+  <!-- <h2>Other</h2> -->
 
-  <h3>Brainstorms</h3>
+  <h2>Brainstorms</h2>
   <ul>
   <% Problem.where(:goal_id => @goal.id).each do |brainstorm| %>
     <li>
@@ -67,7 +80,7 @@
   <% end %>
   </ul>  
 
-  <h3>Actions</h3>
+  <h2>Actions</h2>
   <ul>
   <% Activity.where(:goal_id => @goal.id).each do |action| %>
     <li>
@@ -75,9 +88,9 @@
       <%= link_to action.title, action_path(action) %>
     </li>
   <% end %>
-  </ul>  
+  </ul>
 
-  <h3>Discussions</h3>
+  <h2>Discussions</h2>
   <ul>
   <% Discussion.where(:goal_id => @goal.id).each do |discussion| %>
     <li>

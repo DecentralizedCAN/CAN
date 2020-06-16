@@ -3,8 +3,8 @@ class ProblemsController < ApplicationController
   include SolutionsHelper
   before_action :set_problem, only: [:show, :table, :edit, :update]
   before_action :check_activity, only: [:create]
-  before_action :require_login, unless: -> { public_viewable? }
   before_action :require_login, except: [:show, :table], if: -> { public_viewable? }
+  before_action :require_login, unless: -> { public_viewable? }
   before_action :require_admin_or_anarchy, only: [:new, :create]
 
   # GET /problems
@@ -112,8 +112,10 @@ class ProblemsController < ApplicationController
     puts "======================"
     puts problem_params
 
+    problem_params_edited = problem_params.except(:broadcast_brainstorm)
+
     @user = this_user
-    @problem = Problem.new(problem_params)
+    @problem = Problem.new(problem_params_edited)
     @problem.suggestion_min = 1 if @problem.suggestion_min == nil
     @problem.creator = current_user.id
 
@@ -132,6 +134,17 @@ class ProblemsController < ApplicationController
         @user.update(:last_posted => Time.now)
 
         # Notifications
+        if problem_params[:broadcast_brainstorm]
+          User.all.each do |user|
+            unless @problem.user.include?(user)
+              notification = user.notification.create(:details => "Here's a new brainstorm you might want to take part in: \"" + @problem.title + "\"", 
+                :problem_id => @problem.id)
+            
+              notification.send_email if user.email_notifications
+            end
+          end
+        end
+
         if problem_params[:goal_id].length > 0
           @goal = Goal.find(problem_params[:goal_id])
 
@@ -218,7 +231,7 @@ class ProblemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def problem_params
-      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action, :goal_id, :facilitator_id, :scoring_method)
+      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action, :goal_id, :facilitator_id, :scoring_method, :broadcast_brainstorm)
     end
 
     def public_viewable?
