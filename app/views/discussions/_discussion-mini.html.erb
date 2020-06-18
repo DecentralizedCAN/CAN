@@ -49,7 +49,7 @@
 <!--     <h1>New</h1>
  -->
     <ul id="scroll-div">
-      <% @discussion.comment.last(100).each do |comment| %>
+      <% @discussion.comment.order(created_at: :asc).limit(100).each do |comment| %>
         <% if comment.content %>
           <li>
             <div>

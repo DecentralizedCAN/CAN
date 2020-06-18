@@ -30,7 +30,7 @@
 
         <div class="criterium-response">
 
-      <% if criterium.problem.facilitator_id && criterium.problem.facilitator_id == current_user.id %>
+      <% if criterium.problem.facilitator_id && logged_in? && criterium.problem.facilitator_id == current_user.id %>
         <!-- SPONSORSHIP -->
         <div class="criteria-sponsorship">
           <%if criterium.user.include?(@user)%>

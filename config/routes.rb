@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :solutions, only: [:create]
   get '/brainstorm/:problem_id/proposal/new', to: 'solutions#new', :as => :new_solution
   get '/brainstorm/:problem_id/proposal/:solution_id', to: 'solutions#show', :as => :solution
-  delete '/proposal/:proposal', to: 'solutions#destroy', :as => :destroy_solution
+  delete '/proposal/:solution_id', to: 'solutions#destroy', :as => :destroy_solution
   post '/solver/poll', to: 'solutions#poll', :as => :set_poll
   post '/quietpoll', to: 'polls#quiet_set', :as => :quiet_set_poll
 
