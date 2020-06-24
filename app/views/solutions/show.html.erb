@@ -17,12 +17,12 @@
       <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
     <% end %> 
 
-    <% if @problem.require_action %>
+    <% if @solution.roll.length > 0 %>
       <br>
       <% if @solution.roll.first.maximum %>
-        <p>Participation requirement: <%=@solution.roll.first.minimum %> to <%=@solution.roll.first.maximum %> people</p>
+        <!-- <p>Participation requirement: <%=@solution.roll.first.minimum %> to <%=@solution.roll.first.maximum %> people</p> -->
       <% else %>
-        <p>Participation minimum: <%=pluralize(@solution.roll.first.minimum, 'person')%></p>
+        <!-- <p>Participation minimum: <%=pluralize(@solution.roll.first.minimum, 'person')%></p> -->
       <% end %>
       <br>
 
@@ -52,7 +52,7 @@
   </div>
 
 <!-- ROLES -->
-  <% if @problem.require_action %>
+  <% if @solution.roll.length > 0 %>
     <h1>Roles</h1>
     <div>
       <ul class="all-roles">
@@ -70,7 +70,7 @@
               needed)
             </div>
 
-
+            <br>
           </li>
         <% end %>
       

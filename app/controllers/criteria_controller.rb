@@ -90,6 +90,9 @@ class CriteriaController < ApplicationController
         flash[:success] = "You created a criterion. Thanks for your contribution!"
       end
       redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+    else
+      flash[:warning] = "Can't save criterion. It may be too long."
+      redirect_back fallback_location: root_path
     end
   end
 

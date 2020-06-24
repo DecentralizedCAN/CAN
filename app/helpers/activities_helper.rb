@@ -37,4 +37,14 @@ module ActivitiesHelper
 
     total
   end
+
+  def total_complete(action)
+    total = 0
+
+    action.roll.each do |role|
+      total += Completion.where(roll_id: role.id).count
+    end
+
+    total
+  end
 end
