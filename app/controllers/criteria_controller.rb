@@ -69,10 +69,12 @@ class CriteriaController < ApplicationController
 
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
-        notification = facilitator.notification.create(:details => "Someone has suggested a new criterion",
-          :criterium_id => @criterium.id)
-        if facilitator.email_notifications
-          notification.send_email
+        unless facilitator.id == @user.id
+          notification = facilitator.notification.create(:details => "Someone has suggested a new criterion",
+            :criterium_id => @criterium.id)
+          if facilitator.email_notifications
+            notification.send_email
+          end
         end
       end
       

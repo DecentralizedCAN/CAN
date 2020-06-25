@@ -5,6 +5,7 @@ Rails.application.configure do
   ENV['LOCKBOX_MASTER_KEY'] = '0000000000000000000000000000000000000000000000000000000000000000'
   ENV['BLIND_INDEX_MASTER_KEY']='ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
   ENV['SERVER_HOST']='localhost:3000'
+  ENV['MAILER_HOST']='localhost:3000'
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
