@@ -81,7 +81,7 @@ class PollsController < ApplicationController
     rescue
     end
 
-    redirect_back fallback_location: root_path
+    # redirect_back fallback_location: root_path
   end
 
   # DELETE /polls/1
