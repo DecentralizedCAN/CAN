@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "notifications@" + ENV['SERVER_HOST']
+  default from: "notifications@" + ENV['MAILER_HOST']
   layout 'mailer'
 end
