@@ -97,9 +97,11 @@ class GoalsController < ApplicationController
 			end
 
 			# redirect_to @goal
+  		redirect_back fallback_location: root_path
+		else
+      flash[:warning] = "Can't create goal. It may be too long."
+      redirect_back fallback_location: root_path
 		end
-
-  	redirect_back fallback_location: root_path
 	end
 
 	def complete_goal

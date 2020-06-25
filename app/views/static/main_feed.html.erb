@@ -158,7 +158,7 @@
   			<%= link_to 'New Post', new_discussion_path if logged_in? %>
 		  </div> -->
 
-		  <%= render(:partial => 'static/commitments-mini') if logged_in? && false %>
+		  <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state %>
 
 			<% if logged_in? && @notifications.length > 0 %>
 		  <div class="card-item">
