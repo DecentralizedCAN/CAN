@@ -46,7 +46,7 @@
     <% end %>
     </div>
 
-    <% if Setting.find(11).state %>
+    <% if false && Setting.find(11).state %>
       Scoring method
       <%= form.select :scoring_method, { 'Weighted positive': 1, 'Negative raw': 2, 'Positive raw': 3 }%>
     <% end %>
