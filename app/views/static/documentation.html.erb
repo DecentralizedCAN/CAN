@@ -1,40 +1,62 @@
 <div id="about-outer">
 
 <h1>Introduction</h1>
-<p>Welcome to this Convergent Action Network (CAN). This is platform for decentralized organization, which primarily relies on two processes: criteria-driven problem solving and crowdacting.</p>
-<p>Criteria-driven problem solving is a process for finding solutions to problems, or developing specific strategies around a general goal. This process centers around finding collectively accepted criteria that can serve as a guide for creating proposals that serve the needs of as many people as possible. Along with adding new criteria, users can add support for, or express objections to preexisting criteria. Less controversial options can also be suggested in place of unpopular criteria. When users suggest proposals, these are collectively scored based on how well they meet the criteria. This allows users to sort out the proposals that are most effective for the group.</p>
-<p>Crowdacting is a solution to the collective action problem of perceived efficacy. When people have the option to take action that will only succeed if there is a critical mass of participants, and it is unclear whether this critical mass will be reached, potential participants face a dilemma in which they must decide whether to exert effort for an unsure goal. Crowdacting addresses this problem by allowing users to suggest collective actions and specify the minimum participation required for the action to be successful. Individuals can then safely agree to participate in collective action with the security of knowing that the action will only take place if it reaches that threshold.</p>
+<p>Welcome to Convergence! This app contains tools to assist in collaborative decision making with the Convergent Facilitation process. If you are unfamiliar with Convergent Facilitation, you may want to visit <a href="http://convergentfacilitation.org/">convergentfacilitation.org</a> to learn more. Below are some tips to get you started.</p>
 
-<h1>Sections</h1>
+<!-- <h2>Sections</h2> -->
 <ol id="about-sections">
-	<li><a href="#brainstorming">Brainstorming</a>
+	<strong>Sections</strong>
+	<li><a href="#overview">Getting started</a>
 		<ol>
-			<li><a href="#criteria">Finding criteria</a></li>
-			<li><a href="#proposal_scoring">Scoring proposals</a></li>
-			<li><a href="#proposal_activation">Activating proposals</a></li>
+			<li><a href="#">Starting a convergent collaboration</a></li>
+			<li><a href="#">Joining an existing collaboration</a></li>
+			<li><a href="#">Activating proposals</a></li>
 		</ol>
 	</li>
-	<li><a href="#crowdacting">Actions</a>
+	<li><a href="#facilitation">Facilitation</a>
 		<ol>
-			<li><a href="#action-participation">Participation</a></li>
-			<li><a href="#action-expiration">Expiration</a></li>
+			<li><a href="#one-facilitator">Facilitator mode</a></li>
+			<li><a href="#distributed-facilitation">Distributed facilitation</a></li>
 		</ol>
 	</li>
-	<li><a href="#discussions">Discussions</a></li>
+	<li><a href="#scoring">Scoring</a></li>
+		<ol>
+			<li><a href="#classic-scoring">Classic scoring</a></li>
+			<li><a href="#weighted-scoring">Weighted scoring</a></li>
+	</ol>
+	<li><a href="#video">Video tutorial</a></li>
+
 </ol>
 
-<h1 id="brainstorming">Brainstorming</h1>
+<h1 id="overview">Getting started</h1>
+<p>This app is free to use for the general public. Anyone can sign up using the quick login/signup form that appears at the top of the page for new users.</p>
 
-<%= video_tag "convergent-brainstorming-tutorial.mov", controls: true, autobuffer: true %>
+<h2>Starting a convergent collaboration</h2>
+<p>Anyone who has a decision that they wish to address with the convergent facilitation process can start a new collaboration.</p>
 
-<p>Brainstorms are a way of finding innovative and widely supported strategies. If there is an issue or goal you want to address with collective action, you can post a community brainstorm. This will activate a process by which anyone who wants to participate can help establish the criteria by which a proposal must be evaluated, and propose proposal to address the topic.</p>
-<h2 id="criteria">Finding criteria</h2>
-<p>Criteria are most effective when they are acceptable to as many people as possible. For this reason, it is more effective to use general criteria than specific ones. Using general criteria also allows proposal to be more creative. For example, say you are planning an event and want to make sure you don't get rained out. You might want to add to the criteria "The even must take place indoors". However, some people might prefer an outdoor venue, and there might be a way to deal with rain other than using an indoor venue, like using an outdoor venue with cover, or having a backup plan for rain. Therefore, a more effective criteria might be something like "The event plan must account for the possibility of rain". This gives flexibility for proposal to find more unique and creative ways to approach this issue.</p>
-<p>If there is a criterion that you object to, you can log that objection on that individual criterion's page. Any supporters of that criterion will receive a notification, and if they want, they can transfer there support to a less controversial or more general criterion.</p>
-<p>To transfer support from one criterion to another, the alternative must first be added to the alternatives list. Anyone can add to this list at any time. Once it is on that list, you can click "Transfer to this" to remove support for the original criterion and add support to the alternative. This transfer gets recorded, and alternatives are ranked by how many people have transfered to each one.</p>
-<p>Asside from helping to further the community goal of approaching consensus, transfering to less controversial criteria also serves individual incentives. Due to the nature of the scoring algorithm (explained below), a criterion that has a significant percentage of objections in contrast to supporters will have less effect on the proposal scores than an uncontroversial criterion. Therefore it is in both the community's and individuals' interestes to find criteria that have the fewest objections.</p>
+<ol>
+	<li>From the menu bar, select <span class="click">New</span></li>
+	<li>Choose a title, and fill out any important info in under "details"</li>
+	<li>If you are using a facilitator, select <span class="click">facilitator mode</span>. (See <a href="#facilitation">facilitation</a> for more info)</li>
+	<li>Choose a scoring method (See <a href="#scoring">scoring</a> for more info)</li>
+	<li>Click <span class="click">Create</span>. This will generate a page that you can share with anyone you want to invite to the process.</li>
+</ol>
 
-<h2 id="proposal_scoring">Scoring proposals</h2>
+<h2>Joining an existing collaboration</h2>
+<p>If you visit the link to an existing collaboration, you can click <span class="click">join</span> or just start interacting and you will be automatically added as a collaborator. If you are not logged in when you visit, you will need to use the form that appears at the top of the page to do so. If you enter a username that does not yet exist, a new account will be created for you with that username.</p>
+
+<!-- <%= video_tag "convergent-brainstorming-tutorial.mov", controls: true, autobuffer: true %> -->
+
+<h1 id="facilitation">Facilitation</h1>
+There are two ways to use this app: The first way is to assign a facilitator to oversee the process. This is the traditional way to conduct Convergent Facilitation, and gives one person the role of guiding the group towards a satisfactory outcome. The second way is to conduct the convergent facilitation process without a facilitator. This can be useful for quick decisions, for groups that do not have a trained facilitator, or for groups that wish to distribute power as much as possible.
+<h2>Facilitator mode</h2>
+<p>If you select "facilitator mode" when creating a new collaboration, you will be assigned the facilitator for that decision. As facilitator, you must approve new criteria before they are listed as active. To view unapproved criteria, click <span class="click">All</span> under the criteria section.</p>
+<h2>Distributed facilitation</h2>
+<p></p>
+
+<h1 id="scoring">Scoring</h1>
+<h2 id="classic-scoring">Classic scoring</h2>
+<h2 id="weighted-scoring">Weighted scoring</h2>
 <p>Proposals are scored in order to help make it clear which ones are more likely to be the most effective at serving a group's needs. The scoring algorithm considers how well a proposal meets each criteria, as well as how many supporters and objections each criteria has.</p>
 <p>Criteria support is incorporated in order to give more weight to criteria that are important to more people. The more supporters a criterion has, the more importance it is given when proposal are polled. Objections are incorporated in order to prevent the appearance of a consensus when there is not one. The more objections a criterion has, the less high of a score a proposal can get for meeting it.</p>
 <p>Below is a mathematical representation of the scoring algorithm.</p>
@@ -49,23 +71,8 @@
 	<%= image_tag("scoring-algorithm.png") %>
 </div>
 
-<h2 id="proposal_activation">Activating proposals</h2>
-<p>Proposals should always be framed as an action. When writing a proposal, you must specify all of the same parameters as you would when posting an action. This allows proposals to be sent directly from a brainstorm to the front page, where it can potentially gather enough support to be realized. This can happen if enough people suggest it. When creating a brainstorm, you must specify the number of people who have to suggest a proposal before it is turned into an action. Specifying a higher number prevents the main feed from getting cluttered with actions. Actions that come out of brainstorms display their proposal score, so potential participants can see how how much support they have before they decide whether to participate.</p>
-
-<h1 id="crowdacting">Actions</h1>
-<p>Actions are specific agreements or events that people can collectively agree to.</p>
-<h2 id="action-participation">Participation</h2>
-<p>When you create an action, you must set a minimum participation number. This is the smallest number of people with which the action will be effective in its purpose. Once this number is reached, all participants will receive a notificaiton stating that the action will take place.</p>
-<p>You can also optionally select a maximum participation. If you do not specify one, it will default to infinity.</p>
-<h2 id="action-expiration">Expiration</h2>
-<p>If you choose to, when you create an action you can specify a date after which people cannot sign up. This prevents, for example, people signing up for an event at the last minute.</p>
-<p>If you do not specify an expiration, it will default to infinity.</p>
-
-<h1 id="discussions">Discussions</h1>
-<p>Discussions function much like a chatroom, but do not update live. Actions, brainstorms, and proposals all have their own discussions. Discussions can also be created on their own.</p>
-<p>You can hover over and like a comment. When enough comments have been made in a discussion, a list of the comments with the most likes will appear.</p>
-
-</div>
+<h1 id="video">Video tutorial</h1>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/LCi4svJM5lg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <script type="text/javascript">
 document.addEventListener('turbolinks:before-visit', function(e) {

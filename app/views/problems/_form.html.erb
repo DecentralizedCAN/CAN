@@ -17,11 +17,11 @@
   <% end %>
 
   <div class="main-field">
-    <h1>Title</h1>
-    <%= form.text_area :title, id: :problem_title, placeholder: "Briefly summarize the issue you want to find solutions for" %>
+    <h2>Title</h2>
+    <%= form.text_area :title, id: :problem_title, placeholder: "Brief summary of the issue in question" %>
 
-    <h1>Details</h1>
-    <%= form.text_area :description, id: :problem_description, placeholder: "Explain the issue in detail" %>
+    <h2>Details</h2>
+    <%= form.text_area :description, id: :problem_description, placeholder: "(optional)" %>
 
     <br>
   <!--   <%= form.check_box :require_action, {checked: false}, true, false %> Only allow proposals that are formatted as "actions" -->
@@ -42,13 +42,15 @@
 
     <div>
     <% if Setting.find(10).state %>
-      <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode (you must approve all criteria)
+      <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode
     <% end %>
     </div>
 
     <% if Setting.find(11).state %>
-      Scoring method
-      <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>
+      <div>
+        <!-- Scoring method -->
+        <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>
+      </div>
     <% end %>
 
     <div>
@@ -59,6 +61,6 @@
 
   </div>
 
-  <%= form.submit "Post", id: :submit_brainstorm %>
+  <%= form.submit "Create", id: :submit_brainstorm %>
 
 <% end %>

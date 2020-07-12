@@ -1,6 +1,6 @@
 <header>
 
-<nav class="navbar navbar-default">
+<nav class="navbar">
   <div class="container-fluid converge-header">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -13,7 +13,7 @@
       <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
       <%= link_to root_path, id: "logo", :class => "navbar-brand" do %>
         <%= image_tag("logo.png", :border=>0, :class => 'logo-image') %>
-        <%= group_name %>
+        <span><%= group_name %></span>
       <% end %>
     </div>
 
@@ -23,7 +23,25 @@
         <!-- <li class="active"><a href="#">All posts <span class="sr-only">(current)</span></a></li> -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
+    
+        <% if logged_in? %>
+          <li>
+          <%= link_to post_problem_path do %>
+            <i class="fas fa-plus"></i>
+            New
+          <% end %>
+          </li>
+        <% end %>
+        
         <li>
+          <%= link_to documentation_path do %>
+            <i class="fas fa-book"></i>
+            Guide
+          <% end %>
+        </li>
+
+        <li>
+
           <% if logged_in? %>
 
             <%= link_to notifications_path do %>

@@ -2,14 +2,23 @@
 
 <ol class="home-actions">
 
-<li>
-  <% if current_user && current_user.admin? %>
+<% if current_user && current_user.admin? %>
+  <li>
     <%= link_to settings_path, :class => "button button-hollow" do %>
       <i class="fas fa-cog"></i>
       Settings
     <% end %>
-  <% end %>
-</li>
+  </li>
+<% end %>
+<% if current_user && current_user.superadmin? %>
+
+  <li>
+    <%= link_to main_feed_path(:sort => 'new'), :class => "button button-hollow" do %>
+      <i class="fas fa-list"></i>
+      Feed
+    <% end %>
+  </li>
+<% end %>
 
 <!-- <li>
 <%= link_to documentation_path, :class => "button button-hollow" do %>
@@ -18,12 +27,12 @@
 <% end %>
 </li> -->
 
-<li>
+<!-- <li>
 <%= link_to post_problem_path, :class => "button" do %>
-  <i class="fas fa-pen"></i>
+  <i class="fas fa-plus"></i>
   Start converging
 <% end %>
-</li>
+</li> -->
 </ol>
 
 <% if @sponsored_problems.length > 0 %>

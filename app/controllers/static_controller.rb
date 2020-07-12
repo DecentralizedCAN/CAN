@@ -11,6 +11,8 @@ class StaticController < ApplicationController
 			@proposals = @user.solutions.order("created_at DESC")
 			@current_time = Time.now.to_i
 	    @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
+		else
+			redirect_to documentation_path
 		end
 	end
 

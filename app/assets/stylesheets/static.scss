@@ -334,22 +334,39 @@ h2 {
 
 // ABOUT
 #about-outer {
+  background-color: white;
+  border: 1px solid #d8d8d8;
+  padding: 10px 30px;
+
+  h1 {
+    text-decoration: underline;
+    text-decoration-color: #b1b1b1;
+  }
+
   h2 {
     font-family: inherit;
   }
 }
 
 #about-sections {
-  padding-left: 0px;
+  // padding-left: 0px;
+  background-color: #f5f5f5;
+  border: 1px solid #d8d8d8;
+  width: fit-content;
+  padding: 10px;
 
   li > a {
     color: rgb(6, 69, 173);
     text-decoration: none;
     background: none;
     font-style: normal;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   li {
+    margin-top: 4px;
     display: block;
   }
 

@@ -3,19 +3,20 @@
   <div class="issue">
     <div class="flex-container">
 
-      <div class="issue-title view"><%= @problem.title %>
-        <span class="feed-label">Brainstorm</span>
+      <div class="issue-title view"><h3><strong><%= @problem.title %></strong></h3>
+      </div>
+
+
+      <div class="right-buttons">
+        <%if @problem.user.include?(@user)%>
+          <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+        <%else%>
+          <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+        <%end%>
       </div>
 
     </div>
 
-    <div class="right-buttons">
-      <%if @problem.user.include?(@user)%>
-        <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
-      <%else%>
-        <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
-      <%end%>
-    </div>
 
     <% if @problem.goal %>
       <div class="proposal-activity-description">

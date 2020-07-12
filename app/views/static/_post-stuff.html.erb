@@ -9,7 +9,7 @@
 
 <% pre_upvote = post.upvotes.find { |upvote| upvote.user_id == current_user.id} if current_user %>
 
-<div class="upvote-div">
+<!-- <div class="upvote-div">
 	<% if pre_upvote %>
 		<%= button_to unupvote_path(post, pre_upvote), method: :post, :class => "upvote red-upvote" do %>
       <span class="red-upvote-count"><%= post.upvotes.count %></span>
@@ -19,7 +19,7 @@
       <span class="gray-upvote-count"><%= post.upvotes.count %></span>
     <% end %>
 	<% end %>
-</div>
+</div> -->
 
 
 
