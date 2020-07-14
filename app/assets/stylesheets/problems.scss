@@ -80,6 +80,9 @@ $success-red: #ff7455;
 
 #issue-criteria {
   width: 100%;
+    // width: fit-content;
+    // min-width: 20%;
+    // max-width: 100%;
 }
 
 .criterion-description {
@@ -120,7 +123,8 @@ $success-red: #ff7455;
   padding: 4px 10px;
   border: 1px solid #d8d8d8;
   margin: 10px 0px;
-  background: white;
+  // background: white;
+  background: #f9f9f9;
   min-height: 100px;
 }
 
@@ -280,7 +284,17 @@ $success-red: #ff7455;
     min-height: 290px;
     height: auto;
     box-shadow: 0px 3px 6px 0px #d0d0d0;
-    border: 1px solid #efefef;
+    // border: 1px solid #efefef;
+    border: 1px solid #d2d2d2;
+
+    .comment-box input {
+      border: 1px solid #d2d2d2;
+
+      &#send {
+        background: transparent;
+        margin: 2px;
+      }
+    }
 
     * {
       color: #3a3a3a;
@@ -431,7 +445,11 @@ $success-red: #ff7455;
   }
 
   .answered-tentative > div {
-    border-style: dashed !important;
+    border-style: solid !important;
+    // background-color: #f5f056;
+    // border: 4px solid black !important;
+    // background-color: black;
+    // color: black;
   }
 
   .yes-score.total {
@@ -509,7 +527,7 @@ $success-red: #ff7455;
   // border: 2px solid #9c9c9c;
   // background-color: #d8d5d5;
 
-  box-shadow: 0px 3px 6px 0px #776c6c;
+  // box-shadow: 0px 3px 6px 0px #776c6c;
 }
 
 .outer-table::-webkit-scrollbar {

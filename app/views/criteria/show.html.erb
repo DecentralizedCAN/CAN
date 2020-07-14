@@ -17,8 +17,8 @@
 	<div class="criterium-dissent">
 		<%if @criterium.cridissent.find_by(user: @user)%>
 	    <div>
-	      <strong>You objected</strong> <%= @criterium.cridissent.find_by(user: @user).title %>
-	      <em>(<%= link_to "remove objection", assent_criteria_path(:criterium_id => @criterium.id), :method => "post" %>)</em>
+	      <strong>You objected</strong>: "<%= @criterium.cridissent.find_by(user: @user).title %>"
+	      <%= link_to "remove objection", assent_criteria_path(:criterium_id => @criterium.id), :method => "post", :class => "button" %>
 	    </div>
 	  <%else%>
 			<h3>Objections (<%= @criterium.cridissent.count %>)</h3>
@@ -40,9 +40,9 @@
 	<ul><% @criterium.cridissent.each do |dissent| %>
 		<li>
 	  	<%if dissent.user%>
-				<strong><%= dissent.user.name %></strong>
+				<strong><%= dissent.user.name %></strong>:
 		  	<% if dissent.title.length > 0 %>
-			  	<%= dissent.title %>
+			  	"<%= dissent.title %>"
 		  	<% else %>
 		  		objected to this criterion
 		  	<%end%>

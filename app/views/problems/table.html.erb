@@ -71,11 +71,12 @@
 
 <!-- Table -->
 
-<div><h1><strong>Criteria <i class="fas fa-times"></i> Proposals</strong></h1></div>
-<%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
-  <i class="fas fa-list"></i> Lists
+<!-- <div><h1>Table: <strong>Criteria <i class="fas fa-times"></i> Proposals</strong></h1></div> -->
+<br>
+<div><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
+  <i class="fas fa-list"></i> List view
 <% end %>
-<br><br>
+</div><br>
 
 <p>Refresh page for current stats</p>
 
@@ -138,8 +139,8 @@
       
       <% else %>
       
-        <td class="yes-score "><div><%= polls.where(answer: 1).count %></div></td>
-        <td class="no-score "><div><%= polls.where(answer: 0).count %></div></td>
+        <td class="yes-score "><div><%= polls.where(answer: 1).count if polls %></div></td>
+        <td class="no-score "><div><%= polls.where(answer: 0).count if polls %></div></td>
 
       <% end %>
     <% end %>
@@ -191,12 +192,12 @@
 
 <!-- TABLE -->
 
-<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
+<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %>
 
 
 </div>
 
-<br><br><span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
+<!-- <br><br><span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span> -->
 
 
 <% if logged_in? && current_user.admin? %>

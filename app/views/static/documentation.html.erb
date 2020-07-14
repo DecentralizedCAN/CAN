@@ -8,58 +8,85 @@
 	<strong>Sections</strong>
 	<li><a href="#overview">Getting started</a>
 		<ol>
-			<li><a href="#">Starting a convergent collaboration</a></li>
-			<li><a href="#">Joining an existing collaboration</a></li>
-			<li><a href="#">Activating proposals</a></li>
+			<li><a href="#signing-up">Signing up</a></li>
+			<li><a href="#starting-a-process">Starting a convergent process</a></li>
+			<li><a href="#joining-a-process">Joining an existing process</a></li>
+			<li><a href="#facilitator-mode">Facilitator mode</a></li>
 		</ol>
 	</li>
-	<li><a href="#facilitation">Facilitation</a>
+	<li><a href="#criteria">Finding criteria</a>
 		<ol>
-			<li><a href="#one-facilitator">Facilitator mode</a></li>
-			<li><a href="#distributed-facilitation">Distributed facilitation</a></li>
+			<li><a href="#supporting-criteria">Supporting criteria</a></li>
+			<li><a href="#objecting-criteria">Objecting to criteria</a></li>
+			<li><a href="#alternative-criteria">Alternative criteria</a></li>
 		</ol>
 	</li>
-	<li><a href="#scoring">Scoring</a></li>
+	<li><a href="#scoring">Scoring proposals</a>
 		<ol>
-			<li><a href="#classic-scoring">Classic scoring</a></li>
-			<li><a href="#weighted-scoring">Weighted scoring</a></li>
-	</ol>
-	<li><a href="#video">Video tutorial</a></li>
+			<li><a href="#classic-scoring">Scoring with a facilitator</a></li>
+			<li><a href="#weighted-scoring">Scoring without a facilitator</a></li>
+		</ol>
+	</li>
+	<li><a href="#other">Other</a></li>
+	<!-- <li><a href="#video">Video tutorial</a></li> -->
 
 </ol>
 
 <h1 id="overview">Getting started</h1>
 <p>This app is free to use for the general public. Anyone can sign up using the quick login/signup form that appears at the top of the page for new users.</p>
 
-<h2>Starting a convergent collaboration</h2>
+<h2 id="signing-up">Signing up</h2>
+<p>If you are not logged in when you visit, use the form that appears at the top of the page to do so. If you enter a username that does not yet exist, a new account will be created for you with that username.</p>
+
+<h2 id="starting-a-process">Starting a convergent process</h2>
 <p>Anyone who has a decision that they wish to address with the convergent facilitation process can start a new collaboration.</p>
 
 <ol>
 	<li>From the menu bar, select <span class="click">New</span></li>
 	<li>Choose a title, and fill out any important info in under "details"</li>
-	<li>If you are using a facilitator, select <span class="click">facilitator mode</span>. (See <a href="#facilitation">facilitation</a> for more info)</li>
-	<li>Choose a scoring method (See <a href="#scoring">scoring</a> for more info)</li>
+	<li>If you are using a facilitator, make sure <span class="click">Facilitator mode</span> is selected. (See below for more info)</li>
+	<li>If you want a space for people to discuss the process, make sure <span class="click">Include comments section</span> is checked.</li>
 	<li>Click <span class="click">Create</span>. This will generate a page that you can share with anyone you want to invite to the process.</li>
 </ol>
 
-<h2>Joining an existing collaboration</h2>
-<p>If you visit the link to an existing collaboration, you can click <span class="click">join</span> or just start interacting and you will be automatically added as a collaborator. If you are not logged in when you visit, you will need to use the form that appears at the top of the page to do so. If you enter a username that does not yet exist, a new account will be created for you with that username.</p>
+<h2 id="joining-a-process">Joining an existing process</h2>
+<p>If you visit the link to an existing collaboration, you can click <span class="click">Join</span> or just start interacting and you will be automatically added as a collaborator. You can also click <span class="click">Leave</span> to remove yourself from the process.</p>
 
-<!-- <%= video_tag "convergent-brainstorming-tutorial.mov", controls: true, autobuffer: true %> -->
+<h2 id="facilitator-mode">Facilitator mode</h2>
+<p>There are two ways to use this app: The first way is for a facilitator to oversee the process. This is the traditional way to conduct Convergent Facilitation, and gives one person the role of guiding the group towards a satisfactory outcome. The second way is to conduct the convergent facilitation process without a facilitator. This can be useful for quick decisions, for groups that do not have a trained facilitator, or for groups that wish to distribute power as much as possible.</p>
+<p>If you select "facilitator mode" when creating a new collaboration, you will become the facilitator for that decision. As facilitator, you must approve new criteria before they are listed as active. Proposals will also be scored differently with the presence of a facilitator. The differences are explained where relevant in the following sections of this guide.</p>
 
-<h1 id="facilitation">Facilitation</h1>
-There are two ways to use this app: The first way is to assign a facilitator to oversee the process. This is the traditional way to conduct Convergent Facilitation, and gives one person the role of guiding the group towards a satisfactory outcome. The second way is to conduct the convergent facilitation process without a facilitator. This can be useful for quick decisions, for groups that do not have a trained facilitator, or for groups that wish to distribute power as much as possible.
-<h2>Facilitator mode</h2>
-<p>If you select "facilitator mode" when creating a new collaboration, you will be assigned the facilitator for that decision. As facilitator, you must approve new criteria before they are listed as active. To view unapproved criteria, click <span class="click">All</span> under the criteria section.</p>
-<h2>Distributed facilitation</h2>
-<p></p>
+<h1 id="criteria">Finding criteria</h1>
+<p>The first step towards convergence is creating a list of criteria that everyone can ideally support. To add a criterion to the list, click <span class="click">Criterion +</span>, enter the criterion, then click <span class="click">SUBMIT</span>. If facilitator mode is on, new criteria won't show up in the main criteria list until they are approved by the facilitator.</p>
 
-<h1 id="scoring">Scoring</h1>
-<h2 id="classic-scoring">Classic scoring</h2>
-<h2 id="weighted-scoring">Weighted scoring</h2>
-<p>Proposals are scored in order to help make it clear which ones are more likely to be the most effective at serving a group's needs. The scoring algorithm considers how well a proposal meets each criteria, as well as how many supporters and objections each criteria has.</p>
-<p>Criteria support is incorporated in order to give more weight to criteria that are important to more people. The more supporters a criterion has, the more importance it is given when proposal are polled. Objections are incorporated in order to prevent the appearance of a consensus when there is not one. The more objections a criterion has, the less high of a score a proposal can get for meeting it.</p>
-<p>Below is a mathematical representation of the scoring algorithm.</p>
+<h2 id="supporting-criteria">Supporting criteria</h2>
+<p>If facilitator mode is on, only the facilitator can add their support to a criterion, which will make it active and allow it to show up on the main criteria list. In the absence of a facilitator, it is the job of each individual to add their support to criteria. To add your support, click the <i class="fas fa-hand-point-up gray"></i> icon.</p>
+
+<h2 id="objecting-criteria">Objecting to criteria</h2>
+<p>If there is a criterion that you cannot support, you can record your objection.</p>
+<ol>
+	<li>Click on the criterion</li>
+	<li>Enter your objection in the text area underneath "Objections", and click <span class="click">SUBMIT</span>.</li>
+</ol>
+<p>Objections will be displayed in the "Objections" area of a criterion. They can be removed by clicking <span class="click">remove objection</span></p>
+
+<h2 id="alternative-criteria">Alternative criteria</h2>
+<p>To find broadly supported criteria, it can be useful to offer alternatives to criteria that have objections. You can suggest an existing criterion, or add a new one and then suggest that.</p>
+<ol>
+	<li>Click a criterion</li>
+	<li>Under "alternatives", select <span class="click">Suggest an alternative</span>.</li>
+	<li>In the drop-down menu, next to the alternative criteria, click <span class="click">Suggest</span>.</li>
+</ol>
+<p>Suggesting an alternative criterion will add it to the list of suggestions. Anyone who has supported the original criterion will see a button that says <span class="click">Accept alternative</span>. Clicking this will change your support to the suggested criterion.</p>
+
+<h1 id="scoring">Scoring proposals</h1>
+<p>Proposals are scored in order to help make it clear which ones are more likely to be the most effective at serving the group. Once a proposal has been added, anyone can score it based on how well it meets the criteria list. This can be done by either viewing the proposal details, or on the <span class="click"><i class="fas fa-table"></i> table</span> of proposals.</p>
+<h2 id="classic-scoring">Scoring with a facilitator</h2>
+<p>In facilitator mode, proposal score is the number of times someone marked a proposal as not meeting a criterion as a percentage of all responses. This is a negative score, meaning that the higher the score, the less support there is likely to be for a proposal.</p>
+<h2 id="weighted-scoring">Scoring without a facilitator</h2>
+<p>In the absence of a facilitator, proposal scores are more complex. They take into account not only how many times criteria were marked met, but also how many supports or objections each criterion has. The more support a criterion gets, the more weight it is given in scoring proposals. Criteria that have less support will effect the score more minimally. This is to ensure that if criteria have been added that do not have unanimous support, they do not derail the process.</p>
+<p>Objections are also encorporated into the score, in two ways. First, they subtract from the amount that support for that criterion effects the score. Second, they reduce the overall score potential. If there are objections on any criteria, the scores of all proposals will be reduced slightly. The only way to achieve a proposal score of 100% is if there are no objections on active criteria. This is so as to prevent the appearance of a consensus when there is not one.</p>
+<p>These scores are positive, in that higher scores represent more support, and are represented by a green bar. Below is a mathematical representation of this weighted scoring algorithm.</p>
 
 <div id="scoring-visual">
 	<ul>
@@ -71,8 +98,24 @@ There are two ways to use this app: The first way is to assign a facilitator to 
 	<%= image_tag("scoring-algorithm.png") %>
 </div>
 
-<h1 id="video">Video tutorial</h1>
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/LCi4svJM5lg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>If you want a simpler way to conceptualize how this works, just remember the following.</p>
+<ol>
+	<li>More support for criterion = proposal scores affected more by this criterion</li>
+	<li>More objection for criterion = proposal scores affected less by this criterion</li>
+	<li>More objections overall = lower score potential for any proposal</li>
+</ol>
+
+<p>Proposals are ranked by how high they score. This score is meant as an estimate of how much support a proposal will have, so as to identify which ones to propose first. It is not designed to provide a definitive decision. To find out if a group is comfortable going with a proposal, you have to ask directly.</p>
+
+<h1 id="other">Other</h1>
+<h2 id="feedback">Feedback</h2>
+<p>This app is in beta, and we welcome any and all feedback. Please leave your comments, questions, or suggestions <a href="">here</a>.</p>
+
+<h2 id="donations">Donations</h2>
+<p>This server costs us about $___ a month. You can help us offset that cost <a href="">here</a>.</p>
+
+<!-- <h1 id="video">Video tutorial</h1>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/LCi4svJM5lg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 
 <script type="text/javascript">
 document.addEventListener('turbolinks:before-visit', function(e) {

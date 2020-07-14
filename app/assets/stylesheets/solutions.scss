@@ -20,7 +20,7 @@ $offwhite: #f5f5f5;
   background-color: white;
   padding: 2px 4px;
   box-shadow: 0px 3px 6px 0px #d0d0d0;
-  border: 1px solid #efefef;
+  border: 1px solid #d2d2d2;
 
   .button {
     line-height: 12px;
@@ -46,12 +46,12 @@ $offwhite: #f5f5f5;
 	}
 
 	#solution_description {
-		height: 200px;
+		height: 300px;
 	}
 }
 
 #proposal-description, #proposal-polling {
-	background-color: $offwhite;
+	// background-color: $offwhite;
 	padding: 10px;
 	padding-left: 0px;
 	margin-bottom: 10px;
@@ -65,6 +65,7 @@ $offwhite: #f5f5f5;
 
 	p {
 		margin: 0;
+    background-color: $offwhite;
 	}
 
 	tr {
@@ -128,6 +129,10 @@ $offwhite: #f5f5f5;
 
 .solution-outer {
 
+  background-color: white;
+  padding: 4px 10px;
+  border: 1px solid #d8d8d8;
+
 	#proposal-description {
 		* {
 			// color: #3a3a3a;
@@ -137,8 +142,15 @@ $offwhite: #f5f5f5;
 	#proposal-polling {
 		display: inline-block;
 		vertical-align: top;
-    	min-width: 46%;
+  	min-width: 46%;
 		color: #3a3a3a;
+    background-color: transparent;
+
+    tr {
+      color: #3a3a3a;
+      background-color: #f5f5f5;
+      border: 1px solid #d8d8d8;
+    }
 
 		* {
 			color: #3a3a3a;			

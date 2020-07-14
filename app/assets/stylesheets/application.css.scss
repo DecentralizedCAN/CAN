@@ -17,7 +17,8 @@
 @import "font-awesome";
 
 @import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:wght@400;500;600;700;800;900');
+@import url('https://fonts.googleapis.com/css?family=Libre+Franklin:wght@400;500;600;700;800;900');
 
 $dissent-green: #3be1ea;
 $background-gray: #efeeee;
@@ -403,6 +404,13 @@ hr {
   float: right;
 }
 
+.white-container {
+  background-color: white;
+  border: 1px solid #d8d8d8;
+  padding: 10px;
+  min-height: 80vh;
+}
+
 .converge-container {
   margin-right: auto;
   margin-left: auto;
@@ -472,10 +480,21 @@ nav #logo {
   font-weight: bold;
   letter-spacing: -1px;
 
-  span {
+  span#logo-name {
     background: -webkit-linear-gradient(-180deg, #60f0ff, #4aef9c, #ff7272);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  span#beta-tag {
+    padding: 1px 5px;
+    border-radius: 20px;
+    color: #847c7c;
+    text-transform: uppercase;
+    font-size: 11px;
+    vertical-align: top;
+    margin-top: -14px;
+    letter-spacing: 1px;
   }
 }
 

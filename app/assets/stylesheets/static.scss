@@ -22,7 +22,8 @@ $label-blue: #81c4ff;
 
 .issue-title, .activity-title, .discussion-title, .goal-title {
   display: inline-block;
-  font-family: 'Montserrat', sans-serif;
+  // font-family: 'Montserrat', sans-serif;
+  // font-family: 'Libre Franklin', sans-serif;
   font-weight: bold;
   font-size: 13px;
 }
@@ -403,7 +404,33 @@ ol {
   }
 }
 
+.home-notifications #notifications li {
+  padding: 2px 4px;
+  background-color: white;
+  font-style: normal;
+  border: 2px solid #61e2ff;
+  border-radius: 2px;
+}
+
 li.home-item {
   font-style: normal;
   font-size: 14px;
+}
+
+li.home-item-underlined {
+
+  .issue {
+    background-color: white;
+    border: 1px solid #d8d8d8;
+    padding: 4px 8px;
+    border-radius: 1px;
+  }
+
+  &:hover {
+    text-decoration: none;
+
+    .issue-title {
+      text-decoration: underline;
+    }
+  }
 }

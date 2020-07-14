@@ -44,6 +44,8 @@
     <% if Setting.find(10).state %>
       <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode
     <% end %>
+    <br>
+    <%= form.check_box :include_comments, {checked: true}, true, false %> Include comments section
     </div>
 
     <% if false && Setting.find(11).state %>

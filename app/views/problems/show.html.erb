@@ -1,3 +1,4 @@
+<div class="white-container">
 <div id="solver">
 
   <div class="issue">
@@ -53,6 +54,7 @@
     </div>
 
     <% if @problem.facilitator_id %>
+      <br>
       <% facilitator = User.find(@problem.facilitator_id) %>
       Facilitator: 
       <%= link_to facilitator.name, facilitator %>
@@ -143,7 +145,7 @@
               <% #if !@problem.scoring_method || @problem.scoring_method == 1 %>
               <% if !@problem.facilitator_id %>
                 <div class="score-bar-outer">
-                  <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
+                  <div class="score-bar-inner" style="background-color: #4defa7; width: <%= solution.score %>%" ></div>
                   <div class="written-criterion-score">
                     <%= solution.score %>%
                   </div>
@@ -185,7 +187,7 @@
 
 <!-- DISCUSSION -->
   
-<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
+<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %>
 
 <!-- DISCUSSION ENDS -->
 
@@ -195,3 +197,8 @@
 <!-- EXTRA-SECTIONS ENDS -->
 
 </div>
+</div>
+<!-- <script type="text/javascript">
+  let columns = <%= @criteria_count < 4? 1 : 4 %>
+  $('.criteria-list').css('column-count', columns)
+</script> -->

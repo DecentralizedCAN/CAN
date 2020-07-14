@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200607233224) do
+ActiveRecord::Schema.define(version: 20200713025403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20200607233224) do
     t.datetime "updated_at", null: false
     t.text "creator_ciphertext"
     t.bigint "goal_id"
+    t.boolean "include_comments"
     t.index ["deadline_bidx"], name: "index_activities_on_deadline_bidx"
     t.index ["expiration_bidx"], name: "index_activities_on_expiration_bidx"
     t.index ["goal_id"], name: "index_activities_on_goal_id"
@@ -216,6 +217,7 @@ ActiveRecord::Schema.define(version: 20200607233224) do
     t.boolean "require_action"
     t.integer "facilitator_id"
     t.integer "scoring_method"
+    t.boolean "include_comments"
     t.index ["goal_id"], name: "index_problems_on_goal_id"
   end
 

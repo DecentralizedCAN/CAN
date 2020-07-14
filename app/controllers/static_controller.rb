@@ -92,7 +92,7 @@ class StaticController < ApplicationController
 			notification.save
 		end
 
-		redirect_to notifications_path
+		redirect_back fallback_location: root_path
 	end
 
 	def destroy
