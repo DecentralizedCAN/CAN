@@ -29,6 +29,11 @@ $label-blue: #81c4ff;
   h3 {
   	background-color: transparent;
   	font-weight: bold;
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 12px;
   }
 
 	ul {
@@ -135,6 +140,10 @@ $label-blue: #81c4ff;
     max-width: 100%;
     display: inline-block;
     vertical-align: top;
+  }
+
+  h3 {
+    font-size: 13px;
   }
 }
 
