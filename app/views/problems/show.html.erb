@@ -27,17 +27,6 @@
     <% end %>
 
     <div class="issue-info">
-      <div class="post-signature">
-        <!-- <i class="fas fa-calendar"></i> -->
-        Created <%= time_ago_in_words(@problem.created_at) %> ago
-        by
-        <em><%= 
-        begin 
-          User.find(@problem.creator).name
-        rescue 
-        end  %></em>
-      </div>
-      <br>
       <div>
         <i class="fas fa-handshake"></i>
         <%= @problem.user.count %> collaborators
@@ -50,7 +39,16 @@
         <i class="fas fa-comment-alt"></i> 
         <%= @problem.solution.count %> proposals
       </div>
-
+      <div class="post-signature">
+        <i class="fas fa-clock"></i>
+        Created <%= time_ago_in_words(@problem.created_at) %> ago
+        by
+        <em><%= 
+        begin 
+          User.find(@problem.creator).name
+        rescue 
+        end  %></em>
+      </div>
     </div>
 
     <% if @problem.facilitator_id %>
@@ -76,10 +74,10 @@
     <!-- CRITERIA -->
     <div class="criteria-outer">
 
-      <h1 id="criteria">
+      <h2 id="criteria">
         <i class="fas fa-clipboard-list"></i>
         <%= @criteria_count %> <%= "Active criteria" if @problem.facilitator_id %> <%= "Criteria" unless @problem.facilitator_id %>
-      </h1>
+      </h2>
 
       <div>
         <% if @problem.criterium.count > (@my_criteria.count + @criteria.count) %>
@@ -114,10 +112,10 @@
 
   <div class="solutions-outer">
 
-    <h1 id="solutions">
+    <h2 id="solutions">
       <i class="fas fa-comment-alt"></i>
       <%= @solutions.count %> Proposals
-    </h1>
+    </h2>
 
     <div>
     <% if @problem.solution.count > 0 && @problem.criterium.count > 0 %>

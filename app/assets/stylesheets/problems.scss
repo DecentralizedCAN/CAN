@@ -13,7 +13,9 @@ $success-red: #ff7455;
 }
 
 .issue-title {
-  font-size: 14px;
+  h3 {
+    font-size: 20px;
+  }
 }
 
 .issue-info > div {

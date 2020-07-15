@@ -29,23 +29,23 @@ $label-blue: #81c4ff;
 }
 
 .issue-info, .activity-info, .discussion-info, .written-progress {
-  line-height: 12px;
+  line-height: 14px;
   display: inline-block;
   // margin-left: 22px;
   font-weight: normal;
-  font-size: 11px;
+  font-size: 14px;
   display: block;
 
   div {
     font-weight: normal;
-    font-size: 11px;
+    font-size: 12px;
     // display: inline-block;
   }
 }
 
-.post-signature {
-  font-size: 10px !important;
-}
+// .post-signature {
+  // font-size: 10px !important;
+// }
 
 #main-feed {
   .proposal, .issue, .discussion {
@@ -245,6 +245,7 @@ h2 {
 	display: inline-block;
 	vertical-align: top;
   margin-right: 40px;
+  min-width: 60%;
 
 	h1, h2 {
 		color: #525252;

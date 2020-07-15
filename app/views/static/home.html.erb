@@ -68,17 +68,7 @@
                 <% end %>
 
                 <div class="issue-info">
-                  <div class="post-signature">
-                    <!-- <i class="fas fa-calendar"></i> -->
-                    Created <%= time_ago_in_words(problem.created_at) %> ago
-                    by
-                    <em><%= 
-                    begin 
-                      User.find(problem.creator).name
-                    rescue 
-                    end  %></em>
-                  </div>
-                  <br>
+                  <!-- <br> -->
                   <div>
                     <i class="fas fa-handshake"></i>
                     <%= problem.user.count %> collaborators
@@ -91,7 +81,16 @@
                     <i class="fas fa-comment-alt"></i>
                     <%= pluralize(problem.solution.count, "proposal") %>
                   </div>
-      
+                  <div class="post-signature">
+                    <i class="fas fa-clock"></i>
+                    <%= time_ago_in_words(problem.created_at) %> ago
+                    by
+                    <em><%= 
+                    begin 
+                      User.find(problem.creator).name
+                    rescue 
+                    end  %></em>
+                  </div>
 
                 </div>
               </div>

@@ -1,17 +1,15 @@
-<div class="backdrop solution-outer">
-
+<div class="backdrop solution-outer white-container">
   <div class="back-button">
     <%= link_to issue_path(:problem_id => @problem.hashid), data: { turbolinks: false } do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        <%= @problem.title %>
+        Back to collaboration
       </div>
     <% end %>
 
-
-  <h2>&nbsp;Proposal</h2>
+  <!-- <h2>&nbsp;Proposal</h2> -->
   </div>
-    <h1></strong><%= @solution.title %></h1>
+    <h1>Proposal: </strong><%= @solution.title %></h1>
 
   <% if @solution.description.length > 0 %> 
     <div id="proposal-description">
