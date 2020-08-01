@@ -315,13 +315,12 @@ $success-red: #ff7455;
 }
 
 #full-discussion-view {
-  float: right;
-  color: #3a3a3a !important;
-  font-size: 12px;
-  margin: 8px;
+  // float: right;
+  // color: #3a3a3a !important;
+  // font-size: 12px;
+  // margin: 8px;
   font-style: normal;
-  text-transform: uppercase;
-
+  // text-transform: uppercase;
 }
 
 #suggestion_min {
@@ -447,7 +446,7 @@ $success-red: #ff7455;
   }
 
   .answered-tentative > div {
-    border-style: solid !important;
+    // border-style: solid !important;
     // background-color: #f5f056;
     // border: 4px solid black !important;
     // background-color: black;

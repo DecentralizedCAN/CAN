@@ -7,15 +7,15 @@
       <div class="issue-title view"><h3><strong><%= @problem.title %></strong></h3>
       </div>
 
-      <div class="right-buttons">
+      <!-- <div class="right-buttons">
         <%if @problem.user.include?(@user)%>
           <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
         <%else%>
           <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
         <%end%>
 
-        <!-- <a href="">Share</a> -->
-      </div>
+        <a href="">Share</a>
+      </div> -->
 
     </div>
 
@@ -26,7 +26,7 @@
       </div>
     <% end %>
 
-    <div class="issue-info">
+    <!-- <div class="issue-info">
       <div>
         <i class="fas fa-handshake"></i>
         <%= @problem.user.count %> collaborators
@@ -49,10 +49,9 @@
         rescue 
         end  %></em>
       </div>
-    </div>
+    </div> -->
 
     <% if @problem.facilitator_id %>
-      <br>
       <% facilitator = User.find(@problem.facilitator_id) %>
       Facilitator: 
       <%= link_to facilitator.name, facilitator %>
@@ -63,7 +62,6 @@
     <% if @problem.description.length > 0 %> 
       <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
     <% end %>
-  </div>
 
 
     <!-- DETAILS ENDS -->
@@ -76,32 +74,39 @@
 
       <h2 id="criteria">
         <i class="fas fa-clipboard-list"></i>
-        <%= @criteria_count %> <%= "Active criteria" if @problem.facilitator_id %> <%= "Criteria" unless @problem.facilitator_id %>
+        <%= @criteria_count %> <%= "Criteria" if @problem.facilitator_id %> <%= "Criteria" unless @problem.facilitator_id %>
       </h2>
 
       <div>
         <% if @problem.criterium.count > (@my_criteria.count + @criteria.count) %>
           <%= link_to full_criterium_path( :problem_id => @problem.id), :class => "button button-hollow" do %>
-            <i class="fas fa-clipboard-list"></i> All
+            <i class="fas fa-clipboard-list"></i> 
+            Suggestions
+            (<%= @problem.criterium.count - @criteria_count %>)
           <% end %>
           &nbsp;
         <% end %>
 
-        <%= link_to "Criterion +", new_criterium_path( :problem_id => @problem.id), :class => "button"  %>
+
+        <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to the list of suggestions." tabindex="0">
+          <%= link_to "+ Criterion", new_criterium_path( :problem_id => @problem.id), :class => "button"  %>
+        </span>
+
       </div>
 
-      <div id="issue-criteria">
-
-        <div class="criteria-list">
-          <% @my_criteria.each do |criterium| %>
-            <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-          <% end %>
-          <% @criteria.each do |criterium| %>
-            <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-          <% end %>
+      <% if @criteria_count > 0 %>
+        <div id="issue-criteria">
+          <div class="criteria-list">
+            <% @my_criteria.each do |criterium| %>
+              <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+            <% end %>
+            <% @criteria.each do |criterium| %>
+              <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+            <% end %>
+          </div>
         </div>
+      <% end %>
 
-      </div>
     </div>
 
 <!-- CRITERIA ENDS -->
@@ -114,8 +119,12 @@
 
     <h2 id="solutions">
       <i class="fas fa-comment-alt"></i>
+      
       <%= @solutions.count %> Proposals
+
     </h2>
+
+    <em>Click on proposals to view</em><br><br>
 
     <div>
     <% if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
@@ -125,8 +134,8 @@
       &nbsp;
     <% end %>
 
-      <%= link_to 'Proposal +', new_solution_path(:problem_id => @problem.id), :class => "button" if @problem.require_action %>
-      <%= link_to 'Proposal +', new_solution_path(:problem_id => @problem.id), :class => "button" if !@problem.require_action %>
+      <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if @problem.require_action %>
+      <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if !@problem.require_action %>
     </div>
     
     <ol class="solutions">
@@ -184,17 +193,16 @@
 <!-- SOLUTIONS ENDS --->
 
 <!-- DISCUSSION -->
-  
 <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %>
-
 <!-- DISCUSSION ENDS -->
-
 
 
 </div>
 <!-- EXTRA-SECTIONS ENDS -->
-
 </div>
+<!-- SOLVER ENDS -->
+</div>
+<!-- WHITE CONTAINER ENDS -->
 </div>
 <!-- <script type="text/javascript">
   let columns = <%= @criteria_count < 4? 1 : 4 %>

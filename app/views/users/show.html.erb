@@ -5,10 +5,16 @@
   <aside class="col-md-4">
     <section class="user_info">
       <h1>
+        <a target="_blank" href="https://en.gravatar.com/">
+          <%= gravatar_for(@user) %>          
+        </a>
         <%= @user.name %>
       </h1>
+
+      <%= @user.email if @user.email %><br>
+
       <% if current_user.admin? %>
-        <%= @user.email %> 
+        <!-- <%= @user.email %>  -->
 
         <br>
 
@@ -41,7 +47,7 @@
   <% provide(:title, 'Edit user') %>
   <% provide(:button_text, 'Save changes') %>
   
-  <br><br>
+  <br><br><br>
   <h3>Update your profile</h3>
   <br>
   <div class="row">

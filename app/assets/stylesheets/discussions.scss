@@ -190,6 +190,8 @@ p > a, .comment > a {
 
 .gravatar {
   width: 24px;
+  border-radius: 20px;
+  border: 1px solid gray;
 }
 
 #send {
@@ -237,5 +239,6 @@ p > a, .comment > a {
 
   h2 {
     margin-top: 2px;
+    font-size: 16px;
   }
 }

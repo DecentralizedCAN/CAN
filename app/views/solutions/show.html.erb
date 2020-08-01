@@ -3,7 +3,7 @@
     <%= link_to issue_path(:problem_id => @problem.hashid), data: { turbolinks: false } do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to collaboration
+        All proposals
       </div>
     <% end %>
 
@@ -18,7 +18,7 @@
   <% end %> 
 <!-- CRITERIA -->
 <div id="proposal-polling">
-  <!-- <h2>Evaluation</h2> -->
+  <h2>Evaluation</h2>
   <% #if !@problem.scoring_method || @problem.scoring_method == 1 %>
   <% if !@problem.facilitator_id %>
     Estimated collective support for this proposal
@@ -34,7 +34,7 @@
   <% #elsif @problem.scoring_method == 2 %>
   <% else %> 
     <% polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 %>
-    <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %><%= 0 if !polls %>%</span> unmet criteria
+    <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %><%= 0 if !polls %>%</span> away from convergence
   <% #elsif @problem.scoring_method == 3 %>
     <!-- Criteria marked met / all polls: 
     <% polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 %>
@@ -42,6 +42,8 @@
   <% end %>
 
 <% if logged_in? %>
+
+  <br><br><div><em>For each criterion, select whether you think it is met by the current proposal. If you don’t have an opinion about whether this proposal attends to the criterion or not, simply do not check either box. </em></div>
 
   <!-- <h2>Criteria</h2> -->
   <br><br>
@@ -64,7 +66,7 @@
             <% if current_user && criterium.poll.where(solution_id: @solution.id).where(user_id: @user.id).count == 0 %>
               <div class="poll-bar-outer">
                 <div class="poll-bar-inner" style="width: 0"></div>
-                <span class="criterion-poll-text">Does the proposal meet this criteria?</span><br>
+                <span class="criterion-poll-text">Does the proposal meet this criterion?</span><br>
                 <div class="criterion-poll">
                   
                   <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 1), :method => "post", :class => "poll-yes" do %>
@@ -113,9 +115,11 @@
 
             <% end %>
 
-                <div class="criterion-score-info">
-                  <%= criterium.poll.where(solution_id: @solution.id).count %> responses |
+              <div class="criterion-score-info">
+                <%= pluralize(criterium.poll.where(solution_id: @solution.id).count, "response") %>
 
+                <% if false %>
+                  |
                   <% unless sponsor_count == 0 || criterium.poll.where(solution_id: @solution.id).count == 0 %>
                     Weight: <%= (criterium.user.count.to_f/sponsor_count.to_f * 100).to_i %>%
                   <% else %>
@@ -127,7 +131,8 @@
                   <% else %>
                     Adjusted: <%= (solution_criterium_score(@solution.id, criterium.id) * 100).to_i %>%
                   <% end %>
-                </div>
+                <% end %>
+              </div>
               <!-- </td>
               <td> -->
 

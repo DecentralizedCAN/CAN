@@ -1,6 +1,6 @@
 <div id="solver">
 
-  <div class="issue">
+<!--   <div class="issue">
     <div class="flex-container">
 
       <div class="issue-title view"><h3><strong><%= @problem.title %></strong></h3>
@@ -56,7 +56,7 @@
       <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
     <% end %> 
 
-
+ -->
   <!-- DETAILS ENDS -->
 
  
@@ -64,14 +64,20 @@
 
 <!-- Table -->
 
-<!-- <div><h1>Table: <strong>Criteria <i class="fas fa-times"></i> Proposals</strong></h1></div> -->
-<br>
+<div><h3>Table for 
+  <%= link_to issue_path( :problem_id => @problem.hashid) do %>  
+    <strong><%= @problem.title %></strong>
+  <% end %>
+</h3></div>
+
+<p>Refresh page for current stats</p>
+
+<!-- <br>
 <div><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
   <i class="fas fa-list"></i> List view
 <% end %>
-</div><br>
+</div><br> -->
 
-<p>Refresh page for current stats</p>
 
 <div class="outer-table">
 <table class="proposal-grid" cellspacing ="2" cellpadding ="6">
@@ -80,7 +86,11 @@
   <th class="table-hidden"></th>
 
   <% @solutions.each do |solution| %>
-    <th class="table-title" colspan="2"><div><%= solution.title %></div></th>
+    <th class="table-title" colspan="2">
+      <%= link_to solution_path(:solution_id => solution.hashid) do %>
+        <div><%= solution.title %></div>
+      <% end %>
+    </th>
   <% end %>
 </tr>
 
@@ -94,22 +104,34 @@
 
 <% @all_criteria.each do |criterion| %>
   <tr>
-    <td class="table-title"><div><%= criterion.title %></div></td>
+    <td class="table-title">
+      <%= link_to show_criterium_path(criterion.hashid) do %>
+      <div><%= criterion.title %></div>
+      <% end %>
+    </td>
 
     <% @solutions.each do |solution| %>
       
       <% polls = criterion.poll.where(solution_id: solution.id) if criterion.poll.count > 0 %>
 
         <% if logged_in? %>
-
+            
+          <% 
+            if criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).count > 0
+              poll_id = criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).first.id
+            else
+              poll_id = "#{solution.id}-#{criterion.id}"
+            end
+            %>
           <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 1).count == 0 %>
-            <td class="yes-score ">
+
+            <td class="yes-score" id="<%= poll_id %>-yes">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 1), :method => "post", :class => 'yes-poll' do %>
                 <div><%= polls.where(answer: 1).count if polls %></div>
               <% end %>
             </td>
           <% else %>
-            <td class="yes-score answered">
+            <td class="yes-score answered" id="<%= poll_id %>-yes">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post", :class => 'remove-poll' do %>
                 <div><%= polls.where(answer: 1).count if polls %></div>
               <% end %>
@@ -117,13 +139,13 @@
           <% end %>
 
           <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 0).count == 0 %>
-            <td class="no-score">
+            <td class="no-score" id="<%= poll_id %>-no">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 0), :method => "post", :class => 'no-poll' do %>
                 <div><%= polls.where(answer: 0).count if polls %></div>
               <% end %>
             </td>
         <% else %>
-            <td class="no-score answered">
+            <td class="no-score answered" id="<%= poll_id %>-no">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post", :class => 'remove-poll' do %>
                 <div><%= polls.where(answer: 0).count if polls %></div>
               <% end %>
@@ -148,7 +170,7 @@
   <% end %>
 </tr>
 
-<% if !@problem.scoring_method || @problem.scoring_method == 1 %>
+<% if (!@problem.scoring_method || @problem.scoring_method == 1) && false %>
 
   <tr>
     <th class="table-hidden">Weighted scores</th>
@@ -158,10 +180,10 @@
     <% end %>
   </tr>
 
-<% elsif @problem.scoring_method == 2 %>
+<% elsif @problem.scoring_method == 2 || true %>
 
   <tr>
-    <th class="table-hidden">No's/total</th>
+    <th class="table-hidden">Distance from convergence</th>
     <% @solutions.each do |solution| %>
       <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
       <th class="percentage" colspan="2"><%= 100 - (polls.average(:answer) * 100).round if polls %> %</th>
@@ -207,11 +229,19 @@
 
 <script type="text/javascript">
   $(".yes-poll").click(function() {
+    let oppositePollId = "#" + $(this).parent()[0].id.replace("yes", "no")
+    $(oppositePollId).removeClass('answered')
+    $(oppositePollId).find("a").removeClass('remove-poll').attr("href", $(oppositePollId).find("a").attr("href") + "&answer=0")
+
     $(this).parent().addClass('answered')
     $(this).addClass('answered-tentative')
   });
 
   $(".no-poll").click(function() {
+    let oppositePollId = "#" + $(this).parent()[0].id.replace("no", "yes")
+    $(oppositePollId).removeClass('answered')
+    $(oppositePollId).find("a").removeClass('remove-poll').attr("href", $(oppositePollId).find("a").attr("href") + "&answer=1")
+
     $(this).parent().addClass('answered')
     $(this).addClass('answered-tentative')
   });

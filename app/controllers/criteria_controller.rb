@@ -162,7 +162,7 @@ class CriteriaController < ApplicationController
         # update_all_solution_scores(@criterium.problem.id)
         UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
-        flash[:success] = "You made an objection. Thanks for your input!"
+        flash[:success] = "You added a concern. Thanks for your input!"
         # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
         redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
       end

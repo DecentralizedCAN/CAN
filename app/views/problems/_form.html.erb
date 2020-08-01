@@ -41,11 +41,17 @@
     <% end %>
 
     <div>
-    <% if Setting.find(10).state %>
+    <% if Setting.find(10).state && false %>
       <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode
     <% end %>
-    <br>
-    <%= form.check_box :include_comments, {checked: true}, true, false %> Include comments section
+
+    <%= form.hidden_field :facilitator_id, id: :facilitator_id, value: current_user.id %>
+
+    <% if false %>
+      <br>
+      <%= form.check_box :include_comments, {checked: true}, true, false %> Include comments section
+    <% end %>
+
     </div>
 
     <% if false && Setting.find(11).state %>
@@ -61,6 +67,9 @@
     <% end %>
     </div>
 
+  Facilitator: 
+  <%= current_user.name %>
+  <i class="far fa-question-circle"></i>
   </div>
 
   <%= form.submit "Create", id: :submit_brainstorm %>

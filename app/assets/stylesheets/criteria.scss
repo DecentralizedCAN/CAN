@@ -145,11 +145,16 @@ $label-blue: #81c4ff;
   h3 {
     font-size: 13px;
   }
+
+  h2 {
+    margin-top: 0;
+  }
 }
 
 .dissent-title > textarea {
   min-width: 26em;
   min-height: 4em;
+  font-size: 12px;
 }
 
 .cancel-support, .sponsor-criteria {

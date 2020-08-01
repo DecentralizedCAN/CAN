@@ -1,5 +1,7 @@
 {
   "name": "sample_app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "local-web-server": "^4.2.1"
+  }
 }

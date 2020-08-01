@@ -48,9 +48,20 @@
         <li>
         <%= link_to post_problem_path do %>
           <i class="fas fa-plus"></i>
-          New
+          New process
         <% end %>
         </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if logged_in? %>
+        <li class="user-nav-link">
+          <%= link_to current_user do %>
+            <%= gravatar_for(current_user) %>
+            <%= current_user.name %>
+          <% end %>
+        </li>
+        <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

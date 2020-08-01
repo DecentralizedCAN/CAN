@@ -23,86 +23,82 @@
 </ol>
 
 <% if @notifications.length > 0 %>
-<div class="home-notifications">
-  <div class="flex-container">
-    <h1><i class="fas fa-bell"></i> Notifications 
-      <%= link_to 'Mark all read', clear_notifications_path, :method => "post", :class => "button button-hollow" %>
-    </h1>
-  </div>
+  <div class="home-notifications">
+    <div class="flex-container">
+      <h1><i class="fas fa-bell"></i> Notifications 
+        <%= link_to 'Mark all read', clear_notifications_path, :method => "post", :class => "button button-hollow" %>
+      </h1>
+    </div>
 
-  <ol id="notifications">
-  <% @notifications.each do |notification| %>
-    <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
-      <li class="unread" >
-        <%= notification.details %>
-      </li>
+    <ol id="notifications">
+    <% @notifications.each do |notification| %>
+      <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+        <li class="unread" >
+          <%= notification.details %>
+        </li>
+      <% end %>
     <% end %>
-  <% end %>
-  </ol>
-</div>
-<% end %>
-
-<% else %>
-  This app is a tool to aid in the Convergent Facilitation process. Sign up/in to use.
+    </ol>
+  </div>
 <% end %>
 
 <% if @sponsored_problems.length > 0 %>
-<div class="dashboard-item">
-  <h1>
-    <i class="fas fa-handshake"></i>
-    My collaborations
-  </h1>
-  <ul>
-    <% @sponsored_problems.each do |problem| %>
-      <%= link_to issue_path(problem) do %>
-        <li class="home-item home-item-underlined">
-        <!-- <li class="home-item"> <%= problem.title %> </li> -->
-            <div class="issue">
-              <div class="issue-title"><span class="underline"><%= problem.title %></span></div>
+  <div class="dashboard-item">
+    <h1>
+      <i class="fas fa-handshake"></i>
+      My collaborations
+    </h1>
+    <ul>
+      <% @sponsored_problems.each do |problem| %>
+        <%= link_to issue_path(problem) do %>
+          <li class="home-item home-item-underlined">
+          <!-- <li class="home-item"> <%= problem.title %> </li> -->
+              <div class="issue">
+                <div class="issue-title"><span class="underline"><%= problem.title %></span></div>
 
-                <% if problem.goal %>
-                  <div class="proposal-activity-description">
-                    <i class="fas fa-link"></i>
-                    Attached to goal <strong>"<%= problem.goal.title %>"</strong>
-                  </div>
-                <% end %>
+                  <% if problem.goal %>
+                    <div class="proposal-activity-description">
+                      <i class="fas fa-link"></i>
+                      Attached to goal <strong>"<%= problem.goal.title %>"</strong>
+                    </div>
+                  <% end %>
 
-                <div class="issue-info">
-                  <!-- <br> -->
-                  <div>
-                    <i class="fas fa-handshake"></i>
-                    <%= problem.user.count %> collaborators
-                  </div>
-                  <div>
-                    <i class="fas fa-clipboard-list"></i>
-                    <%= problem.criterium.count %> criteria
-                  </div>
-                  <div>
-                    <i class="fas fa-comment-alt"></i>
-                    <%= pluralize(problem.solution.count, "proposal") %>
-                  </div>
-                  <div class="post-signature">
-                    <i class="fas fa-clock"></i>
-                    <%= time_ago_in_words(problem.created_at) %> ago
-                    by
-                    <em><%= 
-                    begin 
-                      User.find(problem.creator).name
-                    rescue 
-                    end  %></em>
-                  </div>
+                  <div class="issue-info">
+                    <!-- <br> -->
+                    <div>
+                      <i class="fas fa-handshake"></i>
+                      <%= problem.user.count %> participants
+                    </div>
+                    <div>
+                      <i class="fas fa-clipboard-list"></i>
+                      <%= problem.criterium.count %> criteria
+                    </div>
+                    <div>
+                      <i class="fas fa-comment-alt"></i>
+                      <%= pluralize(problem.solution.count, "proposal") %>
+                    </div>
+                    <!-- <div class="post-signature">
+                      <i class="fas fa-clock"></i>
+                      <%= time_ago_in_words(problem.created_at) %> ago
+                      by
+                      <em><%= 
+                      begin 
+                        User.find(problem.creator).name
+                      rescue 
+                      end  %></em>
+                    </div> -->
 
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
 
+        <% end %>
       <% end %>
-    <% end %>
-  </ul>
-</div>
+    </ul>
+  </div>
 <% end %>
 
-<% if @proposals.length > 0 %>
+<% false && if @proposals.length > 0 %>
 <div class="dashboard-item">
   <h1>
     <i class="fas fa-comment-alt"></i>
@@ -118,7 +114,11 @@
 </div>
 <% end %>
 
-<br><br>
-<%= link_to current_user do %>
-  Settings
+<% if @sponsored_problems.length == 0 %>
+  <p>You're signed in! To start a new convergent process, click "<i class="fa fa-plus"></i> New process" in the toolbar.</p>
+  <p>If you need guidance using the tools, hover over the <i class="far fa-question-circle"></i> icon wherever it appears.</p>
+<% end %>
+
+<% else %>
+  This app is a tool to aid in the Convergent Facilitation process. To get started, use the form above to sign in.
 <% end %>

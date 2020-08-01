@@ -4,7 +4,7 @@
     <%= link_to issue_path(:problem_id => @problem.hashid) do %>
       <div class="back-button-arrow"></div>
       <div class="back-button-content">
-        Back to collaboration
+        Back
       </div>
     <% end %>
   </div>
@@ -13,33 +13,10 @@
 
     <h1 id="criteria">
       <i class="fas fa-clipboard-list"></i>
-      <%= @criteria_count %> Active criteria for <em><%= @problem.title %></em>
+      Criteria for <em><%= @problem.title %></em>
     </h1>
 
-    <br>
-    <em>
-      <%= link_to "Criterion +", new_criterium_path( :problem_id => @problem.id), :class => "button" %>
-    </em>
-
     <div id="issue-criteria">
-
-    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id == current_user.id ) %>
-
-      <% if @problem.facilitator_id && @problem.facilitator_id == current_user.id %>
-        <h2>Criteria I've approved</h2>
-      <% else %>
-        <h2>Supported criteria</h2>
-      <% end %>
-
-      <% if @my_criteria.count > 0 %>
-      <% end %>
-      <div class="criteria-list">
-      <% @my_criteria.each do |criterium| %>
-        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-      <% end %>
-      </div>
-
-    <% end %>
 
     <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id != current_user.id ) %>
 
@@ -55,7 +32,7 @@
     <% end %>
 
       <% if @inactive_criteria.count > 0 %>
-      <h2>Inactive criteria</h2>
+      <h2>Suggested criteria</h2>
       <% end %>
       <div class="criteria-list">
       <% @inactive_criteria.each do |criterium| %>
@@ -63,6 +40,23 @@
       <% end %>
       </div>
 
+
+
+    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id == current_user.id ) %>
+
+      <h2>Criteria</h2>
+
+
+      <% if @my_criteria.count > 0 %>
+      <% end %>
+      <div class="criteria-list">
+      <% @my_criteria.each do |criterium| %>
+        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+      <% end %>
+      </div>
+
+    <% end %>
+    
     </div>
   </div>
 

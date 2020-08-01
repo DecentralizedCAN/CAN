@@ -10,12 +10,12 @@
   <% end %>
 
   <div>
-    <%= f.text_field :email, class: 'form-mini', :placeholder => 'Name' %>
+    <%= f.text_field :email, class: 'form-mini', :placeholder => 'Name (lowercase)' %>
   </div>
 
   <div>
     <!-- Email <%= "(optional)" if Setting.find(7).state == false %> -->
-    <%= f.text_field :add_email, id: :user_email, :class => "form-mini", :placeholder => 'Email (optional)'  %>
+    <%= f.text_field :add_email, id: :user_email, :class => "form-mini", :placeholder => 'Email (optional for notifications & recovery)'  %>
   </div>
 
   <div>

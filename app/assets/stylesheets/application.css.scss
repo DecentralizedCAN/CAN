@@ -54,7 +54,7 @@ video {
 }
 
 a {
-  font-style: italic;
+  // font-style: italic;
   color: inherit;
 }
 
@@ -139,6 +139,14 @@ textarea:focus, input:focus {
   form {
     div {
       display: inline-block;
+    }
+
+    #session_email {
+      width: 144px;
+    }
+
+    #user_email {
+      width: 328px;
     }
   }
 }
@@ -226,21 +234,25 @@ textarea:focus, input:focus {
     padding-right: 4px !important;
     position: absolute;
     text-transform: none;
-    top: -24px;
+    // top: -24px;
+    top: 30px;
+    left: 1px;
+    width: 200px;
     z-index: 4;
   }
 
   &::after {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 5px solid #000;
+    border-bottom: 5px solid #000;
     content: " ";
     font-size: 0;
     left: 9px; //This centers the arrow above the element with the tooltip
     line-height: 0;
     margin-left: -8px;
     position: absolute;
-    top: -4px; //This positions the arrow at the bottom of the container
+    top: 25px; //This positions the arrow at the bottom of the container
+    left: 10px;
     width: 0;
   }
 
@@ -499,11 +511,17 @@ nav #logo {
 }
 
 .logo-image {
-  width: 30px;
+  width: 31px;
   margin: 4px;
   top: -2px;
   position: relative;
   display: inline-block !important;
+  margin-right: -4px;
+}
+
+.user-nav-link > a {
+  padding: 5px !important;
+  line-height: inherit !important;
 }
 
 // .nav li {

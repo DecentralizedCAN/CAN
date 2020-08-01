@@ -1,12 +1,13 @@
 <!-- DISCUSSION -->
 <div class="discussion-outer">
 
-  <h1>
-    Comments
+  <%= link_to discussion_path(@discussion), :id => "full-discussion-view" do %>
 
-  <!--   <%= link_to "Full view", discussion_path(@discussion), :id => "full-discussion-view" %> -->
-  
-  </h1>
+    <h2>
+      Comments  
+    </h2>
+
+  <% end %>
 
   <div class="discussion-column mini" id="main-discussion">
 
