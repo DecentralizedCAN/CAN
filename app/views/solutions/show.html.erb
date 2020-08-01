@@ -155,7 +155,8 @@
 <!-- DISCUSSION -->
 <div class="solution-discussion">
   <br>
-  <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %>
+  <!-- <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %> -->
+  <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
 </div>
 <!-- DISCUSSION ENDS -->
 

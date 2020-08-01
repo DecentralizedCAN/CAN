@@ -193,7 +193,9 @@
 <!-- SOLUTIONS ENDS --->
 
 <!-- DISCUSSION -->
-<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %>
+<!-- <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %> -->
+<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
+
 <!-- DISCUSSION ENDS -->
 
 
