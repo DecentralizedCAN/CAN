@@ -1,0 +1,153 @@
+<% if criterium.title %>
+  
+    <% @user = current_user %>
+    <% status_color = "#ff7455d9;;" if criterium.user.include?(@user) %>
+    <% status_color = "#05adabab;" if criterium.cridissent.find_by(user: @user) %>
+
+    <!-- <div class="criterium" style="border-color: <%= status_color %> "> -->
+
+    <div class="criterium" >
+      <%= link_to show_criterium_path(:criterium_id => criterium.hashid) do %>
+        <div class="criterium-title">
+          <%= criterium.title %>
+
+        <% if criterium.cridissent.find_by(user: @user) %>
+          <div class="dissent-stuff">
+            <%= link_to show_criterium_path(:criterium_id => criterium.id), :method => "post" do %>   
+              <span class="cridissent-count tooltip-toggle crimson" href="#" aria-label="Remove concern" tabindex="0">
+                <i class="fas fa-hand-point-down crimson"></i>
+                <!-- <%= criterium.cridissent.count %> -->
+              </span>    
+            <% end %>
+          </div>
+        <% else %>
+          <div class="dissent-stuff">
+            <span class="cridissent-count tooltip-toggle gray" href="#" aria-label="Lodge a concern" tabindex="0">
+              <i class="fas fa-hand-point-down gray"></i>
+              <!-- <%= criterium.cridissent.count %> -->
+            </span>    
+          </div>
+      <% end %>
+
+        </div>
+
+      <% end %>
+
+      <!-- If anyone dissented -->
+      <% if criterium.cridissent.count > 0 %>
+        <%= pluralize(criterium.cridissent.count, "Concern") %>
+      <% end %>
+
+      <!-- If there's a facilitator but this isn't it -->
+      <% if criterium.problem.facilitator_id && logged_in? && criterium.problem.facilitator_id != current_user.id && false %>
+
+        <!-- If you dissented -->
+        <% if criterium.cridissent.find_by(user: @user) %>
+          <div class="dissent-stuff">
+            <%= link_to show_criterium_path(:criterium_id => criterium.id), :method => "post" do %>   
+              <span class="cridissent-count tooltip-toggle crimson" href="#" aria-label="Remove concern" tabindex="0">
+                <i class="fas fa-hand-point-down crimson"></i>
+                <!-- <%= criterium.cridissent.count %> -->
+              </span>    
+            <% end %>
+          </div>
+        <% else %>
+          <div class="dissent-stuff">
+            <span class="cridissent-count tooltip-toggle gray" href="#" aria-label="Lodge a concern" tabindex="0">
+              <i class="fas fa-hand-point-down gray"></i>
+              <!-- <%= criterium.cridissent.count %> -->
+            </span>    
+          </div>
+        <% end %>
+
+        <!-- If anyone dissented -->
+        <% if criterium.cridissent.count > 0 %>
+          <%= pluralize(criterium.cridissent.count, "Concern") %>
+        <% end %>
+        
+      <!-- If there's a facilitator but you aren't logged in -->
+      <% elsif criterium.problem.facilitator_id && !logged_in? %>
+
+      <!-- If you are the facilitator or there is no facilitator -->
+      <% else %>
+
+        <div class="criterium-response">
+
+        <% if criterium.problem.facilitator_id && logged_in? && criterium.problem.facilitator_id == current_user.id %>
+          <!-- SPONSORSHIP -->
+          <div class="criteria-sponsorship">
+            <%if criterium.user.include?(@user)%>
+              <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+                <span class="crisupport-count gray" href="#" tabindex="0">
+                  <!-- <i class="fas fa-hand-point-up red"></i> -->
+                  <!-- <%= criterium.user.count %> -->
+                  Remove
+                </span>
+              <% end %>
+            <%else%>
+              <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+                <span class="crisupport-count gray" href="#" tabindex="0">
+                  <!-- <i class="fas fa-hand-point-up gray"></i> -->
+                  <!-- <%= criterium.user.count %> -->
+                  Add to criteria
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <!-- SPONSORSHIP -->
+          <div class="criteria-sponsorship">
+            <%if criterium.user.include?(@user)%>
+              <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+                <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Unsupport" tabindex="0">
+                  <i class="fas fa-hand-point-up red"></i>
+                  <%= criterium.user.count %>
+                </span>
+              <% end %>
+            <%else%>
+              <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+                <span class="crisupport-count gray tooltip-toggle" href="#" aria-label="Support" tabindex="0">
+                  <i class="fas fa-hand-point-up gray"></i>
+                  <%= criterium.user.count %>
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+
+          <!-- OBJECTIONS -->
+          <div class="dissent-stuff">
+            <%if criterium.cridissent.count > 0 %>
+
+              <%if criterium.cridissent.find_by(user: @user) %>
+                <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>   
+                  <span class="cridissent-count tooltip-toggle crimson" href="#" aria-label="Unobject" tabindex="0">
+                    <i class="fas fa-hand-point-down crimson"></i>
+                    <%= criterium.cridissent.count %>
+                  </span>    
+                <% end %>         
+              <%else%>
+                <%= link_to show_criterium_path(:criterium_id => criterium.id) do %>
+                  
+                  <% if criterium.cridissent.count > 0 %>
+                    <span class="cridissent-count gray" href="#" tabindex="0">
+                      <i class="fas fa-hand-point-down gray"></i>
+                      <%= criterium.cridissent.count %>
+                    </span>  
+                  <% else %>
+                    <span class="cridissent-count tooltip-toggle lightgray" href="#" aria-label="Object" tabindex="0">
+                      <i class="fas fa-hand-point-down lightgray"></i>
+                      <%= criterium.cridissent.count %>
+                    </span>  
+                  <% end %>
+
+                <% end %>
+              <% end %>
+
+            <% end %>
+          </div>
+        <% end %>
+
+        </div>
+      <% end %>
+    </div>
+  <%end%>

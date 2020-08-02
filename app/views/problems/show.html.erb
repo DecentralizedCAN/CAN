@@ -7,15 +7,23 @@
       <div class="issue-title view"><h3><strong><%= @problem.title %></strong></h3>
       </div>
 
-      <!-- <div class="right-buttons">
+      <div class="right-buttons">
         <%if @problem.user.include?(@user)%>
-          <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+          <span class="crisupport-count tooltip-toggle" href="#" aria-label="Remove me from this process" tabindex="0">
+            <%= link_to unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "darkgray" do %>
+              <i class="fas fa-thumbtack"></i>
+            <%end%>
+          </span>
         <%else%>
-          <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
+          <span class="crisupport-count tooltip-toggle" href="#" aria-label="Add me to this process" tabindex="0">
+            <%= link_to sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "lightgray" do %>
+              <i class="fas fa-thumbtack"></i>
+            <%end%>
+          </span>
         <%end%>
 
-        <a href="">Share</a>
-      </div> -->
+        <!-- <a href="">Share</a> -->
+      </div>
 
     </div>
 
@@ -51,11 +59,25 @@
       </div>
     </div> -->
 
-    <% if @problem.facilitator_id %>
-      <% facilitator = User.find(@problem.facilitator_id) %>
-      Facilitator: 
-      <%= link_to facilitator.name, facilitator %>
-    <% end %>
+    <div class="issue-info">
+
+      <div id="open-collaborators">
+        <i class="fas fa-users"></i>
+        <%= pluralize(@problem.user.count, 'collaborator') %>
+      </div>
+
+      <div>
+        <% if @problem.facilitator_id %>
+          <i class="fas fa-user-shield"></i>
+          <% facilitator = User.find(@problem.facilitator_id) %>
+          Facilitator: 
+          <!-- <span class="comment-user-info"><%= gravatar_for(User.find(@problem.facilitator_id)) %></span> -->
+          <strong><%= link_to facilitator.name, facilitator %></strong>
+        <% end %>
+      </div>
+    </div>
+
+    <small><em>Refresh page for current info</em></small>
 
     </div>
 
@@ -74,7 +96,7 @@
 
       <h2 id="criteria">
         <i class="fas fa-clipboard-list"></i>
-        <%= @criteria_count %> <%= "Criteria" if @problem.facilitator_id %> <%= "Criteria" unless @problem.facilitator_id %>
+        <%= @criteria_count %> <%= "Criteria" if @criteria_count != 1 %> <%= "Criterion" if @criteria_count == 1 %>
       </h2>
 
       <div>
@@ -88,7 +110,7 @@
         <% end %>
 
 
-        <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to the list of suggestions." tabindex="0">
+        <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to suggestions." tabindex="0">
           <%= link_to "+ Criterion", new_criterium_path( :problem_id => @problem.id), :class => "button"  %>
         </span>
 
@@ -118,24 +140,29 @@
   <div class="solutions-outer">
 
     <h2 id="solutions">
-      <i class="fas fa-comment-alt"></i>
+      <i class="fas fa-file-alt"></i>
       
-      <%= @solutions.count %> Proposals
+      <%= pluralize(@solutions.count, 'Proposal') %>
 
     </h2>
 
-    <em>Click on proposals to view</em><br><br>
+    <% if @solutions.count > 0 %>
+    <!-- <em>Click on proposals to view evaluations</em><br><br> -->
+    <% end %>
 
     <div>
     <% if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
-      <%= link_to brainstorm_table_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>
-        <i class="fas fa-table"></i> Table
-      <% end %>
-      &nbsp;
+        <span class="tooltip-toggle" href="#" aria-label="Here you can evaluate how well multiple proposals attend to criteria at the same time, as well as see how the group has evaluated them.  If you would like to evaluate each proposal one at a time, click on the individual proposals below." tabindex="0">
+        <%= link_to brainstorm_table_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>
+          <i class="fas fa-table"></i> Table
+        <% end %>
+        &nbsp;
+      </span>
     <% end %>
 
-      <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if @problem.require_action %>
-      <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if !@problem.require_action %>
+        <span class="tooltip-toggle" href="#" aria-label="Add a proposal to the list. To combine elements of different proposals into a new one, right click and open the new proposal form in a new tab, and copy and paste the elements into it." tabindex="0">
+          <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button" %>
+        </span>
     </div>
     
     <ol class="solutions">
@@ -160,10 +187,23 @@
                 </div>
               <% #elsif @problem.scoring_method == 2 %>
               <% elsif @problem.facilitator_id %>
-                <div class="unmet-criteria-score">
-                  <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
-                  <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %><%= 0 if !polls %>%</span> unmet criteria
-                </div>
+                <!-- <div class="unmet-criteria-score"> -->
+                  <%
+                    polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 
+                    basic_score = (polls.average(:answer) * 100).round if polls
+                    basic_score = 0 if !polls
+                  %>
+
+                  <div class="score-bar-outer">
+                    <div class="score-bar-inner" style="
+                    background-color: rgba(82, 240, 191, <%=basic_score * 0.01%>);
+                    width: <%= basic_score %>%;" ></div>
+                    <div class="written-criterion-score">
+                      <%= basic_score %>% convergence
+                    </div>
+
+                  </div>
+                <!-- </div> -->
               <% #elsif @problem.scoring_method == 3 %>
               <% elsif false %>
                 (Met criteria: 
@@ -193,9 +233,15 @@
 <!-- SOLUTIONS ENDS --->
 
 <!-- DISCUSSION -->
+<div>
+<h2><i class="fas fa-comments" ></i> General discussion
+  <%= link_to discussion_path(@discussion), :id => "full-discussion-view" do %>
+    Full view
+  <% end %>
+</h2>
 <!-- <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %> -->
 <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
-
+</div>
 <!-- DISCUSSION ENDS -->
 
 
@@ -210,3 +256,32 @@
   let columns = <%= @criteria_count < 4? 1 : 4 %>
   $('.criteria-list').css('column-count', columns)
 </script> -->
+
+<div id="collaborators-list">
+  <div class="objection-list-inner">
+    <i class="fas fa-times close-window"></i>
+    <h2>Collaborators for "<%= @problem.title %>"</h2>
+    <ul><% @problem.user.each do |user| %>
+    
+    <%= link_to(user) do %>
+    <li>
+      <%= gravatar_for(user) %>
+      <strong><%= user.name %></strong>
+      <br><br>
+      <!-- <%= user.email %> -->
+    </li>
+    <%end%>
+
+  <% end %></ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#open-collaborators').click( function() {
+    $('#collaborators-list').show()
+  })
+
+  $('#collaborators-list').find('.close-window').click(function(){
+    $('#collaborators-list').hide()
+  })
+</script>

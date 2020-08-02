@@ -102,7 +102,11 @@ class CriteriaController < ApplicationController
     @criterium = Criterium.find(params[:criterium_id])
     @user = current_user
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
-    @dissenter.destroy if @dissenter
+
+    unless @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == @user.id
+      @dissenter.destroy if @dissenter
+    end
+
     @criterium.user << @user unless @criterium.user.include?(@user)
 
     begin
@@ -133,19 +137,20 @@ class CriteriaController < ApplicationController
     @criterium = Criterium.find(params[:cridissent][:criterium_id])
     # dissent_count = @criterium.cridissent.count
     @user = this_user
-    @criterium.user.delete(@user)
+    @criterium.user.delete(@user) unless @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == @user.id
+    
     if @criterium.cridissent.where(user_id: @user.id).empty?
       @dissenter = @criterium.cridissent.new(:user_id => @user.id, :title => params[:cridissent][:title])
       if @dissenter.save
 
         # log in chat
         if params[:cridissent][:title].length > 0
-          content = ': ' + params[:cridissent][:title]
+          content = ': "' + params[:cridissent][:title] + '"'
         else
           content = ''
         end
 
-        new_comment('!chatlog objected to a criterion (' + @criterium.title + ')' + content, @criterium.problem.discussion.id)
+        new_comment('!chatlog Added a concern to a criterion (' + @criterium.title + ')' + content, @criterium.problem.discussion.id)
 
         # send notifications
           if @criterium.cridissent.count == 1
@@ -175,7 +180,7 @@ class CriteriaController < ApplicationController
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
     @dissenter.destroy
 
-    new_comment('!chatlog no longer objects to a criterion (' + @criterium.title + ')', @criterium.problem.discussion.id)
+    new_comment('!chatlog Removed their concern about a criterion (' + @criterium.title + ')', @criterium.problem.discussion.id)
 
     # update_all_solution_scores(@criterium.problem.id)
     UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
@@ -239,18 +244,22 @@ class CriteriaController < ApplicationController
   # DELETE /criteria/1
   # DELETE /criteria/1.json
   def destroy
-    if current_user.admin?
-      @criterium = Criterium.find(params[:id])
-      @problem = @criterium.problem
+    @criterium = Criterium.find(params[:id])
+    @problem = @criterium.problem
+    if current_user.admin? || (@problem.facilitator_id && @problem.facilitator_id == current_user.id)
       @criterium.destroy
 
       # update_all_solution_scores(@criterium.problem.id)
       UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
-      respond_to do |format|
-        format.html { redirect_to issue_path(:problem_id => @problem.hashid), notice: 'Criterium was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      flash[:success] = 'Criterion was deleted.'
+
+      redirect_back fallback_location: root_path
+
+      # respond_to do |format|
+      #   format.html { redirect_to issue_path(:problem_id => @problem.hashid), notice: 'Criterium was successfully destroyed.' }
+      #   format.json { head :no_content }
+      # end
     end
   end
 

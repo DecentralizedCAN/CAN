@@ -69,7 +69,9 @@
 
   Facilitator: 
   <%= current_user.name %>
-  <i class="far fa-question-circle"></i>
+  <span class="crisupport-count red tooltip-toggle" href="#" aria-label="The person who creates a process becomes the facilitator. Facilitators must approve all new criteria." tabindex="0">
+    <i class="far fa-question-circle"></i>
+  </span>
   </div>
 
   <%= form.submit "Create", id: :submit_brainstorm %>

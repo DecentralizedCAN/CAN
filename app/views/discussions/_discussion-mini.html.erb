@@ -1,14 +1,6 @@
 <!-- DISCUSSION -->
 <div class="discussion-outer">
 
-  <%= link_to discussion_path(@discussion), :id => "full-discussion-view" do %>
-
-    <h2>
-      Discussion  
-    </h2>
-
-  <% end %>
-
   <div class="discussion-column mini" id="main-discussion">
 
     <% if @top_liked.length > 0 && @discussion.comment.count > 15 %>
@@ -53,9 +45,11 @@
       <% @discussion.comment.order(created_at: :asc).limit(100).each do |comment| %>
         <% if comment.content %>
           <li>
-            <div>
+            <div class="comment-user-info">
+              <%= gravatar_for(comment.user) %>
               <strong><%= comment.user.name %></strong>
             </div>
+            <br>
 
             <% if comment.content.include? "!chatlog" %>
               <% comment_class = "chatlog"%>

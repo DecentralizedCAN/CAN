@@ -24,27 +24,34 @@
       </ul>
       <ul class="nav navbar-nav navbar-left">
         
-        <li>
+        <!-- <li>
           <%= link_to documentation_path do %>
             <i class="fas fa-book"></i>
             Guide
           <% end %>
-        </li>
+        </li> -->
 
         <% if logged_in? %>
           <li>
           <%= link_to root_path do %>
-            <% if current_user.notification.where(:read => nil).count > 0 %>
-                <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
-            <% end %>
-
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
           <% end %>
           </li>
-          
-        <% end %>
         
+          <li>
+          <%= link_to notifications_path do %>
+            <% if current_user.notification.where(:read => nil).count > 0 %>
+                <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
+            <% end %>
+
+            <i class="fas fa-bell"></i>
+            Notifications
+          <% end %>
+          </li>
+
+        <% end %>
+
         <li>
         <%= link_to post_problem_path do %>
           <i class="fas fa-plus"></i>

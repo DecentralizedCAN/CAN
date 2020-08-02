@@ -22,7 +22,7 @@
 
 </ol>
 
-<% if @notifications.length > 0 %>
+<% if @notifications.length > 0 && false %>
   <div class="home-notifications">
     <div class="flex-container">
       <h1><i class="fas fa-bell"></i> Notifications 
@@ -64,19 +64,32 @@
                   <% end %>
 
                   <div class="issue-info">
-                    <!-- <br> -->
-                    <div>
-                      <i class="fas fa-handshake"></i>
-                      <%= problem.user.count %> participants
+                    <div id="open-collaborators">
+                      <i class="fas fa-users"></i>
+                      <%= pluralize(problem.user.count, 'collaborator') %>
                     </div>
                     <div>
                       <i class="fas fa-clipboard-list"></i>
                       <%= problem.criterium.count %> criteria
                     </div>
                     <div>
-                      <i class="fas fa-comment-alt"></i>
+                      <i class="fas fa-file-alt"></i>
                       <%= pluralize(problem.solution.count, "proposal") %>
                     </div>
+                    <% if problem.facilitator_id && problem.facilitator_id != current_user.id && problem.facilitator_id > 0 %>
+                      <div>
+                          <i class="fas fa-user-shield"></i>
+                          <% facilitator = User.find(problem.facilitator_id) %>
+                          Facilitator: 
+                          <strong><%= User.find(problem.facilitator_id).name %></strong>
+                      </div>
+                    <% end %>
+                    <% if problem.facilitator_id && problem.facilitator_id == current_user.id %>
+                      <div class="float-right">
+                        <i class="fas fa-star"></i>
+                        <em>Facilitating</em>
+                      </div>
+                    <% end %>
                     <!-- <div class="post-signature">
                       <i class="fas fa-clock"></i>
                       <%= time_ago_in_words(problem.created_at) %> ago

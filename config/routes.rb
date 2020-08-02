@@ -58,7 +58,8 @@ Rails.application.routes.draw do
   get '/criteria/dissent/:criterium_id', to: 'criteria#dissent_form', :as => :dissent_criterium
   get '/criteria/new', to: 'criteria#new', :as => :new_criterium
   post '/criteria/add', to: 'criteria#add', :as => :add_criterium
-  resources :criteria, only: [:create, :destroy]
+  delete '/criteria/:id', to: 'criteria#destroy', :as => :destroy_criterium
+  resources :criteria, only: [:create]
 
   post '/criteria/alt', to: 'criteria#alt', :as => :alt_criterium
   post '/criteria/accept_alt', to: 'criteria#accept_alt', :as => :accept_alt

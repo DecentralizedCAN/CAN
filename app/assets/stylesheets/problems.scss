@@ -147,6 +147,74 @@ $success-red: #ff7455;
   * {
     // color: #3a3a3a;
     color: #525252;
+    // display: inline-block;
+    // vertical-align: top;
+  }
+
+  .criterion-details {
+    padding-top: 2px;
+  }
+
+}
+
+.submit-concern, .show-objections, #open-collaborators {
+  cursor: pointer;
+}
+
+.objection-popup, .objection-list, #collaborators-list {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  top: 0;
+  left: 0;
+  background-color: #8080803b;
+
+  .objection-inner, .objection-list-inner {
+    background-color: white;
+    border: 1px solid #9c9c9c;
+    min-height: 200px;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 20vh;
+    padding: 20px;
+    box-shadow: 0px 4px 8px 2px #7b7b7b;
+    max-height: 80vh;
+    border-radius: 2px;
+    overflow: auto;
+  }
+
+  .objection-inner {
+    text-align: center;
+  }
+
+  .close-window {
+    float: right;
+    cursor: pointer;
+  }
+
+  .objection-list-inner > h2 {
+    // margin-top: 0;
+    // text-align: left;
+    padding-left: 12%;
+  }
+
+  ul {
+    list-style: none;
+    margin-top: 10px;
+    padding: 10px 12%;
+    // text-align: left;
+  }
+
+  .criterion-objection-input {
+    margin-top: 10px;
+
+    textarea {
+      min-height: 100px;
+      padding: 6px 10px;
+      min-width: 70%;
+    }
   }
 }
 
@@ -303,7 +371,7 @@ $success-red: #ff7455;
     }
 
     #scroll-div {
-      height: 240px;
+      min-height: 240px;
       resize: vertical;
       overflow-y: auto;
     }
@@ -315,11 +383,11 @@ $success-red: #ff7455;
 }
 
 #full-discussion-view {
-  // float: right;
+  float: right;
   // color: #3a3a3a !important;
-  // font-size: 12px;
-  // margin: 8px;
-  font-style: normal;
+  font-size: 14px;
+  margin: 4px;
+  // font-style: normal;
   // text-transform: uppercase;
 }
 
@@ -416,7 +484,8 @@ $success-red: #ff7455;
     border-left: 0.5px solid black;
 
     &:hover {
-      background-color: #a3dae6;
+      // background-color: #a3dae6;
+      background-color: #c6f5ff;
       // cursor: pointer;
     }
 
@@ -433,7 +502,8 @@ $success-red: #ff7455;
     border-right: 0.5px solid black;
 
     &:hover {
-      background-color: #dca6a6;
+      // background-color: #dca6a6;
+      background-color: #fdd4d4;
       // cursor: pointer;
     }
 
