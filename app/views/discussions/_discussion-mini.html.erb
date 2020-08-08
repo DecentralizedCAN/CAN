@@ -6,7 +6,7 @@
     <% if @top_liked.length > 0 && @discussion.comment.count > 15 %>
 
       <ul id="top-liked-mini">
-        <h2>Top Liked</h2>
+        <h2>Top Liked Comments</h2>
         <% @top_liked.each do |comment| %>
           <% if comment.content %>
             <li>
@@ -105,7 +105,7 @@
       <%= form.hidden_field :discussion_id %>
 
       <div class="comment-box">
-        <%= form.text_field :content, id: :comment_content, autocomplete: 'off' %>
+        <%= form.text_field :content, id: :comment_content, autocomplete: 'off', placeholder: "Leave a comment..." %>
         <%= form.submit "Send", id: :send %>
       </div>
 

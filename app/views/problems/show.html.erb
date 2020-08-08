@@ -1,13 +1,11 @@
+<div class="top-flex">
 <div class="white-container">
 <div id="solver">
 
   <div class="issue">
     <div class="flex-container">
 
-      <div class="issue-title view"><h3><strong><%= @problem.title %></strong></h3>
-      </div>
-
-      <div class="right-buttons">
+      <div class="issue-title view">
         <%if @problem.user.include?(@user)%>
           <span class="crisupport-count tooltip-toggle" href="#" aria-label="Remove me from this process" tabindex="0">
             <%= link_to unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "darkgray" do %>
@@ -21,8 +19,17 @@
             <%end%>
           </span>
         <%end%>
+        &nbsp;<h3><strong><%= @problem.title %></strong></h3>
+      </div>
 
-        <!-- <a href="">Share</a> -->
+      <div class="right-buttons">
+
+        <div id="open-discussion">
+          <i class="fas fa-comments"></i>
+          Conversation
+          (<%= @discussion.comment.count %>)
+        </div>
+
       </div>
 
     </div>
@@ -75,6 +82,17 @@
           <strong><%= link_to facilitator.name, facilitator %></strong>
         <% end %>
       </div>
+
+      <div>
+      <div id="open-share-div">
+        <i class="fas fa-share"></i>
+        Share
+      </div>
+      <div id="share-div">
+        <%= render(:partial => 'problems/share') %>
+      </div>
+      </div>
+
     </div>
 
     <small><em>Refresh page for current info</em></small>
@@ -92,6 +110,9 @@
 <!-- EXTRA-SECTIONS -->
 
     <!-- CRITERIA -->
+
+    <!-- <div class="top-left"> -->
+
     <div class="criteria-outer">
 
       <h2 id="criteria">
@@ -111,7 +132,7 @@
 
 
         <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to suggestions." tabindex="0">
-          <%= link_to "+ Criterion", new_criterium_path( :problem_id => @problem.id), :class => "button"  %>
+          <%= link_to "+ Criterion", new_criterium_path( :problem_id => @problem.id), :class => "button green"  %>
         </span>
 
       </div>
@@ -133,8 +154,6 @@
 
 <!-- CRITERIA ENDS -->
 
-<div id="extra-sections-outer">
-
 <!-- SOLUTIONS -->
 
   <div class="solutions-outer">
@@ -152,7 +171,7 @@
 
     <div>
     <% if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
-        <span class="tooltip-toggle" href="#" aria-label="Here you can evaluate how well multiple proposals attend to criteria at the same time, as well as see how the group has evaluated them.  If you would like to evaluate each proposal one at a time, click on the individual proposals below." tabindex="0">
+        <span class="tooltip-toggle" href="#" aria-label="Here you can evaluate how well multiple proposals attend to criteria at the same time, as well as see how the group has evaluated them.  If you would like to evaluate each proposal one at a time, click on the individual proposals." tabindex="0">
         <%= link_to brainstorm_table_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>
           <i class="fas fa-table"></i> Table
         <% end %>
@@ -161,7 +180,7 @@
     <% end %>
 
         <span class="tooltip-toggle" href="#" aria-label="Add a proposal to the list. To combine elements of different proposals into a new one, right click and open the new proposal form in a new tab, and copy and paste the elements into it." tabindex="0">
-          <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button" %>
+          <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button green" %>
         </span>
     </div>
     
@@ -228,30 +247,39 @@
     <span id="paginate_solutions"><%= will_paginate @solutions %></span>
 
   </div>
+  <!-- SOLUTIONS ENDS --->
 
   <!-- </div> -->
-<!-- SOLUTIONS ENDS --->
+  <!-- TOP-FLEX ENDS --->
+
+<!-- <div id="extra-sections-outer">
+</div> -->
+
+<!-- EXTRA-SECTIONS ENDS -->
+
+
+
+</div> <!-- SOLVER ENDS -->
+
+</div> <!-- WHITE CONTAINER ENDS -->
 
 <!-- DISCUSSION -->
-<div>
-<h2><i class="fas fa-comments" ></i> General discussion
-  <%= link_to discussion_path(@discussion), :id => "full-discussion-view" do %>
-    Full view
-  <% end %>
-</h2>
-<!-- <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %> -->
-<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
-</div>
-<!-- DISCUSSION ENDS -->
+<div class="discussion-extraouter">
+  <h2>
+    <i class="fas fa-comments" ></i> Conversation
+    (<%= @discussion.comment.count %>)
+   <!--  <%= link_to discussion_path(@discussion), :id => "full-discussion-view" do %>
+      Full view
+    <% end %> -->
+    <i class="fas fa-times float-right" id="close-discussion"></i>
+  </h2>
+  <!-- <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %> -->
+  <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
+</div> <!-- DISCUSSION ENDS -->
+
+</div> <!-- TOP-FLEX ENDS -->
 
 
-</div>
-<!-- EXTRA-SECTIONS ENDS -->
-</div>
-<!-- SOLVER ENDS -->
-</div>
-<!-- WHITE CONTAINER ENDS -->
-</div>
 <!-- <script type="text/javascript">
   let columns = <%= @criteria_count < 4? 1 : 4 %>
   $('.criteria-list').css('column-count', columns)
@@ -283,5 +311,53 @@
 
   $('#collaborators-list').find('.close-window').click(function(){
     $('#collaborators-list').hide()
+  })
+
+  $('#close-share-div').click( function(){
+    $('#share-div').hide()
+  })
+
+  $('#open-share-div').click(function(){
+    $('#share-div').toggle()
+  })
+
+  var openDiscussion = function() {
+    $('.discussion-extraouter').show()
+    $('#open-discussion').hide()
+    $('.criteria-list').addClass('two-column')
+    localStorage.setItem('dcan-discussion-show-desktop', 'True');
+  }
+
+  var closeDiscussion = function() {
+    $('.discussion-extraouter').hide()
+    $('#open-discussion').show()
+    $('.criteria-list').removeClass('two-column')
+    localStorage.setItem('dcan-discussion-show-desktop', 'False');
+  }
+
+  $(document).ready(function() {
+
+    <% if logged_in? && @discussion.comment.count > 0 %>
+      if (localStorage.getItem('dcan-discussion-show-desktop') != 'False') {
+        localStorage.setItem('dcan-discussion-show-desktop', 'True');
+      }
+    <% end %>
+
+    var showDiscussionDesktop = localStorage.getItem('dcan-discussion-show-desktop') == 'True';
+    
+    if (showDiscussionDesktop) {
+      openDiscussion()
+    } else {
+      closeDiscussion()
+    }
+    // localStorage.setItem('dcan-discussion-show-desktop', 'False');
+  })
+
+  $('#close-discussion').click(function(){
+    closeDiscussion()
+  })
+
+  $('#open-discussion').click(function(){
+    openDiscussion()
   })
 </script>

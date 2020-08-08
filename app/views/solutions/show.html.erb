@@ -20,19 +20,21 @@
 <div id="proposal-polling">
   <h2><i class="fas fa-poll" ></i> Evaluation</h2>
   <% #if !@problem.scoring_method || @problem.scoring_method == 1 %>
-  <% if !@problem.facilitator_id %>
-    Estimated collective support for this proposal
-    <br>
-    <div class="score-bar-outer">
-      <div class="score-bar-inner" style="background-color: #4defa7; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
-      <div class="written-criterion-score">
-        <%= (solution_score(@solution.id) * 100).to_i %>%
+  
+  <% if !logged_in? || Poll.where(solution_id: @solution.id).where(user_id: @user.id).count > 0 %>
+    <% if !@problem.facilitator_id %>
+      Estimated collective support for this proposal
+      <br>
+      <div class="score-bar-outer">
+        <div class="score-bar-inner" style="background-color: #4defa7; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
+        <div class="written-criterion-score">
+          <%= (solution_score(@solution.id) * 100).to_i %>%
+        </div>
       </div>
-    </div>
-    <br>
-    <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
-  <% #elsif @problem.scoring_method == 2 %>
-  <% else %> 
+      <br>
+      <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
+    <% #elsif @problem.scoring_method == 2 %>
+    <% else %> 
       <%
         polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 
         basic_score = (polls.average(:answer) * 100).round if polls
@@ -48,18 +50,29 @@
         </div>
 
       </div>
+    <% end %>
+    <br>
   <% end %>
 
 <% if logged_in? %>
 
-  <br><br><div><em>For each criterion, select whether you think it is met by the current proposal. If you don’t have an opinion about whether this proposal attends to the criterion or not, simply do not check either box. </em></div>
+  <br><div><em>For each criterion, select whether you think it is met by the current proposal. If you don’t have an opinion about whether this proposal attends to the criterion or not, simply do not check either box. </em></div>
 
   <!-- <h2>Criteria</h2> -->
   <br><br>
 
   <table>
-
     <tbody>
+      <tr>
+        <th>
+          Criterion
+        </th>
+        <th>
+          <span class="criterion-poll-text">Does the proposal meet this criterion?</span><br>
+        </th>
+        <th></th>
+      </tr>
+
       <% sponsor_count = problem_criteria_sponsor_count(@solution.id) %>
 
       <% @criteria.each do |criterium| %>
@@ -75,7 +88,6 @@
             <% if current_user && criterium.poll.where(solution_id: @solution.id).where(user_id: @user.id).count == 0 %>
               <div class="poll-bar-outer">
                 <div class="poll-bar-inner" style="width: 0"></div>
-                <span class="criterion-poll-text">Does the proposal meet this criterion?</span><br>
                 <div class="criterion-poll">
                   
                   <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 1), :method => "post", :class => "poll-yes" do %>
@@ -162,11 +174,12 @@
 <!-- CRITERIA ENDS -->
 
 <!-- DISCUSSION -->
-<div class="solution-discussion">
-  <h2><i class="fas fa-comments" ></i> Proposal discussion</h2>
-  <!-- <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %> -->
+<!-- <div class="solution-discussion"> -->
+  <%if false%>
+  <h2><i class="fas fa-comments" ></i> Conversation about this proposal</h2>
   <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
-</div>
+  <%end%>
+<!-- </div> -->
 <!-- DISCUSSION ENDS -->
 
 </div>
@@ -181,11 +194,11 @@
 
 <script type="text/javascript">
   $(".poll-yes").click(function() {
-    $(this).parent().html("<small>You said yes. Refresh to view.</small>")
+    $(this).parent().html("<small>Your answer: YES</small>")
   });
 
   $(".poll-no").click(function() {
-    $(this).parent().html("<small>You said no. Refresh to view.</small>")
+    $(this).parent().html("<small>Your answer: NO</small>")
   });
 
   $(".remove-poll").click(function() {

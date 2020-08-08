@@ -18,15 +18,12 @@
 
     <div id="issue-criteria">
 
-    <% if @inactive_criteria.count > 0 %>
-      <h2>Suggested criteria</h2>
-      <div class="criteria-list">
-      <% @inactive_criteria.each do |criterium| %>
-        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-      <% end %>
-      </div>
+    <h2>Suggested criteria</h2>
+    <div class="criteria-list">
+    <% @inactive_criteria.each do |criterium| %>
+      <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
     <% end %>
-
+    </div>
 
     <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id != current_user.id ) %>
 

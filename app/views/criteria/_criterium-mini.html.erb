@@ -6,64 +6,78 @@
 
   <div class="criterium" >
 
-    <div class="criterium-title">
-      <%= criterium.title %>
-    </div>
+    <div class="criterium-top">
+      <div class="criterium-title">
+        <%= criterium.title %>
 
-    <div class="criterion-details">
+        <br>
 
-      <div class="dissent-stuff">
-      <!-- Objections -->
-      <% if criterium.cridissent.find_by(user: @user) %>
-          <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>   
-            <span class="cridissent-count crimson" href="#" aria-label="Remove concern" tabindex="0">
-              Remove concern
+        <div class="criterion-details">
+          <!-- If anyone dissented -->
+          <% if criterium.cridissent.count > 0 %>
+          <div>
+            <span class="show-objections" id="show-objections-<%=criterium.id%>">
+              <%= pluralize(criterium.cridissent.count, "Concern") %> (view)
             </span>
-          <% end %>
-      <% else %>
-          <span class="cridissent-count submit-concern gray" id="submit-concern-<%=criterium.id%>" href="#" aria-label="Lodge a concern" tabindex="0">
-            + concern
-          </span>    
-
-      <% end %>
-
-      <!-- If anyone dissented -->
-      <% if criterium.cridissent.count > 0 %>
-        <span class="show-objections" id="show-objections-<%=criterium.id%>">
-          (<%= pluralize(criterium.cridissent.count, "Concern") %>)
-        </span>
-      <% end %>
-      </div>
-    </div>
-
-    <!-- If there's a facilitator -->
-    <% if criterium.problem.facilitator_id && logged_in? %>
-      <!-- If you are the facilitator -->
-      <% if criterium.problem.facilitator_id == @user.id %>
-          <div class="criteria-sponsorship">
-            <%if criterium.user.include?(@user)%>
-              <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                <span class="crisupport-count gray" href="#" tabindex="0">
-                  Remove from criteria
-                </span>
-              <% end %>
-            <%else%>
-              <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                <span class="crisupport-count gray" href="#" tabindex="0">
-                  Add to criteria
-                </span>
-              <% end %>
-
-              <span class="crisupport-count gray" href="#" tabindex="0">
-              <%= link_to '| Delete', destroy_criterium_path(:id => criterium.id), :method => "delete", data: { confirm: 'Are you sure?' } %>
-              </span>
-
-            <% end %>
           </div>
-      <!-- If you aren't the facilitator -->
-      <%else%>
+        <% end %>
+          <div class="dissent-stuff">
+          <!-- Objections -->
+          <% if criterium.cridissent.find_by(user: @user) %>
+              <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>   
+                <span class="cridissent-count gray" href="#" aria-label="Remove concern" tabindex="0">
+                  – retract concern
+                </span>
+              <% end %>
+          <% else %>
+              <span class="cridissent-count submit-concern gray" id="submit-concern-<%=criterium.id%>" href="#" aria-label="Lodge a concern" tabindex="0">
+                + add concern
+              </span>    
+
+          <% end %>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- If there's a facilitator -->
+      <% if criterium.problem.facilitator_id && logged_in? %>
+        <!-- If you are the facilitator -->
+        <% if criterium.problem.facilitator_id == @user.id %>
+            <div class="criteria-sponsorship">
+              <%if criterium.user.include?(@user)%>
+                <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+                  <span class="crisupport-count gray yellow-background small-button" href="#" tabindex="0">
+                    <i class="fas fa-times gray"></i>
+                    Remove
+                  </span>
+                <% end %>
+              <%else%>
+                <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+                  <span class="crisupport-count gray small-button green-background" href="#" tabindex="0">
+                    <i class="fas fa-plus gray"></i>
+                    Add to criteria
+                  </span>
+                <% end %>
+
+                <!-- &nbsp; -->
+
+                <div>
+                <%= link_to destroy_criterium_path(:id => criterium.id), :method => "delete", data: { confirm: 'Are you sure you want to delete this criterion?' } do %>
+                  <span class="crisupport-count gray small-button red-background" href="#" tabindex="0">
+                    <i class="fas fa-minus-circle gray"></i>
+                    Delete
+                  </span>
+                <% end %>
+                </div>
+
+              <% end %>
+            </div>
+        <!-- If you aren't the facilitator -->
+        <%else%>
+        <%end%>
       <%end%>
-    <%end%>
+    </div>
 
   </div>
 

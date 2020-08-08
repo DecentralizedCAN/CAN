@@ -292,10 +292,16 @@ h2 {
   // margin-bottom: 10px !important;
 
   li {
-    max-width: 600px;
-    width: fit-content;
-    margin: 4px 0px;
-    padding: 0px 2px;
+    padding: 6px 4px;
+  }
+
+  div {
+    max-width: 500px;
+    // width: fit-content;
+    margin: 8px 0px;
+    // background-color: #e0e0e0;
+    border: 1px solid #c1c1c1;
+    border-radius: 2px;
 
     &:hover {
       text-decoration: underline;
@@ -330,8 +336,9 @@ h2 {
 }
 
 .unread {
-  border: 1px solid gray;
-  background-color: lightgray;
+  // border: 1px solid gray;
+  // background-color: lightgray;
+  background-color: #a4edfd !important;
 }
 
 // ABOUT
@@ -409,7 +416,7 @@ ol {
   padding: 2px 4px;
   background-color: white;
   font-style: normal;
-  border: 2px solid #61e2ff;
+  // border: 2px solid #61e2ff;
   border-radius: 2px;
 }
 

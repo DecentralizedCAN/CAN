@@ -67,8 +67,9 @@ a:hover, a:focus, a:visited {
 
 a.button, input.button {
   font-style: normal;
-  border: 1px solid #505050;
-  padding: 2px 5px;
+  // border: 1px solid #505050;
+  border: none;
+  padding: 4px 6px;
   background-color: #8e8e8e;
   color: whitesmoke !important;
   border-radius: 2px;
@@ -88,6 +89,25 @@ a.button, input.button {
 
   &:hover {
     background-color: #bbb9b9;
+  }
+}
+
+.small-button {
+  background: #d8d8d8;
+  padding: 0px 4px;
+  border-radius: 2px;
+  font-weight: normal;
+
+  &:hover {
+    background-color: #efeded;
+  }
+}
+
+a.button.green {
+  background-color: #0cbf5c;
+
+  &:hover {
+    background-color: #1fe477;
   }
 }
 
@@ -125,10 +145,6 @@ span.click {
 .flex-container {
   display: flex;
   justify-content: space-between;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 }
 
 textarea:focus, input:focus {
@@ -301,6 +317,39 @@ textarea:focus, input:focus {
   color: gray;
 }
 
+.yellow-background {
+  background-color: #ffd969;
+
+  &:hover {
+    background-color: #ffe597;
+  }
+}
+
+.green-background {
+  background-color: #4cff4c;;
+
+  &:hover {
+    background-color: #a3ffa3;
+  }
+}
+
+.red-background {
+  background-color: #ff2020;
+  color: white;
+
+  * {
+    color: white;
+  }
+
+  &:hover {
+    background-color: #fd9090;
+  }
+}
+
+.orange {
+  color: #ffc46a;
+}
+
 .lightgray {
   color: #b9b9b9;
 }
@@ -351,6 +400,7 @@ header {
 
 .navbar {
   min-height: 34px;
+  border-radius: 0;
 }
 
 .navbar-brand {
@@ -425,6 +475,9 @@ hr {
   border: 1px solid #d8d8d8;
   padding: 10px;
   min-height: 80vh;
+  min-width: 68%;
+  width: 100%;
+  // display: flex;
 }
 
 .converge-container {
@@ -497,7 +550,7 @@ nav #logo {
   letter-spacing: -1px;
 
   span#logo-name {
-    background: -webkit-linear-gradient(-180deg, #60f0ff, #4aef9c, #ff7272);
+    background: -webkit-linear-gradient(-180deg, #61e2ff, #4aef9c, #ff7272);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -662,4 +715,9 @@ nav #logo {
       font-style: normal;
     }
   }
+}
+
+.top-flex {
+  display: flex;
+  margin-bottom: 40px;
 }
