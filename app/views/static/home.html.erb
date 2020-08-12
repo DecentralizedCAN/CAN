@@ -70,7 +70,7 @@
                     </div>
                     <div>
                       <i class="fas fa-clipboard-list"></i>
-                      <%= problem.criterium.count %> criteria
+                      <%= problem.criterium.joins(:user).group("criteria.id").count.count %> criteria
                     </div>
                     <div>
                       <i class="fas fa-file-alt"></i>

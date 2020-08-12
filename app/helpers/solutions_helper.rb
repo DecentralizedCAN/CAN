@@ -12,6 +12,13 @@ module SolutionsHelper
   #   return numerator / denominator
   # end
 
+  def poll_count(solution_id)
+    polls = Poll.where(:solution_id => solution_id)
+    polls
+      .joins(:user)
+      .group("user_id").count.count
+  end
+
   def base_criterium_score(criterium_id)
     criterium = Criterium.find(criterium_id)
 

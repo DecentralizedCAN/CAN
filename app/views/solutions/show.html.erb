@@ -7,6 +7,10 @@
       </div>
     <% end %>
 
+    <div id="refresh" class="float-right"><%= button_to request.env['PATH_INFO'], :method => :get do %>
+      <i class="fas fa-sync"></i> View current info
+    <% end %></div>
+
   <!-- <h2>&nbsp;Proposal</h2> -->
   </div>
     <h1>Proposal: </strong><%= @solution.title %></h1>
@@ -16,6 +20,7 @@
       <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
     </div>
   <% end %> 
+
 <!-- CRITERIA -->
 <div id="proposal-polling">
   <h2><i class="fas fa-poll" ></i> Evaluation</h2>
@@ -46,7 +51,7 @@
         background-color: rgba(82, 240, 191, <%=basic_score * 0.01%>);
         width: <%= basic_score %>%;" ></div>
         <div class="written-criterion-score">
-          <%= basic_score %>% convergence
+          <%= basic_score %>% convergence (<%= pluralize(poll_count(@solution.id), 'poll') %>)
         </div>
 
       </div>
