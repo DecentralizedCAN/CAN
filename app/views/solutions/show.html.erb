@@ -7,9 +7,9 @@
       </div>
     <% end %>
 
-    <div id="refresh" class="float-right"><%= button_to request.env['PATH_INFO'], :method => :get do %>
+    <!-- <div id="refresh" class="float-right"><%= button_to request.env['PATH_INFO'], :method => :get do %>
       <i class="fas fa-sync"></i> View current info
-    <% end %></div>
+    <% end %></div> -->
 
   <!-- <h2>&nbsp;Proposal</h2> -->
   </div>
@@ -42,16 +42,16 @@
     <% else %> 
       <%
         polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 
-        basic_score = (polls.average(:answer) * 100).round if polls
-        basic_score = 0 if !polls
+        # basic_score = (polls.average(:answer) * 100).round if polls
+        # basic_score = 0 if !polls
       %>
 
       <div class="score-bar-outer">
         <div class="score-bar-inner" style="
-        background-color: rgba(82, 240, 191, <%=basic_score * 0.01%>);
-        width: <%= basic_score %>%;" ></div>
+        background-color: rgba(82, 240, 191, <%=@solution.score * 0.01%>);
+        width: <%= @solution.score %>%;" ></div>
         <div class="written-criterion-score">
-          <%= basic_score %>% convergence (<%= pluralize(poll_count(@solution.id), 'poll') %>)
+          <%= @solution.score %>% convergence (<%= pluralize(poll_count(@solution.id), 'poll') %>)
         </div>
 
       </div>
@@ -175,6 +175,11 @@
   </table>
 <% end %>
 
+<br>
+<div id="refresh"><%= button_to request.env['PATH_INFO'], :method => :get do %>
+  <i class="fas fa-sync"></i> Refresh to view results
+<% end %></div>
+
 </div>
 <!-- CRITERIA ENDS -->
 
@@ -190,6 +195,7 @@
 </div>
 
 <% if logged_in? && (current_user.admin? || current_user.id == @problem.facilitator_id ) %>
+  <br>
   <div class="delete-section">
     Created by <strong><%= User.find(@solution.creator).name %></strong> <br>
     <%= link_to "Delete this proposal", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -84,6 +84,7 @@
         <% end %>
       </div>
 
+      <% if true %>
       <div>
       <div id="open-share-div">
         <i class="fas fa-share"></i>
@@ -93,6 +94,7 @@
         <%= render(:partial => 'problems/share') %>
       </div>
       </div>
+      <% end %>
 
     </div>
 
@@ -211,16 +213,18 @@
                 <!-- <div class="unmet-criteria-score"> -->
                   <%
                     polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 
-                    basic_score = (polls.average(:answer) * 100).round if polls
-                    basic_score = 0 if !polls
+                    
+                    # basic_score = solution.score
+                    # basic_score = (polls.average(:answer) * 100).round if polls
+                    # basic_score = 0 if !polls
                   %>
 
                   <div class="score-bar-outer">
                     <div class="score-bar-inner" style="
-                    background-color: rgba(82, 240, 191, <%=basic_score * 0.01%>);
-                    width: <%= basic_score %>%;" ></div>
+                    background-color: rgba(82, 240, 191, <%=solution.score * 0.01%>);
+                    width: <%= solution.score %>%;" ></div>
                     <div class="written-criterion-score">
-                      <%= basic_score %>% convergence (<%= pluralize(poll_count(solution.id), 'poll') %>)
+                      <%= solution.score %>% convergence (<%= pluralize(poll_count(solution.id), 'poll') %>)
                     </div>
 
                   </div>
@@ -291,7 +295,17 @@
   <div class="objection-list-inner">
     <i class="fas fa-times close-window"></i>
     <h2>Collaborators for "<%= @problem.title %>"</h2>
-    <ul><% @problem.user.each do |user| %>
+
+    <!-- <div><%= request.url%></div> -->
+
+    <ul>
+    <% if false %>
+      <div><%= render(:partial => 'problems/share') %></div>
+    <% end %>
+
+    <div id="add-collaborators" class="button">+ Add collaborators</div><br>
+
+    <% @problem.user.each do |user| %>
     
     <%= link_to(user) do %>
     <li>
@@ -323,6 +337,11 @@
     $('#share-div').toggle()
   })
 
+  $('#add-collaborators').click(function(){
+    $('#collaborators-list').hide()
+    $('#share-div').show()
+  })
+
   var openDiscussion = function() {
     $('.discussion-extraouter').show()
     $('#open-discussion').hide()
@@ -338,7 +357,6 @@
   }
 
   $(document).ready(function() {
-
     <% if logged_in? && @discussion.comment.count > 0 %>
       if (localStorage.getItem('dcan-discussion-show-desktop') != 'False') {
         localStorage.setItem('dcan-discussion-show-desktop', 'True');
@@ -347,13 +365,17 @@
       <% if params[:discussion] == 'open' %>
         localStorage.setItem('dcan-discussion-show-desktop', 'True');
       <% end %>
+    <% else %>
+      $('.discussion-extraouter').hide()
+      $('#open-discussion').show()
+      $('.criteria-list').removeClass('two-column')
     <% end %>
 
-    var showDiscussionDesktop = localStorage.getItem('dcan-discussion-show-desktop') == 'True';
+    var showDiscussionDesktop = localStorage.getItem('dcan-discussion-show-desktop')
     
-    if (showDiscussionDesktop) {
+    if (showDiscussionDesktop == 'True') {
       openDiscussion()
-    } else {
+    } else if (showDiscussionDesktop == 'False') {
       closeDiscussion()
     }
     // localStorage.setItem('dcan-discussion-show-desktop', 'False');

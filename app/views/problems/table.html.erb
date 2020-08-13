@@ -76,7 +76,8 @@
   <% end %>
 </h3></div>
 
-<em>Refresh page for current info</em>
+<p>Click on table cells to change your answer.
+Refresh page for current info.</p>
 
 
 <div class="outer-table">
@@ -186,7 +187,7 @@
     <th class="table-hidden">Degree of convergence</th>
     <% @solutions.each do |solution| %>
       <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
-      <th class="percentage" colspan="2"><%= (polls.average(:answer) * 100).round if polls %> %</th>
+      <th class="percentage" colspan="2"><%= solution.score if polls %> %</th>
     <% end %>
   </tr>
 

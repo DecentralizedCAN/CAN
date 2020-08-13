@@ -73,7 +73,10 @@ $label-blue: #81c4ff;
 }
 
 .criterion-outer {
-  max-width: 400px;
+
+  .criterium {
+    max-width: 400px;    
+  }
 
 	.criterion-action-box {
 		color: #3a3a3a;
@@ -170,4 +173,8 @@ $label-blue: #81c4ff;
   &:hover {
     background-color: #c53131 !important;
   }
+}
+
+.crialt-button {
+  cursor: pointer;
 }

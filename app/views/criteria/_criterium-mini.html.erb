@@ -15,27 +15,52 @@
         <div class="criterion-details">
           <!-- If anyone dissented -->
           <% if criterium.cridissent.count > 0 %>
-          <div>
-            <span class="show-objections" id="show-objections-<%=criterium.id%>">
-              <%= pluralize(criterium.cridissent.count, "Concern") %> (view)
-            </span>
-          </div>
-        <% end %>
-          <div class="dissent-stuff">
-          <!-- Objections -->
-          <% if criterium.cridissent.find_by(user: @user) %>
-              <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>   
-                <span class="cridissent-count gray" href="#" aria-label="Remove concern" tabindex="0">
-                  – retract concern
-                </span>
-              <% end %>
-          <% else %>
-              <span class="cridissent-count submit-concern gray" id="submit-concern-<%=criterium.id%>" href="#" aria-label="Lodge a concern" tabindex="0">
-                + add concern
-              </span>    
+            <div>
+              <span class="orange"><%= pluralize(criterium.cridissent.count, "Concern") %></span>
+                (<span class="show-objections gray" id="show-objections-<%=criterium.id%>">View</span> | 
 
+              <% if criterium.cridissent.find_by(user: @user) %>
+                <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>  <span class="cridissent-count gray" href="#" aria-label="Remove concern" tabindex="0">
+                  Remove)
+                </span>
+                <% end %>
+              <% else %>
+                <span class="cridissent-count submit-concern gray" id="submit-concern-<%=criterium.id%>">Add)</span>
+              <% end %>
+
+              <% if criterium.crialt.count > 0 %>
+              <br>
+                <span>
+                  <span class="purple"><%= pluralize(criterium.crialt.count, "Alternative") %></span>
+                    (<span class="crialt-button gray" id="open-crialt-<%=criterium.id%>">View</span> | 
+                    <span class="crialt-button gray" id="add-crialt-<%=criterium.id%>">Add</span>)
+                </span>
+              <% else %>
+                <br>
+                <span class="crialt-button gray" id="add-crialt-<%=criterium.id%>">+ suggest alternative</span>
+              <% end %>
+
+            </div>
+          <% else %>
+
+            <div class="dissent-stuff">
+              <!-- Objections -->
+              <% if criterium.cridissent.find_by(user: @user) %>
+                  <%= link_to assent_criteria_path(:criterium_id => criterium.id), :method => "post" do %>   
+                    <span class="cridissent-count gray" href="#" aria-label="Remove concern" tabindex="0">
+                      – retract concern
+                    </span>
+                  <% end %>
+              <% else %>
+                  <span class="cridissent-count submit-concern gray" id="submit-concern-<%=criterium.id%>" href="#" aria-label="Lodge a concern" tabindex="0">
+                    + add concern
+                  </span>    
+
+              <% end %>
+            </div>
+          
           <% end %>
-          </div>
+
         </div>
       </div>
 
@@ -100,22 +125,66 @@
     </div>
   </div>
 
-  <div class="objection-list" id="objection-list-<%=criterium.id%>">
+  <div class="objection-popup" id="objection-list-<%=criterium.id%>">
     <div class="objection-list-inner">
       <i class="fas fa-times close-window"></i>
       <h2>Concerns about "<%=criterium.title%>"</h2>
       <ul><% criterium.cridissent.each do |dissent| %>
-      <li>
-        <%if dissent.user%>
+      <%if dissent.user%>
+        <li>
           <strong><%= link_to(dissent.user.name, dissent.user) %></strong>:
           <% if dissent.title.length > 0 %>
-            <%= dissent.title %>
+            "<%= dissent.title %>"
           <% else %>
             is concerned about this criterion
           <%end%>
-        <%end%>
-      </li>
+        </li>
+      <%end%>
     <% end %></ul>
+    </div>
+  </div>
+
+  <div class="objection-list" id="crialt-<%=criterium.id%>" style="display: none;">
+    <div class="objection-list-inner">
+      <i class="fas fa-times close-window"></i>
+      <h2>Suggest an alternative for "<%=criterium.title%>"</h2>
+
+      <ol>
+        <input placeholder="Suggest a new criterion" style="width: 295px">&nbsp;<button>Suggest</button>
+
+        <% criterium.problem.criterium.each do |alt| %>
+          <% unless alt.id==criterium.id || criterium.crialt.select{|x| x["alternative"].to_i == alt.id}.count > 0%>
+              <li>
+                <div><strong><%= alt.title %></strong>
+                <% if alt.cridissent.count > 0 %>
+                  (<%= pluralize(alt.cridissent.count, 'concern')%>)
+                <% end %></div>
+                &nbsp;<%= link_to "Suggest", alt_criterium_path(:from => criterium.id, :to=> alt.id), :class => "suggest-link", :method => "post" %>
+              </li>
+          <% end %>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+
+  <div class="objection-list" id="crialt-list-<%=criterium.id%>" style="display: none;">
+    <div class="objection-list-inner">
+      <i class="fas fa-times close-window"></i>
+      <h2>Suggested alternatives for "<%=criterium.title%>"</h2>
+
+      <ol>
+        <% criterium.crialt.order("transferred_user_count DESC").each do |suggestion| %>
+            <li>
+                <div><strong><%= Criterium.find(suggestion.alternative).title %></strong>
+                <% if !criterium.problem.facilitator_id %>
+                  (<%= suggestion.transferred_user_count %> <i class="fas fa-sync-alt"></i>) 
+                <% end %></div>
+              <% if criterium.user.include?(@user) %>
+                &nbsp;<%= link_to "Switch to this", accept_alt_path(:crialt => suggestion.id), :class => "transfer-link", :method => "post"%>
+              <% end %>
+            </li>
+        <%end%>
+      </ol>
     </div>
   </div>
 
@@ -136,5 +205,21 @@
 
   $('#objection-list-<%=criterium.id%>').find('.close-window').click(function(){
     $('#objection-list-<%=criterium.id%>').hide()
+  })
+
+  $('#add-crialt-<%=criterium.id%>').click( function() {
+    $('#crialt-<%=criterium.id%>').show()
+  })
+
+  $('#crialt-<%=criterium.id%>').find('.close-window').click(function(){
+    $('#crialt-<%=criterium.id%>').hide()
+  })
+
+  $('#open-crialt-<%=criterium.id%>').click( function() {
+    $('#crialt-list-<%=criterium.id%>').show()
+  })
+
+  $('#crialt-list-<%=criterium.id%>').find('.close-window').click(function(){
+    $('#crialt-list-<%=criterium.id%>').hide()
   })
 </script>

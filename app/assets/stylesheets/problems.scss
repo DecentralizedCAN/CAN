@@ -80,9 +80,13 @@ $success-red: #ff7455;
     button {
       border: 0;
       background: #9a9a9a;
-      color: white;
+      color: white !important;
       border-radius: 2px;
       padding: 2px 6px;
+
+      i {
+        color: white !important;
+      }
     }
   }
 }
@@ -178,10 +182,16 @@ $success-red: #ff7455;
     // vertical-align: top;
   }
 
+  .title {
+    display: inline-flex;
+  }
+
   .criterion-details {
     // padding-top: 2px;
     display: inline-block;
+    // display: inline-flex;
     font-weight: normal;
+    width: 400px;
   }
 
 }
@@ -197,9 +207,13 @@ $success-red: #ff7455;
   cursor: pointer;
 }
 
+#add-collaborators {
+  cursor: pointer;
+}
+
 .show-objections {
   // color: #fd6427;;
-  color: #ffc46a;
+  // color: #ffc46a;
 }
 
 .objection-popup, .objection-list, #collaborators-list {
@@ -217,13 +231,21 @@ $success-red: #ff7455;
     border: 1px solid #9c9c9c;
     min-height: 200px;
     max-width: 500px;
+    // max-height: 400px !important;
     margin: auto;
     margin-top: 20vh;
     padding: 20px;
     box-shadow: 0px 4px 8px 2px #7b7b7b;
     max-height: 80vh;
     border-radius: 2px;
-    overflow: auto;
+    z-index: 2;
+    position: relative;
+    overflow: hidden;
+
+    ol {
+      max-height: 400px !important;
+      overflow: auto;
+    }
 
     // .button {
     //   background-color: #ffc46a;
@@ -239,10 +261,41 @@ $success-red: #ff7455;
     cursor: pointer;
   }
 
-  .objection-list-inner > h2 {
-    // margin-top: 0;
-    // text-align: left;
-    padding-left: 12%;
+  .objection-list-inner{
+    h2 {
+      // margin-top: 0;
+      // text-align: left;
+      padding-left: 12%;
+      padding-right: 6%;
+    }
+
+    ol {
+      margin-top: 20px !important;
+      padding-left: 12% !important;
+
+      li {
+        padding: 8px;
+        border-radius: 2px;
+        margin-right: 10px;
+        /* border: 1px solid #b7b7b7; */
+        // color: white;
+        background: #e2e2e2;
+        display: flex;
+
+        div {
+          width: 100%;
+        }
+
+        a {
+          width: 136px;
+          text-align: center;
+          height: fit-content;        }
+      }
+    }
+
+    li {
+      margin-top: 8px;
+    }
   }
 
   ul {
@@ -289,6 +342,7 @@ $success-red: #ff7455;
   display: inline-block;
   float: right;
   text-align: right;
+  height: fit-content;
 
   div {
     margin-top: 4px;

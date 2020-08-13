@@ -155,7 +155,7 @@ class CriteriaController < ApplicationController
         # send notifications
           if @criterium.cridissent.count == 1
             @criterium.user.each do |user|
-              notification = user.notification.create(:details => "A criterion has an objection",
+              notification = user.notification.create(:details => "Someone has a concern about a criterion",
                 :criterium_id => @criterium.id)
               if user.email_notifications
                 notification.send_email
@@ -163,6 +163,11 @@ class CriteriaController < ApplicationController
             end
             # @criterium.send_dissent_email          
           end
+
+        begin
+          auto_upvote_post(@criterium.problem.post.id, @user.id)
+        rescue
+        end
 
         # update_all_solution_scores(@criterium.problem.id)
         UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
@@ -200,7 +205,8 @@ class CriteriaController < ApplicationController
       new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @criterium.title + '"', @criterium.problem.discussion.id)
 
       flash[:success] = "Thanks for your suggestion!"
-      redirect_to show_criterium_path(:criterium_id => params[:from])
+      # redirect_to show_criterium_path(:criterium_id => params[:from])
+      redirect_back fallback_location: root_path
     end
   end
 
@@ -222,8 +228,13 @@ class CriteriaController < ApplicationController
       # update_all_solution_scores(@crialt.criterium.problem.id)
       UpdateSolutionScoresJob.perform_later(@crialt.criterium.problem.id)
       
-      flash[:success] = "You accepted a alternative criteria. Thanks for working towards convergence!"
-      redirect_to show_criterium_path(:criterium_id => @from.hashid)
+      if @crialt.problem.facilitator_id
+        flash[:success] = "You accepted an alternative criteria. Thanks for working towards convergence!"
+      else
+        flash[:success] = "You accepted an alternative criteria."
+      end
+      # redirect_to show_criterium_path(:criterium_id => @from.hashid)
+      redirect_back fallback_location: root_path
     end
   end
 
