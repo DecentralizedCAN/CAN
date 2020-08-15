@@ -108,7 +108,7 @@
 
   <div class="objection-popup" id="objection-<%=criterium.id%>">
     <div class="objection-inner">
-      <i class="fas fa-times close-window"></i>
+      <div class="close-outer"><i class="fas fa-times close-window"></i></div>
       <h2>What is your concern with the criterion "<%=criterium.title%>"?</h2>
 
       <div class="criterion-objection-input">
@@ -127,7 +127,7 @@
 
   <div class="objection-popup" id="objection-list-<%=criterium.id%>">
     <div class="objection-list-inner">
-      <i class="fas fa-times close-window"></i>
+      <div class="close-outer"><i class="fas fa-times close-window"></i></div>
       <h2>Concerns about "<%=criterium.title%>"</h2>
       <ul><% criterium.cridissent.each do |dissent| %>
       <%if dissent.user%>
@@ -146,11 +146,11 @@
 
   <div class="objection-list" id="crialt-<%=criterium.id%>" style="display: none;">
     <div class="objection-list-inner">
-      <i class="fas fa-times close-window"></i>
+      <div class="close-outer"><i class="fas fa-times close-window"></i></div>
       <h2>Suggest an alternative for "<%=criterium.title%>"</h2>
 
       <ol>
-        <input placeholder="Suggest a new criterion" style="width: 295px">&nbsp;<button>Suggest</button>
+        <!-- <input placeholder="Suggest a new criterion" style="width: 295px">&nbsp;<button>Suggest</button> -->
 
         <% criterium.problem.criterium.each do |alt| %>
           <% unless alt.id==criterium.id || criterium.crialt.select{|x| x["alternative"].to_i == alt.id}.count > 0%>
@@ -169,7 +169,7 @@
 
   <div class="objection-list" id="crialt-list-<%=criterium.id%>" style="display: none;">
     <div class="objection-list-inner">
-      <i class="fas fa-times close-window"></i>
+      <div class="close-outer"><i class="fas fa-times close-window"></i></div>
       <h2>Suggested alternatives for "<%=criterium.title%>"</h2>
 
       <ol>
