@@ -61,7 +61,7 @@ class CriteriaController < ApplicationController
   # POST /criteria.json
   def create
     @user = current_user
-    @criterium = Criterium.new(criterium_params)
+    @criterium = Criterium.new(criterium_params.except(:alt_id))
     @criterium.creator = @user.id
 
     if @criterium.save
@@ -78,12 +78,12 @@ class CriteriaController < ApplicationController
         end
       end
       
+      # update_all_solution_scores(@criterium.problem.id)
+
       begin
         auto_upvote_post(@criterium.problem.post.id, @user.id)
       rescue
       end
-          
-      # update_all_solution_scores(@criterium.problem.id)
 
       if @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == current_user.id
       elsif @criterium.problem.facilitator_id
@@ -91,7 +91,20 @@ class CriteriaController < ApplicationController
       else
         flash[:success] = "You created a criterion. Thanks for your contribution!"
       end
+
+      if criterium_params[:alt_id]
+        @from = Criterium.find(criterium_params[:alt_id])
+        @alternative = Crialt.new(:criterium_id => @from.id, :alternative => @criterium.id, :transferred_user_count => 0)
+        if Crialt.where(criterium_id: @from.id).where(alternative: @criterium.id).count > 0
+          redirect_to show_criterium_path(:criterium_id => @from.id)
+        elsif @alternative.save
+          new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @from.title + '"', @from.problem.discussion.id)
+          flash[:success] = "You suggested an alternative criterion. Thanks for your suggestion!"
+        end
+      end
+      
       redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+
     else
       flash[:warning] = "Can't save criterion. It may be too long."
       redirect_back fallback_location: root_path
@@ -282,7 +295,7 @@ class CriteriaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def criterium_params
-      params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters)
+      params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters, :alt_id)
     end
 
     # def update_all_solution_scores(problem_id)

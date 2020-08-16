@@ -13,6 +13,11 @@
 
 <h1>New criterion</h1>
 
+<% if params[:alt] %>
+  <% @alt = Criterium.find(params[:alt]) %>
+  <p><i class="fas fa-hand-paper"></i> Suggesting as a potential alternative to: <strong><%= @alt.title %></strong></p>
+<% end %>
+
 <div id="submit-criteria">
   <%= form_for(@criterium, remote: true) do |form| %>
 
@@ -21,6 +26,7 @@
     </div>
 
     <%= form.hidden_field :problem_id, id: :id %>
+    <%= form.hidden_field :alt_id, id: :alt_id, value: params[:alt] %>
 
     <!-- <%= link_to "Cancel", issue_path(:problem_id => @criterium.problem.id), :class => "button button-hollow" %> -->
 

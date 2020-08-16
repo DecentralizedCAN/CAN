@@ -150,6 +150,8 @@
       <h2>Suggest an alternative for "<%=criterium.title%>"</h2>
 
       <ol>
+        <p>Suggest an existing criterion from the list below as an alternative, or <%= link_to "Create a new one", new_criterium_path( :problem_id => @problem.id, :alt => criterium.hashid), :class => "button green"  %></p>
+
         <!-- <input placeholder="Suggest a new criterion" style="width: 295px">&nbsp;<button>Suggest</button> -->
 
         <% criterium.problem.criterium.each do |alt| %>
@@ -163,7 +165,9 @@
               </li>
           <% end %>
         <% end %>
+
       </ol>
+
     </div>
   </div>
 
