@@ -1,0 +1,177 @@
+<div class="invitation">
+  <p class="fadein">Your help is wanted with something:</p>
+
+<div class="fadein">
+<p class="discussion-content"><strong class="title"><%= @activity.title %></strong>
+<% if @activity.description.length > 0 %>
+<%= @activity.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %>
+<% end %></p>
+</div>
+
+  <% if @activity.roll.length == 1 && @activity.roll.first.minimum == 1 && @activity.roll.first.maximum%>
+    <p class="fadein scrollto">It can only happen if someone is willing to fill the following role:</p>
+    <% @request = "Are you willing to fill this role?" %>
+  <% elsif @activity.roll.length == 1 && @activity.roll.first.minimum == 1 %>
+    <p class="fadein scrollto">It can only happen if at least one person is willing to fill the following role:</p>
+    <% @request = "Are you willing to fill this role?" %>
+  <% elsif @activity.roll.length == 1 %>
+    <p class="fadein scrollto">It can only happen if enough people are willing to do do the following:</p>
+    <% @request = "If we are able to get enough people for this, can you commit to be one of them?" %>
+  <% else %>
+    <p class="fadein scrollto">It can only happen if the following roles are filled:</p>
+    <p class="yes-notice">Awesome! Please select which role(s) you can commit to below.</p>
+    <% @request = "If we are able to make this happen, can you commit to any of these roles?" %>
+  <% end %>
+
+  <ul class="all-roles fadein">
+    <% @activity.roll.each do |role| %>
+      <li>
+
+        <label class="label" style="display: none;">
+          <input  class="label__checkbox" type="checkbox" />
+          <span class="label__text">
+            <span class="label__check">
+              <i class="fa fa-check icon"></i>
+            </span>
+          </span>
+        </label>
+
+        <div>
+        <strong><%= pluralize(role.minimum, role.title) %></strong><br>
+            <% if role.description.length > 0 %>
+              Description: <%= role.description %><br>
+            <% end %>
+
+            <%= pluralize(role.user.count, 'person') %> committed, and 
+            <% if !role.maximum %>
+              <%= role.minimum %> or more
+            <% elsif role.minimum < role.maximum %>
+              <%= role.minimum %> to <%= role.maximum %>
+            <% else %>
+              only <%= role.minimum %>
+            <% end %>
+            are needed
+
+            <div class="participation-meter participation-meter-outer">
+              <div class="participation-progress" style="
+              width: <%= role.user.count.to_f / role.minimum.to_f * 100%>%; 
+              background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
+              ">
+              </div>
+              <% if role.maximum %>
+                <div class="participation-progress second" style="
+                width: <%= role.user.count.to_f / role.maximum.to_f * 100%>%; 
+                background-color: rgba(255, 166, 252, <%= role.user.count.to_f / role.maximum.to_f * 4%>);
+                ">
+              </div>
+            <% end %>
+            </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="fadein scrollto request-outer">
+    <p class="innerfade request"><%= @request %></p>
+    <div class="commit-options"><span class="no">No</span><span class="yes">Yes</span></div>
+  </div>
+
+  <div class="commit-form">
+    <p></p>
+    <button class="cancel-commit"><i class="fas fa-times"></i> Cancel</button>
+    <button class="commit-action"><i class="fas fa-check"></i> Commit</button>
+  </div>
+</div>
+
+<div class="signup-action-form">
+  <p class="innerfade">Thanks! One last thing. Could you leave some information to help keep track of who committed to what?</p><br>
+
+  <%= form_for(:session, url: login_path) do |f| %>
+    
+    <% if flash['danger'] == 'Incorrect password' %>
+      <%= link_to "Reset password", new_password_reset_path, :class => "button" %>
+      <br><br>
+    <% end %>
+
+    <div>
+      <h3>Your name</h3> <%= f.text_field :email, class: 'form-mini' %>
+    </div>
+
+    <div>
+      <h3>Your email (optional)</h3> <%= f.text_field :add_email, id: :user_email, :class => "form-mini" %>
+    </div>
+
+    <div>
+      <h3>A password</h3> <%= f.password_field :password, class: 'form-mini' %>
+    </div>
+
+    <%= f.submit "Submit & commit", class: "button" %>
+
+  <% end %>
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+  $('header').hide()
+  $('#quick-login-form').hide()
+
+  fadeins =  $('.fadein')
+  index = 0
+
+  let fadein = function(i) {
+
+    if (i == 0) {
+      $(fadeins[i]).css('opacity', 1)
+      fadein(1)
+    } else {
+      setTimeout(function(){
+        $(fadeins[i]).css('opacity', 1)
+
+        if ($(fadeins[i]).hasClass('scrollto')) {
+          $('body').animate({ scrollTop: $(fadeins[i]).offset().top }, 'fast');
+          // .scrollTop($(fadeins[i]).offset().top);
+        }
+
+        if (fadeins[i+1]) {
+          fadein(i + 1)   
+        }
+
+      // }, 0);
+      }, 2000);
+    }
+  }
+
+  fadein(0)
+
+  $('.commit-action').click(function(){
+    $('.signup-action-form').show()
+    $('.invitation').hide()
+  })
+
+  $('.yes').click(function(){
+    $('.yes-notice').show()
+    $('label.label').show()
+    $('.all-roles > li').addClass('select')
+    $('body').animate({ scrollTop: $('.yes-notice').offset().top }, 'fast');
+    $('.request-outer').hide()
+    $('.commit-form').show()
+  })
+
+  $('.cancel-commit').click(function(){
+    $('.yes-notice').hide()
+    $('label.label').hide()
+    $('.all-roles > li').removeClass('select')
+    $('body').animate({ scrollTop: $('.commit-form').offset().top }, 'fast');
+    $('.request-outer').show()
+    $('.commit-form').hide()
+  })
+
+  $('li').click(function(){
+    if ($(this).hasClass('select')) {
+      $(this).toggleClass('selected')
+      $(this).children('label.label')[0].click()
+    }
+  })
+</script>

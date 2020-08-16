@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   include ActivitiesHelper
   include CommentsHelper
 
-  before_action :set_activity, only: [:show, :edit, :update]
+  before_action :set_activity, only: [:show, :invitation, :edit, :update]
   before_action :check_activity, only: [:create, :suggest]
   before_action :require_login, except: [:show], if: -> { public_viewable? }
   before_action :require_login, unless: -> { public_viewable? }
@@ -36,6 +36,10 @@ class ActivitiesController < ApplicationController
       .order("COUNT(upvotes.id) DESC LIMIT 5") #probably won't work in postgres
       # .where("upvotes.id")
     # @actdissent = Actdissent.find_by(activity_id: @activity.id)
+  end
+
+  def invitation
+
   end
 
   # GET /activities/new

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get '/action/post', to: 'activities#new', :as => :post_action
   get '/action/activate', to: 'activities#activate', :as => :activate_action
   get '/action/:activity_id', to: 'activities#show', :as => :action
+  get '/i/:activity_id', to: 'activities#invitation', :as => :invitation
   get '/action/participate/:roll_id', to: 'activities#commit', :as => :commit
   post '/activator/participate/:roll_id', to: 'activities#participate', :as => :participate
   post '/action/unparticipate/:roll_id', to: 'activities#unparticipate', :as => :unparticipate
