@@ -343,6 +343,10 @@ $offwhite: #f5f5f5;
     align-items: center;
     justify-content: left;
 
+    > div {
+      width: 100%;
+    }
+
     &.select {
       cursor: pointer;
   

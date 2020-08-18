@@ -84,7 +84,7 @@
 </div>
 
 <div class="signup-action-form">
-  <p class="innerfade">Thanks! One last thing. Could you leave some information to help keep track of who committed to what?</p><br>
+  <p class="innerfade">Great, there's just one more step for you to take part. Could you leave some information to help everyone keep track of what you committed to?</p><br>
 
   <%= form_for(:session, url: login_path) do |f| %>
     
@@ -143,7 +143,11 @@
     }
   }
 
-  fadein(0)
+  <% if params['presentation'] == 'dramatic' %>
+    fadein(0)
+  <% else %>
+    fadeins.css('opacity', 1)
+  <% end %>
 
   $('.commit-action').click(function(){
     $('.signup-action-form').show()
