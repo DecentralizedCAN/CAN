@@ -380,6 +380,10 @@ textarea:focus, input:focus {
 }
 // COLORS ENDS
 
+.max-width {
+  width: max-content;
+}
+
 header {
 
   a, a:visited, b {

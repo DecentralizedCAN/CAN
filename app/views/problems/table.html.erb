@@ -70,16 +70,18 @@
 <% end %>
 </div><br>
 
-<div><h3>Table for 
+<div class="issue-title view"><h3>Table for 
   <%= link_to issue_path( :problem_id => @problem.hashid) do %>  
     <strong><%= @problem.title %></strong>
   <% end %>
 </h3></div>
 
-<p>Click on table cells to change your answer.
-Refresh page for current info.</p>
-
-
+<div id="refresh"><%= button_to request.env['PATH_INFO'], :method => :get, :class => 'button button-hollow' do %>
+      <i class="fas fa-sync"></i> Refresh
+    <% end %> <em>(for current information)</em></div>
+    
+<p>Click on table cells to change your answer.</p>
+    
 <div class="outer-table">
 <table class="proposal-grid" cellspacing ="2" cellpadding ="6">
 

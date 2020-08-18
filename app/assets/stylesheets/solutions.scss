@@ -29,6 +29,17 @@ $offwhite: #f5f5f5;
 
 #add-criteria {
   cursor: pointer;
+  width: fit-content;
+  color: #ff7455;
+  border: 1px solid;
+  padding: 2px 4px;
+  border-radius: 2px;
+  background-color: whitesmoke;
+  margin-top: 6px;
+
+  i {
+    color: #ff7455;
+  }
 }
 
 .solution-item > a, .solution-item > a > div {
@@ -66,6 +77,10 @@ $offwhite: #f5f5f5;
 		margin-bottom: 10px;
 		display: inline-block;
 	}
+
+  h2 {
+    margin-top: 6px;
+  }
 
 	p {
 		margin: 0;

@@ -1,7 +1,7 @@
 <div class="backdrop">
 
 <div class="back-button">
-  <%= link_to issue_path(:problem_id => @criterium.problem.id) do %>
+  <%= link_to issue_path(:problem_id => params[:problem_id]) do %>
     <div class="back-button-arrow"></div>
     <div class="back-button-content">
       Back

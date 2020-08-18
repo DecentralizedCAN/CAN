@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   get '/criteria/show/:criterium_id', to: 'criteria#show', :as => :show_criterium
   get '/criteria/full/:problem_id', to: 'criteria#full', :as => :full_criterium
   get '/criteria/dissent/:criterium_id', to: 'criteria#dissent_form', :as => :dissent_criterium
-  get '/criteria/new', to: 'criteria#new', :as => :new_criterium
+  get 'c/:problem_id/criteria/new', to: 'criteria#new', :as => :new_criterium
   post '/criteria/add', to: 'criteria#add', :as => :add_criterium
   delete '/criteria/:id', to: 'criteria#destroy', :as => :destroy_criterium
   resources :criteria, only: [:create]

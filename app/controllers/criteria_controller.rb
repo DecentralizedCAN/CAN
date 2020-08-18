@@ -65,7 +65,7 @@ class CriteriaController < ApplicationController
     @criterium.creator = @user.id
 
     if @criterium.save
-      @criterium.user << @user unless @criterium.problem.facilitator_id && @criterium.problem.facilitator_id != current_user.id
+      @criterium.user << @user unless (@criterium.problem.facilitator_id && @criterium.problem.facilitator_id != current_user.id) || criterium_params[:alt_id].length > 0
 
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
@@ -92,7 +92,8 @@ class CriteriaController < ApplicationController
         flash[:success] = "You created a criterion. Thanks for your contribution!"
       end
 
-      if criterium_params[:alt_id]
+      # If this is an alt
+      if criterium_params[:alt_id].length > 0
         @from = Criterium.find(criterium_params[:alt_id])
         @alternative = Crialt.new(:criterium_id => @from.id, :alternative => @criterium.id, :transferred_user_count => 0)
         if Crialt.where(criterium_id: @from.id).where(alternative: @criterium.id).count > 0
@@ -100,6 +101,17 @@ class CriteriaController < ApplicationController
         elsif @alternative.save
           new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @from.title + '"', @from.problem.discussion.id)
           flash[:success] = "You suggested an alternative criterion. Thanks for your suggestion!"
+        
+          # send notifications
+          if @from.crialt.count == 1
+            @from.user.each do |user|
+              notification = user.notification.create(:details => "Someone suggested an alternative to a criterion",
+                :criterium_id => @from.id)
+              if user.email_notifications
+                notification.send_email
+              end
+            end     
+          end
         end
       end
       
@@ -217,6 +229,17 @@ class CriteriaController < ApplicationController
 
       new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @criterium.title + '"', @criterium.problem.discussion.id)
 
+      # send notifications
+      if @criterium.crialt.count == 1
+        @criterium.user.each do |user|
+          notification = user.notification.create(:details => "Someone suggested an alternative to a criterion",
+            :criterium_id => @criterium.id)
+          if user.email_notifications
+            notification.send_email
+          end
+        end     
+      end
+
       flash[:success] = "Thanks for your suggestion!"
       # redirect_to show_criterium_path(:criterium_id => params[:from])
       redirect_back fallback_location: root_path
@@ -241,10 +264,10 @@ class CriteriaController < ApplicationController
       # update_all_solution_scores(@crialt.criterium.problem.id)
       UpdateSolutionScoresJob.perform_later(@crialt.criterium.problem.id)
       
-      if @crialt.problem.facilitator_id
-        flash[:success] = "You accepted an alternative criteria. Thanks for working towards convergence!"
-      else
+      if @crialt.criterium.problem.facilitator_id
         flash[:success] = "You accepted an alternative criteria."
+      else
+        flash[:success] = "You accepted an alternative criteria. Thanks for working towards convergence!"
       end
       # redirect_to show_criterium_path(:criterium_id => @from.hashid)
       redirect_back fallback_location: root_path

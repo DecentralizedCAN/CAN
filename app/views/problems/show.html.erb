@@ -6,20 +6,8 @@
     <div class="flex-container">
 
       <div class="issue-title view">
-        <%if @problem.user.include?(@user)%>
-          <span class="crisupport-count tooltip-toggle" href="#" aria-label="Remove me from this process" tabindex="0">
-            <%= link_to unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "darkgray" do %>
-              <i class="fas fa-thumbtack"></i>
-            <%end%>
-          </span>
-        <%else%>
-          <span class="crisupport-count tooltip-toggle" href="#" aria-label="Add me to this process" tabindex="0">
-            <%= link_to sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "lightgray" do %>
-              <i class="fas fa-thumbtack"></i>
-            <%end%>
-          </span>
-        <%end%>
-        &nbsp;<h3><strong><%= @problem.title %></strong></h3>
+        
+        <h3><strong><%= @problem.title %></strong></h3>
         
       </div>
 
@@ -68,6 +56,21 @@
     </div> -->
 
     <div class="issue-info">
+      <div>
+      <%if @problem.user.include?(@user)%>
+          <span class="crisupport-count tooltip-toggle" href="#" aria-label="Remove me from this process" tabindex="0">
+            <%= link_to unsponsor_problem_path(:problem_id => @problem.id), :method => "post" do %>
+              <i class="fas fa-user-slash"></i> Leave
+            <%end%>
+          </span>
+        <%else%>
+          <span class="crisupport-count tooltip-toggle" href="#" aria-label="Add me to this process" tabindex="0">
+            <%= link_to sponsor_problem_path(:problem_id => @problem.id), :method => "post" do %>
+              <i class="fas fa-user-plus"></i> Join
+            <%end%>
+          </span>
+        <%end%>
+      </div>
 
       <div id="open-collaborators">
         <i class="fas fa-users"></i>
