@@ -282,7 +282,6 @@
     <% end %> -->
     <i class="fas fa-times float-right" id="close-discussion"></i>
   </h2>
-  <!-- <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %> -->
   <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
 </div> <!-- DISCUSSION ENDS -->
 
