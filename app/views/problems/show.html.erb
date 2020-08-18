@@ -75,7 +75,7 @@
       </div>
 
       <div>
-        <% if @problem.facilitator_id %>
+        <% if @problem.facilitator_id && @problem.facilitator_id > 0 %>
           <i class="fas fa-user-shield"></i>
           <% facilitator = User.find(@problem.facilitator_id) %>
           Facilitator: 
@@ -219,6 +219,7 @@
                     # basic_score = 0 if !polls
                   %>
 
+                  <% if solution.score %>
                   <div class="score-bar-outer">
                     <div class="score-bar-inner" style="
                     background-color: rgba(82, 240, 191, <%=solution.score * 0.01%>);
@@ -228,6 +229,8 @@
                     </div>
 
                   </div>
+                  <% end %>
+
                 <!-- </div> -->
               <% #elsif @problem.scoring_method == 3 %>
               <% elsif false %>

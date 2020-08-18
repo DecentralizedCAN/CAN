@@ -150,7 +150,7 @@
       <h2>Suggest an alternative for "<%=criterium.title%>"</h2>
 
       <ol>
-        <p>Suggest an existing criterion from the list below as an alternative, or <%= link_to "Create a new one", new_criterium_path( :problem_id => @problem.id, :alt => criterium.hashid), :class => "button green"  %></p>
+        <p>Suggest an existing criterion from the list below as an alternative, or <%= link_to "Create a new one", new_criterium_path( :problem_id => criterium.problem.id, :alt => criterium.hashid), :class => "button green"  %></p>
 
         <!-- <input placeholder="Suggest a new criterion" style="width: 295px">&nbsp;<button>Suggest</button> -->
 
