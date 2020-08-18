@@ -348,6 +348,9 @@
     $('.discussion-extraouter').show()
     $('#open-discussion').hide()
     $('.criteria-list').addClass('two-column')
+    // if (jQuery(window). width() >= 700) {
+    //   $('.white-container').show()
+    // }
     localStorage.setItem('dcan-discussion-show-desktop', 'True');
   }
 
@@ -355,6 +358,9 @@
     $('.discussion-extraouter').hide()
     $('#open-discussion').show()
     $('.criteria-list').removeClass('two-column')
+    // if (jQuery(window). width() < 700) {
+    //   $('.white-container').hide()
+    // }
     localStorage.setItem('dcan-discussion-show-desktop', 'False');
   }
 
