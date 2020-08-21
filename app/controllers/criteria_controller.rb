@@ -175,7 +175,7 @@ class CriteriaController < ApplicationController
           content = ''
         end
 
-        new_comment('!chatlog Added a concern to a criterion (' + @criterium.title + ')' + content, @criterium.problem.discussion.id)
+        new_comment('!chatlog Added a concern to the criterion "' + @criterium.title + '"' + content, @criterium.problem.discussion.id)
 
         # send notifications
           if @criterium.cridissent.count == 1
@@ -210,7 +210,7 @@ class CriteriaController < ApplicationController
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
     @dissenter.destroy
 
-    new_comment('!chatlog Removed their concern about a criterion (' + @criterium.title + ')', @criterium.problem.discussion.id)
+    new_comment('!chatlog Removed their concern about the criterion "' + @criterium.title + '"', @criterium.problem.discussion.id)
 
     # update_all_solution_scores(@criterium.problem.id)
     UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
