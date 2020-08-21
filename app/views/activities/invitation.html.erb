@@ -1,5 +1,5 @@
 <div class="invitation">
-  <p class="fadein">Your help is wanted with something:</p>
+  <p class="fadein">Your help is needed for something:</p>
 
 <div class="fadein">
 <p class="discussion-content"><strong class="title"><%= @activity.title %></strong>
@@ -84,7 +84,7 @@
 </div>
 
 <div class="signup-action-form">
-  <p class="innerfade">Great! There's just one more step: could you leave some information to keep track of what you committed to?</p><br>
+  <p class="innerfade">Thanks! Please leave your information to help keep track of what you committed to.</p><br>
 
   <%= form_for(:session, url: login_path) do |f| %>
     
@@ -155,12 +155,17 @@
   })
 
   $('.yes').click(function(){
-    $('.yes-notice').show()
-    $('label.label').show()
-    $('.all-roles > li').addClass('select')
-    $('body').animate({ scrollTop: $('.yes-notice').offset().top }, 'fast');
-    $('.request-outer').hide()
-    $('.commit-form').show()
+    if (<%= @activity.roll.length == 1 %>) {
+      $('.commit-action').click()
+    } else {
+      $('.yes-notice').show()
+      $('label.label').show()
+      $('.all-roles > li').addClass('select')
+      $('body').animate({ scrollTop: $('.yes-notice').offset().top }, 'fast');
+      $('.request-outer').hide()
+      $('.commit-form').show()
+    }
+  
   })
 
   $('.cancel-commit').click(function(){
