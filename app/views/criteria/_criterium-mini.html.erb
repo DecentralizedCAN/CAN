@@ -81,8 +81,8 @@
               <%else%>
                 <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
                   <div class="max-width"><span class="crisupport-count gray small-button green-background" href="#" tabindex="0">
-                    <i class="fas fa-plus gray"></i>
-                    Add to criteria
+                    <i class="fas fa-thumbs-up gray"></i>
+                    Approve
                   </span></div>
                 <% end %>
 
@@ -151,7 +151,7 @@
       <h2>Suggest an alternative for "<%=criterium.title%>"</h2>
 
       <ol>
-        <p>Suggest an existing criterion from the list below as an alternative, or <%= link_to "Create a new one", new_criterium_path( :problem_id => criterium.problem.id, :alt => criterium.hashid), :class => "button green"  %></p>
+        <p>Suggest an existing criterion from the list below as an alternative, or <%= link_to "Create a new one", new_criterium_path( :problem_id => criterium.problem.id, :alt => criterium.hashid), :class => "button suggest-link"  %></p>
 
         <!-- <input placeholder="Suggest a new criterion" style="width: 295px">&nbsp;<button>Suggest</button> -->
 

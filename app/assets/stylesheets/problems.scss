@@ -192,6 +192,10 @@ $success-red: #ff7455;
     // display: inline-flex;
     font-weight: normal;
     width: 400px;
+
+    span.gray:hover {
+      text-decoration: underline;
+    }
   }
 
 }
