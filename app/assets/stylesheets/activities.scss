@@ -310,8 +310,235 @@ $offwhite: #f5f5f5;
 }
 
 #action-columns {
-  column-count: 2;
+  // column-count: 2;
 }
+
+
+// INVITATION
+.signup-action-form {
+  display: none;
+  text-align: center;
+
+  input[type=submit] {
+    background-color: #02d577;
+    border: 0;
+    margin-top: 20px;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 0;
+
+    &:hover {
+      background-color: #5bf95b;
+    }
+  }
+}
+
+.invitation, .signup-action-form {
+  padding: 10px;
+  margin: auto;
+  max-width: 600px;
+  transition: all 0.5s ease;
+
+  * {transition: all 0.5s ease;}
+
+  li {
+    padding-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+    > div {
+      width: 100%;
+    }
+
+    &.select {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f9f9f9;
+      }
+  
+      &.selected {
+        border: 1px solid #02d577;
+        transition: border 1s;
+      }
+    }
+  }
+
+  .fadein {
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+
+  p.fadein, p.innerfade {
+    font-family: Montserrat;
+    font-size: 20px;
+    padding-top: 30px;
+    line-height: 26px;
+  }
+
+  div.fadein {
+    // width: fit-content;
+  }
+
+  .commit-options, .request {
+    width: 100%;
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .commit-action, .cancel-commit {
+    color: white;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 16px;
+    margin: 10px;
+    border: 0;
+  }
+
+  .yes, .no  {
+    color: white;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 20px;
+    // border-radius: 2px;
+    border: 0;
+    margin: 10px;
+  }
+
+  .yes, .commit-action {
+    background-color: #27e027;
+
+    &:hover {
+      background-color: #5bf95b;
+    }
+  }
+
+  .no, .cancel-commit {
+    background-color: #fd7850;
+
+    &:hover {
+      background-color: #fbac94;
+    }
+  }
+
+  .yes-notice {
+    display: none;
+    font-family: Montserrat;
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #27e028;
+    padding: 4px 8px;
+    font-weight: bolder;
+  }
+
+  .commit-form {
+    display: none;
+    text-align: center;
+  }
+
+  .participation-meter {
+    height: 8px !important;
+    width: 100%;
+    margin-top: 6px;
+
+    .participation-progress.second {
+      top: -6px;
+      position: relative;
+    }
+  }
+
+  .label__checkbox {
+    display: none;
+  }
+
+  .label__check {
+    display: inline-block;
+    border-radius: 50%;
+    border: 5px solid rgba(0,0,0,0.1);
+    background: white;
+    vertical-align: middle;
+    margin-right: 20px;
+    width: 4em;
+    height: 4em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border .3s ease;
+    
+    i.icon {
+      opacity: 0.2;
+      font-size: 2em;
+      color: #311414;
+      transition: opacity .3s .1s ease;
+    }
+    
+    &:hover {
+      border: 5px solid rgba(0,0,0,0.2);
+    }
+  }
+
+.label__checkbox:checked + .label__text .label__check {
+  animation: check .5s cubic-bezier(0.895, 0.030, 0.685, 0.220) forwards;
+  
+  .icon {
+    opacity: 1;
+    transform: scale(0);
+    color: white;
+    -webkit-text-stroke: 0;
+    animation: icon .3s cubic-bezier(1.000, 0.008, 0.565, 1.650) .1s 1 forwards;
+  }
+}
+
+
+@keyframes icon {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+@keyframes check {
+  0% {
+    width: 4em;
+    height: 4em;
+    border-width: 5px;
+  }
+  10% {
+    width: 4em;
+    height: 4em;
+    opacity: 0.1;
+    background: rgba(0,0,0,0.2);
+    border-width: 15px;
+  }
+  12% {
+    width: 4em;
+    height: 4em;
+    opacity: 0.4;
+    background: rgba(0,0,0,0.1);
+    border-width: 0;
+  }
+  50% {
+    width: 4em;
+    height: 4em;
+    background: #00d478;
+    border: 0;
+    opacity: 0.6;
+  }
+  100% {
+    width: 4em;
+    height: 4em;
+    background: #00d478;
+    border: 0;
+    opacity: 1;
+  }}
+}
+// INVITATION ENDS
 
 @media only screen and (max-width: 700px) {
   #action-columns {
