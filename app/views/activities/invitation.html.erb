@@ -9,16 +9,16 @@
 </div>
 
   <% if @activity.roll.length == 1 && @activity.roll.first.minimum == 1 && @activity.roll.first.maximum%>
-    <p class="fadein scrollto">It can only happen if someone is willing to fill the following role:</p>
+    <p class="fadein scrollto">This can only happen if someone is willing to fill the following role:</p>
     <% @request = "Are you willing to fill this role?" %>
   <% elsif @activity.roll.length == 1 && @activity.roll.first.minimum == 1 %>
-    <p class="fadein scrollto">It can only happen if at least one person is willing to fill the following role:</p>
+    <p class="fadein scrollto">This can only happen if at least one person is willing to fill the following role:</p>
     <% @request = "Are you willing to fill this role?" %>
   <% elsif @activity.roll.length == 1 %>
-    <p class="fadein scrollto">It can only happen if enough people are willing to do do the following:</p>
+    <p class="fadein scrollto">This can only happen if enough people are willing to do do the following:</p>
     <% @request = "If we are able to get enough people for this, can you commit to be one of them?" %>
   <% else %>
-    <p class="fadein scrollto">It can only happen if the following roles are filled:</p>
+    <p class="fadein scrollto">This can only happen if the following roles are filled:</p>
     <p class="yes-notice">Awesome! Please select which role(s) you can commit to below.</p>
     <% @request = "If we are able to make this happen, can you commit to any of these roles?" %>
   <% end %>
@@ -84,7 +84,7 @@
 </div>
 
 <div class="signup-action-form">
-  <p class="innerfade">Thanks! Please leave your information to help keep track of what you committed to.</p><br>
+  <p class="innerfade">Thanks! Please leave your information to keep track of what you committed to.</p><br>
 
   <%= form_for(:session, url: login_path) do |f| %>
     
@@ -150,7 +150,7 @@
   <% end %>
 
   $('.commit-action').click(function(){
-    $('.signup-action-form').show()
+    $('.signup-action-form').css('opacity', 1)
     $('.invitation').hide()
   })
 
