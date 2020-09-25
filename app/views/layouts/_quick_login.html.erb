@@ -4,7 +4,7 @@
 
 <%= form_for(:session, url: login_path) do |f| %>
   
-  <% if flash['danger'] == 'Incorrect password' %>
+  <% if flash['danger'] == 'That user already exists and this is not the correct password' %>
     <%= link_to "Reset password", new_password_reset_path, :class => "button" %>
     <br><br>
   <% end %>

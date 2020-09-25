@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
       end
 
     elsif user
-      flash[:danger] = 'Incorrect password'
+      flash[:danger] = 'That user already exists and this is not the correct password'
 
     elsif Setting.find(6).state
 

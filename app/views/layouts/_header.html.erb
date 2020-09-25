@@ -42,7 +42,7 @@
           <li>
           <%= link_to notifications_path do %>
             <% if current_user.notification.where(:read => nil).count > 0 %>
-                <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
+              <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
             <% end %>
 
             <i class="fas fa-bell"></i>
