@@ -1,5 +1,5 @@
 <div class="invitation">
-  <p class="fadein">Your help is needed for something:</p>
+  <p class="fadein">Your help is needed with the following:</p>
 
 <div class="fadein">
 <p class="discussion-content"><strong class="title"><%= @activity.title %></strong>
@@ -15,7 +15,7 @@
     <p class="fadein scrollto">This can only happen if at least one person is willing to fill the following role:</p>
     <% @request = "Are you willing to fill this role?" %>
   <% elsif @activity.roll.length == 1 %>
-    <p class="fadein scrollto">This can only happen if enough people are willing to do do the following:</p>
+    <p class="fadein scrollto">This can only happen if enough people commit to this:</p>
     <% @request = "If we are able to get enough people for this, can you commit to be one of them?" %>
   <% else %>
     <p class="fadein scrollto">This can only happen if the following roles are filled:</p>
@@ -84,7 +84,7 @@
 </div>
 
 <div class="signup-action-form">
-  <p class="innerfade">Thanks! Please leave your information to keep track of what you committed to.</p><br>
+  <p class="innerfade">Thanks! Please leave your information to keep track of who has committed.</p><br>
 
   <%= form_for(:session, url: login_path) do |f| %>
     
@@ -114,7 +114,7 @@
 </div>
 
 <script type="text/javascript">
-  $('header').hide()
+  // $('header').hide()
   $('#quick-login-form').hide()
 
   fadeins =  $('.fadein')
