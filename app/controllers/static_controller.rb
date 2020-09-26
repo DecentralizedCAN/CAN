@@ -2,6 +2,10 @@ class StaticController < ApplicationController
 	before_action :require_login, except: [:documentation, :main_feed], if: -> { public_viewable? }
 	before_action :require_login, unless: -> { public_viewable? }
 
+	def choice
+		
+	end
+
   def dashboard
     @user = current_user
 

@@ -9,6 +9,10 @@
 .goal-node {
   text-align: center;
 
+  h1 {
+    min-height: 25px;
+  }
+
   .details-subgoal {
     border-radius: 2px;
     text-align: center;
@@ -23,6 +27,11 @@
   }
 
   .goal-middle {
+    border-radius: 40px;
+    padding: 10px;
+    width: fit-content;
+    margin: auto;
+    background-color: gainsboro;
     // position: relative;
     // right: -58px;
   }
@@ -38,6 +47,19 @@
 
   .goal-button {
     text-transform: inherit;
+  }
+
+  .goals-link {
+    text-transform: uppercase;
+    color: gray;
+    font-style: normal;
+    padding: 2px 4px;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+
+  .goals-link.focus {
+    color: black;
   }
 
 
@@ -91,7 +113,7 @@
     background-color: #dcdcdc;
     padding: 2px 4px;
     right: 12px;
-    border: 1px solid #a9a9a9;
+    // border: 1px solid #a9a9a9;
     width: fit-content;
     margin: auto;
     color: gray;
@@ -107,7 +129,7 @@
     padding: 2px 4px;
     position: relative;
     // right: 12px;
-    border: 1px solid #a9a9a9;
+    // border: 1px solid #a9a9a9;
     color: gray;
 
     &:hover {
@@ -121,7 +143,7 @@
     padding: 2px 4px;
     position: relative;
     // left: 12px;
-    border: 1px solid #a9a9a9;
+    // border: 1px solid #a9a9a9;
     color: gray;
 
     &:hover {
@@ -132,6 +154,7 @@
   .button.add {
     background: transparent;
     border: 1px solid #a9a9a9;
+    border: none;
     outline: none;
     position: relative;
     top: -3px;
@@ -266,7 +289,7 @@
 
   .line {
     height: 30px;
-    border-right: 4px solid #dcdcdc;
+    border-right: 4px dashed #dcdcdc;
     text-align: center;
     width: 1px;
     margin: auto;
@@ -328,7 +351,7 @@
   // }
 
   .dropdown-menu {
-    left: -112px;
+    left: -92px;
     width: 246px;
   }
 

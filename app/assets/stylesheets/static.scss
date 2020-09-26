@@ -384,3 +384,33 @@ ol {
     }
   }
 }
+
+// CHOICE
+
+  .choice {
+    text-align: center;
+
+    div {
+      display: inline-block;
+      border: 1px solid gray;
+      background-color: white;
+      width: 200px;
+      height: 200px;
+      vertical-align: top;
+      margin: 20px;
+      cursor: pointer;
+      padding: 10px;
+
+      p {
+        opacity: 0;
+      }
+
+      &:hover {
+        p {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+// CHOICE ENDS

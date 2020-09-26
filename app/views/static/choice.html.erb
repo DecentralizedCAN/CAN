@@ -1,0 +1,37 @@
+<div class="choice">
+
+<h1>What do you want to do?</h1>
+
+<%= link_to post_action_path(:goal => params[:goal]) do %>
+<div style="background: #ff7878">Do something together
+<h1><i class="fas fa-people-carry"></i></h1>
+<p>Propose collective action. Set a minimum or maximum number of people for each role.</p></div>
+<% end %>
+
+<!-- <div style="background: #f1c472">Make an agreement
+<h1><i class="fas fa-handshake"></i></h1>
+<p>Propose a community agreement. Try to get a critical mass of people to sign on.</p></div> -->
+
+<%= link_to post_problem_path(:goal => params[:goal]) do %>
+<div style="background: #fbfb73">Brainstorm things to do
+<h1><i class="fas fa-brain"></i></h1>
+<p>Get help thinking of what the community can do about a specific issue.</p></div><br>
+<% end %>
+
+<!-- <div style="background: #91f391">Solve a disagreement
+<h1><i class="fas fa-dove"></i></h1>
+<p>Get around conflict by focusing on the core criteria behind a diagreement.</p></div> -->
+
+<%= link_to new_discussion_path(:goal => params[:goal]) do %>
+<div style="background: #a5a5f5">Start a discussion
+<h1><i class="fas fa-comments"></i></h1>
+<p>Have an open-ended discussion about any topic.</p></div>
+<% end %>
+
+<%= link_to goal_path(Goal.first, :view => 'public') do %>
+<div style="background: pink">Develop your goals
+<h1><i class="fas fa-bullseye"></i></h1>
+<p>Build your roadmap and suggest goals to the community.</p></div>
+<% end %>
+
+</div>

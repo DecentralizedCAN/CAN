@@ -15,12 +15,12 @@
     <p class="fadein scrollto">This can only happen if at least one person is willing to fill the following role:</p>
     <% @request = "Are you willing to fill this role?" %>
   <% elsif @activity.roll.length == 1 %>
-    <p class="fadein scrollto">This can only happen if enough people commit to this:</p>
-    <% @request = "If we are able to get enough people for this, can you commit to be one of them?" %>
+    <p class="fadein scrollto">For this to happen, the following people are needed:</p>
+    <% @request = "If we are able to get enough people for this to happen, can you commit to be one of them?" %>
   <% else %>
     <p class="fadein scrollto">This can only happen if the following roles are filled:</p>
     <p class="yes-notice">Awesome! Please select which role(s) you can commit to below.</p>
-    <% @request = "If we are able to make this happen, can you commit to any of these roles?" %>
+    <% @request = "If we are able to get enough people for this to happen, can you commit to any of these roles?" %>
   <% end %>
 
   <ul class="all-roles fadein">
@@ -73,7 +73,7 @@
 
   <div class="fadein scrollto request-outer">
     <p class="innerfade request"><%= @request %></p>
-    <div class="commit-options"><span class="no">No</span><span class="yes">Yes</span></div>
+    <div class="commit-options"><!-- <span class="no">No</span> --><span class="yes">Yes, count me in!</span></div>
   </div>
 
   <div class="commit-form">
@@ -105,7 +105,7 @@
       <h3>A password</h3> <%= f.password_field :password, class: 'form-mini' %>
     </div>
 
-    <%= f.submit "Submit & commit", class: "button" %>
+    <%= f.submit "Save and finish", class: "button yes" %>
 
   <% end %>
   </div>
@@ -150,8 +150,12 @@
   <% end %>
 
   $('.commit-action').click(function(){
-    $('.signup-action-form').css('opacity', 1)
-    $('.invitation').hide()
+    <% if logged_in? %>
+      
+    <% else %>
+      $('.signup-action-form').css('opacity', 1)
+      $('.invitation').hide()
+    <% end %>
   })
 
   $('.yes').click(function(){
@@ -172,7 +176,7 @@
     $('.yes-notice').hide()
     $('label.label').hide()
     $('.all-roles > li').removeClass('select')
-    $('body').animate({ scrollTop: $('.commit-form').offset().top }, 'fast');
+    // $('body').animate({ scrollTop: $('.commit-form').offset().top }, 'fast');
     $('.request-outer').show()
     $('.commit-form').hide()
   })
