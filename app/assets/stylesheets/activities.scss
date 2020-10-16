@@ -152,19 +152,19 @@ $offwhite: #f5f5f5;
   font-size: 12px;
   font-style: italic;
   position: relative;
-  top: -18px;
+  // top: -18px;
 }
 
 .activated-tag {
-  position: relative;
+  margin: 4px;
+  margin-left: 0;
   top: -3px;
   font-size: 9px;
   text-transform: uppercase;
-  color: white;
+  color: black;
   font-weight: bolder;
   left: -139px;
   letter-spacing: 1px;
-  // font-style: italic;
 }
 
 .completed-tag {
@@ -224,16 +224,18 @@ $offwhite: #f5f5f5;
 
 .commit.button, .complete.button {
   display: inline-block;
-  background-color: #18a57e;
+  // background-color: #18a57e;
+  // background-color: #77a6ff;
+  background-color: #00de1b;
   border: 1px solid;
   font-size: 10px;
   line-height: 12px;
   position: relative;
-  top: -3px;
-  padding: 2px 4px;
+  top: -5px;
+  padding: 4px 6px;
   color: white;
   letter-spacing: -0.2px;
-  border-radius: 4px;
+  border-radius: 2px;
   color: white !important;
   vertical-align: top;
   margin-top: 4px;
@@ -244,15 +246,17 @@ $offwhite: #f5f5f5;
   }
 
   &:hover {
-    background-color: #0b8a67;
+    // background-color: #0b8a67;
+    // background-color: #9dbdfb;
+    background-color: #2afb43;
   }
 }
 
 .complete.button {
-  background-color: #ff5d5d;
+  // background-color: #ff5d5d;
 
   &:hover {
-    background-color: #dc3e3e;
+    // background-color: #dc3e3e;
   }
 }
 

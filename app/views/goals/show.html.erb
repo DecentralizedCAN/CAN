@@ -128,7 +128,7 @@
     <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
       <div class="mark-accomplished">
         <%= @goal.users.count if @goal.users.count > 0%>
-        <i class="fas fa-check-double"></i> Completed
+        <i class="fas fa-check-double"></i> Achieved
       </div>
     <% end %>
   <% else %>

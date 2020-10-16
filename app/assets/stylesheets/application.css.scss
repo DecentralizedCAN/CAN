@@ -68,6 +68,10 @@ a:hover, a:focus, a:visited {
   cursor: pointer;
 }
 
+.button {
+  cursor: pointer;
+}
+
 a.button, input.button {
   font-style: normal;
   border: 1px solid #505050;
@@ -530,13 +534,29 @@ hr {
   width: auto;
 }
 
+// nav #logo span#logo-name {
+//   background: -webkit-linear-gradient(-180deg, #ec6f68, #6fcae8);
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+// }
+
 nav #logo {
   font-style: normal;
-  font-family: 'Oswald', sans-serif;
+  // font-family: 'Oswald', sans-serif;
   float: left;
   font-size: 2em;
   font-weight: bold;
   letter-spacing: -1px;
+  color: #ec6f68;
+
+  .logo-image {
+    width: 31px;
+    margin: 4px;
+    top: -2px;
+    position: relative;
+    display: inline-block !important;
+    margin-right: -4px;
+  }
 }
 
 // .nav li {
@@ -565,8 +585,11 @@ nav #logo {
 // }
 
 .navbar {
-  background-color: #f1f1f1;
-  border-color: #e2e1e1;
+  // background-color: #f1f1f1;
+  // border-color: #e2e1e1;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
 }
 
 .back-button {
@@ -657,3 +680,44 @@ nav #logo {
   width: 100%;
   text-align: center;
 }
+
+// POPUP
+#commit-popup {
+  display: none;
+}
+
+.popup-background {
+  position: absolute;
+  background-color: gray;
+  opacity: 0.5;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.popup-outer {
+  position: absolute;
+  z-index: 1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.popup-inner {
+  position: relative;
+  top: 20vh;
+  background-color: white;
+  z-index: 2;
+  width: 400px;
+  min-height: 200px;
+  margin: auto;
+  border-radius: 2px;
+  padding: 10px;
+  box-shadow: 0px 3px 6px 0px #807f7f;
+}
+// POPUP ENDS

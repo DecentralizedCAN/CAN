@@ -6,6 +6,11 @@
 
 <br>
 
+<% if Activity.where(:goal_id => link.child.id).count > 0 %>
+  <%= Activity.where(:goal_id => link.child.id).count %>
+  <i class="fas fa-tools"></i>
+<% end %>
+
 <% if link.user.include?(current_user) %>
 
   <% if link.child.users.count > 0 %>
