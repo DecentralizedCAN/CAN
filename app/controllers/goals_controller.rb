@@ -81,6 +81,8 @@ class GoalsController < ApplicationController
         @post.upvotes.create(user_id: current_user.id)				
 			end
 
+      redirect_back fallback_location: root_path
+
 		elsif Goal.find_by(:title => params[:goal][:title]).present?
 
 			@goal = Goal.find_by(:title => params[:goal][:title])

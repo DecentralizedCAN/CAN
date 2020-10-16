@@ -10,7 +10,7 @@
 </div> -->
 
 <ul class="nav nav-tabs">
-  <% if params[:goal] %>
+ <!--  <% if params[:goal] %>
     <li><%= link_to 'Brainstorm', post_problem_path(:goal => params[:goal]) %></li>
     <li class="active"><%= link_to 'Action', post_action_path(:goal => params[:goal]) %></li>
     <li><%= link_to 'Discussion', new_discussion_path(:goal => params[:goal]) %></li>
@@ -18,10 +18,11 @@
     <li><%= link_to 'Brainstorm', post_problem_path %></li>
     <li class="active"><%= link_to 'Action', post_action_path %></li>
     <li><%= link_to 'Discussion', new_discussion_path %></li>
-  <% end %>
+  <% end %> -->
 </ul>
 
 <div class="form-tab">
+
 <%= render 'form', activity: @activity %>
 </div>
 

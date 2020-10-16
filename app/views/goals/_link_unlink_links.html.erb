@@ -9,28 +9,28 @@
 <% if link.user.include?(current_user) %>
 
   <% if link.child.users.count > 0 %>
-    <i class="fas fa-check-double"></i>
     <%= link.child.users.count %>
+    <i class="fas fa-check-double"></i>
   <% end %>
 
-  <i class="fas fa-user-friends"></i>
+  <!-- <i class="fas fa-user-friends"></i> -->
   <%= link.user.count %>
 
   <%= link_to unlink_path(:link_id => link.id), :method => 'post' do %>
-    <i class="fas fa-minus-square unlink"></i>
+    <i class="fas fa-check-square unlink"></i>
   <% end %>
 <% elsif link.child.id == 1 %>
 <% else %>
 
   <% if link.child.users.count > 0 %>
-    <i class="fas fa-check-double"></i>
     <%= link.child.users.count %>
+    <i class="fas fa-check-double"></i>
   <% end %>
 
-  <i class="fas fa-user-friends"></i>
+  <!-- <i class="fas fa-user-friends"></i> -->
   <%= link.user.count %>
 
   <%= link_to link_path(:link_id => link.id), :method => 'post' do %>
-    <i class="fas fa-plus-square link"></i>
+    <i class="far fa-check-square link"></i>
   <% end %>
 <% end %>

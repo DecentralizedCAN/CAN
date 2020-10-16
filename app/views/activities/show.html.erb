@@ -87,6 +87,86 @@
 
     <h1>Roles</h1>
     <div>
+
+  <ul class="all-roles fadein">
+    <% @activity.roll.each do |role| %>
+      <li>
+
+        <label class="label" style="display: none;">
+          <input  class="label__checkbox" type="checkbox" />
+          <span class="label__text">
+            <span class="label__check">
+              <i class="fa fa-check icon"></i>
+            </span>
+          </span>
+        </label>
+
+        <div>
+        <strong><%= pluralize(role.minimum, role.title) %></strong>
+
+          <!-- COMMIT BUTTON -->
+          <% if logged_in? && Completion.where(user_id: @user.id).where(roll_id: role.id).count > 0 %>
+            <span class="completed"><i class="fa fa-check"></i>completed</span>
+          <% else %>
+
+          <% if role.user.include?(@user) %>
+            <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
+              <i class="fa fa-times"></i>
+              Uncommit
+            <% end %>
+
+            <%= link_to complete_path(:roll_id => role.id), :method => "post", :class => "button complete" do %>
+              <i class="fa fa-check"></i>
+              Mark complete
+            <% end %>
+
+            <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
+              <%= link_to commit_path(:roll_id => role.id), :class => "button complete" do %>
+                <i class="fas fa-user-plus"></i>
+                Commit
+              <% end %>
+            <% end %>
+
+          <% end %>
+          <br>
+          <!-- COMMIT BUTTON ENDS -->
+
+
+          
+          <% if role.description.length > 0 %>
+            Description: <%= role.description %><br>
+          <% end %>
+
+          <%= pluralize(role.user.count, 'person') %> committed, and 
+          <% if !role.maximum %>
+            <%= role.minimum %> or more
+          <% elsif role.minimum < role.maximum %>
+            <%= role.minimum %> to <%= role.maximum %>
+          <% else %>
+            only <%= role.minimum %>
+          <% end %>
+          are needed
+
+          <div class="participation-meter participation-meter-outer">
+            <div class="participation-progress" style="
+            width: <%= role.user.count.to_f / role.minimum.to_f * 100%>%; 
+            background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
+            ">
+            </div>
+            <% if role.maximum %>
+              <div class="participation-progress second" style="
+              width: <%= role.user.count.to_f / role.maximum.to_f * 100%>%; 
+              background-color: rgba(255, 166, 252, <%= role.user.count.to_f / role.maximum.to_f * 4%>);
+              ">
+            </div>
+          <% end %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+<!-- 
       <ul class="all-roles">
 
         <% @activity.roll.each do |role| %>
@@ -145,7 +225,7 @@
           </li>
         <% end %>
       
-      </ul>
+      </ul> -->
 
     </div>
 
@@ -154,7 +234,7 @@
 
 </div>
 
-<div class="thisisa">This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.
+<!-- <div class="thisisa">This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info. -->
 
 <% if logged_in? && current_user.admin? %>
   <br><br>

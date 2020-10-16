@@ -1,7 +1,7 @@
 <div id="main-feed">
 
-  <%= link_to main_feed_path do %>
-	  <!-- <i class="fas fa-sort"></i> -->
+ <!--  <%= link_to main_feed_path do %>
+	  <i class="fas fa-sort"></i>
     <% if params[:sort] == 'new' %>
     	popular
     <% else %>
@@ -17,15 +17,15 @@
     <% else %>
     	new
     <% end %>
-  <% end %>
+  <% end %> -->
 
 	<div class="flex-container">
 		<ol class="new-posts">
 	  <% @posts.each do |post| %>
 			<% #if post.upvotes.count > 0 %>
 				<% if post.link_id %>
-  				<%= link_to goal_details_path(:goal_id => Goal.find(post.link.parent.hashid)) do %>
-						<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
+					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
+  				<%= link_to goal_path(:goal_id => Goal.find(post.link.child.hashid), :view => "public") do %>
 	          <div class="issue">
 	          	<div class="goal-title"><span class="underline"><%= Goal.find(post.link.parent.id).title %> <i class="fas fa-arrow-left"></i> <%= Goal.find(post.link.child.id).title %></span> <span class="feed-label">Goal</span></div>
 		            <div class="issue-info">

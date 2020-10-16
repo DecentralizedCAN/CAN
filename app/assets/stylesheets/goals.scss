@@ -1,3 +1,7 @@
+#search-goals {
+  margin-top: 10px;
+}
+
 .goal-node-outer {
   position: absolute;
   width: 100vw;
@@ -24,6 +28,20 @@
 
   h2.goals-title {
     // display: inline-block;
+    font-size: 24px;
+  }
+
+  .goal-middle-outer > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .goal-middle-outer > ul {
+    list-style: none;
+    width: 200px;
+    text-align: left;
+    // border: 1px solid gray;
+    // border-radius: 20px;
   }
 
   .goal-middle {
@@ -71,7 +89,8 @@
     font-size: 1.6em;
     text-overflow: ellipsis;
     overflow: hidden;
-    text-overflow: ellipsis;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .strikethrough {
@@ -105,8 +124,22 @@
     padding: 10px;
     margin: 0;
     font-size: 10px;
-    max-height: 300px;
+    max-height: 400px;
     overflow: auto;
+
+    label {
+      display: inline;
+      line-height: 14px;
+    }
+
+    #goal_post_goal {
+      position: relative;
+      top: 2px;
+    }
+
+    #submit_goal {
+      margin-top: 6px;
+    }
   }
 
   .mark-accomplished {
@@ -149,6 +182,12 @@
     &:hover {
       background-color: #c3c3c3;
     }
+  }
+
+  .btn-group.dropright {
+    display: block;
+    margin-top: 20px;
+    min-width: 300px;
   }
 
   .button.add {
@@ -351,8 +390,9 @@
   // }
 
   .dropdown-menu {
-    left: -92px;
-    width: 246px;
+    // left: -50px;
+    // width: 346px;
+    width: 100%;
   }
 
   .goal-details-section {

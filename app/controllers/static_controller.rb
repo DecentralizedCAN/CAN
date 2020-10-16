@@ -33,7 +33,7 @@ class StaticController < ApplicationController
 		#   smtp.send_message message, 'me@fromdomain.com', 'test@todomain.com'
 		# end
 
-		if params[:sort] == "new"
+		if params[:sort] == "new" || true
 			@posts = Post.left_joins(:upvotes)
 			  .group(:id)
 			  .having('count(upvotes.id) > 0')

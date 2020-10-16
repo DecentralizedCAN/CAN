@@ -47,25 +47,6 @@
 
     <div class="roll-progress">
       
-      <div class="participation-meter">
-        <% if total_complete(activity) >= total_minimum(activity) %>
-          <div class="participation-progress" style="
-          width: 100%;
-          background: repeating-linear-gradient(-45deg, #ff8787, #ffb9b9 4px, #ff7575 4px, #ff3636 8px);
-          ">
-          </div>
-
-        <% else %>
-
-          <div class="participation-progress" style="
-          width: <%= total_committed(activity).to_f / total_minimum(activity).to_f * 100 + 1%>%; 
-          background-color: rgba(255, 116, 85, <%= total_committed(activity).to_f / total_minimum(activity).to_f %>);
-          ">
-          </div>
-        <% end %>
-
-      </div>
-
       <% if total_complete(activity) >= total_minimum(activity) %>
         
         <div class="completed-tag">
@@ -94,6 +75,25 @@
         </div>
 
       <% end %>
+      
+      <div class="participation-meter">
+        <% if total_complete(activity) >= total_minimum(activity) %>
+          <div class="participation-progress" style="
+          width: 100%;
+          background: repeating-linear-gradient(-45deg, #ff8787, #ffb9b9 4px, #ff7575 4px, #ff3636 8px);
+          ">
+          </div>
+
+        <% else %>
+
+          <div class="participation-progress" style="
+          width: <%= total_committed(activity).to_f / total_minimum(activity).to_f * 100 + 1%>%; 
+          background-color: rgba(255, 116, 85, <%= total_committed(activity).to_f / total_minimum(activity).to_f %>);
+          ">
+          </div>
+        <% end %>
+
+      </div>
 
     </div>
 

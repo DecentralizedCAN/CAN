@@ -1,8 +1,11 @@
 <div class="goal-node">
 
-<!-- <h2 class='goals-title'>
-  Viewing goals
-</h2> -->
+<%= link_to goal_path(Goal.first, :view => params['view']), :id => 'goal-path' do %>
+<h2 class='goals-title'>
+  <i class="fas fa-map"></i>
+  Roadmap
+</h2>
+<% end %>
 
 <% if params[:view] == 'public' %>
   <%= link_to goal_path(@goal), :class => "goals-link" do %>
@@ -53,6 +56,9 @@
   <%= render(:partial => 'public_branches', :locals => {:@parents => @public_parents})%>
 <% else %>
   <%= render(:partial => 'personal_branches', :locals => {:@parents => @parents})%>
+  <% if @parents.length == 0 && @goal.id != 1 %>
+    <br><br><div>This goal is not connected to your roadmap</div><br>
+  <% end %>
 <% end %>
 
 
@@ -103,11 +109,22 @@
 <% end %>
 </ul> -->
 
+<div class="goal-middle-outer">
+
+  <ul></ul>
 
   <% if @goal.id != 1 %>
   <div class="goal-middle">
 
-  <% if @goal.users.include?(@user) %>
+  <% first_top_link = @public_parents.first %>
+
+  <% if first_top_link && !first_top_link.user.include?(@user) %>
+    <div class="mark-accomplished">
+    <%= link_to link_path(:link_id => first_top_link.id), :method => 'post' do %>
+      <i class="far fa-check-square link"></i> Adopt
+    <% end %>
+    </div>
+  <% elsif @goal.users.include?(@user) %>
     <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
       <div class="mark-accomplished">
         <%= @goal.users.count if @goal.users.count > 0%>
@@ -118,7 +135,7 @@
     <%= link_to complete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
       <div class="mark-accomplished">
         <%= @goal.users.count if @goal.users.count > 0%>
-        <i class="fas fa-check"></i> Complete
+        <!-- <i class="fas fa-user-check"></i> --> <i class="fas fa-check-double"></i> Mark achieved
       </div>
     <% end %>
   <% end %>
@@ -182,15 +199,21 @@
 
 
 
-  <% if @goal.id == 1 %>
+  <% if @goal.id == 1 && false %>
+    <!-- <h1>Goals</h1>  -->
     <%= link_to goals_path do %>
-      <i class="fas fa-search"></i> Search all goals
+      <div id="search-goals">
+        Search goals
+        <i class="fas fa-search"></i> <!-- Search all -->
+      </div>
     <% end %>
+    
+    <!-- <br><i class="fas fa-search"></i> View all top goals -->
   <% end %>
 
 
   <% if @goal.id != 1 %>
-    <%= link_to post_problem_path(:goal => @goal.id) do %>
+    <%= link_to post_action_path(:goal => @goal.id) do %>
       <div class="view-actionables">
         <i class="fas fa-pen"></i> Act
       </div>
@@ -226,30 +249,29 @@
 <% end %>
 </ul>  
  -->
-<br>
-<br>
+
 
 <div class="btn-group dropright">
   <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-plus"></i> Add
+    <i class="fas fa-plus"></i>
   </button>
   <div class="dropdown-menu">
     
     <%= form_for(@new_goal, remote: true) do |form| %>
       <div>
-        <%= form.text_area :title, id: :goal_title, placeholder: "Add a subgoal" %>
+        <%= form.text_area :title, id: :goal_title, placeholder: "Add a goal" %>
       </div>
 
       <%= form.hidden_field :parent_id, :value => @goal.id %>
 
       <% if Setting.find(13).state %>
-        <%= form.check_box :post_goal, {checked: false}, true, false %> Post to feed<br>
+        <%= form.check_box :post_goal, {checked: true}, true, false %> <label>Post to feed</label><br>
       <% end %>
 
       <%= form.submit "Submit", id: :submit_goal, :class => 'button'%>
     <% end %>
 
-    <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search existing goals...">
+<!--     <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search existing goals...">
     <ul id="myUL2">
 
       <% @my_goals.each do |goal| %>
@@ -257,10 +279,9 @@
           <%= link_to '+ ' + goal.title, newlink_path(:parent_id => @goal.id, :child_id => goal.id), :method => 'post', :class => 'button goal-button' %> 
         </li>
       <% end %>
-    </ul>
+    </ul> -->
   </div>
 </div>
-<br>
 
 
 </div>
@@ -270,7 +291,19 @@
 
 
 
+<ul>
+<% if Activity.where(:goal_id => @goal.id).length > 0 %>
+  <strong>Actions</strong>
+<% end %>
 
+<% Activity.where(:goal_id => @goal.id).each do |action| %>
+  <li>
+    <i class="fas fa-calendar"></i>
+    <%= link_to action.title, action_path(action) %>
+  </li>
+<% end %>
+</ul>
+</div>
 
 
 
@@ -339,9 +372,11 @@ function myFunction2() {
 }
 
 $(document).ready(function(){
-    var outerContent = $('.goal-node-outer');
-    var innerContent = $('.roots0');
+  localStorage.setItem("goal", '/goal/' + window.location.href.split('/goal/')[1]);
 
-    outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);        
+  var outerContent = $('.goal-node-outer');
+  var innerContent = $('.roots0');
+
+  outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);        
 });
 </script>

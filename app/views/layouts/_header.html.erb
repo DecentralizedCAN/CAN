@@ -1,6 +1,7 @@
 <header>
 
 <nav class="navbar navbar-default">
+  <!-- <div class="paintbrush"><i class="fas fa-paint-brush"></i></div> -->
   <div class="container-fluid converge-header">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -38,21 +39,22 @@
         <% if logged_in? %>
         <li>
           <% if logged_in? || Setting.find(6).state %>
-            <%= link_to goal_path(Goal.first, :view => 'public') do %>
-              <i class="fas fa-project-diagram"></i>
+            <%= link_to goal_path(Goal.first, :view => 'public'), :id => 'goal-path' do %>
+              <!-- <i class="fas fa-project-diagram"></i> -->
+              <i class="fas fa-map"></i>
               Roadmap
             <% end %>
           <% end %>
         </li>
 
-        <% if logged_in? && (Setting.first.state || current_user.admin?) %>
+       <!--  <% if logged_in? && (Setting.first.state || current_user.admin?) %>
           <li>
               <%= link_to choice_path do %>
                 <i class="fas fa-pen"></i>
                 Act
               <% end %>
           </li>
-        <% end %>
+        <% end %> -->
 
         <!-- <li>
           <%= link_to users_path do %>
@@ -113,3 +115,12 @@
 </nav>
 
 </header>
+
+<script type="text/javascript">
+  lastGoal = localStorage.getItem("goal");
+  if (lastGoal && lastGoal.length > 0) {
+    $('#goal-path').attr('href', lastGoal)
+    // console.log(href)
+    // $('#goal-path').attr("href", "");
+  }
+</script>
