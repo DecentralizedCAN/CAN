@@ -27,19 +27,19 @@
 					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
   				<%= link_to goal_path(:goal_id => Goal.find(post.link.child.hashid), :view => "public") do %>
 	          <div class="issue">
-	          	<div class="goal-title"><span class="underline"><%= Goal.find(post.link.parent.id).title %> <i class="fas fa-arrow-left"></i> <%= Goal.find(post.link.child.id).title %></span> <span class="feed-label">Goal</span></div>
+	          	<div class="goal-title"><span class="underline"><%= Goal.find(post.link.parent.id).title %> <i class="fas fa-link"></i> <%= Goal.find(post.link.child.id).title %></span> <span class="feed-label">Goal</span></div>
 		            <div class="issue-info">
 
 		              <div class="post-signature">
 		                Created <%= time_ago_in_words(post.created_at) %> ago
-		      					by <em><%= 
+		      					• by <em><%= 
 				            begin 
 				              post.upvotes.first.user.name
 				            rescue 
 				            end  %></em>
-		              </div>
+		              </div>•
 
-		              <br>
+		              <!-- <br> -->
 
 		              <div>
 		                <i class="fas fa-handshake"></i>
@@ -160,7 +160,7 @@
 
 		  <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state %>
 
-			<% if logged_in? && @notifications.length > 0 %>
+			<% if logged_in? && @notifications.length > 0 && false %>
 		  <div class="card-item">
 
 		  	<div class="flex-container">

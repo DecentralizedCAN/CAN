@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse toolbar-1" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="#">All posts <span class="sr-only">(current)</span></a></li> -->
-        <% if logged_in? && Setting.find(14).state %>
+        <% if logged_in? && Setting.find(14).state && false %>
           <li>
               <%= link_to dashboard_path do %>
                 <i class="fas fa-tachometer-alt"></i>

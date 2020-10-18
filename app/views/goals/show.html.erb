@@ -54,6 +54,9 @@
 
 <% if params[:view] == 'public' %>
   <%= render(:partial => 'public_branches', :locals => {:@parents => @public_parents})%>
+  <% if @public_parents.length == 0 && @goal.id != 1 %>
+    <br><br><div>This goal is not connected to any roadmap</div><br>
+  <% end %>
 <% else %>
   <%= render(:partial => 'personal_branches', :locals => {:@parents => @parents})%>
   <% if @parents.length == 0 && @goal.id != 1 %>
@@ -103,15 +106,34 @@
 <br>
  -->
 
-<!-- <ul class="branches">
-<% @parents.each do |link| %>
-	<li><%= link_to link.parent.title, goal_path(link.parent) %></li>
-<% end %>
-</ul> -->
-
 <div class="goal-middle-outer">
 
-  <ul></ul>
+  <% if @goal.id != 1 %>
+  <ul class="goal-actionables goal-users actionables-left">
+    <strong>
+      Adopted by</strong>
+      <% @public_parents.each do |link| %>
+        <% link.user.each do |user| %>
+          <li>
+            <i class="fas fa-user"></i>
+            <%= user.name %>
+          </li>
+        <% end %>
+      <% end %>
+
+    <% if @goal.users.count > 0 %>
+    <br><strong>
+      Marked achieved</strong>
+      <% @goal.users.each do |user| %>
+        <li>
+          <i class="fas fa-user"></i>
+          <%= user.name %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+  <div class="line horizontal"></div>
+  <% end %>
 
   <% if @goal.id != 1 %>
   <div class="goal-middle">
@@ -141,26 +163,6 @@
   <% end %>
 
   <br>
-
-  <!-- <div href="#" >Hover over me</div> -->
-
-  <!-- <ul class="goal-actionables actionables-left">
-    <li>
-      <i class="fas fa-check-double"></i>
-      <%= @goal.users.count %>
-      Marked achieved
-    </li>
-    <li>
-      <i class="fas fa-network-wired fa-rotate-180"></i>
-      <%=pluralize(@parents.count, 'Supergoal')%>
-    </li>
-    <li>
-      <i class="fas fa-network-wired"></i>
-      <%=pluralize(@children.count, 'Subgoal')%>
-    </li>
-  </ul> -->
-
-  <!-- <div class="line horizontal line-left"></div> -->
 
   <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
     <div class="view-goal-details">
@@ -219,23 +221,6 @@
       </div>
     <% end %>
 
-  <!-- <div class="line horizontal line-right"></div> -->
-
-  <!-- <ul class="goal-actionables actionables-right">
-    <li>
-      <i class="fas fa-brain"></i>
-      <%= pluralize(Problem.where(:goal_id => @goal.id).count, 'Brainstorm') %>
-    </li>
-    <li>
-      <i class="fas fa-calendar"></i>
-      <%= pluralize(Activity.where(:goal_id => @goal.id).count, 'Action') %>
-    </li>
-    <li>
-      <i class="fas fa-comments"></i>
-      <%= pluralize(Discussion.where(:goal_id => @goal.id).count, 'Discussion') %>
-    </li>
-  </ul> -->
-
   <% end %>
 
   <!-- <div class="view-actionables"><a href=""><i class="fas fa-plus"></i></a></div> -->
@@ -253,13 +238,13 @@
 
 <div class="btn-group dropright">
   <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-plus"></i>
+    <i class="fas fa-plus"></i> New
   </button>
   <div class="dropdown-menu">
     
     <%= form_for(@new_goal, remote: true) do |form| %>
       <div>
-        <%= form.text_area :title, id: :goal_title, placeholder: "Add a goal" %>
+        <%= form.text_area :title, id: :goal_title, placeholder: "Add a subgoal" %>
       </div>
 
       <%= form.hidden_field :parent_id, :value => @goal.id %>
@@ -290,19 +275,44 @@
 
 
 
-
-<ul>
+<% if Activity.where(:goal_id => @goal.id).count > 0  %>
+<div class="line horizontal"></div>
+<ul class="goal-actions">
 <% if Activity.where(:goal_id => @goal.id).length > 0 %>
   <strong>Actions</strong>
 <% end %>
 
 <% Activity.where(:goal_id => @goal.id).each do |action| %>
   <li>
-    <i class="fas fa-calendar"></i>
+    <% if total_committed(action) >= total_minimum(action) %>
+      <i class="fas fa-calendar-check"></i>
+    <% else %>
+      <i class="far fa-calendar"></i>
+    <% end %>
     <%= link_to action.title, action_path(action) %>
   </li>
 <% end %>
+
+  <!-- <ul class="goal-actionables actionables-right">
+    <li>
+      <i class="fas fa-brain"></i>
+      <%= pluralize(Problem.where(:goal_id => @goal.id).count, 'Brainstorm') %>
+    </li>
+    <li>
+      <i class="fas fa-calendar"></i>
+      <%= pluralize(Activity.where(:goal_id => @goal.id).count, 'Action') %>
+    </li>
+    <li>
+      <i class="fas fa-comments"></i>
+      <%= pluralize(Discussion.where(:goal_id => @goal.id).count, 'Discussion') %>
+    </li>
+  </ul> -->
 </ul>
+<% elsif @goal.id > 1 %>
+  <div class="line horizontal invisible"></div>
+  <ul class="invisible"></ul>
+<% end %>
+
 </div>
 
 

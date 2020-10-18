@@ -1,4 +1,4 @@
-<div id="activator">
+<div id="activator" class="white-container">
 
 <!--   <div class="back-button">
     <%= link_to main_feed_path do %>
@@ -86,151 +86,12 @@
   <div id="action-details">
 
     <h1>Roles</h1>
-    <div>
 
-  <ul class="all-roles fadein">
-    <% @activity.roll.each do |role| %>
-      <li>
-
-        <label class="label" style="display: none;">
-          <input  class="label__checkbox" type="checkbox" />
-          <span class="label__text">
-            <span class="label__check">
-              <i class="fa fa-check icon"></i>
-            </span>
-          </span>
-        </label>
-
-        <div>
-        <strong><%= pluralize(role.minimum, role.title) %></strong>
-
-          <!-- COMMIT BUTTON -->
-          <% if logged_in? && Completion.where(user_id: @user.id).where(roll_id: role.id).count > 0 %>
-            <span class="completed"><i class="fa fa-check"></i>completed</span>
-          <% else %>
-
-          <% if role.user.include?(@user) %>
-            <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
-              <i class="fa fa-times"></i>
-              Uncommit
-            <% end %>
-
-            <%= link_to complete_path(:roll_id => role.id), :method => "post", :class => "button complete" do %>
-              <i class="fa fa-check"></i>
-              Mark complete
-            <% end %>
-
-            <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
-             
-              <div class="button complete" id="commit-button"><i class="fas fa-user-plus"></i> COMMIT</div>
-
-             <!--  <%= link_to commit_path(:roll_id => role.id), :class => "button complete" do %>
-                <i class="fas fa-user-plus"></i>
-                Commit
-              <% end %> -->
-            <% end %>
-
-          <% end %>
-          <br>
-          <!-- COMMIT BUTTON ENDS -->
-
-
-          
-          <% if role.description.length > 0 %>
-            Description: <%= role.description %><br>
-          <% end %>
-
-          <%= pluralize(role.user.count, 'person') %> committed, and 
-          <% if !role.maximum %>
-            <%= role.minimum %> or more
-          <% elsif role.minimum < role.maximum %>
-            <%= role.minimum %> to <%= role.maximum %>
-          <% else %>
-            only <%= role.minimum %>
-          <% end %>
-          are needed
-
-          <div class="participation-meter participation-meter-outer">
-            <div class="participation-progress" style="
-            width: <%= role.user.count.to_f / role.minimum.to_f * 100%>%; 
-            background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
-            ">
-            </div>
-            <% if role.maximum %>
-              <div class="participation-progress second" style="
-              width: <%= role.user.count.to_f / role.maximum.to_f * 100%>%; 
-              background-color: rgba(255, 166, 252, <%= role.user.count.to_f / role.maximum.to_f * 4%>);
-              ">
-            </div>
-          <% end %>
-          </div>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-
-<!-- 
-      <ul class="all-roles">
-
-        <% @activity.roll.each do |role| %>
-          <li>
-
-            <div><strong><%= role.title %></strong> &nbsp;<%= role.description %></div>
-
-            <div class="role-progress">
-              
-              <div class="participation-meter participation-meter-outer">
-                <div class="participation-progress" style="
-                width: <%= role.user.count.to_f / role.minimum.to_f * 100 + 1%>%; 
-                background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
-                ">
-                </div>
-              </div>
-
-              <div class="written-progress-overlay">
-                <i class="fas fa-users"></i>
-                <% if !role.maximum %>
-                  <%= role.user.count %> committed/<%= role.minimum %>-∞
-                <% elsif role.minimum < role.maximum %>
-                  <%= role.user.count %> committed/<%= role.minimum %>-<%= role.maximum %>
-                <% else %>
-                  <%= role.user.count %> committed/<%= role.minimum %>
-                <% end %>
-                needed
-              </div>
-
-            </div>
-
-            <% if logged_in? && Completion.where(user_id: @user.id).where(roll_id: role.id).count > 0 %>
-              <span class="completed"><i class="fa fa-check"></i>completed</span>
-            <% else %>
-
-            <% if role.user.include?(@user) %>
-              <%= link_to unparticipate_path(:roll_id => role.id), :method => "post", :class => "button commit" do %>
-                <i class="fa fa-times"></i>
-                Uncommit
-              <% end %>
-
-              <%= link_to complete_path(:roll_id => role.id), :method => "post", :class => "button complete" do %>
-                <i class="fa fa-check"></i>
-                Mark complete
-              <% end %>
-
-              <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
-                <%= link_to commit_path(:roll_id => role.id), :class => "button complete" do %>
-                  <i class="fas fa-user-plus"></i>
-                  Commit
-                <% end %>
-              <% end %>
-
-            <% end %>
-
-          </li>
-        <% end %>
-      
-      </ul> -->
-
-    </div>
+    <ul class="all-roles fadein">
+      <% @activity.roll.each do |role| %>
+        <%= render(:partial => 'role', :locals => {:role => role}) %>
+      <% end %>
+    </ul>
 
     <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>
   </div>
@@ -239,7 +100,7 @@
 
 <!-- <div class="thisisa">This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info. -->
 
-<% if logged_in? && current_user.admin? %>
+<% if logged_in? && current_user.admin? && false %>
   <br><br>
   Created by user <%= @activity.creator %> –
   <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>
@@ -250,50 +111,3 @@
   <% end %>
 
 </div>
-
-<div id="commit-popup">
-  <div class="popup-background">
-  </div>
-  <div class="popup-outer">
-    <div class="popup-inner">
-      <div class="backdrop">
-
-      <h1>Commit to the role "<%= @roll.title %>"</h1>
-
-      <% if @roll.description.length > 0 %>
-        <p><strong>Description: </strong><%= @roll.description %></p>
-      <% end %>
-
-      <p>The action "<%= @roll.activity.title %>" will only happen if all roles get minimum participation.
-      </p>
-
-      <p>If this happens, can you commit to fulfill the role "<%= @roll.title %>"?</p>
-
-      <br>
-
-      <button class="button" id="exit-button">
-        <i class="fa fa-times"></i> No
-      </button>
-
-      <button class="button" id="exit-button">
-      <%= link_to participate_path(:roll_id => @roll.id), :method => "post" do %>
-        <i class="fa fa-check"></i> Yes
-      <% end %>
-      </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript">
-  
-  $('#commit-button').click(function(){
-    $('#commit-popup').show()
-  })
-
-  $('#exit-button').click(function(){
-    $('#commit-popup').hide()
-  })
-
-</script>

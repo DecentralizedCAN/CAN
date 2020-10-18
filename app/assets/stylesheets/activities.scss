@@ -60,7 +60,7 @@ $offwhite: #f5f5f5;
 
 .participation-meter {
   height: 8px !important;
-  width: 100%;
+  // width: 100%;
   margin-top: 4px;
 
   .participation-progress.second {
@@ -78,10 +78,11 @@ $offwhite: #f5f5f5;
 
 .written-progress {
 
-  // position: relative;
-  // top: -2px;
-  // left: -162px;
-  color: #565656 !important;
+  position: relative;
+  top: 4px;
+  left: -162px;
+  // color: #565656 !important;
+  color: #757575 !important;
   font-weight: bold !important;
   font-size: 10px !important;
 
@@ -155,31 +156,34 @@ $offwhite: #f5f5f5;
   // top: -18px;
 }
 
-.activated-tag {
+.activated-tag, .completed-tag {
+  position: relative;
   margin: 4px;
   margin-left: 0;
-  top: -3px;
+  top: 6px;
   font-size: 9px;
   text-transform: uppercase;
   color: black;
   font-weight: bolder;
-  left: -139px;
+  left: -138px;
   letter-spacing: 1px;
+  display: flex !important;
 }
 
 .completed-tag {
-  position: relative;
-  top: -3px;
-  font-size: 9px;
-  text-transform: uppercase;
   color: white;
-  font-weight: bolder;
-  left: -139px;
-  letter-spacing: 1px;
-  display: inline-block;
-  color: white;
-  font-style: italic !important;
-  border-radius: 2px;
+//   position: relative;
+//   // top: -3px;
+//   font-size: 9px;
+//   text-transform: uppercase;
+//   font-weight: bolder;
+//   // left: -139px;
+//   margin: 2px 0;
+//   letter-spacing: 1px;
+//   // display: inline-block;
+//   // color: white;
+//   // font-style: italic !important;
+//   border-radius: 2px;
 }
 
 .committed {
@@ -200,6 +204,9 @@ $offwhite: #f5f5f5;
 
 .roll-progress {
   max-height: 20px;
+  min-width: fit-content;
+  width: 100%;
+  display: flex;  
 
   div {
     display: inline-block;
@@ -226,7 +233,7 @@ $offwhite: #f5f5f5;
   display: inline-block;
   // background-color: #18a57e;
   // background-color: #77a6ff;
-  background-color: #00de1b;
+  background-color: #6c9bf5;
   border: 1px solid;
   font-size: 10px;
   line-height: 12px;
@@ -248,7 +255,7 @@ $offwhite: #f5f5f5;
   &:hover {
     // background-color: #0b8a67;
     // background-color: #9dbdfb;
-    background-color: #2afb43;
+    background-color: #a9c6fd;
   }
 }
 

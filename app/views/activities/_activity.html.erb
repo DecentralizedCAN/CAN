@@ -1,5 +1,13 @@
   <div class="proposal-block-one">
-    <div class="activity-title"><span class="underline"><%= activity.title %></span> <span class="feed-label">Action</span></div>
+    <div class="activity-title">
+      <span class="underline">
+
+      <% if activity.goal %>
+      <%= activity.goal.title %>
+      <i class="fas fa-arrow-right"></i>
+      <% end %>
+
+      <%= activity.title %></span> <span class="feed-label">Action</span></div>
 
   		<% if activity.solution %>
   			<div class="proposal-activity-description">
@@ -9,7 +17,7 @@
 
   		<% end %>
 
-      <% if activity.goal %>
+      <% if false && activity.goal %>
         <div class="proposal-activity-description">
           <i class="fas fa-link"></i>
           Attached to goal <strong>
@@ -26,41 +34,62 @@
 
       <div class="post-signature">
         <!-- <i class="fas fa-calendar"></i> -->
-        Created <%= time_ago_in_words(activity.created_at) %> ago
-        by <em><%= 
+        <%= time_ago_in_words(activity.created_at) %> ago
+        • by <em><%= 
           begin 
             User.find(activity.creator).name
-          rescue 
+          rescue
           end  %></em>
 
       </div>
 
-      <div>
-        <% if activity.expiration && activity.expiration > @current_time %>
+      <% if activity.expiration && activity.expiration > @current_time %>
+        <div>
           <br>
           <i class="fas fa-clock"></i>
           expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
 
     </div>
 
     <div class="roll-progress">
       
+      <div class="participation-meter">
+        <% if total_complete(activity) >= total_minimum(activity) %>
+          
+          <div class="participation-progress" style="
+          width: 100%; 
+          background-color: #a7a7a7;
+          ">
+          </div>
+
+          <!-- <div class="participation-progress" style="
+          width: 100%;
+          background: repeating-linear-gradient(-45deg, #ff8787, #ffb9b9 4px, #ff7575 4px, #ff3636 8px);
+          "> -->
+          <!-- </div> -->
+
+        <% else %>
+
+          <div class="participation-progress" style="
+          width: <%= total_committed(activity).to_f / total_minimum(activity).to_f * 100 + 1%>%; 
+          background-color: rgba(42, 251, 67, <%= total_committed(activity).to_f / total_minimum(activity).to_f %>);
+          ">
+          </div>
+        <% end %>
+
+      </div>
+
       <% if total_complete(activity) >= total_minimum(activity) %>
-        
         <div class="completed-tag">
           Complete
         </div>
-
       <% elsif total_committed(activity) >= total_minimum(activity) %>
-  
         <div class="activated-tag">
           Activated
         </div>
-
       <% else %>
-
         <div class="written-progress">
           <i class="fas fa-users"></i>
           <% if !total_maximum(activity) %>
@@ -71,29 +100,8 @@
             <%= total_committed(activity) %>/<%=total_minimum(activity) %>
           <% end %>
           filled roles
-
         </div>
-
       <% end %>
-      
-      <div class="participation-meter">
-        <% if total_complete(activity) >= total_minimum(activity) %>
-          <div class="participation-progress" style="
-          width: 100%;
-          background: repeating-linear-gradient(-45deg, #ff8787, #ffb9b9 4px, #ff7575 4px, #ff3636 8px);
-          ">
-          </div>
-
-        <% else %>
-
-          <div class="participation-progress" style="
-          width: <%= total_committed(activity).to_f / total_minimum(activity).to_f * 100 + 1%>%; 
-          background-color: rgba(255, 116, 85, <%= total_committed(activity).to_f / total_minimum(activity).to_f %>);
-          ">
-          </div>
-        <% end %>
-
-      </div>
 
     </div>
 
