@@ -1,6 +1,6 @@
 class StaticController < ApplicationController
-	before_action :require_login, except: [:documentation, :main_feed], if: -> { public_viewable? }
 	before_action :require_login, unless: -> { public_viewable? }
+	before_action :require_login, except: [:documentation, :main_feed], if: -> { public_viewable? }
 
 	def choice
 		
@@ -33,18 +33,18 @@ class StaticController < ApplicationController
 		#   smtp.send_message message, 'me@fromdomain.com', 'test@todomain.com'
 		# end
 
-		if params[:sort] == "new" || true
-			@posts = Post.left_joins(:upvotes)
-			  .group(:id)
-			  .having('count(upvotes.id) > 0')
-			  .paginate(:page => params[:page], :per_page => 12)
-			  .order('created_at DESC')
-		else
+		if params[:sort] == "popular"
 			@posts = Post.left_joins(:upvotes)
 			  .group(:id)
 				.having('count(upvotes.id) > 0')
 			  .paginate(:page => params[:page], :per_page => 12)
 			  .order("COUNT(upvotes.id) / (( extract(epoch from now()) - extract(epoch from posts.created_at) / 1.002) ) DESC")
+		else
+			@posts = Post.left_joins(:upvotes)
+			  .group(:id)
+			  .having('count(upvotes.id) > 0')
+			  .paginate(:page => params[:page], :per_page => 12)
+			  .order('created_at DESC')
 		end
 
 		# User.first.notification.create(:details => "test", :activity_id => 1)

@@ -223,18 +223,6 @@
 
   <% end %>
 
-  <!-- <div class="view-actionables"><a href=""><i class="fas fa-plus"></i></a></div> -->
-
-
-<!-- <h2 class="goal-list-title">How to achieve this</h2> -->
-
-<!-- <ul class="roots roots0">
-<% @children.each do |link| %>
-  <li><%= link_to link.child.title, goal_path(link.child) %>
-<% end %>
-</ul>  
- -->
-
 
 <div class="btn-group dropright">
   <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -275,7 +263,7 @@
 
 
 
-<% if Activity.where(:goal_id => @goal.id).count > 0  %>
+<% if Activity.where(:goal_id => @goal.id).count > 0 %>
 <div class="line horizontal"></div>
 <ul class="goal-actions">
 <% if Activity.where(:goal_id => @goal.id).length > 0 %>
@@ -293,6 +281,31 @@
   </li>
 <% end %>
 
+<% if Discussion.where(:goal_id => @goal.id).length > 0 %>
+  <br><strong>Discussions</strong>
+<% end %>
+
+<% Discussion.where(:goal_id => @goal.id).each do |discussion| %>
+  <li>
+    <i class="fas fa-comments"></i>
+    <%= link_to discussion.title, discussion_path(discussion) %>
+  </li>
+<% end %>
+
+</ul>
+
+<% elsif @goal.id > 1 %>
+  <div class="line horizontal invisible"></div>
+  <ul class="invisible"></ul>
+<% end %>
+
+</div>
+
+
+
+
+
+
   <!-- <ul class="goal-actionables actionables-right">
     <li>
       <i class="fas fa-brain"></i>
@@ -307,17 +320,6 @@
       <%= pluralize(Discussion.where(:goal_id => @goal.id).count, 'Discussion') %>
     </li>
   </ul> -->
-</ul>
-<% elsif @goal.id > 1 %>
-  <div class="line horizontal invisible"></div>
-  <ul class="invisible"></ul>
-<% end %>
-
-</div>
-
-
-
-
 
 
 <!-- <h2 class="goal-list-title">Top node tree</h2> -->

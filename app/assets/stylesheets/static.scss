@@ -24,7 +24,8 @@ $label-blue: #81c4ff;
   display: inline-block;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
-  font-size: 13px;
+  // font-size: 13px;
+  font-size: 15px;
 }
 
 .issue-info, .activity-info, .discussion-info, .written-progress {
@@ -43,7 +44,7 @@ $label-blue: #81c4ff;
 }
 
 .post-signature {
-  font-size: 10px !important;
+  font-size: 12px !important;
 }
 
 #main-feed {
@@ -61,7 +62,7 @@ $label-blue: #81c4ff;
 .proposal, .issue, .discussion {
   margin-left: 0px;
   padding-left: 26px !important;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .upvote-div {

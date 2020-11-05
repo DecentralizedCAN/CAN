@@ -152,11 +152,13 @@ p > a, .comment > a {
 
 .comment-box {
   width: 100%;
-  height: 24px;
+  height: 22px;
 
   #comment_content {
   	width: 100%;
     padding-right: 50px;
+    border: 0;
+    border-top: 1px solid #d8d8d8;
   }
 }
 
@@ -166,7 +168,8 @@ p > a, .comment > a {
 
 #submit_discussion {
   margin-top: 12px;
-  background-color: $neutral-blue;
+  // background-color: $neutral-blue;
+  background-color: #81c4ff;
   border: 1px solid #ddd;
   color: white;
   font-size: 16px;
@@ -195,12 +198,13 @@ p > a, .comment > a {
 #send {
   float: right;
   position: relative;
-  top: -22px;
+  top: -18px;
   left: -8px;
   border: none;
   padding: 0;
   color: #1491ff !important;
   font-weight: bold;
+  background: transparent;
 }
 
 #activator > .discussion-outer {
@@ -222,12 +226,12 @@ p > a, .comment > a {
 }
 
 .discussion-content {
-  margin-top: 8px;
+  margin-top: -8px;
   margin-bottom: 8px;
   font-size: 12px;
   padding: 6px 10px;
-  border: 1px solid #d8d8d8;
-  background: white;
+  // border: 1px solid #d8d8d8;
+  // background: white;
 }
 
 #top-liked-mini {

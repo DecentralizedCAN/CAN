@@ -22,11 +22,13 @@
     <div class="collapse navbar-collapse toolbar-1" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="#">All posts <span class="sr-only">(current)</span></a></li> -->
-        <% if logged_in? && Setting.find(14).state && false %>
+        <% if logged_in? && Setting.find(14).state %>
           <li>
               <%= link_to dashboard_path do %>
-                <i class="fas fa-tachometer-alt"></i>
-                Dashboard
+                <!-- <i class="fas fa-tachometer-alt"></i> -->
+                <!-- Dashboard -->
+                <i class="fas fa-handshake"></i>
+                Commitments
               <% end %>
           </li>
         <% end %>
@@ -39,7 +41,7 @@
           <% end %>
         </li>
         
-        <% if logged_in? %>
+
         <li>
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to goal_path(Goal.first, :view => 'public'), :id => 'goal-path' do %>
@@ -50,14 +52,14 @@
           <% end %>
         </li>
 
-       <!--  <% if logged_in? && (Setting.first.state || current_user.admin?) %>
+        <% if logged_in? && (Setting.first.state || current_user.admin?) %>
           <li>
               <%= link_to choice_path do %>
                 <i class="fas fa-pen"></i>
                 Act
               <% end %>
           </li>
-        <% end %> -->
+        <% end %>
 
         <!-- <li>
           <%= link_to users_path do %>
@@ -65,7 +67,7 @@
               Members
             <% end %>
         </li> -->
-        <% end %>
+
 
         <% if false && (logged_in? || Setting.find(6).state) %>
           <li>

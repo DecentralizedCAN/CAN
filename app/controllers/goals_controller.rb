@@ -1,5 +1,7 @@
 class GoalsController < ApplicationController
-  before_action :require_login
+  # before_action :require_login
+  before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_login, except: [:show], if: -> { public_viewable? }
 
 	def index
 		@goals = Goal.all.reverse
@@ -10,8 +12,16 @@ class GoalsController < ApplicationController
 		@goal = Goal.find(params[:goal_id])
 		# @my_goals = @user.goals.all.reverse
 		@my_goals = Goal.all.reverse
-		@parents = @user.link.where(child_id: @goal.id)
-		@children = @user.link.where(parent_id: @goal.id)
+
+    if !@user && params['view'] != 'public'
+      flash[:warning] = "You must sign in to do that"
+      redirect_to goal_path(:view => 'public')      
+    end
+
+    if @user
+  		@parents = @user.link.where(child_id: @goal.id)
+  		@children = @user.link.where(parent_id: @goal.id)
+    end
 
 		@public_parents = Link.where(child_id: @goal.id)
 			.joins(:user)
@@ -149,6 +159,9 @@ class GoalsController < ApplicationController
 
 	private
 
+    def public_viewable?
+      Setting.find(6).state
+    end
     # def link_params
     #   params.require(:link).permit(:parent_id, :child_id)
     # end

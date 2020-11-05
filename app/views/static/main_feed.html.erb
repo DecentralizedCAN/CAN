@@ -1,23 +1,26 @@
 <div id="main-feed">
 
- <!--  <%= link_to main_feed_path do %>
+  <%= link_to main_feed_path do %>
 	  <i class="fas fa-sort"></i>
-    <% if params[:sort] == 'new' %>
-    	popular
+    <% if params[:sort] == 'popular' %>
+    	recent
     <% else %>
-    	<span class="underline-permanent">popular</span>
+    	<span class="underline-permanent">recent</span>
     <% end %>
   <% end %>
 
 	&nbsp;
 
-  <%= link_to main_feed_path(:sort => 'new') do %>
-    <% if params[:sort] == 'new' %>
-    	<span class="underline-permanent">new</span>
+  <%= link_to main_feed_path(:sort => 'popular') do %>
+	  <i class="fas fa-sort"></i>
+    <% if params[:sort] == 'popular' %>
+    	<span class="underline-permanent">popular</span>
     <% else %>
-    	new
+    	popular
     <% end %>
-  <% end %> -->
+  <% end %>
+
+
 
 	<div class="flex-container">
 		<ol class="new-posts">
@@ -27,7 +30,18 @@
 					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
   				<%= link_to goal_path(:goal_id => Goal.find(post.link.child.hashid), :view => "public") do %>
 	          <div class="issue">
-	          	<div class="goal-title"><span class="underline"><%= Goal.find(post.link.parent.id).title %> <i class="fas fa-link"></i> <%= Goal.find(post.link.child.id).title %></span> <span class="feed-label">Goal</span></div>
+	          	<div class="goal-title">
+	          			<span class="referenced-goal">
+	          				<%= Goal.find(post.link.parent.id).title %>
+          				</span>
+          				<i class="fas fa-link" style="color: #dd72ff"></i>
+	          			<span class="underline">
+        					<span class="referenced-goal"> 
+        						<%= Goal.find(post.link.child.id).title %>
+      						</span></span>
+      						<span class="feed-label">Goal</span>
+	          	</div>
+
 		            <div class="issue-info">
 
 		              <div class="post-signature">
@@ -113,13 +127,19 @@
 					<%= link_to discussion_path(post.discussion) do %>
 	          <div class="discussion">
 
-							<div class="discussion-title"><span class="underline"><%= post.discussion.title %></span>
+							<div class="discussion-title">
+				      	<% if post.discussion.goal %>
+				          <span class="referenced-goal"><strong>"<%= post.discussion.goal.title %>"</strong></span>
+				          <i class="fas fa-arrow-right"></i>
+				      <% end %>
+							<span class="underline" style="text-shadow: 0px 0px 12px #81c4ff"><%= post.discussion.title %></span>
 							<span class="feed-label">Discussion</span></div>
 
-				      <% if post.discussion.goal %>
+				      <% if false && post.discussion.goal %>
 				        <div class="proposal-activity-description">
 				          <i class="fas fa-link"></i>
-				          Attached to goal <strong>"<%= post.discussion.goal.title %>"</strong>
+				          <!-- Attached to goal  -->
+				          <span class="referenced-goal"><strong>"<%= post.discussion.goal.title %>"</strong></span>
 				        </div>
 				      <% end %>
 
@@ -132,11 +152,10 @@
 			            begin 
 			              User.find(post.discussion.creator).name
 			            rescue 
-			            end  %></em>
+			            end  %></em> •
 	              </div>
-	              <br>
 	              <div>
-	                <i class="fas fa-comment-dots"></i>
+	                <!-- <i class="fas fa-comment-dots"></i> -->
 	                <%= pluralize(post.discussion.comment.count, "comment") %>
 	              </div>
 	            </div>

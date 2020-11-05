@@ -1,3 +1,15 @@
+.referenced-goal {
+  border-radius: 40px;
+  padding: 1px 4px;
+  margin-right: 4px;
+  border: 1px solid #dd72ff;
+  line-height: 26px;
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
 #search-goals {
   margin-top: 10px;
 }
@@ -208,7 +220,8 @@
   }
 
   .goal-actions {
-    background-color: #f3bab7 !important;
+    // background-color: #f3bab7 !important;
+    background-color: #91ff9e !important;
   }
 
   .btn-group.dropright {

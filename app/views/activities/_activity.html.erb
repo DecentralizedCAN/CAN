@@ -1,13 +1,18 @@
   <div class="proposal-block-one">
     <div class="activity-title">
-      <span class="underline">
 
       <% if activity.goal %>
-      <%= activity.goal.title %>
+        <span class="referenced-goal">
+        <% if @activity %>
+          <%= link_to @activity.goal.title, goal_path(@activity.goal) %>
+        <% else %>
+          <%= activity.goal.title %>
+        <% end %>
+        </span>
       <i class="fas fa-arrow-right"></i>
       <% end %>
 
-      <%= activity.title %></span> <span class="feed-label">Action</span></div>
+      <span class="underline" style="text-shadow: 0px 0px 12px #2afb43;"><%= activity.title %></span></span> <span class="feed-label">Action</div>
 
   		<% if activity.solution %>
   			<div class="proposal-activity-description">

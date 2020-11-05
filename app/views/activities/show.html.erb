@@ -1,3 +1,19 @@
+<% if false && @activity.goal %>
+<div class="action-goal">
+  <div class="proposal-activity-description">
+    <!-- <i class="fas fa-link"></i> -->
+    <!-- Attached to goal  -->
+    <strong>
+      <% if @activity %>
+        <%= link_to @activity.goal.title, goal_path(@activity.goal) %>    
+      <% else %>
+        "<%= activity.goal.title %>"
+      <% end %>
+    </strong>
+  </div>
+</div>
+<% end %>
+
 <div id="activator" class="white-container">
 
 <!--   <div class="back-button">
