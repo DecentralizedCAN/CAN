@@ -45,7 +45,7 @@
 
   <div class="discussion-title">
     <% if @discussion.goal %>
-      <span class="referenced-goal"><strong>"<%= @discussion.goal.title %>"</strong></span>
+      <span class="referenced-goal"><strong>"<%= link_to @discussion.goal.title, goal_path(@discussion.goal) %>"</strong></span>
       <i class="fas fa-arrow-right"></i>
   <% end %>
   <span class="underline" style="text-shadow: 0px 0px 12px #81c4ff"><%= @discussion.title %></span>
@@ -70,7 +70,8 @@
 </div>
 
 <% if @discussion.content.length > 0 %>
-  <p class="discussion-content">Discussion topic: <%= @discussion.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+  <p class="discussion-content">Discussion info: 
+<%= @discussion.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
 <% end %>
 
 <% end %>
@@ -143,7 +144,8 @@
     <%= form.hidden_field :discussion_id %>
 
     <div class="comment-box">
-      <%= form.text_field :content, id: :comment_content, autocomplete: "off" %>
+      <%= form.text_field :content, id: :comment_content, autocomplete: "off", :maxlength => 3000, :size => 40 %>
+
       <%= form.submit "Send", id: :send %>
     </div>
 
