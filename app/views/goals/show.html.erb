@@ -263,7 +263,7 @@
 
 
 
-<% if Activity.where(:goal_id => @goal.id).count > 0 %>
+<% if Activity.where(:goal_id => @goal.id).count > 0 || Discussion.where(:goal_id => @goal.id).length > 0 %>
 <div class="line horizontal"></div>
 <ul class="goal-actions">
 <% if Activity.where(:goal_id => @goal.id).length > 0 %>
@@ -281,8 +281,12 @@
   </li>
 <% end %>
 
+<% if Activity.where(:goal_id => @goal.id).count > 0 && Discussion.where(:goal_id => @goal.id).length > 0 %>
+<br>
+<% end %>
+
 <% if Discussion.where(:goal_id => @goal.id).length > 0 %>
-  <br><strong>Discussions</strong>
+  <strong>Discussions</strong>
 <% end %>
 
 <% Discussion.where(:goal_id => @goal.id).each do |discussion| %>
