@@ -6,6 +6,8 @@ Rails.application.configure do
   ENV['LOCKBOX_MASTER_KEY'] = '0000000000000000000000000000000000000000000000000000000000000000'
   ENV['BLIND_INDEX_MASTER_KEY']='ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
   ENV['SERVER_HOST']='localhost:3000'
+  ENV['GMAIL_USERNAME']='test'
+  ENV['GMAIL_PASSWORD']='test'
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -32,15 +34,25 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Don't care if the mailer can't send.
+  # Care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
 
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :sendmail
-  host = 'localhost:3000'                     # Local server
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  config.action_mailer.delivery_method = :smtp
+  host = ENV['SERVER_HOST']                    # Local server
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :domain               => 'mail.google.com',
+    :port                 => 587,
+    :user_name            => ENV['GMAIL_USERNAME'],
+    :password             => ENV['GMAIL_PASSWORD'],
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
