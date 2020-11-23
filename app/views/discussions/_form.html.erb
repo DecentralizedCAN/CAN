@@ -24,6 +24,11 @@
     <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
   </div>
 
+  <% if Setting.find(12).state %>
+    <%= form.check_box :broadcast_discussion, {checked: false}, true, false %> Send a notification about this discussion to all members
+    <br>
+  <% end %>
+
   <%= form.submit value: "Post", id: :submit_discussion%>
 
 <% end %>

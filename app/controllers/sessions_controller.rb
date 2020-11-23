@@ -14,7 +14,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       if user.activated?
         log_in user
-        params[:session][:remember_me] == '0' ? forget(user) : remember(user)
+        # params[:session][:remember_me] == '0' ? forget(user) : remember(user)
+        remember(user)
       else
         message  = "Account not activated. "
         message += "Check your email for the activation link."
@@ -32,6 +33,7 @@ class SessionsController < ApplicationController
       @user.activate
       flash[:success] = 'Welcome to ' + ENV['GROUP_NAME'] + ', ' + @user.name + '!'
       log_in @user
+      remember(user)
     end
 
     if Setting.find(6).state

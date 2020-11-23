@@ -41,7 +41,9 @@ class DiscussionsController < ApplicationController
   # POST /discussions
   # POST /discussions.json
   def create
-    @discussion = Discussion.new(discussion_params)
+    clean_discussion_params = discussion_params.except(:broadcast_discussion)
+    puts clean_discussion_params
+    @discussion = Discussion.new(clean_discussion_params)
     @discussion.creator = current_user.id
 
     respond_to do |format|
@@ -55,6 +57,18 @@ class DiscussionsController < ApplicationController
         current_user.update(:last_posted => Time.now)
 
         # Notifications
+        if discussion_params[:broadcast_discussion]
+          puts "hihihihihihihihi"
+          User.all.each do |user|
+            notification = user.notification.create(:details => "A new discussion, \"" + @discussion.title + "\", was just created. Would you like to participate?",
+              :discussion_id => @discussion.id)
+            
+              notification.send_email if user.email_notifications
+          end
+        else 
+          puts "hohohohohoho"
+        end
+
         if discussion_params[:goal_id].length > 0
           @goal = Goal.find(discussion_params[:goal_id])
 
@@ -116,7 +130,7 @@ class DiscussionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def discussion_params
-      params.require(:discussion).permit(:title, :content, :problem_id, :goal_id)
+      params.require(:discussion).permit(:title, :content, :problem_id, :goal_id, :broadcast_discussion)
     end
 
     def public_viewable?
