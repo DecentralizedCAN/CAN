@@ -13,7 +13,7 @@
       </button>
       <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
       <%= link_to root_path, id: "logo", :class => "navbar-brand" do %>
-        <%= image_tag("logo.png", :border=>0, :class => 'logo-image') %>
+     <!--    <%= image_tag("logo.png", :border=>0, :class => 'logo-image') %> -->
         <span id="logo-name"><%= group_name %></span>
       <% end %>
     </div>
