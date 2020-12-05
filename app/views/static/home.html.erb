@@ -45,9 +45,14 @@
 <% if @sponsored_problems.length > 0 %>
   <div class="dashboard-item">
     <h1>
-      <i class="fas fa-handshake"></i>
-      My collaborations
+      <i class="fas fa-hands-helping" style="color: #ec6f68;"></i>
+      Collaborations
     </h1>
+
+    <p>To start a new Convergent Facilitation process, click "New collaboration" above and follow the prompts.
+    </p>
+    <!-- <p>You can find trainings and resources at <a target="_blank" style="color: #5454ff" href="https://convergentfacilitation.org/">convergentfacilitation.org <i class="fas fa-share-square"></i></a></p> -->
+
     <ul>
       <% @sponsored_problems.each do |problem| %>
         <%= link_to issue_path(problem) do %>
@@ -56,40 +61,45 @@
               <div class="issue">
                 <div class="issue-title"><span class="underline"><%= problem.title %></span></div>
 
-                  <% if problem.goal %>
+                  <% if false && problem.goal %>
                     <div class="proposal-activity-description">
                       <i class="fas fa-link"></i>
                       Attached to goal <strong>"<%= problem.goal.title %>"</strong>
                     </div>
                   <% end %>
 
+                  <% if problem.facilitator_id && problem.facilitator_id != current_user.id && problem.facilitator_id > 0 %>
+                    <div>
+                        <i class="fas fa-user-shield"></i>
+                        <% facilitator = User.find(problem.facilitator_id) %>
+                        Facilitator: 
+                        <strong><%= User.find(problem.facilitator_id).name %></strong>
+                    </div>
+                  <% end %>
+                  <% if problem.facilitator_id && problem.facilitator_id == current_user.id %>
+                    <div class="float-right">
+                      <i class="fas fa-star"></i>
+                      Facilitating
+                    </div>
+                  <% end %>
+
                   <div class="issue-info">
                     <div id="open-collaborators">
-                      <i class="fas fa-users"></i>
-                      <%= pluralize(problem.user.count, 'collaborator') %>
+                      Collaborators<br>
+                      <div><i class="fas fa-users"></i>
+                      <strong><%= problem.user.count %></strong></div>
                     </div>
                     <div>
-                      <i class="fas fa-clipboard-list"></i>
-                      <%= problem.criterium.joins(:user).group("criteria.id").count.count %> criteria
+                      Proposals<br>
+                      <div><i class="fas fa-file"></i>
+                      <strong><%= problem.solution.count %></strong></div>
                     </div>
                     <div>
-                      <i class="fas fa-file-alt"></i>
-                      <%= pluralize(problem.solution.count, "proposal") %>
+                      Criteria<br>
+                      <div><i class="fas fa-clipboard-check"></i>
+                      <strong><%= problem.criterium.joins(:user).group("criteria.id").count.count %></strong></div>
                     </div>
-                    <% if problem.facilitator_id && problem.facilitator_id != current_user.id && problem.facilitator_id > 0 %>
-                      <div>
-                          <i class="fas fa-user-shield"></i>
-                          <% facilitator = User.find(problem.facilitator_id) %>
-                          Facilitator: 
-                          <strong><%= User.find(problem.facilitator_id).name %></strong>
-                      </div>
-                    <% end %>
-                    <% if problem.facilitator_id && problem.facilitator_id == current_user.id %>
-                      <div class="float-right" style="color: #ffbe00;">
-                        <i class="fas fa-star"></i>
-                        <em>Facilitating</em>
-                      </div>
-                    <% end %>
+
                     <!-- <div class="post-signature">
                       <i class="fas fa-clock"></i>
                       <%= time_ago_in_words(problem.created_at) %> ago
@@ -109,6 +119,9 @@
       <% end %>
     </ul>
   </div>
+
+<p>You can find trainings and resources about Convergent Facilitation at <a target="_blank" style="color: #5454ff" href="https://convergentfacilitation.org/">convergentfacilitation.org <i class="fas fa-share-square"></i></a></p>
+<p>You can help us maintain this platform by <a target="_blank" style="color: #5454ff"  href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=XBL69M4KUQVTC&source=app">supporting it financially <i class="fas fa-share-square"></i><!-- <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"></a> --></p>
 <% end %>
 
 <% false && if @proposals.length > 0 %>
@@ -128,10 +141,17 @@
 <% end %>
 
 <% if @sponsored_problems.length == 0 %>
-  <p>You're signed in! To start a new convergent process, click "<i class="fa fa-plus"></i> New process" in the toolbar.</p>
+  <p>You're signed in! To start a new Convergent Facilitation process, click "<i class="fa fa-plus-circle"></i> New collaboration" in the toolbar.</p>
+  <p>If you are new to Convergent Facilitation, we recommend taking a class or reading the book before using this app. You can learn more at <a target="_blank" style="color: #5454ff" href="https://convergentfacilitation.org/">our official website <i class="fas fa-share-square"></i></a></p>
+
   <!-- <p>If you need guidance using the tools, hover over the <i class="far fa-question-circle"></i> icon wherever it appears.</p> -->
 <% end %>
 
 <% else %>
-  This app is a tool to aid in the Convergent Facilitation process. To get started, use the form above to sign in.
+  <h1>Welcome to Convergence!</h1>
+  <p>This app is a tool to aid in Convergent Facilitation processes.</p>
+
+  <p>If you are new to Convergent Facilitation, we recommend taking a class or reading the book before using this app. You can learn more at <a target="_blank" style="color: #5454ff" href="https://convergentfacilitation.org/">our official website <i class="fas fa-share-square"></i></a></p>
+
+  <p>To get started, use the form above to sign in.</p>
 <% end %>

@@ -34,12 +34,23 @@
         <% if logged_in? %>
           <li>
           <%= link_to root_path do %>
-            <i class="fas fa-tachometer-alt"></i>
-            Dashboard
+            <i class="fas fa-hands-helping"></i>
+            Collaborations
           <% end %>
           </li>
-        
-          <li>
+        <% end %>
+
+        <li>
+        <%= link_to post_problem_path do %>
+          <i class="fas fa-plus-circle"></i>
+          New collaboration
+        <% end %>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if logged_in? %>
+        <li>
           <%= link_to notifications_path do %>
             <% if current_user.notification.where(:read => nil).count > 0 %>
               <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
@@ -48,20 +59,8 @@
             <i class="fas fa-bell"></i>
             Notifications
           <% end %>
-          </li>
-
-        <% end %>
-
-        <li>
-        <%= link_to post_problem_path do %>
-          <i class="fas fa-plus"></i>
-          New process
-        <% end %>
         </li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-        <% if logged_in? %>
+        
         <li class="user-nav-link">
           <%= link_to current_user do %>
             <%= gravatar_for(current_user) %>

@@ -245,7 +245,8 @@ h2 {
 	display: inline-block;
 	vertical-align: top;
   margin-right: 40px;
-  min-width: 60%;
+  // min-width: 60%;
+  width: 100%;
 
 	h1, h2 {
 		color: #525252;
@@ -428,11 +429,40 @@ li.home-item {
 li.home-item-underlined {
 
   .issue {
+    display: flex;
     background-color: white;
-    border: 1px solid #d8d8d8;
-    padding: 6px 12px;
-    border-radius: 1px;
+    // border: 1px solid #d8d8d8;
+    // padding: 6px 12px;
+    padding: 20px;
+    border-radius: 3px;
     // border-radius: 20px;
+    margin-bottom: 20px;
+
+    > div {
+      margin: 10px;
+    }
+
+    > .issue-title { width: 50%; }
+    > .float-right {
+      width: 20%;
+      text-align: center;
+      padding-top: 10px;
+      color: #f06c9d;
+    }
+    > .issue-info {
+      width: 30%;
+      text-align: center;
+
+      i {
+        color: #6fcae8;
+      }
+
+      > div > div {
+        font-size: 20px;
+        margin: 0px;
+        margin-top: 6px;
+      }
+    }
   }
 
   &:hover {

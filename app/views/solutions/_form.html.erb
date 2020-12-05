@@ -63,7 +63,7 @@
 
   <%= form.hidden_field :problem_id, id: :solution_problem_id %>
 
-  <%= link_to "Cancel", issue_path(@problem.hashid), :class => "button-hollow", :id => "proposal-cancel" %>
+  <%= link_to "Discard", issue_path(@problem.hashid), data: {confirm: "Are you sure you want to discard? You will lose any progress on this proposal."}, :class => "button-hollow", :id => "proposal-cancel" %>
 
   <%= form.submit "Propose", id: :submit_action %>
 <% end %>
@@ -136,5 +136,9 @@
   });
 
   <% end %>
+
+  window.onbeforeunload = function() {
+      return true;
+  };
 
 </script>

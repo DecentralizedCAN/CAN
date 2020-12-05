@@ -559,7 +559,8 @@ nav #logo {
   letter-spacing: -1px;
 
   span#logo-name {
-    background: -webkit-linear-gradient(-180deg, #61e2ff, #4aef9c, #ff7272);
+    // background: -webkit-linear-gradient(-180deg, #61e2ff, #4aef9c, #ff7272);
+    background: #ff7272;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -619,8 +620,9 @@ nav #logo {
   // background-color: #f1f1f1;
   // border-color: #e2e1e1;
 
-  background-color: #e8e7e7;
-  border-color: #d8d8d8;
+  // background-color: #e8e7e7;
+  // border-color: #d8d8d8;
+  margin: 20px;
 }
 
 .back-button {

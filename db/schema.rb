@@ -52,34 +52,6 @@ ActiveRecord::Schema.define(version: 20200813155828) do
     t.index ["user_id", "activity_id"], name: "index_activities_users_on_user_id_and_activity_id"
   end
 
-  create_table "alinks", force: :cascade do |t|
-    t.bigint "goal_id"
-    t.bigint "action_id"
-    t.index ["action_id"], name: "index_alinks_on_action_id"
-    t.index ["goal_id"], name: "index_alinks_on_goal_id"
-  end
-
-  create_table "alinks_users", id: false, force: :cascade do |t|
-    t.bigint "alink_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["alink_id", "user_id"], name: "index_alinks_users_on_alink_id_and_user_id"
-    t.index ["user_id", "alink_id"], name: "index_alinks_users_on_user_id_and_alink_id"
-  end
-
-  create_table "blinks", force: :cascade do |t|
-    t.bigint "goal_id"
-    t.bigint "brainstorm_id"
-    t.index ["brainstorm_id"], name: "index_blinks_on_brainstorm_id"
-    t.index ["goal_id"], name: "index_blinks_on_goal_id"
-  end
-
-  create_table "blinks_users", id: false, force: :cascade do |t|
-    t.bigint "blink_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["blink_id", "user_id"], name: "index_blinks_users_on_blink_id_and_user_id"
-    t.index ["user_id", "blink_id"], name: "index_blinks_users_on_user_id_and_blink_id"
-  end
-
   create_table "comments", force: :cascade do |t|
     t.text "content_ciphertext"
     t.bigint "discussion_id"
@@ -88,15 +60,6 @@ ActiveRecord::Schema.define(version: 20200813155828) do
     t.datetime "updated_at", null: false
     t.index ["discussion_id"], name: "index_comments_on_discussion_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "completed", force: :cascade do |t|
-    t.bigint "roll_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["roll_id"], name: "index_completed_on_roll_id"
-    t.index ["user_id"], name: "index_completed_on_user_id"
   end
 
   create_table "completions", force: :cascade do |t|
@@ -162,20 +125,6 @@ ActiveRecord::Schema.define(version: 20200813155828) do
     t.index ["post_id"], name: "index_discussions_on_post_id"
     t.index ["problem_id"], name: "index_discussions_on_problem_id"
     t.index ["solution_id"], name: "index_discussions_on_solution_id"
-  end
-
-  create_table "dlinks", force: :cascade do |t|
-    t.bigint "goal_id"
-    t.bigint "discussion_id"
-    t.index ["discussion_id"], name: "index_dlinks_on_discussion_id"
-    t.index ["goal_id"], name: "index_dlinks_on_goal_id"
-  end
-
-  create_table "dlinks_users", id: false, force: :cascade do |t|
-    t.bigint "dlink_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["dlink_id", "user_id"], name: "index_dlinks_users_on_dlink_id_and_user_id"
-    t.index ["user_id", "dlink_id"], name: "index_dlinks_users_on_user_id_and_dlink_id"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -363,14 +312,8 @@ ActiveRecord::Schema.define(version: 20200813155828) do
   add_foreign_key "actdissents", "activities"
   add_foreign_key "actdissents", "users"
   add_foreign_key "activities", "goals"
-  add_foreign_key "alinks", "activities", column: "action_id"
-  add_foreign_key "alinks", "goals"
-  add_foreign_key "blinks", "goals"
-  add_foreign_key "blinks", "problems", column: "brainstorm_id"
   add_foreign_key "comments", "discussions"
   add_foreign_key "comments", "users"
-  add_foreign_key "completed", "rolls"
-  add_foreign_key "completed", "users"
   add_foreign_key "completions", "rolls"
   add_foreign_key "completions", "users"
   add_foreign_key "crialts", "criteria"
@@ -383,8 +326,6 @@ ActiveRecord::Schema.define(version: 20200813155828) do
   add_foreign_key "discussions", "posts"
   add_foreign_key "discussions", "problems"
   add_foreign_key "discussions", "solutions"
-  add_foreign_key "dlinks", "discussions"
-  add_foreign_key "dlinks", "goals"
   add_foreign_key "goals", "activities", column: "activities_id"
   add_foreign_key "goals", "discussions", column: "discussions_id"
   add_foreign_key "goals", "problems", column: "problems_id"
