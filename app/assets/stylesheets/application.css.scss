@@ -412,6 +412,14 @@ header {
   border-radius: 0;
 }
 
+.navbar-toggle {
+  border-color: #ddd;
+
+  .icon-bar {
+    background-color: #888;
+  }
+}
+
 .navbar-brand {
   padding: 0 10px;
   height: 20px;
