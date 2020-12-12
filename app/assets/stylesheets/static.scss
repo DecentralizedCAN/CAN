@@ -293,9 +293,10 @@ h2 {
 
   li {
     max-width: 600px;
-    width: fit-content;
-    margin: 4px 0px;
-    padding: 0px 2px;
+    width: 400px;
+    margin: 8px 0px;
+    padding: 2px 4px;
+    border: 1px solid;
 
     &:hover {
       text-decoration: underline;
@@ -330,8 +331,8 @@ h2 {
 }
 
 .unread {
-  border: 1px solid gray;
-  background-color: lightgray;
+  border: 2px solid #ec6f68 !important;
+  background-color: #ec6f681c;
 }
 
 // ABOUT

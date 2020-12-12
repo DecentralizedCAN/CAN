@@ -1,3 +1,19 @@
+<ol id="notifications" class="centered-notifications">
+<% @notifications.each do |notification| %>
+  <% if !notification.read %>
+    <li class='unread'>
+      <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+        <%= notification.details %>
+      <% end %>
+  
+      <%= link_to clear_notifications_path, :method => "post" do %>
+        <i class="fas fa-times close-window"></i>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>
+</ol>
+
 <div class="goal-node">
 
 <%= link_to goal_path(Goal.first, :view => params['view']), :id => 'goal-path' do %>
@@ -164,11 +180,23 @@
 
   <br>
 
-  <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
+  <div class="view-goal-details">
+  <% if !first_top_link.user.include?(@user) %>
+    <%= link_to link_path(:link_id => first_top_link.id), :method => 'post' do %>
+      <i class="far fa-check-square link"></i> Adopt
+    <% end %>
+  <% else %>
+    <%= link_to unlink_path(:link_id => first_top_link.id), :method => 'post' do %>
+      <i class="far fa-check-square link"></i> Leave
+    <% end %>
+  <% end %>
+  </div>
+
+<!--   <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
     <div class="view-goal-details">
       <i class="fas fa-stream"></i> Info
     </div>
-  <% end %>
+  <% end %> -->
 
 <% else %>
   <div>
@@ -217,7 +245,7 @@
   <% if @goal.id != 1 %>
     <%= link_to post_action_path(:goal => @goal.id) do %>
       <div class="view-actionables">
-        <i class="fas fa-pen"></i> Act
+        <i class="fas fa-tools"></i> Act
       </div>
     <% end %>
 

@@ -13,6 +13,9 @@ class GoalsController < ApplicationController
 		# @my_goals = @user.goals.all.reverse
 		@my_goals = Goal.all.reverse
 
+    @notifications = @user.notification.order("created_at DESC")
+    .paginate(:page => params[:page], :per_page => 20)
+
     if !@user && params['view'] != 'public'
       flash[:warning] = "You must sign in to do that"
       redirect_to goal_path(:view => 'public')      
