@@ -70,7 +70,7 @@ class CriteriaController < ApplicationController
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
         unless facilitator.id == @user.id
-          notification = facilitator.notification.create(:details => "Someone has suggested a new criterion",
+          notification = facilitator.notification.create(:details => "Someone has suggested a new criterion for \"" + @criterium.problem.title + "\"",
             :criterium_id => @criterium.id)
           if facilitator.email_notifications
             notification.send_email
@@ -105,7 +105,7 @@ class CriteriaController < ApplicationController
           # send notifications
           if @from.crialt.count == 1
             @from.user.each do |user|
-              notification = user.notification.create(:details => "Someone suggested an alternative to a criterion",
+              notification = user.notification.create(:details => "Someone suggested an alternative to the criterion \"" + @from.title + "\"",
                 :criterium_id => @from.id)
               if user.email_notifications
                 notification.send_email
@@ -180,7 +180,7 @@ class CriteriaController < ApplicationController
         # send notifications
           if @criterium.cridissent.count == 1
             @criterium.user.each do |user|
-              notification = user.notification.create(:details => "Someone has a concern about a criterion",
+              notification = user.notification.create(:details => "Someone has a concern about the criterion \"" + @criterium.title + "\"",
                 :criterium_id => @criterium.id)
               if user.email_notifications
                 notification.send_email
@@ -232,7 +232,7 @@ class CriteriaController < ApplicationController
       # send notifications
       if @criterium.crialt.count == 1
         @criterium.user.each do |user|
-          notification = user.notification.create(:details => "Someone suggested an alternative to a criterion",
+          notification = user.notification.create(:details => 'Someone suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @criterium.title + '"',
             :criterium_id => @criterium.id)
           if user.email_notifications
             notification.send_email
