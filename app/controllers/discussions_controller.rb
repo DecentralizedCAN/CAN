@@ -41,7 +41,7 @@ class DiscussionsController < ApplicationController
   # POST /discussions
   # POST /discussions.json
   def create
-    clean_discussion_params = discussion_params.except(:broadcast_discussion)
+    clean_discussion_params = discussion_params.except(:broadcast_discussion, :group_id)
     puts clean_discussion_params
     @discussion = Discussion.new(clean_discussion_params)
     @discussion.creator = current_user.id
@@ -50,7 +50,7 @@ class DiscussionsController < ApplicationController
       if @discussion.save
 
         # create post and upvote
-        @post = Post.create(:discussion => @discussion)
+        @post = Post.create(:discussion => @discussion, :group_id => discussion_params[:group_id])
         @post.upvotes.create(user_id: current_user.id)
 
         # keep record of user activity
@@ -58,15 +58,14 @@ class DiscussionsController < ApplicationController
 
         # Notifications
         if discussion_params[:broadcast_discussion]
-          puts "hihihihihihihihi"
-          User.all.each do |user|
+          (discussion_params[:group_id] && discussion_params[:group_id] != '' && discussion_params[:group_id] != 0) ? @send_users = Group.find(discussion_params[:group_id]).user.all : @send_users = User.all
+          @send_users.each do |user|
             notification = user.notification.create(:details => "A new discussion, \"" + @discussion.title + "\", was just created. Would you like to participate?",
               :discussion_id => @discussion.id)
             
               notification.send_email if user.email_notifications
           end
-        else 
-          puts "hohohohohoho"
+        else
         end
 
         if discussion_params[:goal_id].length > 0
@@ -130,7 +129,7 @@ class DiscussionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def discussion_params
-      params.require(:discussion).permit(:title, :content, :problem_id, :goal_id, :broadcast_discussion)
+      params.require(:discussion).permit(:title, :content, :problem_id, :goal_id, :broadcast_discussion, :group_id)
     end
 
     def public_viewable?

@@ -61,6 +61,7 @@
         User.find(@discussion.creator).name
       rescue 
       end  %></em> •
+      in <%= @discussion.post.group ? @discussion.post.group.name : 'main feed' %> •
     </div>
     <div>
       <!-- <i class="fas fa-comment-dots"></i> -->

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :groups
   resources :comments
   resources :discussions, only: [:create, :new, :show, :destroy]
   resources :polls
@@ -73,6 +74,9 @@ Rails.application.routes.draw do
   post '/path/leave/:link_id', to: 'goals#unlink', :as => :unlink
   post '/goal/complete/:goal_id', to: 'goals#complete_goal', :as => :complete_goal
   post '/goal/uncomplete/:goal_id', to: 'goals#uncomplete_goal', :as => :uncomplete_goal
+
+  post '/groups/join', to: 'groups#join', :as => :join_group
+  post '/groups/leave', to: 'groups#leave', :as => :leave_group
 
   # TEMPORARY
   # resources :posts do

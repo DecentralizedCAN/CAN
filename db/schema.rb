@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200607233224) do
+ActiveRecord::Schema.define(version: 20201212024617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20200607233224) do
     t.datetime "updated_at", null: false
     t.text "creator_ciphertext"
     t.bigint "goal_id"
+    t.boolean "include_comments"
     t.index ["deadline_bidx"], name: "index_activities_on_deadline_bidx"
     t.index ["expiration_bidx"], name: "index_activities_on_expiration_bidx"
     t.index ["goal_id"], name: "index_activities_on_goal_id"
@@ -145,6 +146,20 @@ ActiveRecord::Schema.define(version: 20200607233224) do
     t.index ["user_id", "goal_id"], name: "index_goals_users_on_user_id_and_goal_id"
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups_users", id: false, force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["group_id", "user_id"], name: "index_groups_users_on_group_id_and_user_id"
+    t.index ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id"
+  end
+
   create_table "links", force: :cascade do |t|
     t.bigint "parent_id"
     t.bigint "child_id"
@@ -198,8 +213,10 @@ ActiveRecord::Schema.define(version: 20200607233224) do
     t.datetime "updated_at", null: false
     t.bigint "discussion_id"
     t.bigint "link_id"
+    t.bigint "group_id"
     t.index ["activity_id"], name: "index_posts_on_activity_id"
     t.index ["discussion_id"], name: "index_posts_on_discussion_id"
+    t.index ["group_id"], name: "index_posts_on_group_id"
     t.index ["link_id"], name: "index_posts_on_link_id"
     t.index ["problem_id"], name: "index_posts_on_problem_id"
   end
@@ -216,6 +233,7 @@ ActiveRecord::Schema.define(version: 20200607233224) do
     t.boolean "require_action"
     t.integer "facilitator_id"
     t.integer "scoring_method"
+    t.boolean "include_comments"
     t.index ["goal_id"], name: "index_problems_on_goal_id"
   end
 
@@ -262,6 +280,7 @@ ActiveRecord::Schema.define(version: 20200607233224) do
     t.datetime "updated_at", null: false
     t.bigint "discussion_id"
     t.text "creator_ciphertext"
+    t.boolean "draft"
     t.index ["discussion_id"], name: "index_solutions_on_discussion_id"
     t.index ["problem_id"], name: "index_solutions_on_problem_id"
   end
@@ -339,6 +358,7 @@ ActiveRecord::Schema.define(version: 20200607233224) do
   add_foreign_key "polls", "users"
   add_foreign_key "posts", "activities"
   add_foreign_key "posts", "discussions"
+  add_foreign_key "posts", "groups"
   add_foreign_key "posts", "links"
   add_foreign_key "posts", "problems"
   add_foreign_key "problems", "goals"

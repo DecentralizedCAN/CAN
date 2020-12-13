@@ -59,6 +59,22 @@ $label-blue: #81c4ff;
   }
 }
 
+#group_nav {
+  width: fit-content;
+  border-bottom: 4px solid #ff9900;
+
+  > span {
+    padding: 4px 8px 0px 8px;
+    background-color: #d2d2d2;
+    border-radius: 10px 10px 0 0;
+  }
+
+  > span.current_group {
+    background-color: #ff9900;
+    color: white;
+  }
+}
+
 .proposal, .issue, .discussion {
   margin-left: 0px;
   padding-left: 26px !important;

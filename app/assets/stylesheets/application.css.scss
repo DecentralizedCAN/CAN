@@ -72,6 +72,20 @@ a:hover, a:focus, a:visited {
   cursor: pointer;
 }
 
+.cancel-button {
+  margin-top: 12px;
+  background-color: #b9b9b9;
+  border: 1px solid #ddd;
+  color: white !important;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: none;
+
+  &:hover {
+    background-color: #9e9e9e;
+  }
+}
+
 a.button, input.button {
   font-style: normal;
   border: 1px solid #505050;
@@ -168,6 +182,9 @@ textarea:focus, input:focus {
   }
 }
 
+form select {
+  width: auto !important;
+}
 
 .participation-meter {
 	border: 1px solid;

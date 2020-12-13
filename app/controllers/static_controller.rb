@@ -34,13 +34,17 @@ class StaticController < ApplicationController
 		# end
 
 		if params[:sort] == "popular"
+			(!params[:group] || params[:group] == '0') ? group_id = nil : group_id = params[:group]
 			@posts = Post.left_joins(:upvotes)
+			  .where(:group_id => group_id)
 			  .group(:id)
 				.having('count(upvotes.id) > 0')
 			  .paginate(:page => params[:page], :per_page => 12)
 			  .order("COUNT(upvotes.id) / (( extract(epoch from now()) - extract(epoch from posts.created_at) / 1.002) ) DESC")
 		else
+			(!params[:group] || params[:group] == '0') ? group_id = nil : group_id = params[:group]
 			@posts = Post.left_joins(:upvotes)
+			  .where(:group_id => group_id)
 			  .group(:id)
 			  .having('count(upvotes.id) > 0')
 			  .paginate(:page => params[:page], :per_page => 12)

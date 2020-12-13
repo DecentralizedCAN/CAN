@@ -1,6 +1,26 @@
 <div id="main-feed">
 
-  <%= link_to main_feed_path do %>
+	<% if Group.all.length > 0 %>
+	<div id="group_nav">
+		Group:  
+
+	  <% if (!params[:group] || params[:group] == '0') %><span class="current_group"><% else %><span><% end %>
+  	<%= link_to "None", url_for(request.params.merge(:group => '0')) %></span>
+
+
+	  <% Group.all.each do |group| %>
+	  	<% if params[:group].to_i == group.id %>
+	  	<span class="current_group">
+  		<% else %>
+  		<span><% end %>
+  		<%= link_to group.name, url_for(request.params.merge(:group => group.id)) %></span>
+	  <% end %>
+
+	  <%= link_to '+', new_group_path %>
+	</div><% end %>
+
+  <!-- Sort: -->
+  <%= link_to url_for(request.params.merge(:sort => 'recent')) do %>
 	  <i class="fas fa-sort"></i>
     <% if params[:sort] == 'popular' %>
     	recent
@@ -11,7 +31,7 @@
 
 	&nbsp;
 
-  <%= link_to main_feed_path(:sort => 'popular') do %>
+  <%= link_to url_for(request.params.merge(:sort => 'popular')) do %>
 	  <i class="fas fa-sort"></i>
     <% if params[:sort] == 'popular' %>
     	<span class="underline-permanent">popular</span>
@@ -20,12 +40,11 @@
     <% end %>
   <% end %>
 
-
-
 	<div class="flex-container">
 		<ol class="new-posts">
 	  <% @posts.each do |post| %>
 			<% #if post.upvotes.count > 0 %>
+			<% if true #(params[:group] == 'main' || params[:group].to_i == post.group_id) %>
 				<% if post.link_id %>
 					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
   				<%= link_to goal_path(:goal_id => Goal.find(post.link.child.hashid), :view => "public") do %>
@@ -166,6 +185,7 @@
 				<!-- <hr> -->
 
 		<% end %>
+		<% end %>
 		
 		<span id="paginate_solutions"><%= will_paginate @posts %></span>
 
@@ -173,11 +193,28 @@
 
 		<ol class="side-card">
 
+		  <div class="card-item">
+			<% if Group.all.length > 0 && (params[:group] && params[:group] != '0') %>
+				<% @group = Group.find(params[:group]) %>
+				<h3><%= @group.name %> members
+		    <% if params[:group].to_i == @group.id && @group.user.include?(current_user) %>
+		      (<%= link_to "Leave", leave_group_path(:group_id => @group.id), :method => "post" %>)
+		    <% elsif params[:group].to_i == @group.id %>
+		      (<%= link_to "join", join_group_path(:group_id => @group.id), :method => "post" %>)
+		    <% end %></h3>
+				<ol style="padding-left: 20px;">
+				<% Group.find(params[:group]).user.each do |user| %>
+					<li><%= user.name %></li>
+				<% end %>
+				</ol>
+			<% end %>
+			</div>
+
 		  <!-- <div id="post-something"> 
   			<%= link_to 'New Post', new_discussion_path if logged_in? %>
 		  </div> -->
 
-		  <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state %>
+		  <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state && false %>
 
 			<% if logged_in? && @notifications.length > 0 && false %>
 		  <div class="card-item">
@@ -206,3 +243,9 @@
 </div>
 
 <br><br>
+
+<script type="text/javascript">
+	<% if params[:group] %>
+		localStorage.setItem('dcan-group', <%= params[:group] %>);
+	<% end %>
+</script>

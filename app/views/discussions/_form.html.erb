@@ -21,6 +21,9 @@
     <%= form.text_area :title, id: :discussion_title, placeholder: "Name this discussion" %>
     <h1>Details</h1>
     <%= form.text_area :content, id: :discussion_content, placeholder: "Details to guide discussion (optional)" %>
+    Post go a group? 
+    <%= form.select :group_id, Group.all.collect {|p| [ p.name, p.id ] }, :prompt => 'No group' %>
+
     <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
   </div>
 
@@ -29,6 +32,14 @@
     <br>
   <% end %>
 
+  <%= link_to 'Cancel', main_feed_path, class: 'cancel-button' %>
   <%= form.submit value: "Post", id: :submit_discussion%>
 
 <% end %>
+
+<script type="text/javascript">
+  if (localStorage.getItem('dcan-group') && localStorage.getItem('dcan-group') != 0) {
+    console.log(localStorage.getItem('dcan-group'))
+    $('select')[0].value = localStorage.getItem('dcan-group')
+  }
+</script>
