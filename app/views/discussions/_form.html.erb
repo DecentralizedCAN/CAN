@@ -21,8 +21,11 @@
     <%= form.text_area :title, id: :discussion_title, placeholder: "Name this discussion" %>
     <h1>Details</h1>
     <%= form.text_area :content, id: :discussion_content, placeholder: "Details to guide discussion (optional)" %>
+
+    <% if Group.all.count > 0 %>
     Post go a group? 
     <%= form.select :group_id, Group.all.collect {|p| [ p.name, p.id ] }, :prompt => 'No group' %>
+    <% end %>
 
     <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
   </div>

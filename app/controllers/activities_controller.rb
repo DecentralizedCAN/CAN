@@ -142,7 +142,7 @@ class ActivitiesController < ApplicationController
 
 
         # create post and upvote
-        @post = Post.create(:activity => @activity)
+        @post = Post.create(:activity => @activity, :group_id => activity_params[:group_id])
         @post.upvotes.create(user_id: current_user.id)
 
         # create discussion
@@ -153,7 +153,8 @@ class ActivitiesController < ApplicationController
 
         # Notifications
         if activity_params[:broadcast_action]
-          User.all.each do |user|
+          (activity_params[:group_id] && activity_params[:group_id] != '' && activity_params[:group_id] != 0) ? @send_users = Group.find(activity_params[:group_id]).user.all : @send_users = User.all
+          @send_users.each do |user|
             notification = user.notification.create(:details => "A new action, \"" + @activity.title + "\", was just created. Would you like to participate?",
               :activity_id => @activity.id)
             

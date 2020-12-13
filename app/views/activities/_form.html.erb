@@ -64,10 +64,17 @@
   </div>
 
 
+    <br>
     <% if Setting.find(12).state %>
-      <br>
       <%= form.check_box :broadcast_action, {checked: false}, true, false %> Send a notification about this action to all members
       <br>
+    <% end %>
+
+
+    <% if Group.all.count > 0 %>
+    Post go a group? 
+    <%= form.select :group_id, Group.all.collect {|p| [ p.name, p.id ] }, :prompt => 'No group' %>
+    <br>
     <% end %>
 
   
