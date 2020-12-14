@@ -1,7 +1,7 @@
 class GoalsController < ApplicationController
   # before_action :require_login
-  before_action :require_login, unless: -> { public_viewable? }
   before_action :require_login, except: [:show], if: -> { public_viewable? }
+  before_action :require_login, unless: -> { public_viewable? }
 
 	def index
 		@goals = Goal.all.reverse
