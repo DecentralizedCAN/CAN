@@ -163,6 +163,7 @@ class ProblemsController < ApplicationController
         # End notifications
 
         # @problem.send_problem_email
+        flash[:success] = 'You started a Convergent Facilitation process. Send this page to others with whom you want to collaborate. Click "Share/invite" for a shareable link.'
         format.html { redirect_to issue_path(@problem) }
         format.json { render :show, status: :created, location: @problem }
       else
