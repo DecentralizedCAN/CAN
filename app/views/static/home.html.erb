@@ -1,27 +1,5 @@
 <% if logged_in? %>
 
-<ol class="home-actions">
-
-<% if current_user && current_user.admin? %>
-  <li>
-    <%= link_to settings_path, :class => "button button-hollow" do %>
-      <i class="fas fa-cog"></i>
-      Settings
-    <% end %>
-  </li>
-<% end %>
-<% if current_user && current_user.superadmin? %>
-
-  <li>
-    <%= link_to main_feed_path(:sort => 'new'), :class => "button button-hollow" do %>
-      <i class="fas fa-list"></i>
-      Feed
-    <% end %>
-  </li>
-<% end %>
-
-</ol>
-
 <% if @notifications.length > 0 && false %>
   <div class="home-notifications">
     <div class="flex-container">
@@ -155,3 +133,26 @@
 
   <p>To get started, use the form above to sign in.</p>
 <% end %>
+
+
+<ol class="home-actions">
+
+<% if current_user && current_user.admin? %>
+  <li>
+    <%= link_to settings_path, :class => "button button-hollow" do %>
+      <i class="fas fa-cog"></i>
+      Settings
+    <% end %>
+  </li>
+<% end %>
+<% if current_user && current_user.superadmin? %>
+
+  <li>
+    <%= link_to main_feed_path(:sort => 'new'), :class => "button button-hollow" do %>
+      <i class="fas fa-list"></i>
+      Feed
+    <% end %>
+  </li>
+<% end %>
+
+</ol>

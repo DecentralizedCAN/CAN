@@ -407,6 +407,29 @@ header {
 
 // reduce navbar height
 
+.notifications-li {
+  a {
+    padding-top: 4px !important;
+    
+    i {
+      font-size: 26px;
+      color: #ec6f68;
+      margin-right: -12px;
+    }
+
+    .notification-number {
+      color: white;
+      position: relative;
+      left: -8px;
+      top: -6px;
+      background-color: transparent;
+      border-radius: 10px;
+      // padding: 2px 6px;
+      font-size: 11px;
+    }
+  }
+}
+
 .navbar {
   min-height: 34px;
   border-radius: 0;

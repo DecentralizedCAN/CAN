@@ -50,24 +50,33 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
-        <li>
+        
+        <li class="user-nav-link">
+          <%= link_to current_user do %>
+            <%= current_user.name %>
+            <%= gravatar_for(current_user) %>
+          <% end %>
+        </li>
+
+        <li class="notifications-li">
           <%= link_to notifications_path do %>
+            <i class="fas fa-bell"></i>
+
             <% if current_user.notification.where(:read => nil).count > 0 %>
               <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
             <% end %>
 
-            <i class="fas fa-bell"></i>
-            Notifications
-          <% end %>
-        </li>
-        
-        <li class="user-nav-link">
-          <%= link_to current_user do %>
-            <%= gravatar_for(current_user) %>
-            <%= current_user.name %>
+            <!-- Notifications -->
           <% end %>
         </li>
         <% end %>
+
+        <li>
+          <span class="tooltip-toggle" href="#" aria-label="If you have a question, comment or need assistance, feel free to email convergentfacilitation@
+          baynvc.org" tabindex="0">
+          <i class="far fa-question-circle" style="font-size: 18px; margin-top: 8px; margin-left: 6px;"></i>
+          </span>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
