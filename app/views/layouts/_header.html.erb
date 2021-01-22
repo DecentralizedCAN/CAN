@@ -64,6 +64,8 @@
 
             <% if current_user.notification.where(:read => nil).count > 0 %>
               <span class="notification-number"><%= current_user.notification.where(:read => nil).count %></span>
+            <% else %>
+              <span class="notification-number">&nbsp;</span>
             <% end %>
 
             <!-- Notifications -->
