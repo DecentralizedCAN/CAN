@@ -246,7 +246,10 @@ h2 {
 .dashboard-item {
 	display: inline-block;
 	vertical-align: top;
-  margin-right: 40px;
+  // margin-right: 40px;
+  border: 1px solid black;
+  padding: 4px 8px;
+  margin-top: 8px;
 
 	h1, h2 {
 		color: #525252;
@@ -264,9 +267,12 @@ h2 {
 .dashboard-item li {
 	list-style: none;
 	font-size: 13px;
-	margin: 4px;
+	margin: 4px 20px;
   margin-left: 0;
 	background-color: $offwhite;
+
+    display: inline-block;
+
   
   &:hover {
     text-decoration: underline;

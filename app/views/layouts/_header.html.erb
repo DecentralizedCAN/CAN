@@ -23,14 +23,14 @@
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="#">All posts <span class="sr-only">(current)</span></a></li> -->
         <% #if logged_in? && Setting.find(14).state %>
-          <li>
-              <%= link_to dashboard_path do %>
+          <!-- <li> -->
+             <!--  <%= link_to dashboard_path do %> -->
                 <!-- <i class="fas fa-tachometer-alt"></i> -->
                 <!-- Dashboard -->
-                <i class="fas fa-check"></i>
-                Tasks
-              <% end %>
-          </li>
+                <!-- <i class="fas fa-check"></i> -->
+                <!-- Tasks -->
+              <!-- <% end %> -->
+          <!-- </li> -->
         <% #end %>
         <!-- <li>
           <% if logged_in? || Setting.find(6).state %>
@@ -46,8 +46,9 @@
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to goal_path(Goal.first, :view => 'public'), :id => 'goal-path' do %>
               <!-- <i class="fas fa-project-diagram"></i> -->
-              <i class="fas fa-map"></i>
-              Roadmap
+              <!-- <i class="fas fa-map"></i> -->
+              <i class="fas fa-home"></i>
+              Main page
             <% end %>
           <% end %>
         </li>

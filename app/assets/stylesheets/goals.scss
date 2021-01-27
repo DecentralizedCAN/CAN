@@ -182,7 +182,7 @@
     }
   }
 
-  .mark-accomplished {
+  .view-goal-details {
     // background-color: #dcdcdc;
     padding: 2px 4px;
     right: 12px;
@@ -197,7 +197,7 @@
     }
   }
 
-  .view-goal-details {
+  .mark-accomplished {
     display: inline-block;
     // background-color: #dcdcdc;
     padding: 2px 4px;
@@ -293,7 +293,7 @@
 
   .branches {
     list-style: none;
-    bottom: -4px;
+    // bottom: -4px;
     position: relative;
     // display: flex;
 
@@ -424,17 +424,43 @@
     border-radius: 20px;
     color: #787878;
     border: 1px solid #dd72ff;
+
+    // width: fit-content;
+    // margin: auto;
+    // padding: 0 4px;
     
     a {
       max-width: 100px;  
       color: #3c3c3c;
     }
 
+    // BUBBLE INSIDE STYLING
+    .goal-mini {
+      width: 100%;
+      > div {
+        display: inline-block;
+        // width: max-width;
+        vertical-align: middle;
+
+        max-width: 120px;
+        margin: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .mini-actions {
+      background-color: #91ff9e;
+      display: inline-block;
+      padding: 0px 2px;
+      border-radius: 4px;
+    }
+
     .highlight-title {
-      max-width: 120px;
-      margin: auto;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      // max-width: 120px;
+      // margin: auto;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
 
       i {
         margin-left: -2px;
@@ -551,4 +577,17 @@
 
 #myUL li a:hover:not(.header), #myUL2 li a:hover:not(.header) {
   background-color: #c7c7c7; /* Add a hover effect to all links, except for headers */
+}
+
+#reload {
+  cursor: pointer;
+  margin: auto;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.reload-now {
+  background-color: red;
+  color: white;
 }

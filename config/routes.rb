@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   get 'notifications', to: 'static#notifications', :as => :notifications
   get 'notification_redirect/:notification_id', to: 'static#notification_redirect', :as => :notification_redirect
+  post 'notifications/clear_one/:notification_id', to: 'static#clear_notification', :as => :clear_notification
   post 'notifications/clear', to: 'static#clear_notifications', :as => :clear_notifications
   post 'notifications/broadcast_post/:post_id', to: 'notifications#broadcast_post', :as => :broadcast_post
   post 'notifications/broadcast_criterion/:criterion_id', to: 'notifications#broadcast_criterion', :as => :broadcast_criterion
@@ -74,6 +75,7 @@ Rails.application.routes.draw do
   post '/path/leave/:link_id', to: 'goals#unlink', :as => :unlink
   post '/goal/complete/:goal_id', to: 'goals#complete_goal', :as => :complete_goal
   post '/goal/uncomplete/:goal_id', to: 'goals#uncomplete_goal', :as => :uncomplete_goal
+  post '/goal/delete/:goal_id', to: 'goals#delete', :as => :delete_goal
 
   # TEMPORARY
   # resources :posts do

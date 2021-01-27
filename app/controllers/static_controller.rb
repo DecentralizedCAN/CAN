@@ -87,6 +87,13 @@ class StaticController < ApplicationController
 		end
 	end
 
+	def clear_notification
+		@n = Notification.find(params[:notification_id])
+		@n.read = true
+		@n.save
+		redirect_back fallback_location: root_path  
+	end
+
 	def clear_notifications
 		current_user.notification.where(:read => nil).each do |notification|
 			notification.read = true

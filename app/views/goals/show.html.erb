@@ -1,3 +1,8 @@
+<% if current_user && current_user.admin? %>
+  <%= link_to "ø", delete_goal_path(@goal.id), :method=>"post" %>
+<% end %>
+
+<% if current_user %>
 <ol id="notifications" class="centered-notifications">
 <% @notifications.each do |notification| %>
   <% if !notification.read %>
@@ -6,15 +11,62 @@
         <%= notification.details %>
       <% end %>
   
-      <%= link_to clear_notifications_path, :method => "post" do %>
+      <%= link_to clear_notification_path(notification.id), :method => "post" do %>
         <i class="fas fa-times close-window"></i>
       <% end %>
     </li>
   <% end %>
 <% end %>
 </ol>
+<% end %>
 
 <div class="goal-node">
+
+<div id="reload"> <i class="fas fa-undo"></i> Reload</div>
+
+<% if current_user %>
+
+<% @commitments = @user.rolls %>
+<% if @commitments.length > 0 && Completion.where(user_id: @user.id).count < @commitments.length %>
+  <div class="dashboard-item">
+    
+    <h3>
+      <i class="fas fa-tools"></i>
+      My actions
+    </h3>
+
+    <% if @commitments.count > 0 %>
+      <ul>
+        <% @commitments.each do |commitment| %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+          <% if total_committed(commitment.activity) >= total_minimum(commitment.activity) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+            <%= link_to  action_path(commitment.activity.id) do %>
+              <li> 
+                <i class="fas fa-calendar-check"></i>
+                <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% end %>
+        <br>
+        <% @commitments.each do |commitment| %>
+          <% if Completion.where(user_id: @user.id).where(roll_id: commitment.id).count == 0  %>
+          <% if total_committed(commitment.activity) < total_minimum(commitment.activity) && (!commitment.activity.expiration || commitment.activity.expiration > @current_time) %>
+            <%= link_to  action_path(commitment.activity.id) do %>
+              <li> 
+                <i class="far fa-calendar"></i>
+                <%= commitment.activity.title %> </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% else %>
+<% end %>
+<% end %>
+
 
 <%= link_to goal_path(Goal.first, :view => params['view']), :id => 'goal-path' do %>
 <h2 class='goals-title'>
@@ -156,30 +208,6 @@
 
   <% first_top_link = @public_parents.first %>
 
-  <% if first_top_link && !first_top_link.user.include?(@user) %>
-    <div class="mark-accomplished">
-    <%= link_to link_path(:link_id => first_top_link.id), :method => 'post' do %>
-      <i class="far fa-check-square link"></i> Adopt
-    <% end %>
-    </div>
-  <% elsif @goal.users.include?(@user) %>
-    <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
-      <div class="mark-accomplished">
-        <%= @goal.users.count if @goal.users.count > 0%>
-        <i class="fas fa-check-double"></i> Achieved
-      </div>
-    <% end %>
-  <% else %>
-    <%= link_to complete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
-      <div class="mark-accomplished">
-        <%= @goal.users.count if @goal.users.count > 0%>
-        <!-- <i class="fas fa-user-check"></i> --> <i class="fas fa-check-double"></i> Mark achieved
-      </div>
-    <% end %>
-  <% end %>
-
-  <br>
-
   <div class="view-goal-details">
   <% if !first_top_link.user.include?(@user) %>
     <%= link_to link_path(:link_id => first_top_link.id), :method => 'post' do %>
@@ -191,6 +219,30 @@
     <% end %>
   <% end %>
   </div>
+
+  <br>
+
+  <% if first_top_link && !first_top_link.user.include?(@user) %>
+    <div class="mark-accomplished">
+    <%= link_to link_path(:link_id => first_top_link.id), :method => 'post' do %>
+      <i class="far fa-check-square link"></i> Adopt
+    <% end %>
+    </div>
+  <% elsif @goal.users.include?(@user) %>
+    <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
+      <div class="mark-accomplished">
+        <%= @goal.users.count if @goal.users.count > 0%>
+        <i class="fas fa-check-double"></i> Done
+      </div>
+    <% end %>
+  <% else %>
+    <%= link_to complete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
+      <div class="mark-accomplished">
+        <%= @goal.users.count if @goal.users.count > 0%>
+        <!-- <i class="fas fa-user-check"></i> --> <i class="fas fa-check-double"></i> Done
+      </div>
+    <% end %>
+  <% end %>
 
 <!--   <%= link_to goal_details_path(:goal_id => @goal.hashid) do %>
     <div class="view-goal-details">
@@ -245,7 +297,7 @@
   <% if @goal.id != 1 %>
     <%= link_to post_action_path(:goal => @goal.id) do %>
       <div class="view-actionables">
-        <i class="fas fa-tools"></i> Act
+        <i class="fas fa-tools"></i> Action
       </div>
     <% end %>
 
@@ -423,4 +475,12 @@ $(document).ready(function(){
 
   outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);        
 });
+
+$("#reload").click(function() {
+  location.reload()
+})
+
+setInterval(function () {
+  $("#reload").addClass('reload-now')
+}, 60000);
 </script>
