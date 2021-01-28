@@ -1,0 +1,73 @@
+<div class="goal-mini">
+  <div class="goal-mini-inner-1">
+    <%= link.child.users.count %>
+    <i class="fas fa-check-double"></i>
+  </div>
+
+  <div class="goal-mini-inner-2">
+
+    <% if link.user.include?(current_user) %>
+
+<!--       <% if link.child.users.count > 0 %>
+        <%= link.child.users.count %>
+        <i class="fas fa-check-double"></i>
+      <% end %> -->
+
+      <!-- <i class="fas fa-user-friends"></i> -->
+      <%= link.user.count %>
+
+      <%= link_to unlink_path(:link_id => link.id), :method => 'post' do %>
+        <i class="fas fa-check-square unlink"></i>
+      <% end %>
+    <% elsif link.child.id == 1 %>
+    <% else %>
+
+      <% if link.child.users.count > 0 %>
+        <%= link.child.users.count %>
+        <i class="fas fa-check-double"></i>
+      <% end %>
+
+      <!-- <i class="fas fa-user-friends"></i> -->
+      <%= link.user.count %>
+
+      <%= link_to link_path(:link_id => link.id), :method => 'post' do %>
+        <i class="far fa-check-square link"></i>
+      <% end %>
+    <% end %>
+
+    <br>
+
+      <%= link_to goal_details_path(:goal_id => link.child.hashid, :view => view) do %>
+        <% if link.child.users.include?(@user) %>
+          <span class="strikethrough"><%= link.child.title %></span>
+        <% else %>
+          <%= link.child.title %>
+        <% end %>
+      <% end %>
+      
+      <div> <%= Link.where(parent_id: link.child.id).count %> <i class="fas fa-project-diagram"></i></div>
+
+  </div>
+
+  <div class="goal-mini-inner-3">
+<!--     <div class="mini-actions">
+      <% if Discussion.where(:goal_id => link.child.id).count > 0 %>
+        <%= Discussion.where(:goal_id => link.child.id).count %>
+        <i class="fas fa-comments"></i><br>
+      <% end %>
+      <% if Activity.where(:goal_id => link.child.id).count > 0 %>
+        <%= Activity.where(:goal_id => link.child.id).count %>
+        <i class="fas fa-tools"></i>
+      <% end %>
+    </div> -->
+
+    <% if Activity.where(:goal_id => link.child.id).count > 0 %>
+      <div class="mini-actions">
+        <%= Activity.where(:goal_id => link.child.id).count %>
+        <i class="fas fa-tools"></i>
+      </div>
+    <% else %>
+      0 <i class="fas fa-tools"></i>
+    <% end %>
+  </div>
+</div>

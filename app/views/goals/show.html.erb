@@ -231,15 +231,15 @@
   <% elsif @goal.users.include?(@user) %>
     <%= link_to uncomplete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
       <div class="mark-accomplished">
-        <%= @goal.users.count if @goal.users.count > 0%>
+        <!-- <%= @goal.users.count if @goal.users.count > 0%> -->
         <i class="fas fa-check-double"></i> Done
       </div>
     <% end %>
   <% else %>
     <%= link_to complete_goal_path(:goal_id => @goal.hashid), :method => 'post' do %>
       <div class="mark-accomplished">
-        <%= @goal.users.count if @goal.users.count > 0%>
-        <!-- <i class="fas fa-user-check"></i> --> <i class="fas fa-check-double"></i> Done
+        <!-- <%= @goal.users.count if @goal.users.count > 0%> -->
+        <i class="fas fa-check-double"></i> Done
       </div>
     <% end %>
   <% end %>
@@ -266,18 +266,20 @@
   <!-- TITLE -->
   <% if @goal.id != 1 %>
 
-  <% if @goal.users.include?(@user) %>
-    <h1 id='<%= @goal.hashid %>' class="strikethrough"><%= @goal.title %></h1> 
-  <% else %>
-    <h1 id='<%= @goal.hashid %>'><%= @goal.title %></h1>
-  <% end %>
+  <%= link_to goal_details_path(@goal.id) do %>
 
-  <% else %>
+    <% if @goal.users.include?(@user) %>
+      <h1 id='<%= @goal.hashid %>' class="strikethrough"><%= @goal.title %></h1> 
+    <% else %>
+      <h1 id='<%= @goal.hashid %>'><%= @goal.title %></h1>
+    <% end %>
 
-  <!-- View all -->
 
-  <% end %>
+    <!-- View all -->
+    <% end %>
+
   <!-- END TITLE -->
+  <% end %>
 
 
 

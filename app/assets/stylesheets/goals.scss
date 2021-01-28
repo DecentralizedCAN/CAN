@@ -41,6 +41,10 @@
   overflow: auto;
 }
 
+.goal-details-section > ul > .details-subgoal > .goal-mini > div {
+  max-width: none !important;
+}
+
 .goal-node {
   text-align: center;
 
@@ -434,21 +438,6 @@
       color: #3c3c3c;
     }
 
-    // BUBBLE INSIDE STYLING
-    .goal-mini {
-      width: 100%;
-      > div {
-        display: inline-block;
-        // width: max-width;
-        vertical-align: middle;
-
-        max-width: 120px;
-        margin: auto;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
     .mini-actions {
       background-color: #91ff9e;
       display: inline-block;
@@ -468,6 +457,21 @@
       }
     }
 
+  }
+
+    // BUBBLE INSIDE STYLING
+  .goal-mini {
+    width: 100%;
+    > div {
+      display: inline-block;
+      // width: max-width;
+      vertical-align: middle;
+
+      max-width: 120px;
+      margin: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .highlight.short {
