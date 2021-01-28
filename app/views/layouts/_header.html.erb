@@ -11,7 +11,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
+      <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "CommitCamp" %>
       <%= link_to root_path, id: "logo", :class => "navbar-brand" do %>
      <!--    <%= image_tag("logo.png", :border=>0, :class => 'logo-image') %> -->
         <span id="logo-name"><%= group_name %></span>
@@ -42,21 +42,26 @@
         </li>
         
 
-        <li>
+       <!--  <li>
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to goal_path(Goal.first, :view => 'public'), :id => 'goal-path' do %>
-              <!-- <i class="fas fa-project-diagram"></i> -->
+              <i class="fas fa-project-diagram"></i>
               <i class="fas fa-map"></i>
               Roadmap
             <% end %>
           <% end %>
-        </li>
+        </li> -->
 
         <% if logged_in? && (Setting.first.state || current_user.admin?) %>
           <li>
-              <%= link_to choice_path do %>
+             <!--  <%= link_to choice_path do %>
                 <i class="fas fa-pen"></i>
                 Act
+              <% end %> -->
+              
+              <%= link_to post_action_path(:goal => params[:goal]) do %>
+                <i class="fas fa-pen"></i>
+                New
               <% end %>
           </li>
         <% end %>
