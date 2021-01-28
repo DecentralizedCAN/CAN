@@ -1,5 +1,5 @@
 <div class="invitation">
-  <p class="fadein">Your help is needed with the following:</p>
+  <p class="fadein">Your help is needed:</p>
 
 <div class="fadein">
 <p class="discussion-content"><strong class="title"><%= @activity.title %></strong>
@@ -9,11 +9,11 @@
 </div>
 
   <% if @activity.roll.length == 1 && @activity.roll.first.minimum == 1 && @activity.roll.first.maximum%>
-    <p class="fadein scrollto">This can only happen if someone is willing to fill the following role:</p>
-    <% @request = "Are you willing to fill this role?" %>
+    <p class="fadein scrollto">This can only happen if someone is willing to commit to the following role:</p>
+    <% @request = "Are you willing to commit to this role?" %>
   <% elsif @activity.roll.length == 1 && @activity.roll.first.minimum == 1 %>
-    <p class="fadein scrollto">This can only happen if at least one person is willing to fill the following role:</p>
-    <% @request = "Are you willing to fill this role?" %>
+    <p class="fadein scrollto">This can only happen if at least one person is willing to commit to the following role:</p>
+    <% @request = "Are you willing to commit to this role?" %>
   <% elsif @activity.roll.length == 1 %>
     <p class="fadein scrollto">For this to happen, the following people are needed:</p>
     <% @request = "If we are able to get enough people for this to happen, can you commit to be one of them?" %>
@@ -98,7 +98,7 @@
     </div>
 
     <div>
-      <h3>Your email (optional)</h3> <%= f.text_field :add_email, id: :user_email, :class => "form-mini" %>
+      <h3>Your email <br><small>(optional for notifications)</small></h3> <%= f.text_field :add_email, id: :user_email, :class => "form-mini" %>
     </div>
 
     <div>

@@ -23,6 +23,9 @@ class ActivitiesController < ApplicationController
   # GET /activities/1
   # GET /activities/1.json
   def show
+    # unless logged_in?
+    #   redirect_to invitation_path(params[:activity_id])
+    # end
     @user = current_user
     @roll = @activity.roll.first
 
@@ -39,7 +42,9 @@ class ActivitiesController < ApplicationController
   end
 
   def invitation
-
+    if logged_in?
+      redirect_to action_path(params[:activity_id])
+    end
   end
 
   # GET /activities/new

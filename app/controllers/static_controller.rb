@@ -6,6 +6,10 @@ class StaticController < ApplicationController
 		
 	end
 
+	def about
+		
+	end
+
   def dashboard
     @user = current_user
 

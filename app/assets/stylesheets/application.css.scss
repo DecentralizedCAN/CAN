@@ -88,12 +88,12 @@ a:hover, a:focus, a:visited {
 
 a.button, input.button {
   font-style: normal;
-  border: 1px solid #505050;
-  padding: 2px 5px;
+  border: none;
+  padding: 4px 6px;
   background-color: #8e8e8e;
   color: whitesmoke !important;
   border-radius: 2px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   vertical-align: middle;
 
@@ -139,7 +139,7 @@ p {
   padding: 10px;
   min-height: 70vh;
   min-width: 68%;
-  width: 100%;
+  width: 100% !important;
 }
 
 .underline-permanent {
@@ -439,9 +439,35 @@ header {
 
 
 // reduce navbar height
+.notifications-li {
+  a {
+    padding-top: 4px !important;
+    
+    i {
+      font-size: 26px;
+      color: #ec6f68;
+      margin-right: -7px;
+    }
+
+    .notification-number {
+      color: white;
+      position: relative;
+      left: -13px;
+      top: -6px;
+      background-color: transparent;
+      border-radius: 10px;
+      // padding: 2px 6px;
+      font-size: 11px;
+    }
+  }
+}
 
 .navbar {
   min-height: 34px;
+  margin: 20px;
+  min-height: 34px;
+  border-radius: 0;
+  padding: 0 !important;
 }
 
 .navbar-brand {
@@ -500,6 +526,10 @@ hr {
 .center {
   width: 100%;
   text-align: center;
+}
+
+.float-right {
+  float: right;
 }
 
 .converge-container {
@@ -572,20 +602,38 @@ hr {
 nav #logo {
   font-style: normal;
   // font-family: 'Oswald', sans-serif;
+  font-family: sans-serif;
   float: left;
   font-size: 2em;
   font-weight: bold;
   letter-spacing: -1px;
-  color: #ec6f68;
 
-  .logo-image {
-    width: 31px;
-    margin: 4px;
-    top: -2px;
-    position: relative;
-    display: inline-block !important;
-    margin-right: -4px;
+  span#logo-name {
+    // background: -webkit-linear-gradient(-180deg, #61e2ff, #4aef9c, #ff7272);
+    background: #ff7272;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
+
+  span#beta-tag {
+    padding: 1px 5px;
+    border-radius: 20px;
+    color: #847c7c;
+    text-transform: uppercase;
+    font-size: 11px;
+    vertical-align: top;
+    margin-top: -14px;
+    letter-spacing: 1px;
+  }
+}
+
+.logo-image {
+  width: 31px;
+  margin: 4px;
+  top: -2px;
+  position: relative;
+  display: inline-block !important;
+  margin-right: -4px;
 }
 
 // .nav li {
@@ -755,3 +803,39 @@ nav #logo {
   }
 }
 // POPUP ENDS
+
+.top-flex {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+#open-collaborators, #open-share-div, a {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// SHARE DIV
+#open-share-div {
+  width: fit-content;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+#share-div {
+  display: none;
+  position: absolute;
+  background: #f9f9f9;
+  z-index: 1;
+  // left: -160px;
+  width: 250px;
+  border: 1px solid black;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-top: 6px;
+  // margin-left: -94px;
+  
+  .link {
+
+  }
+}

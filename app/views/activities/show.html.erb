@@ -14,6 +14,8 @@
 </div>
 <% end %>
 
+<div class="top-flex">
+
 <div id="activator" class="white-container">
 
 <!--   <div class="back-button">
@@ -25,13 +27,28 @@
     <% end %>
   </div> -->
 
-  <% if @activity.post %>
-    <%= render(:partial => 'static/post-stuff', :locals => {:post => @activity.post})%>
-  <% end %>
+  <%= render(:partial => 'static/post-stuff', :locals => {:post => @activity.post})%>
 
   <div class="proposal">
 
-    <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
+    <div class="flex-container">
+
+      <div class="issue-title view">  
+        <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
+      </div>
+
+      <div class="right-buttons">
+
+        <div id="open-discussion">
+          <i class="fas fa-comments"></i>
+          Conversation
+          (<%= @discussion.comment.count %>)
+        </div>
+
+      </div>
+
+    </div>
+
 
     <% if @activity.solution && @activity.solution.problem %>
       <br>
@@ -94,23 +111,42 @@
   <% end %>
 
   <% if Setting.find(5).state %>
-    <div id="action-columns">
+  <div id="action-columns">
   <% else %>
-    <div>
+  <div>
   <% end %>
-
   <div id="action-details">
 
-    <h1>Roles</h1>
+    <h1>Roles</h1>   
+    <div id="open-share-div">
+      <i class="fas fa-share"></i>
+      Share/invite
+    </div>
+    <div id="share-div">
+      <%= render(:partial => 'activities/share') %>
+    </div>
 
     <ul class="all-roles fadein">
       <% @activity.roll.each do |role| %>
         <%= render(:partial => 'role', :locals => {:role => role}) %>
       <% end %>
     </ul>
-
-    <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>
   </div>
+  </div>
+
+</div>
+<!-- DISCUSSION -->
+<div class="discussion-extraouter">
+  <h2>
+    <i class="fas fa-comments" ></i> Conversation
+    (<%= @discussion.comment.count %>)
+   <!--  <%= link_to discussion_path(@discussion), :id => "full-discussion-view" do %>
+      Full view
+    <% end %> -->
+    <i class="fas fa-times float-right" id="close-discussion"></i>
+  </h2>
+  <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(5).state %>
+</div> <!-- DISCUSSION ENDS -->
 
 </div>
 
@@ -127,3 +163,84 @@
   <% end %>
 
 </div>
+
+<script type="text/javascript">
+  $('#open-collaborators').click( function() {
+    $('#collaborators-list').show()
+  })
+
+  $('#collaborators-list').find('.close-window').click(function(){
+    $('#collaborators-list').hide()
+  })
+
+  $('#close-share-div').click( function(){
+    $('#share-div').hide()
+  })
+
+  $('#open-share-div').click(function(){
+    $('#share-div').toggle()
+  })
+
+  $('#add-collaborators').click(function(){
+    $('#collaborators-list').hide()
+    $('#share-div').show()
+  })
+
+  var openDiscussion = function() {
+    $('.discussion-extraouter').show()
+    $('#open-discussion').hide()
+    $('.criteria-list').addClass('two-column')
+    // if (jQuery(window). width() >= 700) {
+    //   $('.white-container').show()
+    // }
+    localStorage.setItem('dcan-discussion-show-desktop', 'True');
+  }
+
+  var closeDiscussion = function() {
+    $('.discussion-extraouter').hide()
+    $('#open-discussion').show()
+    $('.criteria-list').removeClass('two-column')
+    // if (jQuery(window). width() < 700) {
+    //   $('.white-container').hide()
+    // }
+    localStorage.setItem('dcan-discussion-show-desktop', 'False');
+  }
+
+  $(document).ready(function() {
+    <% if logged_in? && @discussion.comment.count > 0 %>
+      if (localStorage.getItem('dcan-discussion-show-desktop') != 'False') {
+        localStorage.setItem('dcan-discussion-show-desktop', 'True');
+      }
+
+      <% if params[:discussion] == 'open' %>
+        localStorage.setItem('dcan-discussion-show-desktop', 'True');
+      <% end %>
+    <% else %>
+      $('.discussion-extraouter').hide()
+      $('#open-discussion').show()
+      $('.criteria-list').removeClass('two-column')
+    <% end %>
+
+    var showDiscussionDesktop = localStorage.getItem('dcan-discussion-show-desktop')
+    
+    if (showDiscussionDesktop == 'True') {
+      openDiscussion()
+    } else if (showDiscussionDesktop == 'False') {
+      closeDiscussion()
+    }
+    // localStorage.setItem('dcan-discussion-show-desktop', 'False');
+  })
+
+  $('#close-discussion').click(function(){
+    closeDiscussion()
+
+    url = window.location.href
+    if (url.indexOf('?discussion') > 0) {
+      window.location = url.slice(0, url.indexOf('?discussion') )      
+    }
+  })
+
+  $('#open-discussion').click(function(){
+    openDiscussion()
+  })
+</script>

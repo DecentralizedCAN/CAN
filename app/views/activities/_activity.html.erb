@@ -12,7 +12,8 @@
       <i class="fas fa-arrow-right"></i>
       <% end %>
 
-      <span class="underline" style="text-shadow: 0px 0px 12px #2afb43;"><%= activity.title %></span></span> <span class="feed-label">Action</div>
+      <!-- <span class="underline" style="text-shadow: 0px 0px 12px #2afb43;"><%= activity.title %></span></span> <span class="feed-label">Collective action</div> -->
+      <span class="underline" ><%= activity.title %></span></span> <span class="feed-label">Collective action</div>
 
   		<% if activity.solution %>
   			<div class="proposal-activity-description">
@@ -96,7 +97,7 @@
         </div>
       <% else %>
         <div class="written-progress">
-          <i class="fas fa-users"></i>
+          <!-- <i class="fas fa-users"></i> -->
           <% if !total_maximum(activity) %>
             <%= total_committed(activity) %>/<%= total_minimum(activity) %>-∞
           <% elsif total_minimum(activity) < total_maximum(activity) %>
