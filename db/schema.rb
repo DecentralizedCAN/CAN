@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200813155828) do
+ActiveRecord::Schema.define(version: 20201212024617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,20 @@ ActiveRecord::Schema.define(version: 20200813155828) do
     t.index ["user_id", "goal_id"], name: "index_goals_users_on_user_id_and_goal_id"
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups_users", id: false, force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["group_id", "user_id"], name: "index_groups_users_on_group_id_and_user_id"
+    t.index ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id"
+  end
+
   create_table "links", force: :cascade do |t|
     t.bigint "parent_id"
     t.bigint "child_id"
@@ -199,8 +213,10 @@ ActiveRecord::Schema.define(version: 20200813155828) do
     t.datetime "updated_at", null: false
     t.bigint "discussion_id"
     t.bigint "link_id"
+    t.bigint "group_id"
     t.index ["activity_id"], name: "index_posts_on_activity_id"
     t.index ["discussion_id"], name: "index_posts_on_discussion_id"
+    t.index ["group_id"], name: "index_posts_on_group_id"
     t.index ["link_id"], name: "index_posts_on_link_id"
     t.index ["problem_id"], name: "index_posts_on_problem_id"
   end
@@ -342,6 +358,7 @@ ActiveRecord::Schema.define(version: 20200813155828) do
   add_foreign_key "polls", "users"
   add_foreign_key "posts", "activities"
   add_foreign_key "posts", "discussions"
+  add_foreign_key "posts", "groups"
   add_foreign_key "posts", "links"
   add_foreign_key "posts", "problems"
   add_foreign_key "problems", "goals"
