@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
       end
 
     elsif user
-      flash[:danger] = 'That user already exists and this is not the correct password'
+      flash[:warning] = "That user already exists and this is not the correct password. If you're signing up for the first time, try using a different name."
 
     elsif Setting.find(6).state
 
