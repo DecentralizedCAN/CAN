@@ -31,9 +31,9 @@ class SessionsController < ApplicationController
                           :password_confirmation => params[:session][:password], :admin => String(rand(382132)), :superadmin =>  String(rand(382130)))
       @user.save
       @user.activate
-      flash[:success] = 'Welcome to ' + ENV['GROUP_NAME'] + ', ' + @user.name + '!'
+      # flash[:success] = 'Welcome to ' + ENV['GROUP_NAME'] + ', ' + @user.name + '!'
       log_in @user
-      remember(user)
+      remember(@user)
     end
 
     if Setting.find(6).state

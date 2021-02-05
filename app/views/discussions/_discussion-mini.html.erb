@@ -46,7 +46,7 @@
         <% if comment.content %>
           <li>
             <div class="comment-user-info">
-              <%= gravatar_for(comment.user) %>
+              <%-# gravatar_for(comment.user) %>
               <strong><%= comment.user.name %></strong>
             </div>
             <br>

@@ -26,6 +26,13 @@ $label-blue: #81c4ff;
   font-weight: bold;
   // font-size: 13px;
   font-size: 15px;
+
+  width: 50%;
+  font-family: sans-serif;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 10px;
 }
 
 .issue-info, .activity-info, .discussion-info, .written-progress {
@@ -76,9 +83,15 @@ $label-blue: #81c4ff;
 }
 
 .proposal, .issue, .discussion {
-  margin-left: 0px;
-  padding-left: 26px !important;
-  margin-bottom: 16px;
+  // margin-left: 0px;
+  // padding-left: 26px !important;
+  // margin-bottom: 16px;
+
+  display: flex;
+  background-color: white;
+  padding: 20px;
+  border-radius: 3px;
+  margin-bottom: 20px;
 }
 
 .upvote-div {

@@ -42,9 +42,9 @@ class ActivitiesController < ApplicationController
   end
 
   def invitation
-    if logged_in?
-      redirect_to action_path(params[:activity_id])
-    end
+    # if logged_in?
+    #   redirect_to action_path(params[:activity_id])
+    # end
   end
 
   # GET /activities/new

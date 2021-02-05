@@ -86,13 +86,13 @@
 				<% elsif post.activity %>
 			  	
 					<% if (post.activity.deadline && post.activity.deadline > @current_time) || (post.activity.expiration && post.activity.expiration > @current_time) || (!post.activity.deadline && !post.activity.expiration) %>
-						<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
+							<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
 
-						<%= link_to action_path(post.activity.hashid) do %>
+							<%= link_to action_path(post.activity.hashid) do %>
 						  <li class="proposal">
 								<%= render(:partial => 'activities/activity', :locals => {:activity => post.activity})%>
 						  </li>
-						<% end %>
+							<% end %>
 					<% end %>
 				<% elsif post.problem %>
 

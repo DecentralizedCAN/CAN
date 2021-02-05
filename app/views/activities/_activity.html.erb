@@ -1,4 +1,5 @@
-  <div class="proposal-block-one">
+
+  <!-- <div class="proposal-block-one"> -->
     <div class="activity-title">
 
       <% if activity.goal %>
@@ -13,8 +14,10 @@
       <% end %>
 
       <!-- <span class="underline" style="text-shadow: 0px 0px 12px #2afb43;"><%= activity.title %></span></span> <span class="feed-label">Collective action</div> -->
-      <span class="underline" ><%= activity.title %></span></span> <span class="feed-label">Collective action</div>
-
+      <span class="underline" ><%= activity.title %></span></span>
+        <!-- <span class="feed-label">Collective action</span> -->
+      </div>
+      
   		<% if activity.solution %>
   			<div class="proposal-activity-description">
   				Proposal for <em><%= activity.solution.problem.title %></em>
@@ -35,29 +38,6 @@
           </strong>
         </div>
       <% end %>
-
-    <div class="activity-info">
-
-      <div class="post-signature">
-        <!-- <i class="fas fa-calendar"></i> -->
-        <%= time_ago_in_words(activity.created_at) %> ago
-        • by <em><%= 
-          begin 
-            User.find(activity.creator).name
-          rescue
-          end  %></em>
-
-      </div>
-
-      <% if activity.expiration && activity.expiration > @current_time %>
-        <div>
-          <br>
-          <i class="fas fa-clock"></i>
-          expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
-        </div>
-      <% end %>
-
-    </div>
 
     <div class="roll-progress">
       
@@ -111,10 +91,33 @@
 
     </div>
 
+    <div class="activity-info">
+
+      <div class="post-signature">
+        <!-- <i class="fas fa-calendar"></i> -->
+        <%= time_ago_in_words(activity.created_at) %> ago
+        • by <em><%= 
+          begin 
+            User.find(activity.creator).name
+          rescue
+          end  %></em>
+
+      </div>
+
+      <% if activity.expiration && activity.expiration > @current_time %>
+        <div>
+          <br>
+          <i class="fas fa-clock"></i>
+          expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
+        </div>
+      <% end %>
+
+    </div>
+
     <% if activity.actdissent.count > 0 %>
       <div class="dissenter-count">
         <i class="fas fa-hand-point-down"></i>
         <%= activity.actdissent.count %> objections
       </div>
     <% end %>
-</div>
+<!-- </div> -->

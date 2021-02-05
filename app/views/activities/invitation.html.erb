@@ -1,5 +1,5 @@
 <div class="invitation">
-  <p class="fadein">Your help is needed:</p>
+  <p class="fadein">Your help is needed with:</p>
 
 <div class="fadein">
 <p class="discussion-content"><strong class="title"><%= @activity.title %></strong>
@@ -25,7 +25,7 @@
 
   <ul class="all-roles fadein">
     <% @activity.roll.each do |role| %>
-      <li>
+      <li id="<%= role.id %>">
 
         <label class="label" style="display: none;">
           <input  class="label__checkbox" type="checkbox" />
@@ -84,7 +84,7 @@
 </div>
 
 <div class="signup-action-form">
-  <p class="innerfade">Thanks! Please leave your information to keep track of who has committed.</p><br>
+  <p class="innerfade">Thanks! Please enter the following to help keep track your commitment. You may either enter new information, or credentials from an existing account.</p><br>
 
   <%= form_for(:session, url: login_path) do |f| %>
     
@@ -94,7 +94,7 @@
     <% end %>
 
     <div>
-      <h3>Your name</h3> <%= f.text_field :email, class: 'form-mini' %>
+      <h3>Your name or pseudonym</h3> <%= f.text_field :email, class: 'form-mini' %>
     </div>
 
     <div>
@@ -104,6 +104,8 @@
     <div>
       <h3>A password</h3> <%= f.password_field :password, class: 'form-mini' %>
     </div>
+
+    <% f.hidden_field :commitments_json, id: :commitments_json %>
 
     <%= f.submit "Save and finish", class: "button yes" %>
 
@@ -151,8 +153,9 @@
 
   $('.commit-action').click(function(){
     <% if logged_in? %>
-      
+      // $('#commitments_json').val(JSON.stringify(selectedRoles))
     <% else %>
+      $('#commitments_json').val(JSON.stringify(selectedRoles))
       $('.signup-action-form').css('opacity', 1)
       $('.invitation').hide()
     <% end %>
@@ -181,8 +184,18 @@
     $('.commit-form').hide()
   })
 
+  let selectedRoles = []
   $('li').click(function(){
     if ($(this).hasClass('select')) {
+      let liid = $(this).attr('id')
+      if (selectedRoles.includes(liid)) {
+        selectedRoles.splice(selectedRoles.indexOf(liid), 1)
+      } else {
+        selectedRoles.push(liid)
+      }
+
+      console.log(selectedRoles)
+
       $(this).toggleClass('selected')
       $(this).children('label.label')[0].click()
     }
