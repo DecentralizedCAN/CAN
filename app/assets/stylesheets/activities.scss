@@ -80,8 +80,8 @@ $offwhite: #f5f5f5;
 .written-progress {
 
   position: relative;
-  top: 4px;
-  left: -162px;
+  top: -12px;
+  // left: -162px;
   // color: #565656 !important;
   color: #757575 !important;
   font-weight: bold !important;
@@ -161,14 +161,15 @@ $offwhite: #f5f5f5;
   position: relative;
   margin: 4px;
   margin-left: 0;
-  top: 6px;
+  top: -9px;
   font-size: 9px;
   text-transform: uppercase;
   color: black;
   font-weight: bolder;
-  left: -138px;
+  // left: -138px;
+  // left: 62px;
   letter-spacing: 1px;
-  display: flex !important;
+  // display: flex !important;
 }
 
 .completed-tag {
@@ -203,11 +204,19 @@ $offwhite: #f5f5f5;
   border-radius: 2px;
 }
 
+.roll-progress-outer {
+  margin: 0 50px;
+  display: flex;
+}
+
 .roll-progress {
+  margin: auto;
   max-height: 20px;
   min-width: fit-content;
   width: 100%;
-  display: flex;  
+  // display: flex;  
+  display: inline-block;
+  text-align: center;
 
   div {
     display: inline-block;
@@ -215,7 +224,7 @@ $offwhite: #f5f5f5;
 
   // line-height: 15px;
   line-height: 0;
-  margin-top: 2px;
+  // margin-top: 2px;
 }
 
 #role_title {

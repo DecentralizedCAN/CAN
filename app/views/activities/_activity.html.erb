@@ -16,15 +16,18 @@
       <!-- <span class="underline" style="text-shadow: 0px 0px 12px #2afb43;"><%= activity.title %></span></span> <span class="feed-label">Collective action</div> -->
       <span class="underline" ><%= activity.title %></span></span>
         <!-- <span class="feed-label">Collective action</span> -->
-      </div>
-      
-  		<% if activity.solution %>
-  			<div class="proposal-activity-description">
-  				Proposal for <em><%= activity.solution.problem.title %></em>
-  				with <%= activity.solution.score %>% estimated support
+<!--     </div>
+    
+
+    <div class="activity-info"> -->
+
+      <% if activity.solution %>
+        <div class="proposal-activity-description">
+          Proposal for <em><%= activity.solution.problem.title %></em>
+          with <%= activity.solution.score %>% estimated support
         </div>
 
-  		<% end %>
+      <% end %>
 
       <% if false && activity.goal %>
         <div class="proposal-activity-description">
@@ -39,6 +42,28 @@
         </div>
       <% end %>
 
+      <div class="post-signature">
+        <!-- <i class="fas fa-calendar"></i> -->
+        <%= time_ago_in_words(activity.created_at) %> ago
+        • by <em><%= 
+          begin 
+            User.find(activity.creator).name
+          rescue
+          end  %></em>
+
+      </div>
+
+      <% if activity.expiration && activity.expiration > @current_time %>
+        <div>
+          <br>
+          <i class="fas fa-clock"></i>
+          expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="roll-progress-outer">
     <div class="roll-progress">
       
       <div class="participation-meter">
@@ -72,11 +97,11 @@
           Complete
         </div>
       <% elsif total_committed(activity) >= total_minimum(activity) %>
-        <div class="activated-tag">
+        <br><div class="activated-tag">
           Activated
         </div>
       <% else %>
-        <div class="written-progress">
+        <br><div class="written-progress">
           <!-- <i class="fas fa-users"></i> -->
           <% if !total_maximum(activity) %>
             <%= total_committed(activity) %>/<%= total_minimum(activity) %>-∞
@@ -90,28 +115,6 @@
       <% end %>
 
     </div>
-
-    <div class="activity-info">
-
-      <div class="post-signature">
-        <!-- <i class="fas fa-calendar"></i> -->
-        <%= time_ago_in_words(activity.created_at) %> ago
-        • by <em><%= 
-          begin 
-            User.find(activity.creator).name
-          rescue
-          end  %></em>
-
-      </div>
-
-      <% if activity.expiration && activity.expiration > @current_time %>
-        <div>
-          <br>
-          <i class="fas fa-clock"></i>
-          expires in <%= distance_of_time_in_words(Time.now, Time.at(activity.expiration), include_seconds: true) %>
-        </div>
-      <% end %>
-
     </div>
 
     <% if activity.actdissent.count > 0 %>

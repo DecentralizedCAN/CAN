@@ -27,7 +27,8 @@ $label-blue: #81c4ff;
   // font-size: 13px;
   font-size: 15px;
 
-  width: 50%;
+  // width: 50%;
+  width: 100%;
   font-family: sans-serif;
   display: inline-block;
   font-weight: bold;
@@ -52,6 +53,7 @@ $label-blue: #81c4ff;
 
 .post-signature {
   font-size: 12px !important;
+  font-weight: 100;
 }
 
 #main-feed {
@@ -82,27 +84,56 @@ $label-blue: #81c4ff;
   }
 }
 
-.proposal, .issue, .discussion {
-  // margin-left: 0px;
-  // padding-left: 26px !important;
-  // margin-bottom: 16px;
+#main-feed {
+  .post-outer {
+    list-style: none;
+    margin-bottom: 20px;
+    display: flex;
 
-  display: flex;
-  background-color: white;
-  padding: 20px;
-  border-radius: 3px;
-  margin-bottom: 20px;
+    form {
+      // flex: 1 1 auto;
+      height: 100%;
+      color: white;
+
+      button {
+        height: 100%;
+        border: 0;
+        background-color: #e0e0e0;
+        color: white;
+      }
+    }
+
+    a {
+      width: 100%;
+    }
+  }
+
+  .proposal, .issue, .discussion {
+    // margin-left: 0px;
+    // padding-left: 26px !important;
+    // margin-bottom: 16px;
+
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    border-radius: 3px;
+    margin: 0;
+  }
 }
 
 .upvote-div {
-	width: 20px;
-	float: left;
-	display: inline-block;
-  position: relative;
-  margin-top: 4px;
-  left: -5px;
-  text-align: center;
-  color: #757575;
+  // width: 20px;
+  // float: left;
+  // display: inline-block;
+  // position: relative;
+  // margin-top: 4px;
+  // left: -5px;
+  // text-align: center;
+  // color: #757575;
+  // height: 100%;
+  // vertical-align: top;
+
+  flex: 1 1 auto;
 
   form {
     height: 14px;
@@ -132,16 +163,19 @@ $label-blue: #81c4ff;
   }
 
 	.red-upvote {
-		background: url(two-arrow-red.svg) center no-repeat;
+		// background: url(two-arrow-red.svg) center no-repeat;
+    background: url(two-arrow-white.svg) center no-repeat;
     background-size: 18px;
     border: 0;
+    background-color: #ff7455 !important;
 
     &:active, &:focus {
       outline: 0;
     }
 
     span {
-      color: #ff7455;
+      // color: #ff7455;
+      color: white;
       // color: #fbbf33;
       top: 9px;
       position: relative;
@@ -229,7 +263,8 @@ $label-blue: #81c4ff;
   ol.side-card {
       padding: 0;
       width: 25%;
-      margin-top: -4px;
+      margin-top: 10px;
+      background-color: white;
 
     li {
       color: #525252;

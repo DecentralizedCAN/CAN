@@ -86,13 +86,15 @@
 				<% elsif post.activity %>
 			  	
 					<% if (post.activity.deadline && post.activity.deadline > @current_time) || (post.activity.expiration && post.activity.expiration > @current_time) || (!post.activity.deadline && !post.activity.expiration) %>
+						<li class="post-outer">
 							<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
 
 							<%= link_to action_path(post.activity.hashid) do %>
-						  <li class="proposal">
+						  <div class="proposal">
 								<%= render(:partial => 'activities/activity', :locals => {:activity => post.activity})%>
-						  </li>
+						  </div>
 							<% end %>
+						</li>
 					<% end %>
 				<% elsif post.problem %>
 
@@ -214,9 +216,9 @@
   			<%= link_to 'New Post', new_discussion_path if logged_in? %>
 		  </div> -->
 
-		  <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state && false %>
+		  <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state %>
 
-			<% if logged_in? && @notifications.length > 0 && false %>
+			<% if logged_in? && @notifications.length > 0 %>
 		  <div class="card-item">
 
 		  	<div class="flex-container">
