@@ -27,28 +27,18 @@
     <% end %>
   </div> -->
 
-  <div class="post-outer">
+  <div class="post-outer show-post">
     <%= render(:partial => 'static/post-stuff', :locals => {:post => @activity.post})%>
 
-    <div class="proposal">
+    <div class="action show-action">
 
-      <div class="flex-container">
+      <!-- <div class="flex-container"> -->
 
-        <div class="issue-title view">  
+        <!-- <div class="issue-title view">   -->
           <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
-        </div>
+        <!-- </div> -->
 
-        <div class="right-buttons">
-
-          <div id="open-discussion">
-            <i class="fas fa-comments"></i>
-            Conversation
-            (<%= @discussion.comment.count %>)
-          </div>
-
-        </div>
-
-      </div>
+      <!-- </div> -->
 
 
       <% if @activity.solution && @activity.solution.problem %>
@@ -76,10 +66,20 @@
       <% end %> -->
       
     </div>
+
+    <div class="right-buttons">
+
+      <div id="open-discussion">
+        <i class="fas fa-comments"></i>
+        <!-- Conversation -->
+        (<%= @discussion.comment.count %>)
+      </div>
+
+    </div>
   </div>
 
   <% if @activity.description.length > 0 %>
-  <p class="discussion-content"><%= @activity.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+  <p><%= @activity.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
   <% end %>
 
   <div class="dissent-activity">

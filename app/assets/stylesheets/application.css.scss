@@ -190,8 +190,8 @@ form select {
 	border: 1px solid;
 }
 
-.proposal .participation-meter {
-  height: 12px !important;
+.proposal .participation-meter, .action .participation-meter {
+  height: 14px !important;
 }
 
 .participation-progress {

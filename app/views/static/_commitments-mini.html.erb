@@ -52,7 +52,8 @@
         		<%= link_to  action_path(commitment.activity.id) do %>
               <li> 
                 <i class="far fa-calendar"></i>
-                (<%= commitment.activity.roll.first.user.count %>/<%= commitment.activity.roll.first.minimum %>) 
+                (<%= total_committed(commitment.activity) %>/<%=total_minimum(commitment.activity)%>)
+                <!-- (<%= commitment.activity.roll.first.user.count %>/<%= commitment.activity.roll.first.minimum %>)  -->
                 <%= commitment.activity.title %>:
                 <%= commitment.title %>
               </li>
