@@ -70,6 +70,9 @@
       <br>
     <% end %>
 
+    <%= form.check_box :make_public, {checked: true}, false, true %> Private action (don't post to main page)
+
+    <br>
 
     <% if Group.all.count > 0 %>
     Post go a group? 

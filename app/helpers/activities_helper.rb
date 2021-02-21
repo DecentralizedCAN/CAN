@@ -66,7 +66,7 @@ module ActivitiesHelper
       # Notifications
       if total_committed(@roll.activity) == total_minimum(@roll.activity)
         @roll.user.each do |user|
-          notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and will happen.",
+          notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and can happen.",
             :activity_id => @activity.id)
           notification.send_email
         end

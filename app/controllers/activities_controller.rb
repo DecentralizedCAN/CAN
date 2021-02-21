@@ -147,8 +147,10 @@ class ActivitiesController < ApplicationController
 
 
         # create post and upvote
-        @post = Post.create(:activity => @activity, :group_id => activity_params[:group_id])
-        @post.upvotes.create(user_id: current_user.id)
+        if activity_params[:make_public] && activity_params[:make_public] == 'true'
+          @post = Post.create(:activity => @activity, :group_id => activity_params[:group_id])
+          @post.upvotes.create(user_id: current_user.id)
+        end
 
         # create discussion
         @discussion = Discussion.create(:activity => @activity, :title => "Activity", :content => "Discussion for #{@activity.title}")
@@ -418,7 +420,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:title, :description, :role_json, :deadline, :expiration, :goal_id, :broadcast_action, :group_id)
+      params.require(:activity).permit(:title, :description, :role_json, :deadline, :expiration, :goal_id, :broadcast_action, :group_id, :make_public)
     end
 
     def public_viewable?
