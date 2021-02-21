@@ -188,7 +188,7 @@ class ActivitiesController < ApplicationController
 
         # @activity.send_activity_email
 
-        format.html { redirect_to action_path(@activity.id) }
+        format.html { redirect_to action_path(@activity.hashid) }
         format.json { render :show, status: :created, location: @activity }
       else
         format.html { render :new }

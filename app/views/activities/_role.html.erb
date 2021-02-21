@@ -69,7 +69,9 @@
         background-color: rgba(255, 166, 252, <%= role.user.count.to_f / role.maximum.to_f * 4%>);
         ">
       </div>
-    <% end %>
+      <% else %>
+        <br><div class="participation-progress second"></div>
+      <% end %>
     </div>
   </div>
 </li>

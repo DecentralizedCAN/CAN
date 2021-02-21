@@ -37,34 +37,45 @@
         </label>
 
         <div>
-        <strong><%= pluralize(role.minimum, role.title) %></strong><br>
+        <!-- <strong><%= pluralize(role.minimum, role.title) %></strong> -->
+  <strong>
+    <% if !role.maximum %>
+      <%= role.minimum %> or more
+    <% elsif role.minimum < role.maximum %>
+      <%= role.minimum %> to <%= role.maximum %>
+    <% else %>
+      <%= role.minimum %>
+    <% end %>
+    <%= role.title.pluralize(role.minimum) %></strong>
+
+            <br>
             <% if role.description.length > 0 %>
               Description: <%= role.description %><br>
             <% end %>
 
-            <%= pluralize(role.user.count, 'person') %> committed, and 
-            <% if !role.maximum %>
-              <%= role.minimum %> or more
-            <% elsif role.minimum < role.maximum %>
-              <%= role.minimum %> to <%= role.maximum %>
-            <% else %>
-              only <%= role.minimum %>
-            <% end %>
-            are needed
+            <%= pluralize(role.user.count, 'person') %> committed<!--, and 
+            <%# if !role.maximum %>
+              <%#= role.minimum %> or more
+            <%# elsif role.minimum < role.maximum %>
+              <%#= role.minimum %> to <%= role.maximum %>
+            <%# else %>
+              only <%#= role.minimum %>
+            <%# end %>
+            are needed -->
 
             <div class="participation-meter participation-meter-outer">
               <div class="participation-progress" style="
               width: <%= role.user.count.to_f / role.minimum.to_f * 100%>%; 
               background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
-              ">
-              </div>
+              "></div><br>
               <% if role.maximum %>
                 <div class="participation-progress second" style="
                 width: <%= role.user.count.to_f / role.maximum.to_f * 100%>%; 
                 background-color: rgba(255, 166, 252, <%= role.user.count.to_f / role.maximum.to_f * 4%>);
-                ">
-              </div>
-            <% end %>
+                "></div>              
+              <% else %>
+                <div class="participation-progress second"></div>
+              <% end %>
             </div>
         </div>
       </li>
@@ -94,7 +105,7 @@
     <% end %>
 
     <div>
-      <h3>Your name or pseudonym</h3> <%= f.text_field :email, class: 'form-mini' %>
+      <h3>Your name or pseudonym</h3> <%= f.text_field :email, required: true, class: 'form-mini' %>
     </div>
 
     <div>
@@ -102,7 +113,7 @@
     </div>
 
     <div>
-      <h3>A password</h3> <%= f.password_field :password, class: 'form-mini' %>
+      <h3>A password</h3> <%= f.password_field :password, required: true, class: 'form-mini' %>
     </div>
 
     <%= f.hidden_field :commitments_json, id: :commitments_json %>
@@ -152,16 +163,18 @@
   <% end %>
 
   $('.commit-action').click(function(){
-    <% if logged_in? %>
-      // $('#commitments_json').val(JSON.stringify(selectedRoles))
-      let commitlink = "<%= masscommit_url %>?commitments_json=" + selectedRoles
-      console.log(commitlink)
-      window.location.replace(commitlink)
-    <% else %>
-      $('#commitments_json').val(JSON.stringify(selectedRoles))
-      $('.signup-action-form').css('opacity', 1)
-      $('.invitation').hide()
-    <% end %>
+    if (selectedRoles.length > 0) {
+      <% if logged_in? %>
+        // $('#commitments_json').val(JSON.stringify(selectedRoles))
+        let commitlink = "<%= masscommit_url %>?commitments_json=" + selectedRoles
+        console.log(commitlink)
+        window.location.replace(commitlink)
+      <% else %>
+        $('#commitments_json').val(JSON.stringify(selectedRoles))
+        $('.signup-action-form').css('opacity', 1)
+        $('.invitation').hide()
+      <% end %>
+    }
   })
 
   $('.yes').click(function(){
