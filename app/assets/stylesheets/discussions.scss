@@ -228,6 +228,11 @@ p > a, .comment > a {
 }
 
 .discussion-content { 
+
+  strong {
+    font-size: 13px;
+  }
+
   margin-top: 8px;
   margin-bottom: 8px;
   font-size: 12px;

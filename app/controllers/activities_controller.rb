@@ -272,31 +272,25 @@ class ActivitiesController < ApplicationController
     @roll = Roll.find(params[:roll_id])
   end
 
-  def participate
-    @roll = Roll.find(params[:roll_id])
-    @user = current_user
-    @activity = @roll.activity
-    unless @roll.user.include?(@user) || (@roll.maximum && @roll.user.count >= @roll.maximum)
-      @roll.user << @user
+  def masscommit
+    if params[:commitments_json].length > 0
 
-      new_comment('!chatlog committed to the role "' + @roll.title + '"', @activity.discussion.id)
+      # commitments = JSON.parse(params[:commitments_json])
+      commitments = params[:commitments_json].split(',').map{|chr| chr.to_i}
 
-      begin
-        auto_upvote_post(@activity.post.id, @user.id)
-      rescue
+      commitments.each do |role_id|
+        commit_to_a_role(role_id)
       end
 
-      # Notifications
-      if total_committed(@roll.activity) == total_minimum(@roll.activity)
-        @roll.user.each do |user|
-          notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and will happen.",
-            :activity_id => @activity.id)
-          notification.send_email
-        end
-      end  
-      # End notifications
+      flash[:success] = "Thanks for your participation!"
+      redirect_to action_path(:activity_id => Roll.find(commitments[0]).activity.hashid)
+
     end
-    redirect_to action_path(:activity_id => @roll.activity.id)
+  end
+
+  def participate
+    commit_to_a_role(params[:roll_id])      
+    redirect_to action_path(:activity_id => @roll.activity.hashid)
   end
 
   def cancel
@@ -322,7 +316,7 @@ class ActivitiesController < ApplicationController
       end  
       # End notifications
     end
-    redirect_to action_path(:activity_id => @roll.activity.id)
+    redirect_to action_path(:activity_id => @roll.activity.hashid)
   end
 
   def complete
@@ -391,6 +385,32 @@ class ActivitiesController < ApplicationController
   end
 
   private
+    # def commit_to_a_role(role_id)
+    #   @roll = Roll.find(role_id)
+    #   @user = current_user
+    #   @activity = @roll.activity
+    #   unless @roll.user.include?(@user) || (@roll.maximum && @roll.user.count >= @roll.maximum)
+    #     @roll.user << @user
+
+    #     new_comment('!chatlog committed to the role "' + @roll.title + '"', @activity.discussion.id)
+
+    #     begin
+    #       auto_upvote_post(@activity.post.id, @user.id)
+    #     rescue
+    #     end
+
+    #     # Notifications
+    #     if total_committed(@roll.activity) == total_minimum(@roll.activity)
+    #       @roll.user.each do |user|
+    #         notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and will happen.",
+    #           :activity_id => @activity.id)
+    #         notification.send_email
+    #       end
+    #     end  
+    #     # End notifications
+    #   end
+    # end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
       @activity = Activity.find(params[:activity_id])

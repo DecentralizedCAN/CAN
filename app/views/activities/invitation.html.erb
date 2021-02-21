@@ -105,7 +105,7 @@
       <h3>A password</h3> <%= f.password_field :password, class: 'form-mini' %>
     </div>
 
-    <% f.hidden_field :commitments_json, id: :commitments_json %>
+    <%= f.hidden_field :commitments_json, id: :commitments_json %>
 
     <%= f.submit "Save and finish", class: "button yes" %>
 
@@ -154,6 +154,9 @@
   $('.commit-action').click(function(){
     <% if logged_in? %>
       // $('#commitments_json').val(JSON.stringify(selectedRoles))
+      let commitlink = "<%= masscommit_url %>?commitments_json=" + selectedRoles
+      console.log(commitlink)
+      window.location.replace(commitlink)
     <% else %>
       $('#commitments_json').val(JSON.stringify(selectedRoles))
       $('.signup-action-form').css('opacity', 1)
@@ -163,6 +166,7 @@
 
   $('.yes').click(function(){
     if (<%= @activity.roll.length == 1 %>) {
+      selectedRoles = [<%= @activity.roll.first.id %>]
       $('.commit-action').click()
     } else {
       $('.yes-notice').show()

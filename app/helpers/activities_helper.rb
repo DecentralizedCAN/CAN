@@ -47,4 +47,32 @@ module ActivitiesHelper
 
     total
   end
+
+
+  def commit_to_a_role(role_id)
+    @roll = Roll.find(role_id)
+    @user = current_user
+    @activity = @roll.activity
+    unless @roll.user.include?(@user) || (@roll.maximum && @roll.user.count >= @roll.maximum)
+      @roll.user << @user
+
+      new_comment('!chatlog committed to the role "' + @roll.title + '"', @activity.discussion.id)
+
+      begin
+        auto_upvote_post(@activity.post.id, @user.id)
+      rescue
+      end
+
+      # Notifications
+      if total_committed(@roll.activity) == total_minimum(@roll.activity)
+        @roll.user.each do |user|
+          notification = user.notification.create(:details => "The action \"" + @activity.title + "\" has reached minimum participation and will happen.",
+            :activity_id => @activity.id)
+          notification.send_email
+        end
+      end  
+      # End notifications
+    end
+  end
+
 end

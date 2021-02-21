@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  include ActivitiesHelper
+  include CommentsHelper
+  include UpvoteHelper
 
   def new
   end
@@ -36,7 +39,20 @@ class SessionsController < ApplicationController
       remember(@user)
     end
 
-    if Setting.find(6).state
+    if params[:session][:commitments_json].length > 0
+      puts "--------"
+      puts params[:session][:commitments_json]
+      puts"========="
+
+      commitments = JSON.parse(params[:session][:commitments_json])
+
+      commitments.each do |role_id|
+        commit_to_a_role(role_id)
+      end
+
+      flash[:success] = "Thanks for your participation!"
+      redirect_to action_path(:activity_id => Roll.find(commitments[0]).activity.hashid)
+    elsif Setting.find(6).state
       redirect_back fallback_location: root_path
     else
       redirect_to root_path
