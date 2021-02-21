@@ -287,17 +287,19 @@ $label-blue: #81c4ff;
   }
 
   ol.side-card {
-      padding: 0;
-      width: 25%;
-      margin-top: 10px;
-      background-color: white;
+    padding: 10px;
+    width: 29%;
+    margin-top: 10px;
+    background-color: white;
 
     li {
       color: #525252;
     }
 
     .card-item {
-      margin-bottom: 2em;
+      // margin-bottom: 2em;
+      margin-top: 10px;
+      margin-bottom: 10px;
       // background-color: $offwhite;
       list-style: none;
       vertical-align: top;
@@ -309,6 +311,7 @@ $label-blue: #81c4ff;
 
       h2 {
         margin: 0;
+        padding-bottom: 4px;
         color: #525252;
         // font-weight: bold;
       }

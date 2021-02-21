@@ -196,22 +196,22 @@
 
 		<ol class="side-card">
 
-		  <div class="card-item">
 			<% if Group.all.length > 0 && (params[:group] && params[:group] != '0') %>
-				<% @group = Group.find(params[:group]) %>
-				<h3><%= @group.name %> members
-		    <% if params[:group].to_i == @group.id && @group.user.include?(current_user) %>
-		      (<%= link_to "Leave", leave_group_path(:group_id => @group.id), :method => "post" %>)
-		    <% elsif params[:group].to_i == @group.id %>
-		      (<%= link_to "join", join_group_path(:group_id => @group.id), :method => "post" %>)
-		    <% end %></h3>
-				<ol style="padding-left: 20px;">
-				<% Group.find(params[:group]).user.each do |user| %>
-					<li><%= user.name %></li>
-				<% end %>
-				</ol>
+			  <div class="card-item">
+					<% @group = Group.find(params[:group]) %>
+					<h3><%= @group.name %> members
+			    <% if params[:group].to_i == @group.id && @group.user.include?(current_user) %>
+			      (<%= link_to "Leave", leave_group_path(:group_id => @group.id), :method => "post" %>)
+			    <% elsif params[:group].to_i == @group.id %>
+			      (<%= link_to "join", join_group_path(:group_id => @group.id), :method => "post" %>)
+			    <% end %></h3>
+					<ol style="padding-left: 20px;">
+					<% Group.find(params[:group]).user.each do |user| %>
+						<li><%= user.name %></li>
+					<% end %>
+					</ol>
+				</div>
 			<% end %>
-			</div>
 
 		  <!-- <div id="post-something"> 
   			<%= link_to 'New Post', new_discussion_path if logged_in? %>
