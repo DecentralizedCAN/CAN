@@ -1,7 +1,7 @@
 <div class="backdrop">
 
 <div class="back-button">
-  <%= link_to issue_path(:problem_id => @criterium.problem.hashid), data: { turbolinks: false } do %>
+  <%= link_to issue_path(:problem_id => @criterium.problem.hashid, :view => "suggested"), data: { turbolinks: false } do %>
     <div class="back-button-arrow"></div>
     <div class="back-button-content">
       All criteria

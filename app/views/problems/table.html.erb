@@ -1,25 +1,25 @@
+<div class="top-flex">
+<div class="white-container">
 <div id="solver">
 
+<%= render 'problem_details' %>
+
 <!-- Table -->
-<div><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
+
+<br><br>
+<div class="table-title">
+
+  <br><div><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
   <span class="tooltip-toggle" href="#" aria-label="View proposals and criteria as lists" tabindex="0">
-    <i class="fas fa-list"></i> View as lists
+    <i class="fas fa-eye">&nbsp;</i> Switch back to main view
   </span>
-<% end %>
-</div><br>
+<% end %></div><br><br>
 
-<div class="issue-title view"><h3>Table for 
-  <%= link_to issue_path( :problem_id => @problem.hashid) do %>  
-    <strong><%= @problem.title %></strong>
-  <% end %>
-</h3></div>
+  <div class="issue-title view"><h3>Proposals X Criteria Table</h3></div>
+  <p>Click on table cells to change your answer.</p>
 
-<br><div id="refresh"><%= button_to request.env['PATH_INFO'], :method => :get, :class => 'button button-hollow' do %>
-      <i class="fas fa-sync"></i> Refresh
-    <% end %> <em>(for current information)</em></div>
-    
-<p>Click on table cells to change your answer.</p>
-    
+</div>
+        
 <div class="outer-table">
 <table class="proposal-grid" cellspacing ="2" cellpadding ="6">
 
@@ -33,6 +33,9 @@
       <% end %>
     </th>
   <% end %>
+  <!-- <th><span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to suggestions." tabindex="0">
+      <button id="open-new-criterion-div" class="button green">+</button>
+    </span></th> -->
 </tr>
 
 <tr>
@@ -151,7 +154,10 @@
 <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %>
 
 
+<%= render 'problem_bottom' %>
 </div>
+
+
 
 <!-- <br><br><span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span> -->
 

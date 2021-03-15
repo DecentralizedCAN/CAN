@@ -74,6 +74,10 @@
   </span>
   </div>
 
-  <%= form.submit "Create", id: :submit_brainstorm %>
+  <% if controller.action_name == "edit" %>
+    <%= form.submit "Save changes", id: :submit_brainstorm %>
+  <% else %>
+    <%= form.submit "Create", id: :submit_brainstorm %>
+  <% end %>
 
 <% end %>

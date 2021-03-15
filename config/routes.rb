@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post '/problem/unsponsor', to: 'problems#unsponsor', :as => :unsponsor_problem
   get '/c/:problem_id', to: 'problems#show', :as => :issue
   get '/c/table/:problem_id', to: 'problems#table', :as => :brainstorm_table
-  resources :problems, only: [:create, :destroy]
+  resources :problems, only: [:create, :destroy, :edit, :update]
 
   resources :solutions, only: [:create]
   get '/c/:problem_id/proposal/new', to: 'solutions#new', :as => :new_solution

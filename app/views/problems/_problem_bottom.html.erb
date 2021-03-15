@@ -1,0 +1,152 @@
+
+
+</div> <!-- SOLVER ENDS -->
+
+</div> <!-- WHITE CONTAINER ENDS -->
+
+<!-- DISCUSSION -->
+<div class="discussion-extraouter">
+  <h2>
+    <i class="fas fa-comments" ></i> Conversation
+    (<%= @discussion.comment.count %>)
+   <!--  <%= link_to discussion_path(@discussion), :id => "full-discussion-view" do %>
+      Full view
+    <% end %> -->
+    <i class="fas fa-times float-right" id="close-discussion"></i>
+  </h2>
+  <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
+</div> <!-- DISCUSSION ENDS -->
+
+</div> <!-- TOP-FLEX ENDS -->
+
+<div id="new-criterion-div">
+  <div class="new-criterion-inner">
+    <div id="close-new-criterion-div" class="float-right close-outer"><i class="fas fa-times close-window"></i></div>
+    <h1 class="center">New Criterion</h1>
+
+    <% @criterium = Criterium.new(:problem_id => @problem.id) %>
+    <div><%= render(:partial => 'criteria/new' )%></div>
+
+  </div>
+</div>
+
+<div id="collaborators-list">
+  <div class="objection-list-inner">
+    <div class="close-outer"><i class="fas fa-times close-window"></i></div>
+    <h2>Collaborators for "<%= @problem.title %>"</h2>
+
+    <!-- <div><%= request.url%></div> -->
+
+    <ul>
+    <% if false %>
+      <div><%= render(:partial => 'problems/share') %></div>
+    <% end %>
+
+    <div id="add-collaborators">+ Add collaborators</div><br>
+
+    <% @problem.user.each do |user| %>
+    
+    <%= link_to(user) do %>
+    <li>
+      <%= gravatar_for(user) %>
+      <strong><%= user.name %></strong>
+      <% if current_user && @problem.facilitator_id && @problem.facilitator_id == current_user.id %>
+        <a class="button small-button green float-right">make co-facilitator</a>
+      <% end %>
+      <br><br>
+      <!-- <%= user.email %> -->
+    </li>
+    <%end%>
+
+  <% end %></ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#open-collaborators').click( function() {
+    $('#collaborators-list').show()
+  })
+
+  $('#collaborators-list').find('.close-window').click(function(){
+    $('#collaborators-list').hide()
+  })
+
+  $('#close-new-criterion-div').click( function(){
+    $('#new-criterion-div').hide()
+  })
+
+  $('#open-new-criterion-div').click(function(){
+    $('#new-criterion-div').show()
+  })
+
+  $('#close-share-div').click( function(){
+    $('#share-div').hide()
+  })
+
+  $('#open-share-div').click(function(){
+    $('#share-div').toggle()
+  })
+
+  $('#add-collaborators').click(function(){
+    $('#collaborators-list').hide()
+    $('#share-div').show()
+  })
+
+  var openDiscussion = function() {
+    $('.discussion-extraouter').show()
+    $('#open-discussion').hide()
+    $('.criteria-list').addClass('two-column')
+    // if (jQuery(window). width() >= 700) {
+    //   $('.white-container').show()
+    // }
+    localStorage.setItem('dcan-discussion-show-desktop', 'True');
+  }
+
+  var closeDiscussion = function() {
+    $('.discussion-extraouter').hide()
+    $('#open-discussion').show()
+    $('.criteria-list').removeClass('two-column')
+    // if (jQuery(window). width() < 700) {
+    //   $('.white-container').hide()
+    // }
+    localStorage.setItem('dcan-discussion-show-desktop', 'False');
+  }
+
+  $(document).ready(function() {
+    <% if logged_in? && @discussion.comment.count > 0 %>
+      if (localStorage.getItem('dcan-discussion-show-desktop') != 'False') {
+        localStorage.setItem('dcan-discussion-show-desktop', 'True');
+      }
+
+      <% if params[:discussion] == 'open' %>
+        localStorage.setItem('dcan-discussion-show-desktop', 'True');
+      <% end %>
+    <% else %>
+      $('.discussion-extraouter').hide()
+      $('#open-discussion').show()
+      $('.criteria-list').removeClass('two-column')
+    <% end %>
+
+    var showDiscussionDesktop = localStorage.getItem('dcan-discussion-show-desktop')
+    
+    if (showDiscussionDesktop == 'True') {
+      openDiscussion()
+    } else if (showDiscussionDesktop == 'False') {
+      closeDiscussion()
+    }
+    // localStorage.setItem('dcan-discussion-show-desktop', 'False');
+  })
+
+  $('#close-discussion').click(function(){
+    closeDiscussion()
+
+    url = window.location.href
+    if (url.indexOf('?discussion') > 0) {
+      window.location = url.slice(0, url.indexOf('?discussion') )      
+    }
+  })
+
+  $('#open-discussion').click(function(){
+    openDiscussion()
+  })
+</script>

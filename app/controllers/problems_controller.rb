@@ -1,7 +1,7 @@
 class ProblemsController < ApplicationController
   include UpvoteHelper
   include SolutionsHelper
-  before_action :set_problem, only: [:show, :table, :edit, :update]
+  before_action :set_problem, only: [:show, :table]
   before_action :check_activity, only: [:create]
   before_action :require_login, unless: -> { public_viewable? }
   before_action :require_login, except: [:show, :table], if: -> { public_viewable? }
@@ -33,7 +33,7 @@ class ProblemsController < ApplicationController
       @my_criteria = current_user.criterium
         .where(problem_id: @problem.id)
 
-      @criteria = @all_criteria - @my_criteria
+      @criteria = (@my_criteria + (@all_criteria - @my_criteria)).first(8)
         # .order("COUNT(user_id) DESC").first(16) - @my_criteria
 
       @user = this_user
@@ -104,6 +104,7 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1/edit
   def edit
+    @problem = Problem.find(params[:id])
   end
 
   # POST /problems
@@ -176,15 +177,20 @@ class ProblemsController < ApplicationController
   # PATCH/PUT /problems/1
   # PATCH/PUT /problems/1.json
   def update
-    respond_to do |format|
-      if @problem.update(problem_params)
-        format.html { redirect_to issue_path(@problem), notice: 'Problem was successfully updated.' }
-        format.json { render :show, status: :ok, location: @problem }
-      else
-        format.html { render :edit }
-        format.json { render json: @problem.errors, status: :unprocessable_entity }
+    @problem = Problem.find(params[:id])
+
+    if @problem.facilitator_id && @problem.facilitator_id == current_user.id
+      respond_to do |format|
+        if @problem.update(problem_params)
+          format.html { redirect_to issue_path(@problem), notice: 'Problem was successfully updated.' }
+          format.json { render :show, status: :ok, location: @problem }
+        else
+          format.html { render :edit }
+          format.json { render json: @problem.errors, status: :unprocessable_entity }
+        end
       end
     end
+
   end
 
   # DELETE /problems/1

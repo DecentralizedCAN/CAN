@@ -1,9 +1,3 @@
-<div class="backdrop">
-
-<div class="form-tab form-full">
-
-<h1>New criterion</h1>
-
 <% if params[:alt] %>
   <% @alt = Criterium.find(params[:alt]) %>
   <p><i class="fas fa-hand-paper"></i> Suggesting as a potential alternative to: <strong><%= @alt.title %></strong></p>
@@ -19,9 +13,7 @@
     <%= form.hidden_field :problem_id, id: :id %>
     <%= form.hidden_field :alt_id, id: :alt_id, value: params[:alt] %>
 
-    <%= link_to "Cancel", issue_path(:problem_id => @criterium.problem.id), :class => "button button-hollow" %>
-
-    <%= form.submit "Submit", id: :submit_form, :class => "button" %>
+    <div class="center"><%= form.submit "Submit", id: :submit_form, :class => "button", :redirect => 'none' %></div>
 
   <% end %>
 </div>
@@ -37,7 +29,3 @@
 <li>Applies to everyone (this is a need that everyone can recognize, not just one person’s need)
 <li>Doesn’t have a specific outcome (as long as it’s noncontroversial, this is the least important characteristic)  
 </ol>
-
-</div>
-
-</div>

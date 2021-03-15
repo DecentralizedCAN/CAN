@@ -115,7 +115,11 @@ class CriteriaController < ApplicationController
         end
       end
       
-      redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+      if params[:redirect] == "none"
+        redirect_back fallback_location: root_path
+      else
+        redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+      end
 
     else
       flash[:warning] = "Can't save criterion. It may be too long."

@@ -1,18 +1,9 @@
 <div class="backdrop solution-outer white-container">
-  <div class="back-button">
-    <%= link_to issue_path(:problem_id => @problem.hashid), data: { turbolinks: false } do %>
-      <div class="back-button-arrow"></div>
-      <div class="back-button-content">
-        All proposals
-      </div>
-    <% end %>
 
-    <!-- <div id="refresh" class="float-right"><%= button_to request.env['PATH_INFO'], :method => :get do %>
-      <i class="fas fa-sync"></i> View current info
-    <% end %></div> -->
+  <div><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
+    <i class="fas fa-arrow-left">&nbsp;</i> Back to all proposals
+<% end %></div><br>
 
-  <!-- <h2>&nbsp;Proposal</h2> -->
-  </div>
     <h1>Proposal: </strong><%= @solution.title %></h1>
 
   <% if @solution.description.length > 0 %> 

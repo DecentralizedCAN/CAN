@@ -72,19 +72,23 @@
             <div class="criteria-sponsorship">
               <%if criterium.user.include?(@user)%>
                 <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                  <div class="max-width">
-                  <span class="crisupport-count gray yellow-background small-button" href="#" tabindex="0">
+                  <!-- <div class="max-width"> -->
+                  <div>
+                    <span class="crisupport-count gray lightgray-background small-button" href="#" tabindex="0">
                     <i class="fas fa-times gray"></i>
                     Remove
                   </span></div>
                 <% end %>
               <%else%>
+                  <!-- <div class="max-width"> -->
+                  <div>
+                    <span class="crisupport-count gray small-button green-background" href="#" tabindex="0">
                 <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                  <div class="max-width"><span class="crisupport-count gray small-button green-background" href="#" tabindex="0">
                     <i class="fas fa-thumbs-up gray"></i>
                     Approve
-                  </span></div>
+                  </span>
                 <% end %>
+                </div>
 
                 <!-- &nbsp; -->
 

@@ -87,7 +87,7 @@ $success-red: #ff7455;
 
     button {
       border: 0;
-      background: #9a9a9a;
+      background: #9a9a9a !important;
       color: white !important;
       border-radius: 2px;
       padding: 2px 6px;
@@ -103,7 +103,14 @@ $success-red: #ff7455;
   display: inline-block;
 }
 
+.issue-criteria-main {
+  // overflow: auto;
+  // max-height: 130px;
+}
+
 #issue-criteria {
+  // border: 1px solid #d8d8d8;
+  // background: #f9f9f9;
   display: inline-block;
 
   h2 {
@@ -229,7 +236,7 @@ $success-red: #ff7455;
   // color: #ffc46a;
 }
 
-.objection-popup, .objection-list, #collaborators-list {
+.objection-popup, .objection-list, #collaborators-list, #new-criterion-div {
   display: none;
   position: absolute;
   width: 100%;
@@ -239,7 +246,7 @@ $success-red: #ff7455;
   left: 0;
   background-color: #8080803b;
 
-  .objection-inner, .objection-list-inner {
+  .objection-inner, .objection-list-inner, .new-criterion-inner {
     background-color: white;
     border: 1px solid #9c9c9c;
     min-height: 200px;
@@ -268,6 +275,11 @@ $success-red: #ff7455;
     // .button {
     //   background-color: #ffc46a;
     // }
+  }
+
+  .new-criterion-inner {
+    min-height: fit-content;
+    max-height: none !important;
   }
 
   .objection-inner {
@@ -567,7 +579,15 @@ $success-red: #ff7455;
   }
 }
 
+.table-title {
+  margin: auto;
+  width: fit-content;
+  text-align: center;
+}
+
 .proposal-grid {
+
+  margin: auto;
 
   td, th {
     border: 1px solid;
@@ -721,7 +741,8 @@ $success-red: #ff7455;
 
   .table-hidden {
     border: none;
-    background-color: #f5f5f5 !important;
+    background: transparent;
+    // background-color: #f5f5f5 !important;
     // background-color: #9c9c9c !important;
     // color: white;
     text-align: right;
