@@ -50,7 +50,7 @@
     <li>
       <%= gravatar_for(user) %>
       <strong><%= user.name %></strong>
-      <% if current_user && @problem.facilitator_id && @problem.facilitator_id == current_user.id %>
+      <% if false && current_user && @problem.facilitator_id && @problem.facilitator_id == current_user.id %>
         <a class="button small-button green float-right">make co-facilitator</a>
       <% end %>
       <br><br>

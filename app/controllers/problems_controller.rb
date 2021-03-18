@@ -182,7 +182,7 @@ class ProblemsController < ApplicationController
     if @problem.facilitator_id && @problem.facilitator_id == current_user.id
       respond_to do |format|
         if @problem.update(problem_params)
-          format.html { redirect_to issue_path(@problem), notice: 'Problem was successfully updated.' }
+          format.html { redirect_to issue_path(@problem), notice: 'Process was successfully updated.' }
           format.json { render :show, status: :ok, location: @problem }
         else
           format.html { render :edit }

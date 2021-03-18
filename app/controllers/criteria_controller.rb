@@ -65,7 +65,7 @@ class CriteriaController < ApplicationController
     @criterium.creator = @user.id
 
     if @criterium.save
-      @criterium.user << @user unless (@criterium.problem.facilitator_id && @criterium.problem.facilitator_id != current_user.id) || criterium_params[:alt_id].length > 0
+      @criterium.user << @user unless ( (@criterium.problem.facilitator_id && @criterium.problem.facilitator_id != current_user.id) || criterium_params[:alt_id].length > 0 ) && (!@criterium.problem.scoring_method || @criterium.problem.scoring_method == 2)
 
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
@@ -86,7 +86,7 @@ class CriteriaController < ApplicationController
       end
 
       if @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == current_user.id
-      elsif @criterium.problem.facilitator_id
+      elsif @criterium.problem.facilitator_id && (!@criterium.problem.scoring_method || @criterium.problem.scoring_method == 2)
         flash[:success] = "You suggested a criterion. Please wait for the facilitator to review it. Thanks for your contribution!"
       else
         flash[:success] = "You created a criterion. Thanks for your contribution!"

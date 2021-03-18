@@ -99,6 +99,7 @@ a.button, input.button, div.button, button.button {
   padding: 0px 4px;
   border-radius: 2px;
   font-weight: normal;
+  height: fit-content;
 
   &:hover {
     background-color: #efeded;
@@ -240,6 +241,12 @@ textarea:focus, input:focus {
 
 
 // TOOLTIP
+
+.tooltip-small {
+  &::before {
+    width: fit-content !important;
+  }
+}
 
 .tooltip-toggle {
   position: relative;

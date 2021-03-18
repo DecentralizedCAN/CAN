@@ -22,6 +22,14 @@ $offwhite: #f5f5f5;
   box-shadow: 0px 3px 6px 0px #d0d0d0;
   border: 1px solid #d2d2d2;
 
+  a > * {
+    vertical-align: middle !important;
+  }
+
+  .float-right {
+    padding: 2px;
+  }
+
   .button {
     line-height: 12px;
   }

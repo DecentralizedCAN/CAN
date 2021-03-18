@@ -53,11 +53,15 @@
                         Facilitator: 
                         <strong><%= User.find(problem.facilitator_id).name %></strong>
                     </div>
-                  <% end %>
-                  <% if problem.facilitator_id && problem.facilitator_id == current_user.id %>
+                  <% elsif problem.facilitator_id && problem.facilitator_id == current_user.id %>
                     <div class="facilitating">
                       <i class="fas fa-star"></i>
                       Facilitating
+                    </div>
+                  <% else %>
+                    <div class="facilitator">
+                      <i class="fas fa-user-shield"></i>
+                      Distributed facilitation
                     </div>
                   <% end %>
 

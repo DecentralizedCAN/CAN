@@ -43,9 +43,10 @@
     <div>
     <% if Setting.find(10).state && false %>
       <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode
+    <% else %>
+      <%= form.hidden_field :facilitator_id, id: :facilitator_id, value: current_user.id %>
     <% end %>
 
-    <%= form.hidden_field :facilitator_id, id: :facilitator_id, value: current_user.id %>
 
     <% if false %>
       <br>
@@ -54,7 +55,8 @@
 
     </div>
 
-    <% if false && Setting.find(11).state %>
+    <%# if Setting.find(11).state %>
+    <% if params[:scoring] == "show" %>
       <div>
         <!-- Scoring method -->
         <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>

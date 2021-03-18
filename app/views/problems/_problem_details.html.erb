@@ -84,6 +84,9 @@
         Facilitator: 
         <!-- <span class="comment-user-info"><%= gravatar_for(User.find(@problem.facilitator_id)) %></span> -->
         <strong><%= link_to facilitator.name, facilitator %></strong>
+      <% else %>
+        <i class="fas fa-user-shield"></i>
+        Distributed facilitation
       <% end %>
     </div>
 
