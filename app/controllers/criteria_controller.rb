@@ -61,7 +61,7 @@ class CriteriaController < ApplicationController
   # POST /criteria.json
   def create
     @user = current_user
-    @criterium = Criterium.new(criterium_params.except(:alt_id))
+    @criterium = Criterium.new(criterium_params.except(:alt_id, :redirect))
     @criterium.creator = @user.id
 
     if @criterium.save
@@ -115,7 +115,7 @@ class CriteriaController < ApplicationController
         end
       end
       
-      if params[:redirect] == "none"
+      if criterium_params[:redirect] == "none"
         redirect_back fallback_location: root_path
       else
         redirect_to issue_path(:problem_id => @criterium.problem.hashid)
@@ -322,7 +322,7 @@ class CriteriaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def criterium_params
-      params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters, :alt_id)
+      params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters, :alt_id, :redirect)
     end
 
     # def update_all_solution_scores(problem_id)
