@@ -70,7 +70,6 @@
                                           <%= render(:partial => 'link_unlink_links', :locals => {:link => link5, :@goal => @goal, :view => 'public'})%>
 
                                           <% if Link.where(parent_id: link5.child.id).where.not(child_id: @goal.id).count > 0 %>
-                                            <br>
                                             <i class="fas fa-caret-down"></i>
                                           <% end %>
 

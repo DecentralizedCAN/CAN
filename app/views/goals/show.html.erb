@@ -22,12 +22,12 @@
 
 <div class="goal-node">
 
-<div id="reload"> <i class="fas fa-undo"></i> Reload</div>
+<!-- <div id="reload"> <i class="fas fa-undo"></i> Reload</div> -->
 
 <% if current_user %>
 
-<% @commitments = @user.rolls %>
-<% if @commitments.length > 0 && Completion.where(user_id: @user.id).count < @commitments.length %>
+<%# @commitments = @user.rolls %>
+<% if false && @commitments.length > 0 && Completion.where(user_id: @user.id).count < @commitments.length %>
   <div class="dashboard-item">
     
     <h3>
