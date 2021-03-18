@@ -1,6 +1,8 @@
 <div class="white-container">
 <div id="solver">
 
+<% @weighted = (@problem.scoring_method && @problem.scoring_method == 1) %>
+
 <div class="back-button"><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
     <i class="fas fa-arrow-left">&nbsp;</i> Back to main view
 <% end %></div><br>
@@ -11,16 +13,33 @@
     <h3 id="criteria">
       <i class="fas fa-clipboard-list"></i>
       Criteria for <strong><%= @problem.title %></strong>
-      <% if params[:view] == "suggested"%> (suggested & accepted) <%end%>
+      <% if params[:view] == "suggested" && !@weighted%> (suggested & accepted) <%end%>
     </h3></div>
 
     <br><br>
 
     <% if @problem.criterium.count > @criteria.count && !(params[:view] == 'suggested') %>
       <%= link_to full_criterium_path( :problem_id => @problem.id, :view => "suggested"), :class => "button button-hollow" do %>
-        <i class="fas fa-clipboard-list"></i> 
-        Suggestions
+        <i class="fas fa-eye"></i> 
+        <% if @weighted %>
+          Show abandoned criteria
+        <% else %>
+          Show suggestions
+        <% end %>
+
         (<%= @problem.criterium.count - @criteria_count %>)
+      <% end %>
+      &nbsp;
+    <% end %>
+
+    <% if params[:view] == 'suggested' %>
+      <%= link_to full_criterium_path( :problem_id => @problem.id), :class => "button button-hollow" do %>
+        <i class="fas fa-eye"></i> 
+        <% if @weighted %>
+          Hide abandoned
+        <% else %>
+          Hide suggestions
+        <% end %>
       <% end %>
       &nbsp;
     <% end %>
@@ -32,7 +51,11 @@
     <div id="issue-criteria">
 
     <% if params[:view] == "suggested"%>
-      <h2>Suggested criteria</h2>
+      <% if @weighted %>
+        <h2>Abandoned criteria</h2>
+      <% else %>
+        <h2>Suggested criteria</h2>
+      <% end %>
       <div class="criteria-list">
       <% @inactive_criteria.each do |criterium| %>
         <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
@@ -40,29 +63,38 @@
       </div>
     <% end %>
 
-    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id != current_user.id ) %>
 
-      <h2>Criteria</h2>
-      <% if @criteria.count > 0 %>
+    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id == current_user.id ) || @weighted%>
+
+      <% if @weighted %>
+        <h2>Supported Criteria</h2>
+      <% else %>
+        <h2>Criteria</h2>
       <% end %>
-      <div class="criteria-list">
-      <% @criteria.each do |criterium| %>
-        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-      <% end %>
-      </div>
-
-    <% end %>
-
-
-    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id == current_user.id ) %>
-
-      <h2>Criteria</h2>
 
 
       <% if @my_criteria.count > 0 %>
       <% end %>
       <div class="criteria-list">
       <% @my_criteria.each do |criterium| %>
+        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+      <% end %>
+      </div>
+
+    <% end %>
+
+    <% if @criteria_count - @my_criteria.count  > 0 %>
+
+      <% if @weighted %>
+        <h2>Unsupported Criteria</h2>
+      <% else %>
+        <h2>Criteria</h2>
+      <% end %>
+
+      <% if @criteria.count > 0 %>
+      <% end %>
+      <div class="criteria-list">
+      <% @criteria.each do |criterium| %>
         <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
       <% end %>
       </div>

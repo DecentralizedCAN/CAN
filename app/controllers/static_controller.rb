@@ -73,8 +73,13 @@ class StaticController < ApplicationController
 		elsif @notification.problem
 			redirect_to issue_path(:problem_id => @notification.problem.hashid)
 		elsif @notification.criterium
-			redirect_to show_criterium_path(:criterium_id => @notification.criterium.hashid)
+			# redirect_to show_criterium_path(:criterium_id => @notification.criterium.hashid)
 			# redirect_to issue_path(:problem_id => @notification.criterium.problem.hashid)
+			if current_user.admin?
+				redirect_to full_criterium_path(:problem_id => @notification.criterium.problem.hashid, :view => "suggested"), data: { turbolinks: false }
+			else
+				redirect_to full_criterium_path(:problem_id => @notification.criterium.problem.hashid), data: { turbolinks: false }
+			end
 		elsif @notification.discussion
 			if @notification.discussion.activity
 				redirect_to action_path(@notification.discussion.activity.hashid)
