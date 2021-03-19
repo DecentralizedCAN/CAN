@@ -4,7 +4,8 @@ class CriteriaController < ApplicationController
   include CommentsHelper
 
   before_action :set_criterium, only: [:show, :dissent_form, :edit, :update]
-  before_action :require_login
+  before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_login, except: [:full], if: -> { public_viewable? }
 
   # GET /criteria
   # GET /criteria.json
@@ -30,7 +31,9 @@ class CriteriaController < ApplicationController
     @criteria_count = @active_criteria.count.count
 
     @my_criteria = current_user.criterium
-      .where(problem_id: @problem.id)
+      .where(problem_id: @problem.id) if current_user
+
+    @my_criteria = [] unless current_user
 
     @criteria = @problem.criterium
       .joins(:user)
@@ -331,4 +334,8 @@ class CriteriaController < ApplicationController
     #     solution.update(:score => solution_score(solution.id) * 100)
     #   end
     # end
+
+    def public_viewable?
+      Setting.find(6).state
+    end
 end

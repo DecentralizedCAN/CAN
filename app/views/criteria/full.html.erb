@@ -64,7 +64,7 @@
     <% end %>
 
 
-    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id == current_user.id ) || @weighted%>
+    <% if !@problem.facilitator_id || ( @problem.facilitator_id && current_user && @problem.facilitator_id == current_user.id ) || @weighted %>
 
       <% if @weighted %>
         <h2>Supported Criteria</h2>
