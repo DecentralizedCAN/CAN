@@ -17,8 +17,8 @@
 
   <div class="goal-mini-inner-2">
 
-    <% if Link.where(child_id: link.child.id).count > 0 %>
-      <div> <%= Link.where(child_id: link.child.id).count %> <i class="fas fa-project-diagram fa-flip-vertical"></i></div>
+    <% if Link.where(child_id: link.parent.id).count > 0 %>
+      <div> <%= Link.where(child_id: link.parent.id).count %> <i class="fas fa-project-diagram fa-flip-vertical"></i></div>
     <% else %>
       <div class="invisible">no</div>
     <% end %>

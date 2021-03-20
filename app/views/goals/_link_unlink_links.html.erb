@@ -60,10 +60,11 @@
 
     <!-- TITLE ENDS -->
       
-      <% if Link.where(parent_id: link.child.id).count > 0 %>
-      <div> <%= Link.where(parent_id: link.child.id).count %> <i class="fas fa-project-diagram"></i></div>
+      <% child_links_count = Link.where(parent_id: link.child.id).joins(:user).group("links.id").count.count %>
+      <% if child_links_count > 0 %>
+      <div> <%= child_links_count %> <i class="fas fa-project-diagram"></i></div>
       <% else %>
-      <div class="invisible">no children</div>
+      <div class="invisible">none</div>
       <% end %>
 
   </div>

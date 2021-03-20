@@ -144,48 +144,23 @@
 
 <!-- <h2 class="goal-list-title">This helps achieve</h2> -->
 
-<!-- <div class="btn-group">
-  <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-plus"></i>
-  </button>
-  <div class="dropdown-menu">
-    
-    <%= form_for(@new_goal, remote: true) do |form| %>
-      <div>
-        <%= form.text_area :title, id: :goal_title, placeholder: "Why do you want to achieve the current goal?" %>
-      </div>
-
-      <%= form.hidden_field :child_id, :value => @goal.id %>
-
-      <%= form.submit "Add", id: :submit_goal, :class => 'button'%>
-    <% end %>
-
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search existing goals...">
-    <ul id="myUL">
-
-      <% @my_goals.each do |goal| %>
-        <li>
-          <%= link_to '+ ' + goal.title, newlink_path(:child_id => @goal.id, :parent_id => goal.id), :method => 'post', :class => 'button' %> 
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
-<br>
- -->
 
 <div class="goal-middle-outer">
 
-  <% if @goal.id != 1 %>
+  <% if @goal.id != 1 && (@public_parents.count.count > 0 || @goal.users.count > 0 ) %>
   <ul class="goal-actionables goal-users actionables-left">
     <strong>
       Adopted by</strong>
+      <% users_linked = [] %>
       <% @public_parents.each do |link| %>
         <% link.user.each do |user| %>
-          <li>
-            <i class="fas fa-user"></i>
-            <%= user.name %>
-          </li>
+          <% if !users_linked.include?(user.id) %>
+            <% users_linked << user.id %>
+            <li>
+              <i class="fas fa-user"></i>
+              <%= user.name %>
+            </li>
+          <% end %>
         <% end %>
       <% end %>
 
@@ -201,6 +176,10 @@
     <% end %>
   </ul>
   <div class="line horizontal"></div>
+
+  <% elsif @goal.id != 1 %>
+  <ul></ul>
+  <div class="line horizontal invisible"></div>
   <% end %>
 
   <% if @goal.id != 1 %>
@@ -208,17 +187,51 @@
 
   <% first_top_link = @public_parents.first %>
 
-  <div class="view-goal-details">
-  <% if !first_top_link.user.include?(@user) %>
+  <% if first_top_link && !first_top_link.user.include?(@user) %>
+    <div class="view-goal-details">
     <%= link_to link_path(:link_id => first_top_link.id), :method => 'post' do %>
       <i class="far fa-check-square link"></i> Adopt
     <% end %>
-  <% else %>
+    </div>
+  <% elsif first_top_link %>
+    <div class="view-goal-details">
     <%= link_to unlink_path(:link_id => first_top_link.id), :method => 'post' do %>
       <i class="far fa-check-square link"></i> Leave
     <% end %>
+    </div>
+  <% else %>
+
+
+    <div class="btn-group dropright-top">
+      <button type="button" class="button add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-plus"></i> New
+      </button>
+      <div class="dropdown-menu">
+        
+        <%= form_for(@new_goal, remote: true) do |form| %>
+          <div>
+            <%= form.text_area :title, id: :goal_title, placeholder: "What would achieving the current goal lead to?" %>
+          </div>
+
+          <%= form.hidden_field :child_id, :value => @goal.id %>
+
+          <%= form.submit "Add", id: :submit_goal, :class => 'button'%>
+        <% end %>
+
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search existing goals...">
+        <ul id="myUL">
+
+          <% @my_goals.each do |goal| %>
+            <li>
+              <%= link_to '+ ' + goal.title, newlink_path(:child_id => @goal.id, :parent_id => goal.id), :method => 'post', :class => 'button' %> 
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+
   <% end %>
-  </div>
 
   <br>
 
@@ -314,7 +327,7 @@
     
     <%= form_for(@new_goal, remote: true) do |form| %>
       <div>
-        <%= form.text_area :title, id: :goal_title, placeholder: "Add a subgoal" %>
+        <%= form.text_area :title, id: :goal_title, placeholder: "What subgoal would help achieve the current goal?" %>
       </div>
 
       <%= form.hidden_field :parent_id, :value => @goal.id %>
@@ -420,9 +433,10 @@
 <% else %>
   <%= render(:partial => 'personal_roots')%>
 <% end %>
-
 </div>
 
+<br><br><br><br>
+<br><br><br><br>
 
 
 

@@ -35,7 +35,7 @@
 
 .goal-node-outer {
   position: absolute;
-  width: 100vw;
+  width: 98vw;
   left: 0;
   text-align: center;
   overflow: auto;
@@ -255,10 +255,16 @@
     // background-color: #91ff9e !important;
   }
 
-  .btn-group.dropright {
+  .btn-group.dropright, .btn-group.dropright-top {
     display: block;
     margin-top: 20px;
     min-width: 300px;
+  }
+
+  .btn-group.dropright-top {
+    margin-top: 0;
+
+    &:hover {background: transparent;}
   }
 
   .button.add {
