@@ -68,7 +68,7 @@ class CriteriaController < ApplicationController
     @criterium.creator = @user.id
 
     if @criterium.save
-      @criterium.user << @user unless ( (@criterium.problem.facilitator_id && @criterium.problem.facilitator_id != current_user.id) || criterium_params[:alt_id].length > 0 ) && (!@criterium.problem.scoring_method || @criterium.problem.scoring_method == 2)
+      @criterium.user << @user unless (facilitating?(@criterium.problem) || criterium_params[:alt_id].length > 0 ) && !weighted_scoring?(@criterium.problem)
 
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
@@ -88,8 +88,8 @@ class CriteriaController < ApplicationController
       rescue
       end
 
-      if @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == current_user.id
-      elsif @criterium.problem.facilitator_id && (!@criterium.problem.scoring_method || @criterium.problem.scoring_method == 2)
+      if facilitating?(@criterium.problem)
+      elsif @criterium.problem.facilitator_id && !weighted_scoring?(@criterium.problem)
         flash[:success] = "You suggested a criterion. Please wait for the facilitator to review it. Thanks for your contribution!"
       else
         flash[:success] = "You created a criterion. Thanks for your contribution!"
@@ -135,7 +135,7 @@ class CriteriaController < ApplicationController
     @user = current_user
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
 
-    unless @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == @user.id
+    unless facilitating?(@criterium.problem) && !weighted_scoring?(@criterium.problem)
       @dissenter.destroy if @dissenter
     end
 
@@ -169,7 +169,7 @@ class CriteriaController < ApplicationController
     @criterium = Criterium.find(params[:cridissent][:criterium_id])
     # dissent_count = @criterium.cridissent.count
     @user = this_user
-    @criterium.user.delete(@user) unless @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == @user.id
+    @criterium.user.delete(@user) unless facilitating?(@criterium.problem)  && !weighted_scoring?(@criterium.problem)
     
     if @criterium.cridissent.where(user_id: @user.id).empty?
       @dissenter = @criterium.cridissent.new(:user_id => @user.id, :title => params[:cridissent][:title])
@@ -186,7 +186,7 @@ class CriteriaController < ApplicationController
 
         # send notifications
           if @criterium.cridissent.count == 1
-            @criterium.user.each do |user|
+            @criterium.user.where.not(id: @user.id).each do |user|
               notification = user.notification.create(:details => "Someone has a concern about the criterion \"" + @criterium.title + "\"",
                 :criterium_id => @criterium.id)
               if user.email_notifications
@@ -208,6 +208,9 @@ class CriteriaController < ApplicationController
         # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
         redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
       end
+    else
+      flash[:warning] = "You alread added a concern to this criterion. You must remove it before adding any more."
+      redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
     end
   end
 
@@ -238,7 +241,7 @@ class CriteriaController < ApplicationController
 
       # send notifications
       if @criterium.crialt.count == 1
-        @criterium.user.each do |user|
+        @criterium.user.where.not(id: current_user.id).each do |user|
           notification = user.notification.create(:details => 'Someone suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @criterium.title + '"',
             :criterium_id => @criterium.id)
           if user.email_notifications
@@ -300,7 +303,7 @@ class CriteriaController < ApplicationController
   def destroy
     @criterium = Criterium.find(params[:id])
     @problem = @criterium.problem
-    if current_user.admin? || (@problem.facilitator_id && @problem.facilitator_id == current_user.id)
+    if current_user.admin? || facilitating?(@problem)
       @criterium.destroy
 
       # update_all_solution_scores(@criterium.problem.id)
@@ -337,5 +340,13 @@ class CriteriaController < ApplicationController
 
     def public_viewable?
       Setting.find(6).state
+    end
+
+    def facilitating?(problem)
+      problem.facilitator_id && problem.facilitator_id != current_user.id
+    end
+
+    def weighted_scoring?(problem)
+      problem.scoring_method && problem.scoring_method = 1
     end
 end

@@ -821,7 +821,7 @@ td, th {
 }
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1000px) {
   #extra-sections-outer {
     &>div {
       width: 100%;
@@ -840,7 +840,7 @@ td, th {
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 610px) {
   .criteria-list {
     column-count: 1;
   }

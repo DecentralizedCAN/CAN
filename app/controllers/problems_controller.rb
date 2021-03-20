@@ -245,6 +245,14 @@ class ProblemsController < ApplicationController
       Setting.find(6).state
     end
 
+    def facilitating?(problem)
+      problem.facilitator_id && problem.facilitator_id != current_user.id
+    end
+
+    def weighted_scoring?(problem)
+      problem.scoring_method && problem.scoring_method = 1
+    end
+
     # def this_user
     #   return User.find(session[:user_id])
     # end
