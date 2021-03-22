@@ -308,7 +308,7 @@ $offwhite: #f5f5f5;
   height: 200px;
 }
 
-#submit_action {
+#submit_action, #proposal-cancel {
   margin-top: 12px;
   // background-color: $success-red;
   background-color: #2afb43;;
@@ -362,6 +362,7 @@ $offwhite: #f5f5f5;
 .remove-role {
   cursor: pointer;
 }
+
 
 // #action-columns {
 //   column-count: 2;

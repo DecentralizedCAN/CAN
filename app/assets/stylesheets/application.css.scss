@@ -17,7 +17,8 @@
 @import "font-awesome";
 
 @import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:wght@400;500;600;700;800;900');
+@import url('https://fonts.googleapis.com/css?family=Libre+Franklin:wght@400;500;600;700;800;900');
 
 $dissent-green: #3be1ea;
 $background-gray: #efeeee;
@@ -69,6 +70,7 @@ a:hover, a:focus, a:visited {
   cursor: pointer;
 }
 
+
 .button {
   cursor: pointer;
 }
@@ -97,6 +99,8 @@ a.button, input.button {
   font-size: 12px;
   text-transform: uppercase;
   vertical-align: middle;
+  height: 24px;
+
 
   // font-style: normal;
   // border: 1px solid #868686;
@@ -113,12 +117,34 @@ a.button, input.button {
   }
 }
 
-a.button-hollow, input.button-hollow {
+.small-button {
+  background: #d8d8d8;
+  padding: 0px 4px;
+  border-radius: 2px;
+  font-weight: normal;
+  height: fit-content;
+
+  &:hover {
+    background-color: #efeded;
+  }
+}
+
+a.button.green, button.button.green {
+  background-color: #0cbf5c;
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: #1fe477;
+  }
+}
+
+a.button-hollow, input.button-hollow, div.button-hollow, button.button-hollow {
   background-color: #d8d8d8 !important;
   color: #4e4e4e !important;
 }
 
-a.button-view, input.button-view {
+a.button-view, input.button-view, div.button-view, button.button-view {
   background-color: #d8d8d8 !important;
   color: #6b6b6b !important;
   border: none;
@@ -134,6 +160,7 @@ p {
   white-space: pre-wrap;
 }
 
+
 .white-container {
   background-color: white;
   border: 1px solid #d8d8d8;
@@ -143,6 +170,16 @@ p {
   width: 100% !important;
 }
 
+span.click {
+  background-color: gainsboro;
+  padding: 2px 4px;
+  border-radius: 1px;
+}
+
+.underline:hover {
+  text-decoration: underline;
+}
+
 .underline-permanent {
   text-decoration: underline;
 }
@@ -150,10 +187,6 @@ p {
 .flex-container {
   display: flex;
   justify-content: space-between;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 }
 
 textarea:focus, input:focus {
@@ -164,6 +197,14 @@ textarea:focus, input:focus {
   form {
     div {
       display: inline-block;
+    }
+
+    #session_email {
+      width: 244px;
+    }
+
+    #user_email {
+      width: 328px;
     }
   }
 }
@@ -244,6 +285,12 @@ form select {
 
 // TOOLTIP
 
+.tooltip-small {
+  &::before {
+    width: fit-content !important;
+  }
+}
+
 .tooltip-toggle {
   position: relative;
 
@@ -257,21 +304,25 @@ form select {
     padding-right: 4px !important;
     position: absolute;
     text-transform: none;
-    top: -24px;
+    // top: -24px;
+    top: 30px;
+    left: 1px;
+    width: 200px;
     z-index: 4;
   }
 
   &::after {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 5px solid #000;
+    border-bottom: 5px solid #000;
     content: " ";
     font-size: 0;
     left: 9px; //This centers the arrow above the element with the tooltip
     line-height: 0;
     margin-left: -8px;
     position: absolute;
-    top: -4px; //This positions the arrow at the bottom of the container
+    top: 25px; //This positions the arrow at the bottom of the container
+    left: 10px;
     width: 0;
   }
 
@@ -312,8 +363,54 @@ form select {
 
 
 // COLORS
+.darkgray {
+  color: #5a5a5a;
+}
+
 .gray {
   color: gray;
+}
+
+.lightgray-background {
+  background-color: #ececec;
+
+  &:hover {
+    background-color: #e2e2e2
+  }
+}
+
+.yellow-background {
+  background-color: #ffd969;
+
+  &:hover {
+    background-color: #ffe597;
+  }
+}
+
+.green-background {
+  background-color: #4cff4c;;
+
+  &:hover {
+    background-color: #a3ffa3;
+  }
+}
+
+.red-background {
+  background-color: #ff2020;
+  color: white;
+
+  * {
+    color: white;
+  }
+
+  &:hover {
+    background-color: #fd9090;
+  }
+}
+
+.orange {
+  // color: #ffc46a;
+  color: #fba850;
 }
 
 .lightgray {
@@ -339,6 +436,7 @@ form select {
 .blue {
   color: $neutral-blue;
 }
+
 
 .invisible {
   color: transparent;
@@ -366,6 +464,16 @@ form select {
 //   width: 100vw;
 // }
 
+.purple {
+  color: #fb3cfb;
+}
+// COLORS ENDS
+
+.max-width {
+  width: max-content;
+}
+
+
 header {
 
   a, a:visited, b {
@@ -384,64 +492,22 @@ header {
     a:hover {
       color: gray;
     }
-  } 
-
-  // .nav {
-  //   display: inline-block;
-  //   float: right;
-
-  //   li {
-  //     display: inline-block;
-  //   }
-  // }
+  }
 }
 
-// #toolbar {
-//   border: 1px solid;
-//   background-color: transparent;
+// reduce navbar height
 
-//   > * {
-//     display: inline-block;
-//   }
-  
-//   ul {
-//     padding: 0;
-//     margin: 0;
-//     display: table-cell;
-//   }
-
-//   #logo {
-//     font-style: normal;
-//     font-family: 'Oswald', sans-serif;
-//     font-size: 3em;
-//     font-weight: bold;
-//     font-size: 20px;
-//   }
-
-//   li {
-//     list-style: none;
-//     padding: 2px 8px;
-//     display: table-cell;
-//     height: 100%;
-//     // float: left;
-//     vertical-align: middle;
-//   }
-
-//   li#logo {
-//     background-color: transparent !important;
-//   }
-
-//   ul#toolbar-1 li:nth-child(even) {
-//     background-color: #828080;
-//     color: #dedddd;
-//   }
-
-//   ul#toolbar-1 li:nth-child(odd) {
-//     background-color: #dedddd;
-//     color: #828080;
-//   }
-// }
-
+.notifications-li {
+  a {
+    padding-top: 4px !important;
+    
+    i {
+      font-size: 26px;
+      color: #ec6f68;
+      margin-right: -12px;
+    }
+  }
+}
 
 // reduce navbar height
 .notifications-li {
@@ -457,7 +523,9 @@ header {
     .notification-number {
       color: white;
       position: relative;
-      left: -13px;
+      color: white;
+      position: relative;
+      left: -8px;
       top: -6px;
       background-color: transparent;
       border-radius: 10px;
@@ -473,6 +541,16 @@ header {
   min-height: 34px;
   border-radius: 0;
   padding: 0 !important;
+  border-radius: 0;
+}
+
+.navbar-toggle {
+  border-color: #ddd;
+
+  .icon-bar {
+    background-color: #888;
+  }
+
 }
 
 .navbar-brand {
@@ -511,7 +589,12 @@ h1 {
 }
 
 h2 {
-  font-size: 18px
+  font-size: 19px
+}
+
+.h2-margins {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 h3 {
@@ -535,6 +618,16 @@ hr {
 
 .float-right {
   float: right;
+}
+
+.white-container {
+  background-color: white;
+  border: 1px solid #d8d8d8;
+  padding: 10px;
+  min-height: 70vh;
+  min-width: 68%;
+  width: 100%;
+  // display: flex;
 }
 
 .converge-container {
@@ -573,11 +666,22 @@ hr {
   }
 }
 @media (min-width: 1200px) {
-  /* line 10, /Users/leo/.rvm/gems/ruby-2.5.1/gems/bootstrap-sass-3.3.7/assets/stylesheets/bootstrap/_grid.scss */
   .converge-container, .converge-header {
     width: 1000px;
   }
 }
+
+@media (min-width: 1400px) {
+  .converge-container, .converge-header {
+    width: 1200px;
+  }
+}
+
+// @media (min-width: 1600px) {
+//   .converge-container, .converge-header {
+//     width: 1400px;
+//   }
+// }
 
 @media (max-width: 767px) {
   .navbar #logo {
@@ -641,6 +745,11 @@ nav #logo {
   margin-right: -4px;
 }
 
+.user-nav-link > a {
+  padding: 5px !important;
+  line-height: inherit !important;
+}
+
 // .nav li {
 //   font-family: 'Montserrat', sans-serif;
 //   font-size: 1.2em;
@@ -672,6 +781,10 @@ nav #logo {
   background-color: transparent;
   border: none;
   padding: 10px;
+
+  // background-color: #e8e7e7;
+  // border-color: #d8d8d8;
+  margin: 20px;
 }
 
 .back-button {
@@ -689,7 +802,7 @@ nav #logo {
     // color: white;
     color: #545454;
     line-height: 12px;
-    font-size: 10px;
+    font-size: 12px;
     font-style: normal;
   }
 
@@ -763,6 +876,7 @@ nav #logo {
   text-align: center;
 }
 
+
 // POPUP
 #commit-popup {
   display: none;
@@ -808,6 +922,22 @@ nav #logo {
   }
 }
 // POPUP ENDS
+
+
+.home-actions {
+  list-style: none;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    margin-right: 10px;
+
+    a {
+      font-style: normal;
+    }
+  }
+}
+
 
 .top-flex {
   display: flex;

@@ -8,6 +8,6 @@ class Notification < ApplicationRecord
   encrypts :details
 
   def send_email
-    NotificationMailer.send_email(self).deliver_now
+    NotificationMailer.send_email(self).deliver_now if Setting.find(8).state
   end
 end

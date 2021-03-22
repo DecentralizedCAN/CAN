@@ -1,35 +1,77 @@
+<div class="white-container">
 <div id="solver">
 
-  <div class="back-button">
-    <%= link_to issue_path(:problem_id => @problem.hashid) do %>
-      <div class="back-button-arrow"></div>
-      <div class="back-button-content">
-        Back to brainstorm
-      </div>
-    <% end %>
-  </div>
+<% @weighted = (@problem.scoring_method && @problem.scoring_method == 1) %>
+
+<div class="back-button"><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
+    <i class="fas fa-arrow-left">&nbsp;</i> Back to main view
+<% end %></div><br>
 
   <div class="criteria-outer">
 
-    <h1 id="criteria">
+    <div class="issue-title view">
+    <h3 id="criteria">
       <i class="fas fa-clipboard-list"></i>
-      <%= @criteria_count %> Active criteria for <em><%= @problem.title %></em>
-    </h1>
+      Criteria for <strong><%= @problem.title %></strong>
+      <% if params[:view] == "suggested" && !@weighted%> (suggested & accepted) <%end%>
+    </h3></div>
 
-    <br>
-    <em>
-      <%= link_to "Add criterion", new_criterium_path( :problem_id => @problem.id), :class => "button" %>
-    </em>
+    <br><br>
+
+    <% if @problem.criterium.count > @criteria_count && !(params[:view] == 'suggested') %>
+      <%= link_to full_criterium_path( :problem_id => @problem.id, :view => "suggested"), :class => "button button-hollow" do %>
+        <i class="fas fa-eye"></i> 
+        <% if @weighted %>
+          Show abandoned criteria
+        <% else %>
+          Show suggestions
+        <% end %>
+
+        (<%= @problem.criterium.count - @criteria_count %>)
+      <% end %>
+      &nbsp;
+    <% end %>
+
+    <% if params[:view] == 'suggested' %>
+      <%= link_to full_criterium_path( :problem_id => @problem.id), :class => "button button-hollow" do %>
+        <i class="fas fa-eye"></i> 
+        <% if @weighted %>
+          Hide abandoned
+        <% else %>
+          Hide suggestions
+        <% end %>
+      <% end %>
+      &nbsp;
+    <% end %>
+
+    <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to suggestions." tabindex="0">
+      <button id="open-new-criterion-div" class="button green">+ Criterion</button>
+    </span>
 
     <div id="issue-criteria">
 
-    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id == current_user.id ) %>
-
-      <% if @problem.facilitator_id && @problem.facilitator_id == current_user.id %>
-        <h2>Criteria I've approved</h2>
+    <% if params[:view] == "suggested"%>
+      <% if @weighted %>
+        <h2>Abandoned criteria</h2>
       <% else %>
-        <h2>Supported criteria</h2>
+        <h2>Suggested criteria</h2>
       <% end %>
+      <div class="criteria-list">
+      <% @inactive_criteria.each do |criterium| %>
+        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+      <% end %>
+      </div>
+    <% end %>
+
+
+    <% if !@problem.facilitator_id || ( @problem.facilitator_id && current_user && @problem.facilitator_id == current_user.id ) || @weighted %>
+
+      <% if @weighted %>
+        <h2>Supported Criteria</h2>
+      <% else %>
+        <h2>Criteria</h2>
+      <% end %>
+
 
       <% if @my_criteria.count > 0 %>
       <% end %>
@@ -41,10 +83,15 @@
 
     <% end %>
 
-    <% if !@problem.facilitator_id || ( @problem.facilitator_id && @problem.facilitator_id != current_user.id ) %>
+    <% if @criteria_count - @my_criteria.count  > 0 %>
 
-      <h2>Active criteria</h2>
-      <% if @criteria.count > 0 %>
+      <% if @weighted %>
+        <h2>Unsupported Criteria</h2>
+      <% else %>
+        <h2>Criteria</h2>
+      <% end %>
+
+      <% if @criteria_count > 0 %>
       <% end %>
       <div class="criteria-list">
       <% @criteria.each do |criterium| %>
@@ -53,17 +100,29 @@
       </div>
 
     <% end %>
-
-      <% if @inactive_criteria.count > 0 %>
-      <h2>Inactive criteria</h2>
-      <% end %>
-      <div class="criteria-list">
-      <% @inactive_criteria.each do |criterium| %>
-        <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-      <% end %>
-      </div>
-
+    
     </div>
   </div>
 
 </div>
+
+<div id="new-criterion-div">
+  <div class="new-criterion-inner">
+    <div id="close-new-criterion-div" class="float-right"><i class="fas fa-times close-window"></i></div>
+    <h1 class="center">New Criterion</h1>
+
+    <% @criterium = Criterium.new(:problem_id => @problem.id) %>
+    <div><%= render(:partial => 'criteria/new' )%></div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#close-new-criterion-div').click( function(){
+    $('#new-criterion-div').hide()
+  })
+
+  $('#open-new-criterion-div').click(function(){
+    $('#new-criterion-div').show()
+  })
+</script>

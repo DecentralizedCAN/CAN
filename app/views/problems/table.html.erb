@@ -1,87 +1,25 @@
+<div class="top-flex">
+<div class="white-container">
 <div id="solver">
 
-  <% if @problem.post %>
-    <%= render(:partial => 'static/post-stuff', :locals => {:post => @problem.post})%>
-  <% end %>
-
-  <div class="issue">
-    <div class="flex-container">
-
-      <div class="issue-title view"><%= @problem.title %>
-        <span class="feed-label">Brainstorm</span>
-      </div>
-
-    </div>
-
-    <div class="right-buttons">
-      <%if @problem.user.include?(@user)%>
-        <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
-      <%else%>
-        <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
-      <%end%>
-    </div>
-
-    <% if @problem.goal %>
-      <div class="proposal-activity-description">
-        <i class="fas fa-link"></i>
-        Attached to goal <strong><%= link_to @problem.title, goal_path(@problem.goal) %></strong>
-      </div>
-    <% end %>
-
-    <div class="issue-info">
-      <div class="post-signature">
-        <!-- <i class="fas fa-calendar"></i> -->
-        Created <%= time_ago_in_words(@problem.created_at) %> ago
-        by
-        <em><%= 
-        begin 
-          User.find(@problem.creator).name
-        rescue 
-        end  %></em>
-      </div>
-      <br>
-      <div>
-        <i class="fas fa-handshake"></i>
-        <%= @problem.user.count %> collaborators
-      </div>
-      <div>
-        <i class="fas fa-clipboard-list"></i>
-        <%= @problem.criterium.count %> criteria
-      </div>
-      <div>
-        <i class="fas fa-comment-alt"></i> 
-        <%= @problem.solution.count %> proposals
-      </div>
-<!--       <% if logged_in? && current_user.admin? %> 
-        <div>          
-          <i class="fas fa-user-alt"></i> 
-          <%= @problem.creator %>
-        </div>
-      <% end %> -->
-    </div>
-
-    </div>
-
-    <% if @problem.description.length > 0 %> 
-      <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
-    <% end %> 
-
-
-  <!-- DETAILS ENDS -->
-
- 
-
+<%= render 'problem_details' %>
 
 <!-- Table -->
 
-<div><h1><strong>Criteria <i class="fas fa-times"></i> Proposals</strong></h1></div>
-<%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
-  <i class="fas fa-list"></i> Lists
-<% end %>
 <br><br>
+<div class="table-title">
 
-<p>Refresh page for current stats</p>
+  <br><div><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
+  <span class="tooltip-toggle" href="#" aria-label="View proposals and criteria as lists" tabindex="0">
+    <i class="fas fa-eye">&nbsp;</i> Switch back to main view
+  </span>
+<% end %></div><br><br>
 
+  <div class="issue-title view"><h3>Proposals X Criteria Table</h3></div>
+  <p>Click on table cells to change your answer.</p>
+
+</div>
+        
 <div class="outer-table">
 <table class="proposal-grid" cellspacing ="2" cellpadding ="6">
 
@@ -89,8 +27,15 @@
   <th class="table-hidden"></th>
 
   <% @solutions.each do |solution| %>
-    <th class="table-title" colspan="2"><div><%= solution.title %></div></th>
+    <th class="table-title" colspan="2">
+      <%= link_to solution_path(:solution_id => solution.hashid) do %>
+        <div><%= solution.title %></div>
+      <% end %>
+    </th>
   <% end %>
+  <!-- <th><span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to suggestions." tabindex="0">
+      <button id="open-new-criterion-div" class="button green">+</button>
+    </span></th> -->
 </tr>
 
 <tr>
@@ -103,46 +48,58 @@
 
 <% @all_criteria.each do |criterion| %>
   <tr>
-    <td class="table-title"><div><%= criterion.title %></div></td>
+    <td class="table-title">
+      <%= link_to show_criterium_path(criterion.hashid) do %>
+      <div><%= criterion.title %></div>
+      <% end %>
+    </td>
 
     <% @solutions.each do |solution| %>
       
       <% polls = criterion.poll.where(solution_id: solution.id) if criterion.poll.count > 0 %>
 
-        <% if logged_in? %>
+      <% if logged_in? %>
+          
+        <% 
+          if criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).count > 0
+            poll_id = criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).first.id
+          else
+            poll_id = "#{solution.id}-#{criterion.id}"
+          end
+          %>
+        <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 1).count == 0 %>
 
-          <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 1).count == 0 %>
-            <td class="yes-score ">
-              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 1), :method => "post", :class => 'yes-poll' do %>
-                <div><%= polls.where(answer: 1).count if polls %></div>
-              <% end %>
-            </td>
-          <% else %>
-            <td class="yes-score answered">
-              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post", :class => 'remove-poll' do %>
-                <div><%= polls.where(answer: 1).count if polls %></div>
-              <% end %>
-            </td>
-          <% end %>
-
-          <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 0).count == 0 %>
-            <td class="no-score">
-              <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 0), :method => "post", :class => 'no-poll' do %>
-                <div><%= polls.where(answer: 0).count if polls %></div>
-              <% end %>
-            </td>
+          <td class="yes-score" id="<%= poll_id %>-yes">
+            <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 1), :method => "post", :class => 'yes-poll' do %>
+              <div><%= polls ? polls.where(answer: 1).count : 0 %></div>
+            <% end %>
+          </td>
         <% else %>
-            <td class="no-score answered">
+          <td class="yes-score answered" id="<%= poll_id %>-yes">
+            <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post", :class => 'remove-poll' do %>
+              <div><%= polls ? polls.where(answer: 1).count : 0 %></div>
+            <% end %>
+          </td>
+        <% end %>
+
+        <% if current_user && criterion.poll.where(solution_id: solution.id).where(user_id: @user.id).where(answer: 0).count == 0 %>
+          <td class="no-score" id="<%= poll_id %>-no">
+            <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => 0), :method => "post", :class => 'no-poll' do %>
+              <div><%= polls ? polls.where(answer: 0).count : 0 %></div>
+            <% end %>
+          </td>
+        <% else %>
+            <td class="no-score answered" id="<%= poll_id %>-no">
               <%= link_to quiet_set_poll_path(:criterium_id => criterion.id, :solution_id => solution.id, :answer => nil), :method => "post", :class => 'remove-poll' do %>
-                <div><%= polls.where(answer: 0).count if polls %></div>
+                <div><%= polls ? polls.where(answer: 0).count : 0 %></div>
               <% end %>
             </td>
         <% end %>
       
       <% else %>
       
-        <td class="yes-score "><div><%= polls.where(answer: 1).count %></div></td>
-        <td class="no-score "><div><%= polls.where(answer: 0).count %></div></td>
+        <td class="yes-score "><div><%= polls.where(answer: 1).count if polls %></div></td>
+        <td class="no-score "><div><%= polls.where(answer: 0).count if polls %></div></td>
 
       <% end %>
     <% end %>
@@ -157,7 +114,7 @@
   <% end %>
 </tr>
 
-<% if !@problem.scoring_method || @problem.scoring_method == 1 %>
+<% if (!@problem.scoring_method || @problem.scoring_method == 1) && false %>
 
   <tr>
     <th class="table-hidden">Weighted scores</th>
@@ -167,13 +124,13 @@
     <% end %>
   </tr>
 
-<% elsif @problem.scoring_method == 2 %>
+<% elsif @problem.scoring_method == 2 || true %>
 
   <tr>
-    <th class="table-hidden">No's/total</th>
+    <th class="table-hidden">Degree of convergence</th>
     <% @solutions.each do |solution| %>
       <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
-      <th class="percentage" colspan="2"><%= 100 - (polls.average(:answer) * 100).round if polls %> %</th>
+      <th class="percentage" colspan="2"><%= solution.score if polls %> %</th>
     <% end %>
   </tr>
 
@@ -194,12 +151,15 @@
 
 <!-- TABLE -->
 
-<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
+<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state && @problem.include_comments %>
 
 
+<%= render 'problem_bottom' %>
 </div>
 
-<br><br><span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
+
+
+<!-- <br><br><span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span> -->
 
 
 <% if logged_in? && current_user.admin? %>
@@ -216,17 +176,54 @@
 
 <script type="text/javascript">
   $(".yes-poll").click(function() {
+    let oppositePollId = "#" + $(this).parent()[0].id.replace("yes", "no")
+    answered = $(this).parent().hasClass('answered') || $(this).hasClass('answered-tentative')
+    oppositeAnswered = $(oppositePollId).hasClass('answered') || $(oppositePollId).find('a').hasClass('answered-tentative')
+    $(oppositePollId).removeClass('answered')
+    $(oppositePollId).find('a').removeClass('answered-tentative')
+    $(oppositePollId).find("a").removeClass('remove-poll').attr("href", $(oppositePollId).find("a").attr("href") + "&answer=0")
+
     $(this).parent().addClass('answered')
     $(this).addClass('answered-tentative')
+
+    currentValue = Number($(this).find('div')[0].innerText)
+    oppositeCurrentValue = Number($(oppositePollId).find('div')[0].innerText)
+
+    console.log($(this))
+
+    if (!answered) {
+      $($(this).find('div')[0]).text(currentValue + 1)
+    }
+    if (oppositeAnswered) {
+      Math.max($($(oppositePollId).find('div')[0]).text(oppositeCurrentValue - 1), 0)   
+    }
   });
 
   $(".no-poll").click(function() {
+    console.log(this)
+    let oppositePollId = "#" + $(this).parent()[0].id.replace("no", "yes")
+    answered = $(this).parent().hasClass('answered') || $(this).hasClass('answered-tentative')
+    oppositeAnswered = $(oppositePollId).hasClass('answered') || $(oppositePollId).find('a').hasClass('answered-tentative')
+    $(oppositePollId).removeClass('answered')
+    $(oppositePollId).find('a').removeClass('answered-tentative')
+    $(oppositePollId).find("a").removeClass('remove-poll').attr("href", $(oppositePollId).find("a").attr("href") + "&answer=1")
+
     $(this).parent().addClass('answered')
     $(this).addClass('answered-tentative')
+
+    currentValue = Number($(this).find('div')[0].innerText)
+    oppositeCurrentValue = Number($(oppositePollId).find('div')[0].innerText)
+
+    if (!answered) {
+      $($(this).find('div')[0]).text(currentValue + 1)
+    }
+    if (oppositeAnswered) {
+      Math.max($($(oppositePollId).find('div')[0]).text(oppositeCurrentValue - 1), 0)
+    }
   });
 
   $(".remove-poll").click(function() {
-    console.log('hi')
+    // console.log('hi')
     setTimeout(function () {
       location.reload()
     }, 10);

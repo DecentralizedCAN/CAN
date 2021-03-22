@@ -22,7 +22,8 @@ $label-blue: #81c4ff;
 
 .issue-title, .activity-title, .discussion-title, .goal-title {
   display: inline-block;
-  font-family: 'Montserrat', sans-serif;
+  // font-family: 'Montserrat', sans-serif;
+  // font-family: 'Libre Franklin', sans-serif;
   font-weight: bold;
   // font-size: 13px;
   font-size: 15px;
@@ -37,16 +38,16 @@ $label-blue: #81c4ff;
 }
 
 .issue-info, .activity-info, .discussion-info, .written-progress {
-  line-height: 12px;
+  line-height: 16px;
   display: inline-block;
   // margin-left: 22px;
   font-weight: normal;
-  font-size: 11px;
+  font-size: 14px;
   display: block;
 
   div {
     font-weight: normal;
-    font-size: 11px;
+    font-size: 14px;
     // display: inline-block;
   }
 }
@@ -64,6 +65,10 @@ $label-blue: #81c4ff;
     width: 100%;
   }
 }
+
+// .post-signature {
+  // font-size: 10px !important;
+// }
 
 #main-feed {
   .proposal, .issue, .discussion {
@@ -91,6 +96,12 @@ $label-blue: #81c4ff;
     background-color: #ff9900;
     color: white;
   }
+}
+
+.proposal, .issue, .discussion {
+  margin-left: 0px;
+  // padding-left: 26px !important;
+  margin-bottom: 10px;
 }
 
 
@@ -339,10 +350,15 @@ $label-blue: #81c4ff;
 .dashboard-item {
 	display: inline-block;
 	vertical-align: top;
+
   // margin-right: 40px;
   border: 1px solid black;
   padding: 4px 8px;
   margin-top: 8px;
+
+  margin-right: 40px;
+  // min-width: 60%;
+  width: 100%;
 
 	h1, h2 {
 		color: #525252;
@@ -391,6 +407,7 @@ $label-blue: #81c4ff;
   // padding: 2px 4px !important;
   // margin-bottom: 10px !important;
 
+
   // li {
   //   max-width: 600px;
   //   width: 400px;
@@ -399,6 +416,12 @@ $label-blue: #81c4ff;
   //   border: 1px solid;
   //   padding: 6px 4px;
   // }
+
+
+  li {
+    padding: 6px 4px;
+  }
+
 
   div {
     max-width: 500px;
@@ -443,7 +466,7 @@ $label-blue: #81c4ff;
 .unread {
   border: 2px solid #ec6f68 !important;
   background-color: #ec6f681c;
-// =======
+
   // border: 1px solid gray;
   // background-color: lightgray;
   background-color: #a4edfd !important;
@@ -587,3 +610,4 @@ li.home-item-underlined {
   }
 }
 // CHOICE ENDS
+

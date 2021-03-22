@@ -1,43 +1,92 @@
 <div id="about-outer">
 
 <h1>Introduction</h1>
-<p>Welcome to this Convergent Action Network (CAN). This is platform for decentralized organization, which primarily relies on two processes: criteria-driven problem solving and crowdacting.</p>
-<p>Criteria-driven problem solving is a process for finding solutions to problems, or developing specific strategies around a general goal. This process centers around finding collectively accepted criteria that can serve as a guide for creating proposals that serve the needs of as many people as possible. Along with adding new criteria, users can add support for, or express objections to preexisting criteria. Less controversial options can also be suggested in place of unpopular criteria. When users suggest proposals, these are collectively scored based on how well they meet the criteria. This allows users to sort out the proposals that are most effective for the group.</p>
-<p>Crowdacting is a solution to the collective action problem of perceived efficacy. When people have the option to take action that will only succeed if there is a critical mass of participants, and it is unclear whether this critical mass will be reached, potential participants face a dilemma in which they must decide whether to exert effort for an unsure goal. Crowdacting addresses this problem by allowing users to suggest collective actions and specify the minimum participation required for the action to be successful. Individuals can then safely agree to participate in collective action with the security of knowing that the action will only take place if it reaches that threshold.</p>
+<p>Welcome to Convergence! This app contains tools to assist in collaborative decision making with the Convergent Facilitation process. If you are unfamiliar with Convergent Facilitation, you may want to visit <a href="http://convergentfacilitation.org/">convergentfacilitation.org</a> to learn more. Below are some tips to get you started.</p>
 
-<h1>Sections</h1>
+<!-- <h2>Sections</h2> -->
 <ol id="about-sections">
-	<li><a href="#brainstorming">Brainstorming</a>
+	<strong>Sections</strong>
+	<li><a href="#overview">Getting started</a>
 		<ol>
-			<li><a href="#criteria">Finding criteria</a></li>
-			<li><a href="#proposal_scoring">Scoring proposals</a></li>
-			<li><a href="#proposal_activation">Activating proposals</a></li>
+			<li><a href="#signing-up">Signing up</a></li>
+			<li><a href="#starting-a-process">Starting a convergent process</a></li>
+			<li><a href="#joining-a-process">Joining an existing process</a></li>
+			<li><a href="#facilitator-mode">Facilitator mode</a></li>
 		</ol>
 	</li>
-	<li><a href="#crowdacting">Actions</a>
+	<li><a href="#criteria">Finding criteria</a>
 		<ol>
-			<li><a href="#action-participation">Participation</a></li>
-			<li><a href="#action-expiration">Expiration</a></li>
+			<li><a href="#supporting-criteria">Supporting criteria</a></li>
+			<li><a href="#objecting-criteria">Objecting to criteria</a></li>
+			<li><a href="#alternative-criteria">Alternative criteria</a></li>
 		</ol>
 	</li>
-	<li><a href="#discussions">Discussions</a></li>
+	<li><a href="#scoring">Scoring proposals</a>
+		<ol>
+			<li><a href="#classic-scoring">Scoring with a facilitator</a></li>
+			<li><a href="#weighted-scoring">Scoring without a facilitator</a></li>
+		</ol>
+	</li>
+	<li><a href="#other">Other</a></li>
+	<!-- <li><a href="#video">Video tutorial</a></li> -->
+
 </ol>
 
-<h1 id="brainstorming">Brainstorming</h1>
+<h1 id="overview">Getting started</h1>
+<p>This app is free to use for the general public. Anyone can sign up using the quick login/signup form that appears at the top of the page for new users.</p>
 
-<%= video_tag "convergent-brainstorming-tutorial.mov", controls: true, autobuffer: true %>
+<h2 id="signing-up">Signing up</h2>
+<p>If you are not logged in when you visit, use the form that appears at the top of the page to do so. If you enter a username that does not yet exist, a new account will be created for you with that username.</p>
 
-<p>Brainstorms are a way of finding innovative and widely supported strategies. If there is an issue or goal you want to address with collective action, you can post a community brainstorm. This will activate a process by which anyone who wants to participate can help establish the criteria by which a proposal must be evaluated, and propose proposal to address the topic.</p>
-<h2 id="criteria">Finding criteria</h2>
-<p>Criteria are most effective when they are acceptable to as many people as possible. For this reason, it is more effective to use general criteria than specific ones. Using general criteria also allows proposal to be more creative. For example, say you are planning an event and want to make sure you don't get rained out. You might want to add to the criteria "The even must take place indoors". However, some people might prefer an outdoor venue, and there might be a way to deal with rain other than using an indoor venue, like using an outdoor venue with cover, or having a backup plan for rain. Therefore, a more effective criteria might be something like "The event plan must account for the possibility of rain". This gives flexibility for proposal to find more unique and creative ways to approach this issue.</p>
-<p>If there is a criterion that you object to, you can log that objection on that individual criterion's page. Any supporters of that criterion will receive a notification, and if they want, they can transfer there support to a less controversial or more general criterion.</p>
-<p>To transfer support from one criterion to another, the alternative must first be added to the alternatives list. Anyone can add to this list at any time. Once it is on that list, you can click "Transfer to this" to remove support for the original criterion and add support to the alternative. This transfer gets recorded, and alternatives are ranked by how many people have transfered to each one.</p>
-<p>Asside from helping to further the community goal of approaching consensus, transfering to less controversial criteria also serves individual incentives. Due to the nature of the scoring algorithm (explained below), a criterion that has a significant percentage of objections in contrast to supporters will have less effect on the proposal scores than an uncontroversial criterion. Therefore it is in both the community's and individuals' interestes to find criteria that have the fewest objections.</p>
+<h2 id="starting-a-process">Starting a convergent process</h2>
+<p>Anyone who has a decision that they wish to address with the convergent facilitation process can start a new collaboration.</p>
 
-<h2 id="proposal_scoring">Scoring proposals</h2>
-<p>Proposals are scored in order to help make it clear which ones are more likely to be the most effective at serving a group's needs. The scoring algorithm considers how well a proposal meets each criteria, as well as how many supporters and objections each criteria has.</p>
-<p>Criteria support is incorporated in order to give more weight to criteria that are important to more people. The more supporters a criterion has, the more importance it is given when proposal are polled. Objections are incorporated in order to prevent the appearance of a consensus when there is not one. The more objections a criterion has, the less high of a score a proposal can get for meeting it.</p>
-<p>Below is a mathematical representation of the scoring algorithm.</p>
+<ol>
+	<li>From the menu bar, select <span class="click">New</span></li>
+	<li>Choose a title, and fill out any important info in under "details"</li>
+	<li>If you are using a facilitator, make sure <span class="click">Facilitator mode</span> is selected. (See below for more info)</li>
+	<li>If you want a space for people to discuss the process, make sure <span class="click">Include comments section</span> is checked.</li>
+	<li>Click <span class="click">Create</span>. This will generate a page that you can share with anyone you want to invite to the process.</li>
+</ol>
+
+<h2 id="joining-a-process">Joining an existing process</h2>
+<p>If you visit the link to an existing collaboration, you can click <span class="click">Join</span> or just start interacting and you will be automatically added as a collaborator. You can also click <span class="click">Leave</span> to remove yourself from the process.</p>
+
+<h2 id="facilitator-mode">Facilitator mode</h2>
+<p>There are two ways to use this app: The first way is for a facilitator to oversee the process. This is the traditional way to conduct Convergent Facilitation, and gives one person the role of guiding the group towards a satisfactory outcome. The second way is to conduct the convergent facilitation process without a facilitator. This can be useful for quick decisions, for groups that do not have a trained facilitator, or for groups that wish to distribute power as much as possible.</p>
+<p>If you select "facilitator mode" when creating a new collaboration, you will become the facilitator for that decision. As facilitator, you must approve new criteria before they are listed as active. Proposals will also be scored differently with the presence of a facilitator. The differences are explained where relevant in the following sections of this guide.</p>
+
+<h1 id="criteria">Finding criteria</h1>
+<p>The first step towards convergence is creating a list of criteria that everyone can ideally support. To add a criterion to the list, click <span class="click">Criterion +</span>, enter the criterion, then click <span class="click">SUBMIT</span>. If facilitator mode is on, new criteria won't show up in the main criteria list until they are approved by the facilitator.</p>
+
+<h2 id="supporting-criteria">Supporting criteria</h2>
+<p>If facilitator mode is on, only the facilitator can add their support to a criterion, which will make it active and allow it to show up on the main criteria list. In the absence of a facilitator, it is the job of each individual to add their support to criteria. To add your support, click the <i class="fas fa-hand-point-up gray"></i> icon.</p>
+
+<h2 id="objecting-criteria">Objecting to criteria</h2>
+<p>If there is a criterion that you cannot support, you can record your objection.</p>
+<ol>
+	<li>Click on the criterion</li>
+	<li>Enter your objection in the text area underneath "Objections", and click <span class="click">SUBMIT</span>.</li>
+</ol>
+<p>Objections will be displayed in the "Objections" area of a criterion. They can be removed by clicking <span class="click">remove objection</span></p>
+
+<h2 id="alternative-criteria">Alternative criteria</h2>
+<p>To find broadly supported criteria, it can be useful to offer alternatives to criteria that have objections. You can suggest an existing criterion, or add a new one and then suggest that.</p>
+<ol>
+	<li>Click a criterion</li>
+	<li>Under "alternatives", select <span class="click">Suggest an alternative</span>.</li>
+	<li>In the drop-down menu, next to the alternative criteria, click <span class="click">Suggest</span>.</li>
+</ol>
+<p>Suggesting an alternative criterion will add it to the list of suggestions. Anyone who has supported the original criterion will see a button that says <span class="click">Accept alternative</span>. Clicking this will change your support to the suggested criterion.</p>
+
+<h1 id="scoring">Scoring proposals</h1>
+<p>Proposals are scored in order to help make it clear which ones are more likely to be the most effective at serving the group. Once a proposal has been added, anyone can score it based on how well it meets the criteria list. This can be done by either viewing the proposal details, or on the <span class="click"><i class="fas fa-table"></i> table</span> of proposals.</p>
+<h2 id="classic-scoring">Scoring with a facilitator</h2>
+<p>In facilitator mode, proposal score is the number of times someone marked a proposal as not meeting a criterion as a percentage of all responses. This is a negative score, meaning that the higher the score, the less support there is likely to be for a proposal.</p>
+<h2 id="weighted-scoring">Scoring without a facilitator</h2>
+<p>In the absence of a facilitator, proposal scores are more complex. They take into account not only how many times criteria were marked met, but also how many supports or objections each criterion has. The more support a criterion gets, the more weight it is given in scoring proposals. Criteria that have less support will effect the score more minimally. This is to ensure that if criteria have been added that do not have unanimous support, they do not derail the process.</p>
+<p>Objections are also encorporated into the score, in two ways. First, they subtract from the amount that support for that criterion effects the score. Second, they reduce the overall score potential. If there are objections on any criteria, the scores of all proposals will be reduced slightly. The only way to achieve a proposal score of 100% is if there are no objections on active criteria. This is so as to prevent the appearance of a consensus when there is not one.</p>
+<p>These scores are positive, in that higher scores represent more support, and are represented by a green bar. Below is a mathematical representation of this weighted scoring algorithm.</p>
 
 <div id="scoring-visual">
 	<ul>
@@ -49,23 +98,24 @@
 	<%= image_tag("scoring-algorithm.png") %>
 </div>
 
-<h2 id="proposal_activation">Activating proposals</h2>
-<p>Proposals should always be framed as an action. When writing a proposal, you must specify all of the same parameters as you would when posting an action. This allows proposals to be sent directly from a brainstorm to the front page, where it can potentially gather enough support to be realized. This can happen if enough people suggest it. When creating a brainstorm, you must specify the number of people who have to suggest a proposal before it is turned into an action. Specifying a higher number prevents the main feed from getting cluttered with actions. Actions that come out of brainstorms display their proposal score, so potential participants can see how how much support they have before they decide whether to participate.</p>
+<p>If you want a simpler way to conceptualize how this works, just remember the following.</p>
+<ol>
+	<li>More support for criterion = proposal scores affected more by this criterion</li>
+	<li>More objection for criterion = proposal scores affected less by this criterion</li>
+	<li>More objections overall = lower score potential for any proposal</li>
+</ol>
 
-<h1 id="crowdacting">Actions</h1>
-<p>Actions are specific agreements or events that people can collectively agree to.</p>
-<h2 id="action-participation">Participation</h2>
-<p>When you create an action, you must set a minimum participation number. This is the smallest number of people with which the action will be effective in its purpose. Once this number is reached, all participants will receive a notificaiton stating that the action will take place.</p>
-<p>You can also optionally select a maximum participation. If you do not specify one, it will default to infinity.</p>
-<h2 id="action-expiration">Expiration</h2>
-<p>If you choose to, when you create an action you can specify a date after which people cannot sign up. This prevents, for example, people signing up for an event at the last minute.</p>
-<p>If you do not specify an expiration, it will default to infinity.</p>
+<p>Proposals are ranked by how high they score. This score is meant as an estimate of how much support a proposal will have, so as to identify which ones to propose first. It is not designed to provide a definitive decision. To find out if a group is comfortable going with a proposal, you have to ask directly.</p>
 
-<h1 id="discussions">Discussions</h1>
-<p>Discussions function much like a chatroom, but do not update live. Actions, brainstorms, and proposals all have their own discussions. Discussions can also be created on their own.</p>
-<p>You can hover over and like a comment. When enough comments have been made in a discussion, a list of the comments with the most likes will appear.</p>
+<h1 id="other">Other</h1>
+<h2 id="feedback">Feedback</h2>
+<p>This app is in beta, and we welcome any and all feedback. Please leave your comments, questions, or suggestions <a href="">here</a>.</p>
 
-</div>
+<h2 id="donations">Donations</h2>
+<p>This server costs us about $___ a month. You can help us offset that cost <a href="">here</a>.</p>
+
+<!-- <h1 id="video">Video tutorial</h1>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/LCi4svJM5lg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 
 <script type="text/javascript">
 document.addEventListener('turbolinks:before-visit', function(e) {

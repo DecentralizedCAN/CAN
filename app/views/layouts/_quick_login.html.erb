@@ -4,18 +4,18 @@
 
 <%= form_for(:session, url: login_path) do |f| %>
   
-  <% if flash['danger'] == 'Incorrect password' %>
-    <%= link_to "Reset password", new_password_reset_path, :class => "button" %>
+  <% if flash['warning'] == "That user already exists and this is not the correct password. If you're signing up for the first time, try using a different name." %>
+    <%= link_to "Reset password?", new_password_reset_path, :class => "button" %>
     <br><br>
   <% end %>
 
   <div>
-    <%= f.text_field :email, class: 'form-mini', :placeholder => 'Name' %>
+    <%= f.text_field :email, class: 'form-mini', :placeholder => 'Name/username (lowercase)' %>
   </div>
 
   <div>
     <!-- Email <%= "(optional)" if Setting.find(7).state == false %> -->
-    <%= f.text_field :add_email, id: :user_email, :class => "form-mini", :placeholder => 'Email (optional)'  %>
+    <%= f.text_field :add_email, id: :user_email, :class => "form-mini", :placeholder => 'Email (optional for notifications & recovery)'  %>
   </div>
 
   <div>

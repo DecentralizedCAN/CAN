@@ -3,13 +3,13 @@ body {
   color: #333;
   margin: 33px;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 18px;
 }
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 18px;
 }
 
@@ -54,6 +54,7 @@ div {
   padding: 2px;
   background-color: red;
   display: table;
+  width: 100%;
 }
 
 #error_explanation {

@@ -13,21 +13,37 @@ $success-red: #ff7455;
 }
 
 .issue-title {
-  font-size: 14px;
+  h3 {
+    font-size: 20px;
+    display: inline-block;
+  }
+
+  span > a {
+    display: inline-block;
+    font-size: 16px;
+  }
 }
 
-.issue-info > div {
-  display: inline-block;
-  margin-right: 4px;
-  color: #757575;
-  font-weight: 600;
-  font-size: 10px;
-  letter-spacing: -0.2px;
+.issue-info{
+  #open-collaborators, #open-share-div, a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  div {
+    display: inline-block;
+    margin-right: 4px;
+    color: #757575;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: -0.2px;
+  }
 }
 
 .issue-description {
   margin-top: 8px;
-  font-size: 12px;
+  font-size: 13px;
   margin-bottom: 0;
   padding: 6px 10px;
   border: 1px solid #d8d8d8;
@@ -35,6 +51,8 @@ $success-red: #ff7455;
 }
 
 #solver{
+  // margin-right: 24px;
+
   ol {
   	padding: 0px;
   	margin: auto;
@@ -58,11 +76,41 @@ $success-red: #ff7455;
   // }
 }
 
+#refresh { 
+  margin-top: 8px;
+  // margin-left: 4px;
+  display: inline-block;
+  // text-align: right;
+
+  form {
+    display: inline-block;
+
+    button {
+      border: 0;
+      background: #9a9a9a !important;
+      color: white !important;
+      border-radius: 2px;
+      padding: 2px 6px;
+
+      i {
+        color: white !important;
+      }
+    }
+  }
+}
+
 #criteria {
   display: inline-block;
 }
 
+.issue-criteria-main {
+  // overflow: auto;
+  // max-height: 130px;
+}
+
 #issue-criteria {
+  // border: 1px solid #d8d8d8;
+  // background: #f9f9f9;
   display: inline-block;
 
   h2 {
@@ -80,6 +128,9 @@ $success-red: #ff7455;
 
 #issue-criteria {
   width: 100%;
+    // width: fit-content;
+    // min-width: 20%;
+    // max-width: 100%;
 }
 
 .criterion-description {
@@ -113,14 +164,15 @@ $success-red: #ff7455;
 
 .criteria-list {
   float: left;
-  column-count: 4;
+  column-count: 3;
   display: inline-block;
   border-radius: 2px;
   width: 100%;
   padding: 4px 10px;
   border: 1px solid #d8d8d8;
   margin: 10px 0px;
-  background: white;
+  // background: white;
+  background: #f9f9f9;
   min-height: 100px;
 }
 
@@ -132,7 +184,7 @@ $success-red: #ff7455;
   background-color: white;
   border-radius: 4px;
   width: 100%;
-  max-width: 20vw;
+  // max-width: 20vw;
   padding: 2 4px;
   box-shadow: 0px 3px 6px 0px #d0d0d0;
   border: 1px solid #efefef;
@@ -141,16 +193,157 @@ $success-red: #ff7455;
   * {
     // color: #3a3a3a;
     color: #525252;
+    // display: inline-block;
+    // vertical-align: top;
   }
+
+  .title {
+    display: inline-flex;
+  }
+
+  .criterion-details {
+    // padding-top: 2px;
+    display: inline-block;
+    // display: inline-flex;
+    font-weight: normal;
+    width: 400px;
+
+    span.gray:hover {
+      text-decoration: underline;
+    }
+  }
+
 }
 
-@media only screen and (max-width: 700px) {
-  .criteria-list {
-    column-count: 2;
+#open-discussion {
+  background: #d6d6d6;
+  padding: 4px 8px;
+  border-radius: 1px;
+  cursor: pointer;
+  width: max-content;
+}
+
+.submit-concern, .show-objections, #open-collaborators {
+  cursor: pointer;
+}
+
+#add-collaborators {
+  cursor: pointer;
+}
+
+.show-objections {
+  // color: #fd6427;;
+  // color: #ffc46a;
+}
+
+.objection-popup, .objection-list, #collaborators-list, #new-criterion-div {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  top: 0;
+  left: 0;
+  background-color: #8080803b;
+
+  .objection-inner, .objection-list-inner, .new-criterion-inner {
+    background-color: white;
+    border: 1px solid #9c9c9c;
+    min-height: 200px;
+    max-width: 500px;
+    // max-height: 400px !important;
+    margin: auto;
+    margin-top: 20vh;
+    padding: 20px;
+    padding-top: 10px;
+    box-shadow: 0px 4px 8px 2px #7b7b7b;
+    max-height: 80vh;
+    border-radius: 2px;
+    z-index: 2;
+    position: relative;
+    overflow: hidden;
+    overflow: auto;
+    max-height: 400px !important;
+
+    .close-outer {
+      width: 100%; text-align: right; padding-right: 4px; font-size: 20px;
+    }
+
+    ol {
+    }
+
+    // .button {
+    //   background-color: #ffc46a;
+    // }
   }
 
-  .criterium {
-    max-width: 40vw;
+  .new-criterion-inner {
+    min-height: fit-content;
+    max-height: none !important;
+  }
+
+  .objection-inner {
+    text-align: center;
+  }
+
+  .close-window {
+    float: right;
+    cursor: pointer;
+    position: fixed;
+  }
+
+  .objection-list-inner{
+    h2 {
+      // margin-top: 0;
+      // text-align: left;
+      padding-left: 12%;
+      padding-right: 6%;
+    }
+
+    ol {
+      margin-top: 20px !important;
+      padding-left: 12% !important;
+
+      li {
+        padding: 8px;
+        border-radius: 2px;
+        margin-right: 10px;
+        /* border: 1px solid #b7b7b7; */
+        // color: white;
+        background: #e2e2e2;
+        display: flex;
+
+        div {
+          width: 100%;
+        }
+
+        a {
+          width: 136px;
+          text-align: center;
+          height: fit-content;        }
+      }
+    }
+
+    li {
+      margin-top: 8px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin-top: 10px;
+    padding: 10px 12%;
+    // text-align: left;
+  }
+
+  .criterion-objection-input {
+    margin-top: 10px;
+
+    textarea {
+      min-height: 100px;
+      padding: 6px 10px;
+      min-width: 70%;
+    }
   }
 }
 
@@ -173,11 +366,27 @@ $success-red: #ff7455;
 }
 
 .criteria-sponsorship {
+  width: 160px !important;
   padding: 2px;
   width: auto;
   vertical-align: top;
   display: inline-block;
-  float: left;
+  float: right;
+  text-align: right;
+  height: fit-content;
+
+  a {
+    width: max-content;
+  }
+
+  div {
+    margin-top: 4px;
+  }
+}
+
+.criterium-top {
+  display: flex;
+  justify-content: space-between;
 }
 
 .criterium-title {
@@ -186,6 +395,7 @@ $success-red: #ff7455;
   overflow: hidden;
   text-overflow: ellipsis;
   font-style: normal;
+  width: fit-content;
   // display: inline-block;
 }
 
@@ -253,43 +463,64 @@ $success-red: #ff7455;
   }
 }
 
-@media only screen and (max-width: 700px) {
-  #extra-sections-outer {
-    &>div {
-      width: 100%;
+.discussion-extraouter {
+  width: 100%;
+  background-color: white;
+  // padding: 0 6px;
+  border: 1px solid #d8d8d8;
+  border-left: 0;
+  height: fit-content;
+
+  h2 {
+    padding-left: 10px;
+    margin-top: 10px;
+
+    i.float-right {
+      margin-right: 20px;
+      cursor: pointer;
     }
   }
 
-  #criteria-list {
-    column-count: 2;
-  }
-}
-
-.criteria-outer, .discussion-outer, .solutions-outer {
-  display: inline-block;
-  width: 100%;
-  margin-right: 20px;
-  vertical-align: top;
-
   #main-discussion {
     width: 100%;
-    margin-left: 0;   
+    // margin-left: 0;   
+    margin: 0;
   }
 
   .discussion-column.mini {
     min-height: 290px;
     height: auto;
-    box-shadow: 0px 3px 6px 0px #d0d0d0;
-    border: 1px solid #efefef;
+    // box-shadow: 0px 3px 6px 0px #d0d0d0;
+    // border: 1px solid #efefef;
+    // border: 1px solid #d2d2d2;
+    border: 0;
+    // border-top: 1px solid #d2d2d2;
+    padding: 0;
+
+    .comment-box input {
+      border: none;
+      border-top: 1px solid #d2d2d2;
+      height: 24px;
+
+      &#send {
+        background: transparent;
+        margin: 2px;
+        top: -31px;
+      }
+    }
 
     * {
       color: #3a3a3a;
     }
 
     #scroll-div {
-      height: 240px;
+      border-top: 1px solid #d2d2d2;
+      height: 62vh;
       resize: vertical;
       overflow-y: auto;
+      padding-left: 10px;
+      padding-top: 10px;
+      margin: 0;
     }
 
     ul {
@@ -300,16 +531,22 @@ $success-red: #ff7455;
 
 #full-discussion-view {
   float: right;
-  color: #3a3a3a !important;
-  font-size: 12px;
-  margin: 8px;
-  font-style: normal;
-  text-transform: uppercase;
-
+  // color: #3a3a3a !important;
+  font-size: 14px;
+  margin: 4px;
+  // font-style: normal;
+  // text-transform: uppercase;
 }
 
 #suggestion_min {
   width: 40px;
+}
+
+.criteria-outer, .solutions-outer {
+  display: inline-block;
+  width: 100%;
+  margin-right: 20px;
+  vertical-align: top;
 }
 
 .number-field-outer {
@@ -342,7 +579,15 @@ $success-red: #ff7455;
   }
 }
 
+.table-title {
+  margin: auto;
+  width: fit-content;
+  text-align: center;
+}
+
 .proposal-grid {
+
+  margin: auto;
 
   td, th {
     border: 1px solid;
@@ -401,7 +646,8 @@ $success-red: #ff7455;
     border-left: 0.5px solid black;
 
     &:hover {
-      background-color: #a3dae6;
+      // background-color: #a3dae6;
+      background-color: #c6f5ff;
       // cursor: pointer;
     }
 
@@ -418,7 +664,8 @@ $success-red: #ff7455;
     border-right: 0.5px solid black;
 
     &:hover {
-      background-color: #dca6a6;
+      // background-color: #dca6a6;
+      background-color: #fdd4d4;
       // cursor: pointer;
     }
 
@@ -431,7 +678,11 @@ $success-red: #ff7455;
   }
 
   .answered-tentative > div {
-    border-style: dashed !important;
+    // border-style: solid !important;
+    // background-color: #f5f056;
+    // border: 4px solid black !important;
+    // background-color: black;
+    // color: black;
   }
 
   .yes-score.total {
@@ -490,7 +741,8 @@ $success-red: #ff7455;
 
   .table-hidden {
     border: none;
-    background-color: #f5f5f5 !important;
+    background: transparent;
+    // background-color: #f5f5f5 !important;
     // background-color: #9c9c9c !important;
     // color: white;
     text-align: right;
@@ -509,7 +761,7 @@ $success-red: #ff7455;
   // border: 2px solid #9c9c9c;
   // background-color: #d8d5d5;
 
-  box-shadow: 0px 3px 6px 0px #776c6c;
+  // box-shadow: 0px 3px 6px 0px #776c6c;
 }
 
 .outer-table::-webkit-scrollbar {
@@ -540,3 +792,56 @@ td, th {
   height: 20px;
 }
 
+// SHARE DIV
+#open-share-div {
+  width: fit-content;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+#share-div {
+  display: none;
+  position: absolute;
+  background: #f9f9f9;
+  // left: -160px;
+  width: 250px;
+  border: 1px solid black;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-top: 6px;
+  // margin-left: -94px;
+  
+  .link {
+
+  }
+}
+
+.two-column {
+  column-count: 2;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  #extra-sections-outer {
+    &>div {
+      width: 100%;
+    }
+  }
+
+  .criteria-list {
+    column-count: 2;
+  }
+
+  .discussion-extraouter {
+    position: absolute;
+    width: 92vw;
+    border-left: 1px solid #d8d8d8;
+    border-right: 0;
+  }
+}
+
+@media only screen and (max-width: 610px) {
+  .criteria-list {
+    column-count: 1;
+  }
+}

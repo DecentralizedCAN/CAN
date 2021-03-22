@@ -7,20 +7,20 @@ Rails.application.routes.draw do
 
 # MAIN STUFF
   get '/solver', to: 'problems#index', :as => :solver
-  get '/brainstorm/post', to: 'problems#new', :as => :post_problem
+  get '/collaboration/post', to: 'problems#new', :as => :post_problem
   post '/solver/sponsor', to: 'criteria#sponsor', :as => :sponsor_criteria
   post '/solver/unsponsor', to: 'criteria#unsponsor', :as => :unsponsor_criteria
   post '/solver/dissent', to: 'criteria#dissent', :as => :dissent_criteria
   post '/solver/assent', to: 'criteria#assent', :as => :assent_criteria
   post '/problem/sponsor', to: 'problems#sponsor', :as => :sponsor_problem
   post '/problem/unsponsor', to: 'problems#unsponsor', :as => :unsponsor_problem
-  get '/brainstorm/:problem_id', to: 'problems#show', :as => :issue
-  get '/brainstorm/table/:problem_id', to: 'problems#table', :as => :brainstorm_table
-  resources :problems, only: [:create, :destroy]
+  get '/c/:problem_id', to: 'problems#show', :as => :issue
+  get '/c/table/:problem_id', to: 'problems#table', :as => :brainstorm_table
+  resources :problems, only: [:create, :destroy, :edit, :update]
 
   resources :solutions, only: [:create]
-  get '/brainstorm/:problem_id/proposal/new', to: 'solutions#new', :as => :new_solution
-  get '/brainstorm/:problem_id/proposal/:solution_id', to: 'solutions#show', :as => :solution
+  get '/c/:problem_id/proposal/new', to: 'solutions#new', :as => :new_solution
+  get '/c/:problem_id/proposal/:solution_id', to: 'solutions#show', :as => :solution
   delete '/proposal/:solution_id', to: 'solutions#destroy', :as => :destroy_solution
   post '/solver/poll', to: 'solutions#poll', :as => :set_poll
   post '/quietpoll', to: 'polls#quiet_set', :as => :quiet_set_poll
@@ -50,8 +50,12 @@ Rails.application.routes.draw do
   get 'about', to: 'static#about', :as => :about
   get 'choice', to: 'static#choice', :as => :choice
   get 'commitments', to: 'static#commitments', :as => :commitment
+
   get '', to: 'static#main_feed', :as => :main_feed
   # get '', to: 'static#welcome', :as => :main_feed
+  # get '', to: 'static#home', :as => :home
+  # get 'main_feed', to: 'static#main_feed', :as => :main_feed
+
   get 'guide', to: 'static#documentation', :as => :documentation
   get 'manage', to: 'static#manage', :as => :manage
 
@@ -62,9 +66,10 @@ Rails.application.routes.draw do
   get '/criteria/show/:criterium_id', to: 'criteria#show', :as => :show_criterium
   get '/criteria/full/:problem_id', to: 'criteria#full', :as => :full_criterium
   get '/criteria/dissent/:criterium_id', to: 'criteria#dissent_form', :as => :dissent_criterium
-  get '/criteria/new', to: 'criteria#new', :as => :new_criterium
+  get 'c/:problem_id/criteria/new', to: 'criteria#new', :as => :new_criterium
   post '/criteria/add', to: 'criteria#add', :as => :add_criterium
-  resources :criteria, only: [:create, :destroy]
+  delete '/criteria/:id', to: 'criteria#destroy', :as => :destroy_criterium
+  resources :criteria, only: [:create]
 
   post '/criteria/alt', to: 'criteria#alt', :as => :alt_criterium
   post '/criteria/accept_alt', to: 'criteria#accept_alt', :as => :accept_alt
@@ -100,6 +105,10 @@ Rails.application.routes.draw do
 
 # MAIN STUFF ENDS
 
+  get "/404", :to => "errors#error"
+  get "/422", :to => "errors#error"
+  get "/500", :to => "errors#error"
+
   get 'wakemydyno.txt', to: 'static#wakemydyno'
 
 
@@ -108,6 +117,7 @@ Rails.application.routes.draw do
   get 'password_resets/edit'
 
   # root   'static#commitments'
+
   root   'static#main_feed'
   # root   'static#welcome'
   get    '/dashboard', to: 'static#dashboard'

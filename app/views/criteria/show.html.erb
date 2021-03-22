@@ -1,32 +1,40 @@
 <div class="backdrop">
 
 <div class="back-button">
-  <%= link_to issue_path(:problem_id => @criterium.problem.hashid), data: { turbolinks: false } do %>
+  <%= link_to issue_path(:problem_id => @criterium.problem.hashid, :view => "suggested"), data: { turbolinks: false } do %>
     <div class="back-button-arrow"></div>
     <div class="back-button-content">
-      <%= @criterium.problem.title %>
+      All criteria
     </div>
   <% end %>
 </div>
 
+<div class="criterion-outer">
+
 <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => @criterium})%>
+
+</div>
+
+<%if false%>
 
 <div class="criterion-outer">
 
 <div class="criterion-action-box">
 	<div class="criterium-dissent">
-		<%if @criterium.cridissent.find_by(user: @user)%>
+		<%if @criterium.cridissent.find_by(user: @user) %>
 	    <div>
-	      <strong>You objected</strong> <%= @criterium.cridissent.find_by(user: @user).title %>
-	      <em>(<%= link_to "remove objection", assent_criteria_path(:criterium_id => @criterium.id), :method => "post" %>)</em>
+				<!-- <h2><%= pluralize(@criterium.cridissent.count, "Concern") %></h2> -->
+	      <!-- <strong>You objected</strong>: "<%= @criterium.cridissent.find_by(user: @user).title %>" -->
+	      <%= link_to "remove my concern", assent_criteria_path(:criterium_id => @criterium.id), :method => "post", :class => "button" %>
 	    </div>
 	  <%else%>
-			<h3>Objections (<%= @criterium.cridissent.count %>)</h3>
+			<!-- <h3><%= @criterium.cridissent.count %> Concerns</h3> -->
+			<h2>Controversial? Say more.</h2>
 
 		  <%= form_for(@criterium.cridissent.new, :url => dissent_criteria_path, remote: true) do |form| %>
 		    <!-- <div class="dissent-instructions">I cannot support a proposal that meets this criterion because</div> -->
 		    <%= form.hidden_field :criterium_id %>
-		    <div class="dissent-title"><%= form.text_area :title, placeholder: "I cannot support a proposal that meets this criterion because" %></div>
+		    <div class="dissent-title"><%= form.text_area :title, placeholder: "I find this criterion controversial because..." %></div>
 		    <!-- <div class="submit-dissent"> -->
 		    <div>
 		    	<%= form.submit "Submit", :class => "button" %>
@@ -40,20 +48,21 @@
 	<ul><% @criterium.cridissent.each do |dissent| %>
 		<li>
 	  	<%if dissent.user%>
-				<strong><%= dissent.user.name %></strong>
+				<strong><%= link_to(dissent.user.name, dissent.user) %></strong>:
 		  	<% if dissent.title.length > 0 %>
-			  	<%= dissent.title %>
+			  	"<%= dissent.title %>"
 		  	<% else %>
-		  		objected to this criterion
+		  		is concerned about this criterion
 		  	<%end%>
 	  	<%end%>
   	</li>
-	<% end %>
+	<% end %></ul>
 </div>
-
+<%end%>
 <!-- <div class="criterion-action-box">
 </div> -->
 
+<%if false%>
 <div class="criterion-action-box">
 	<h3>Alternatives</h3>
 
@@ -94,14 +103,13 @@
 		<%end%>
 	</ul>
 </div>
-
+<%end #end of "false"%>
 
 </div>
 
 <% if current_user.admin? %>
 
   Added by user <%= @criterium.creator %>
-  – <%= link_to 'Remove', @criterium, method: :delete, data: { confirm: 'Are you sure?' } %>
 
   <%= link_to "Broadcast", broadcast_criterion_path(:criterion_id => @criterium.id), :method => "post", :class => 'button', data: { confirm: "Broadcast criterion?" } %>
 <% end %>

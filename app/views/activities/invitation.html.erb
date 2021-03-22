@@ -49,6 +49,7 @@
     <%= role.title.pluralize(role.minimum) %></strong>
 
             <br>
+
             <% if role.description.length > 0 %>
               Description: <%= role.description %><br>
             <% end %>
@@ -63,11 +64,14 @@
             <%# end %>
             are needed -->
 
+
             <div class="participation-meter participation-meter-outer">
               <div class="participation-progress" style="
               width: <%= role.user.count.to_f / role.minimum.to_f * 100%>%; 
               background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
+
               "></div><br>
+
               <% if role.maximum %>
                 <div class="participation-progress second" style="
                 width: <%= role.user.count.to_f / role.maximum.to_f * 100%>%; 
@@ -76,6 +80,7 @@
               <% else %>
                 <div class="participation-progress second"></div>
               <% end %>
+
             </div>
         </div>
       </li>
@@ -128,6 +133,7 @@
 
 <script type="text/javascript">
   // $('header').hide()
+
   $('#quick-login-form').hide()
 
   fadeins =  $('.fadein')
@@ -196,6 +202,7 @@
     $('.yes-notice').hide()
     $('label.label').hide()
     $('.all-roles > li').removeClass('select')
+
     // $('body').animate({ scrollTop: $('.commit-form').offset().top }, 'fast');
     $('.request-outer').show()
     $('.commit-form').hide()

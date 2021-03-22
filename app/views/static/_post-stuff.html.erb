@@ -14,12 +14,12 @@
 	<% end %>
 
   <% if current_user && current_user.admin? %>
-  <!--   <div class="delete-button">
+     <div class="delete-button">
       <br><br>
       <%= link_to "Ø", delete_post_path(:post_id => post.id), method: :delete,
                                       data: { confirm: "Delete post?" } %>
 
-    </div> -->
+    </div>
   <% end %>
 
 </div>

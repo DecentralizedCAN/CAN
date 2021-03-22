@@ -8,13 +8,16 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= favicon_link_tag asset_path('can.svg') %>
+    <%= favicon_link_tag asset_path('logo.png') %>
   </head>
 
 
 
   <%= render 'layouts/header' %>
 
+  <script type="text/javascript">
+    window.onbeforeunload = null;
+  </script>
 
   <body>
 

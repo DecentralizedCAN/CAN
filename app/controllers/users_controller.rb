@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    unless current_user.admin?
+      redirect_to root_url
+    end
     @users = User.paginate(page: params[:page])
   end
 
@@ -176,7 +179,7 @@ class UsersController < ApplicationController
     def logged_in_user
       unless logged_in?
         store_location
-        flash[:danger] = "Please log in."
+        flash[:danger] = "Please sign in."
         redirect_to login_url
       end
     end

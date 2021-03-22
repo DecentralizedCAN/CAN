@@ -29,6 +29,11 @@ $label-blue: #81c4ff;
   h3 {
   	background-color: transparent;
   	font-weight: bold;
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 12px;
   }
 
 	ul {
@@ -68,6 +73,11 @@ $label-blue: #81c4ff;
 }
 
 .criterion-outer {
+
+  .criterium {
+    max-width: 400px;    
+  }
+
 	.criterion-action-box {
 		color: #3a3a3a;
     color: #525252;
@@ -136,11 +146,20 @@ $label-blue: #81c4ff;
     display: inline-block;
     vertical-align: top;
   }
+
+  h3 {
+    font-size: 13px;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
 }
 
 .dissent-title > textarea {
   min-width: 26em;
   min-height: 4em;
+  font-size: 12px;
 }
 
 .cancel-support, .sponsor-criteria {
@@ -154,4 +173,8 @@ $label-blue: #81c4ff;
   &:hover {
     background-color: #c53131 !important;
   }
+}
+
+.crialt-button {
+  cursor: pointer;
 }

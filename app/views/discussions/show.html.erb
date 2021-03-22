@@ -85,9 +85,11 @@
   	<% @discussion.comment.order(created_at: :asc).limit(200).each do |comment| %>
   		<% if comment.content %>
   		  <li>
-          <div>
+          <div class="comment-user-info">
+            <%= gravatar_for(comment.user) %>
             <strong><%= comment.user.name %></strong>
           </div>
+          <br>
 
           <% if comment.content.include? "!chatlog" %>
             <% comment_class = "chatlog"%>

@@ -7,13 +7,16 @@
 
 <ol id="notifications">
 <% @notifications.each do |notification| %>
+<div <%= 'class=unread' if !notification.read %>>
   <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+
   <div>
     <li <%= 'class=unread' if !notification.read %> >
       <%= notification.details %>
     </li>
   </div>
   <% end %>
+</div>
 <% end %>
 </ol>
 

@@ -14,16 +14,20 @@
 .poll-yes {
 	color: black !important;
 	background-color: white !important;
+	// background-color: #1efd0f !important;
 	&:hover {
 		background-color: #e8e8e8 !important;
+		// background-color: #91ffae !important;
 	}
 }
 
 .poll-no {
 	color: white !important;
 	background-color: black !important;
+	// background-color: #ff2e2e !important;
 	&:hover {
 		background-color: #464646 !important;
+		// background-color: #ff8f8f !important;
 	}
 
 	i {

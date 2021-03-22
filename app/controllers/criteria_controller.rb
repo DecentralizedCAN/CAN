@@ -4,7 +4,8 @@ class CriteriaController < ApplicationController
   include CommentsHelper
 
   before_action :set_criterium, only: [:show, :dissent_form, :edit, :update]
-  before_action :require_login
+  before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_login, except: [:full], if: -> { public_viewable? }
 
   # GET /criteria
   # GET /criteria.json
@@ -30,7 +31,9 @@ class CriteriaController < ApplicationController
     @criteria_count = @active_criteria.count.count
 
     @my_criteria = current_user.criterium
-      .where(problem_id: @problem.id)
+      .where(problem_id: @problem.id) if current_user
+
+    @my_criteria = [] unless current_user
 
     @criteria = @problem.criterium
       .joins(:user)
@@ -61,35 +64,66 @@ class CriteriaController < ApplicationController
   # POST /criteria.json
   def create
     @user = current_user
-    @criterium = Criterium.new(criterium_params)
+    @criterium = Criterium.new(criterium_params.except(:alt_id, :redirect))
     @criterium.creator = @user.id
 
     if @criterium.save
-      @criterium.user << @user unless @criterium.problem.facilitator_id && @criterium.problem.facilitator_id != current_user.id
+      @criterium.user << @user unless (facilitating?(@criterium.problem) || criterium_params[:alt_id].length > 0 ) && !weighted_scoring?(@criterium.problem)
 
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
-        notification = facilitator.notification.create(:details => "Someone has suggested a new criterion",
-          :criterium_id => @criterium.id)
-        if facilitator.email_notifications
-          notification.send_email
+        unless facilitator.id == @user.id
+          notification = facilitator.notification.create(:details => "Someone has suggested a new criterion for \"" + @criterium.problem.title + "\"",
+            :criterium_id => @criterium.id)
+          if facilitator.email_notifications
+            notification.send_email
+          end
         end
       end
       
+      # update_all_solution_scores(@criterium.problem.id)
+
       begin
         auto_upvote_post(@criterium.problem.post.id, @user.id)
       rescue
       end
-          
-      # update_all_solution_scores(@criterium.problem.id)
 
-      if @criterium.problem.facilitator_id && @criterium.problem.facilitator_id == current_user.id
-      elsif @criterium.problem.facilitator_id
+      if facilitating?(@criterium.problem)
+      elsif @criterium.problem.facilitator_id && !weighted_scoring?(@criterium.problem)
         flash[:success] = "You suggested a criterion. Please wait for the facilitator to review it. Thanks for your contribution!"
       else
         flash[:success] = "You created a criterion. Thanks for your contribution!"
       end
-      redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+
+      # If this is an alt
+      if criterium_params[:alt_id].length > 0
+        @from = Criterium.find(criterium_params[:alt_id])
+        @alternative = Crialt.new(:criterium_id => @from.id, :alternative => @criterium.id, :transferred_user_count => 0)
+        if Crialt.where(criterium_id: @from.id).where(alternative: @criterium.id).count > 0
+          redirect_to show_criterium_path(:criterium_id => @from.id)
+        elsif @alternative.save
+          new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @from.title + '"', @from.problem.discussion.id)
+          flash[:success] = "You suggested an alternative criterion. Thanks for your suggestion!"
+        
+          # send notifications
+          if @from.crialt.count == 1
+            @from.user.each do |user|
+              notification = user.notification.create(:details => "Someone suggested an alternative to the criterion \"" + @from.title + "\"",
+                :criterium_id => @from.id)
+              if user.email_notifications
+                notification.send_email
+              end
+            end     
+          end
+        end
+      end
+      
+      if criterium_params[:redirect] == "none"
+        redirect_back fallback_location: root_path
+      else
+        redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+      end
+
     else
       flash[:warning] = "Can't save criterion. It may be too long."
       redirect_back fallback_location: root_path
@@ -100,7 +134,11 @@ class CriteriaController < ApplicationController
     @criterium = Criterium.find(params[:criterium_id])
     @user = current_user
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
-    @dissenter.destroy if @dissenter
+
+    unless facilitating?(@criterium.problem) && !weighted_scoring?(@criterium.problem)
+      @dissenter.destroy if @dissenter
+    end
+
     @criterium.user << @user unless @criterium.user.include?(@user)
 
     begin
@@ -131,24 +169,25 @@ class CriteriaController < ApplicationController
     @criterium = Criterium.find(params[:cridissent][:criterium_id])
     # dissent_count = @criterium.cridissent.count
     @user = this_user
-    @criterium.user.delete(@user)
+    @criterium.user.delete(@user) unless facilitating?(@criterium.problem)  && !weighted_scoring?(@criterium.problem)
+    
     if @criterium.cridissent.where(user_id: @user.id).empty?
       @dissenter = @criterium.cridissent.new(:user_id => @user.id, :title => params[:cridissent][:title])
       if @dissenter.save
 
         # log in chat
         if params[:cridissent][:title].length > 0
-          content = ': ' + params[:cridissent][:title]
+          content = ': "' + params[:cridissent][:title] + '"'
         else
           content = ''
         end
 
-        new_comment('!chatlog objected to a criterion (' + @criterium.title + ')' + content, @criterium.problem.discussion.id)
+        new_comment('!chatlog Added a concern to the criterion "' + @criterium.title + '"' + content, @criterium.problem.discussion.id)
 
         # send notifications
           if @criterium.cridissent.count == 1
-            @criterium.user.each do |user|
-              notification = user.notification.create(:details => "A criterion which you support has an objection",
+            @criterium.user.where.not(id: @user.id).each do |user|
+              notification = user.notification.create(:details => "Someone has a concern about the criterion \"" + @criterium.title + "\"",
                 :criterium_id => @criterium.id)
               if user.email_notifications
                 notification.send_email
@@ -157,13 +196,21 @@ class CriteriaController < ApplicationController
             # @criterium.send_dissent_email          
           end
 
+        begin
+          auto_upvote_post(@criterium.problem.post.id, @user.id)
+        rescue
+        end
+
         # update_all_solution_scores(@criterium.problem.id)
         UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
-        flash[:success] = "You made an objection. Thanks for your input!"
+        flash[:success] = "You added a concern. Thanks for your input!"
         # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
         redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
       end
+    else
+      flash[:warning] = "You alread added a concern to this criterion. You must remove it before adding any more."
+      redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
     end
   end
 
@@ -173,7 +220,7 @@ class CriteriaController < ApplicationController
     @dissenter = @criterium.cridissent.find_by(user_id: @user.id)
     @dissenter.destroy
 
-    new_comment('!chatlog no longer objects to a criterion (' + @criterium.title + ')', @criterium.problem.discussion.id)
+    new_comment('!chatlog Removed their concern about the criterion "' + @criterium.title + '"', @criterium.problem.discussion.id)
 
     # update_all_solution_scores(@criterium.problem.id)
     UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
@@ -192,8 +239,20 @@ class CriteriaController < ApplicationController
 
       new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @criterium.title + '"', @criterium.problem.discussion.id)
 
+      # send notifications
+      if @criterium.crialt.count == 1
+        @criterium.user.where.not(id: current_user.id).each do |user|
+          notification = user.notification.create(:details => 'Someone suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @criterium.title + '"',
+            :criterium_id => @criterium.id)
+          if user.email_notifications
+            notification.send_email
+          end
+        end     
+      end
+
       flash[:success] = "Thanks for your suggestion!"
-      redirect_to show_criterium_path(:criterium_id => params[:from])
+      # redirect_to show_criterium_path(:criterium_id => params[:from])
+      redirect_back fallback_location: root_path
     end
   end
 
@@ -215,8 +274,13 @@ class CriteriaController < ApplicationController
       # update_all_solution_scores(@crialt.criterium.problem.id)
       UpdateSolutionScoresJob.perform_later(@crialt.criterium.problem.id)
       
-      flash[:success] = "You accepted a alternative criteria. Thanks for working towards convergence!"
-      redirect_to show_criterium_path(:criterium_id => @from.hashid)
+      if @crialt.criterium.problem.facilitator_id
+        flash[:success] = "You accepted an alternative criteria."
+      else
+        flash[:success] = "You accepted an alternative criteria. Thanks for working towards convergence!"
+      end
+      # redirect_to show_criterium_path(:criterium_id => @from.hashid)
+      redirect_back fallback_location: root_path
     end
   end
 
@@ -237,18 +301,22 @@ class CriteriaController < ApplicationController
   # DELETE /criteria/1
   # DELETE /criteria/1.json
   def destroy
-    if current_user.admin?
-      @criterium = Criterium.find(params[:id])
-      @problem = @criterium.problem
+    @criterium = Criterium.find(params[:id])
+    @problem = @criterium.problem
+    if current_user.admin? || facilitating?(@problem)
       @criterium.destroy
 
       # update_all_solution_scores(@criterium.problem.id)
       UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
-      respond_to do |format|
-        format.html { redirect_to issue_path(:problem_id => @problem.hashid), notice: 'Criterium was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      flash[:success] = 'Criterion was deleted.'
+
+      redirect_back fallback_location: root_path
+
+      # respond_to do |format|
+      #   format.html { redirect_to issue_path(:problem_id => @problem.hashid), notice: 'Criterium was successfully destroyed.' }
+      #   format.json { head :no_content }
+      # end
     end
   end
 
@@ -260,7 +328,7 @@ class CriteriaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def criterium_params
-      params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters)
+      params.require(:criterium).permit(:title, :alternatives, :problem_id, :dissenters, :alt_id, :redirect)
     end
 
     # def update_all_solution_scores(problem_id)
@@ -269,4 +337,16 @@ class CriteriaController < ApplicationController
     #     solution.update(:score => solution_score(solution.id) * 100)
     #   end
     # end
+
+    def public_viewable?
+      Setting.find(6).state
+    end
+
+    def facilitating?(problem)
+      problem.facilitator_id && problem.facilitator_id == current_user.id
+    end
+
+    def weighted_scoring?(problem)
+      problem.scoring_method && problem.scoring_method = 1
+    end
 end

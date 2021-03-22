@@ -24,7 +24,7 @@ class UpvotesController < ApplicationController
 	def upvote
 		begin
 		  if already_upvoted?
-		    flash[:notice] = "You already upvoted this"
+		    # flash[:notice] = "You already upvoted this"
 		  else
 		    @post.upvotes.create(user_id: current_user.id)
 		  end
@@ -35,7 +35,7 @@ class UpvotesController < ApplicationController
 	def unupvote
 		begin
 		  if !(already_upvoted?)
-		    flash[:notice] = "Not upvoted"
+		    # flash[:notice] = "Not upvoted"
 		  else
 				@upvote = @post.upvotes.find_by(:user_id => current_user.id)
 		    @upvote.destroy
@@ -46,7 +46,7 @@ class UpvotesController < ApplicationController
 
 	def like
 	  if already_liked?
-	    flash[:notice] = "You already liked this"
+	    # flash[:notice] = "You already liked this"
 	  else
 	    @comment.upvotes.create(user_id: current_user.id)
 	  end
@@ -54,7 +54,7 @@ class UpvotesController < ApplicationController
 
 	def unlike
 	  if !(already_liked?)
-	    flash[:notice] = "Not liked"
+	    # flash[:notice] = "Not liked"
 	  else
 			@like = @comment.upvotes.find_by(:user_id => current_user.id)
 	    @like.destroy

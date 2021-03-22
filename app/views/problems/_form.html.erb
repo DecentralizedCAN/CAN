@@ -17,14 +17,14 @@
   <% end %>
 
   <div class="main-field">
-    <h1>Title</h1>
-    <%= form.text_area :title, id: :problem_title, placeholder: "Briefly summarize the issue you want to find solutions for" %>
+    <h2>Title</h2>
+    <%= form.text_area :title, id: :problem_title, placeholder: "Brief summary of the issue in question" %>
 
-    <h1>Details</h1>
-    <%= form.text_area :description, id: :problem_description, placeholder: "Explain the issue in detail" %>
+    <h2>Details</h2>
+    <%= form.text_area :description, id: :problem_description, placeholder: "(optional)" %>
 
     <br>
-    <%= form.check_box :require_action, {checked: false}, true, false %> Only allow proposals that are formatted as "actions"
+  <!--   <%= form.check_box :require_action, {checked: false}, true, false %> Only allow proposals that are formatted as "actions" -->
 
     <%= form.hidden_field :goal_id, id: :goal_id, value: params[:goal] %>
 
@@ -41,14 +41,26 @@
     <% end %>
 
     <div>
-    <% if Setting.find(10).state %>
-      <%= form.check_box :facilitator_id, {checked: false}, current_user.id, false %> Facilitator mode (no criteria supporting, you must approve all criteria)
+    <% if Setting.find(10).state && false %>
+      <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode
+    <% else %>
+      <%= form.hidden_field :facilitator_id, id: :facilitator_id, value: current_user.id %>
     <% end %>
+
+
+    <% if false %>
+      <br>
+      <%= form.check_box :include_comments, {checked: true}, true, false %> Include comments section
+    <% end %>
+
     </div>
 
-    <% if false && Setting.find(11).state %>
-      Scoring method
-      <%= form.select :scoring_method, { 'Weighted positive': 1, 'Negative raw': 2, 'Positive raw': 3 }%>
+    <%# if Setting.find(11).state %>
+    <% if params[:scoring] == "show" %>
+      <div>
+        <!-- Scoring method -->
+        <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>
+      </div>
     <% end %>
 
     <div>
@@ -57,8 +69,17 @@
     <% end %>
     </div>
 
+  Facilitator: 
+  <%= current_user.name %>
+  <span class="crisupport-count red tooltip-toggle" href="#" aria-label="The person who creates a process becomes the facilitator. Facilitators must approve all new criteria." tabindex="0">
+    <i class="far fa-question-circle"></i>
+  </span>
   </div>
 
-  <%= form.submit "Post", id: :submit_brainstorm %>
+  <% if controller.action_name == "edit" %>
+    <%= form.submit "Save changes", id: :submit_brainstorm %>
+  <% else %>
+    <%= form.submit "Create", id: :submit_brainstorm %>
+  <% end %>
 
 <% end %>

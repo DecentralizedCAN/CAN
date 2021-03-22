@@ -7,6 +7,14 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if params[:session][:email].length == 0
+      flash[:danger] = 'You must provide a name'
+      redirect_to root_path
+    elsif params[:session][:password].length == 0
+      flash[:danger] = 'You must provide a password'
+      redirect_to root_path
+    else
+
     user = User.find_by(email: params[:session][:email].downcase)
     user = User.find_by(email: params[:session][:email]) if !user
     user = User.find_by(name: params[:session][:email].downcase) if !user
@@ -66,7 +74,7 @@ class SessionsController < ApplicationController
       remember(@user)
 
     elsif user
-      flash[:danger] = 'Incorrect password'
+      flash[:warning] = "That user already exists and this is not the correct password. If you're signing up for the first time, try using a different name."
 
     elsif Setting.find(6).state
 
@@ -96,6 +104,8 @@ class SessionsController < ApplicationController
       redirect_back fallback_location: root_path
     else
       redirect_to root_path
+    end
+
     end
   end
 

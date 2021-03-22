@@ -139,11 +139,11 @@ class SolutionsController < ApplicationController
   # DELETE /solutions/1
   # DELETE /solutions/1.json
   def destroy
-    if current_user.admin?
-      @problem = @solution.problem
+    @problem = @solution.problem
+    if current_user.admin? || (@problem.facilitator_id && @problem.facilitator_id == current_user.id)
       @solution.destroy
       respond_to do |format|
-        format.html { redirect_to issue_path(@problem), notice: 'Solution was successfully destroyed.' }
+        format.html { redirect_to issue_path(@problem), notice: 'Proposal was deleted.' }
         format.json { head :no_content }
       end
     end

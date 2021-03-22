@@ -15,6 +15,7 @@
       <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
       <%= link_to root_path, id: "logo", :class => "navbar-brand" do %>
         <%= image_tag("logo.png", :border=>0, :class => 'logo-image') %>
+
         <span id="logo-name"><%= group_name %></span><!-- <span id="beta-tag">Beta</span> -->
       <% end %>
     </div>
@@ -119,6 +120,7 @@
           <% end %>
         </li>
 
+
         <!-- <li>
           <span class="tooltip-toggle" href="#" aria-label="If you have a question, comment or need assistance, feel free to email convergentfacilitation@
           baynvc.org" tabindex="0">
@@ -126,7 +128,15 @@
           </span>
         </li> -->
         
+
         <% end %>
+
+        <li>
+          <span class="tooltip-toggle" href="#" aria-label="If you have a question, comment or need assistance, feel free to email convergentfacilitation@
+          baynvc.org" tabindex="0">
+          <i class="far fa-question-circle" style="font-size: 18px; margin-top: 8px; margin-left: 6px;"></i>
+          </span>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

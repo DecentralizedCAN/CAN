@@ -52,6 +52,10 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
   end
 
+  def invitation
+    
+  end
+
   def activate
     @solution = Solution.find(params[:solution_id])
     @activity = Activity.new(:title => @solution.title,

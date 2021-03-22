@@ -1,10 +1,10 @@
 class ProblemsController < ApplicationController
   include UpvoteHelper
   include SolutionsHelper
-  before_action :set_problem, only: [:show, :table, :edit, :update]
+  before_action :set_problem, only: [:show, :table]
   before_action :check_activity, only: [:create]
-  before_action :require_login, except: [:show, :table], if: -> { public_viewable? }
   before_action :require_login, unless: -> { public_viewable? }
+  before_action :require_login, except: [:show, :table], if: -> { public_viewable? }
   before_action :require_admin_or_anarchy, only: [:new, :create]
 
   # GET /problems
@@ -33,7 +33,7 @@ class ProblemsController < ApplicationController
       @my_criteria = current_user.criterium
         .where(problem_id: @problem.id)
 
-      @criteria = @all_criteria - @my_criteria
+      @criteria = (@my_criteria + (@all_criteria - @my_criteria)).first(8)
         # .order("COUNT(user_id) DESC").first(16) - @my_criteria
 
       @user = this_user
@@ -104,6 +104,7 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1/edit
   def edit
+    @problem = Problem.find(params[:id])
   end
 
   # POST /problems
@@ -163,6 +164,7 @@ class ProblemsController < ApplicationController
         # End notifications
 
         # @problem.send_problem_email
+        flash[:success] = 'You started a Convergent Facilitation process. Send this page to others with whom you want to collaborate. Click "Share/invite" for a shareable link. Once they join the process, they can suggest criteria and proposals.'
         format.html { redirect_to issue_path(@problem) }
         format.json { render :show, status: :created, location: @problem }
       else
@@ -175,15 +177,20 @@ class ProblemsController < ApplicationController
   # PATCH/PUT /problems/1
   # PATCH/PUT /problems/1.json
   def update
-    respond_to do |format|
-      if @problem.update(problem_params)
-        format.html { redirect_to issue_path(@problem), notice: 'Problem was successfully updated.' }
-        format.json { render :show, status: :ok, location: @problem }
-      else
-        format.html { render :edit }
-        format.json { render json: @problem.errors, status: :unprocessable_entity }
+    @problem = Problem.find(params[:id])
+
+    if @problem.facilitator_id && @problem.facilitator_id == current_user.id
+      respond_to do |format|
+        if @problem.update(problem_params)
+          format.html { redirect_to issue_path(@problem), notice: 'Process was successfully updated.' }
+          format.json { render :show, status: :ok, location: @problem }
+        else
+          format.html { render :edit }
+          format.json { render json: @problem.errors, status: :unprocessable_entity }
+        end
       end
     end
+
   end
 
   # DELETE /problems/1
@@ -231,11 +238,19 @@ class ProblemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def problem_params
-      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action, :goal_id, :facilitator_id, :scoring_method, :broadcast_brainstorm, :group_id)
+      params.require(:problem).permit(:title, :description, :suggestion_min, :require_action, :goal_id, :facilitator_id, :scoring_method, :broadcast_brainstorm, :include_comments, :group_id)
     end
 
     def public_viewable?
       Setting.find(6).state
+    end
+
+    def facilitating?(problem)
+      problem.facilitator_id && problem.facilitator_id == current_user.id
+    end
+
+    def weighted_scoring?(problem)
+      problem.scoring_method && problem.scoring_method = 1
     end
 
     # def this_user

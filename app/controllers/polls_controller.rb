@@ -1,4 +1,5 @@
 class PollsController < ApplicationController
+  include UpvoteHelper
   include SolutionsHelper
   
   before_action :set_poll, only: [:show, :edit, :update, :destroy]
@@ -74,6 +75,11 @@ class PollsController < ApplicationController
         @poll = @criterium.poll.new(:user_id => @user.id, :solution_id => @solution_id, 
                                     :answer => @answer)
         @poll.save
+      end
+
+      begin
+        auto_upvote_post(@criterium.problem.post.id, @user.id)
+      rescue
       end
 
       # update_all_solution_scores(@criterium.problem.id)

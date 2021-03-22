@@ -1,115 +1,74 @@
-<div class="backdrop solution-outer">
+<div class="backdrop solution-outer white-container">
 
-  <div class="back-button">
-    <%= link_to issue_path(:problem_id => @problem.hashid), data: { turbolinks: false } do %>
-      <div class="back-button-arrow"></div>
-      <div class="back-button-content">
-        <%= @problem.title %>
-      </div>
-    <% end %>
-  </div>
+  <div><%= link_to issue_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>  
+    <i class="fas fa-arrow-left">&nbsp;</i> Back to all proposals
+<% end %></div><br>
 
-  <div id="proposal-description">
-    <h1><strong>Proposal: </strong><%= @solution.title %></h1>
-    <!-- <span>- Proposal for <span class="problem-title"><%= @solution.problem.title %></span></span> -->
+    <h1>Proposal: </strong><%= @solution.title %></h1>
 
-    <% if @solution.description.length > 0 %> 
+  <% if @solution.description.length > 0 %> 
+    <div id="proposal-description">
       <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
-    <% end %> 
-
-    <% if @solution.roll.length > 0 %>
-      <br>
-      <% if @solution.roll.first.maximum %>
-        <!-- <p>Participation requirement: <%=@solution.roll.first.minimum %> to <%=@solution.roll.first.maximum %> people</p> -->
-      <% else %>
-        <!-- <p>Participation minimum: <%=pluralize(@solution.roll.first.minimum, 'person')%></p> -->
-      <% end %>
-      <br>
-
-   <!--  <%= link_to "View in table", brainstorm_table_path( :problem_id => @problem.id), :class => "button button-hollow" if @problem.solution.count > 0 && @problem.criterium.count > 0 %>&nbsp; -->
-
-      <% if Setting.first.state || (current_user && current_user.admin?) %>
-        <% if @solution.user.count < @solution.problem.suggestion_min - 1 %>
-          <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button button-hollow" do %>
-            Suggest for action (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
-          <% end %>
-        <% elsif @solution.user.count >= @solution.problem.suggestion_min && @solution.activity %>
-          <!-- <br> -->
-          <!-- This was posted as an action -->
-          <%= link_to action_path(:activity_id => @solution.activity.id), :class => "button button-view" do %>
-            <em>View action</em>
-          <% end %>
-        <% elsif @solution.user.include?(@user) %>
-          Suggested (<%= @solution.user.count %>/<%= @solution.problem.suggestion_min %>)
-        <% elsif @solution.user.count == @solution.problem.suggestion_min - 1 %>
-          <%= link_to suggest_path(:solution_id => @solution.id), :method => "post", :class => "button button-hollow" do %>
-            Make this an action
-          <% end %>
-        <% end %>
-      <% end %>
-    <%end%>
-
-  </div>
-
-<!-- ROLES -->
-  <% if @solution.roll.length > 0 %>
-    <h1>Roles</h1>
-    <div>
-      <ul class="all-roles">
-
-        <% @solution.roll.each do |role| %>
-          <li>
-            <div><strong><%= role.title %></strong> &nbsp;<%= role.description %>
-              <% if !role.maximum %>
-                (<%= role.minimum %>-∞
-              <% elsif role.minimum < role.maximum %>
-                (<%= role.minimum %>-<%= role.maximum %>
-              <% else %>
-                (<%= role.minimum %>
-              <% end %>
-              needed)
-            </div>
-
-            <br>
-          </li>
-        <% end %>
-      
-      </ul>
     </div>
-  <% end %>
+  <% end %> 
 
 <!-- CRITERIA -->
 <div id="proposal-polling">
-  <h2>Evaluation</h2>
+  <h2><i class="fas fa-poll" ></i> Evaluation</h2>
   <% #if !@problem.scoring_method || @problem.scoring_method == 1 %>
-  <% if !@problem.facilitator_id %>
-    Estimated collective support for this proposal
-    <br>
-    <div class="score-bar-outer">
-      <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
-      <div class="written-criterion-score">
-        <%= (solution_score(@solution.id) * 100).to_i %>%
+  
+  <% if !logged_in? || Poll.where(solution_id: @solution.id).where(user_id: @user.id).count > 0 %>
+    <% if !@problem.facilitator_id %>
+      Estimated collective support for this proposal
+      <br>
+      <div class="score-bar-outer">
+        <div class="score-bar-inner" style="background-color: #4defa7; width: <%= solution_score(@solution.id) * 100 %>%" ></div>
+        <div class="written-criterion-score">
+          <%= (solution_score(@solution.id) * 100).to_i %>%
+        </div>
       </div>
-    </div>
+      <br>
+      <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
+    <% #elsif @problem.scoring_method == 2 %>
+    <% else %> 
+      <%
+        polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 
+        # basic_score = (polls.average(:answer) * 100).round if polls
+        # basic_score = 0 if !polls
+      %>
+
+      <div class="score-bar-outer">
+        <div class="score-bar-inner" style="
+        background-color: rgba(82, 240, 191, <%=@solution.score * 0.01%>);
+        width: <%= @solution.score %>%;" ></div>
+        <div class="written-criterion-score">
+          <%= @solution.score %>% convergence (<%= pluralize(poll_count(@solution.id), 'poll') %>)
+        </div>
+
+      </div>
+    <% end %>
     <br>
-    <%= link_to "(see how this is calculated)", documentation_path(:anchor => "proposal_scoring") %>
-  <% #elsif @problem.scoring_method == 2 %>
-  <% else %> 
-    <% polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 %>
-    <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %><%= 0 if !polls %>%</span> criteria marked unmet
-  <% #elsif @problem.scoring_method == 3 %>
-    <!-- Criteria marked met / all polls: 
-    <% polls = Poll.where(solution_id: @solution.id) if Poll.where(solution_id: @solution.id).count > 0 %>
-    <span class="percentage" colspan="2"><%= ( (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span> -->
   <% end %>
+
 <% if logged_in? %>
+
+  <br><div><em>For each criterion, select whether you think it is met by the current proposal. If you don’t have an opinion about whether this proposal attends to the criterion or not, simply do not check either box. </em></div>
 
   <!-- <h2>Criteria</h2> -->
   <br><br>
 
   <table>
-
     <tbody>
+      <tr>
+        <th>
+          Criteria
+        </th>
+        <th>
+          <span class="criterion-poll-text">Does the proposal meet this criterion?</span><br>
+        </th>
+        <th></th>
+      </tr>
+
       <% sponsor_count = problem_criteria_sponsor_count(@solution.id) %>
 
       <% @criteria.each do |criterium| %>
@@ -125,7 +84,6 @@
             <% if current_user && criterium.poll.where(solution_id: @solution.id).where(user_id: @user.id).count == 0 %>
               <div class="poll-bar-outer">
                 <div class="poll-bar-inner" style="width: 0"></div>
-                <span class="criterion-poll-text">Does the proposal meet this criteria?</span><br>
                 <div class="criterion-poll">
                   
                   <%= link_to quiet_set_poll_path(:criterium_id => criterium.id, :solution_id => @solution.id, :answer => 1), :method => "post", :class => "poll-yes" do %>
@@ -174,9 +132,11 @@
 
             <% end %>
 
-                <div class="criterion-score-info">
-                  <%= criterium.poll.where(solution_id: @solution.id).count %> responses |
+              <div class="criterion-score-info">
+                <%= pluralize(criterium.poll.where(solution_id: @solution.id).count, "response") %>
 
+                <% if false %>
+                  |
                   <% unless sponsor_count == 0 || criterium.poll.where(solution_id: @solution.id).count == 0 %>
                     Weight: <%= (criterium.user.count.to_f/sponsor_count.to_f * 100).to_i %>%
                   <% else %>
@@ -188,7 +148,8 @@
                   <% else %>
                     Adjusted: <%= (solution_criterium_score(@solution.id, criterium.id) * 100).to_i %>%
                   <% end %>
-                </div>
+                <% end %>
+              </div>
               <!-- </td>
               <td> -->
 
@@ -205,34 +166,41 @@
   </table>
 <% end %>
 
+<br>
+<div id="refresh"><%= button_to request.env['PATH_INFO'], :method => :get do %>
+  <i class="fas fa-sync"></i> Refresh to view results
+<% end %></div>
+
 </div>
 <!-- CRITERIA ENDS -->
 
 <!-- DISCUSSION -->
-<div class="solution-discussion">
+<!-- <div class="solution-discussion"> -->
+  <%if false%>
+  <h2><i class="fas fa-comments" ></i> Conversation about this proposal</h2>
   <%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
-</div>
+  <%end%>
+<!-- </div> -->
 <!-- DISCUSSION ENDS -->
 
 </div>
 
-<% if logged_in? && current_user.admin? %>
+<% if logged_in? && (current_user.admin? || current_user.id == @problem.facilitator_id ) %>
   <br>
-  <span class="admin-section">
-    Created by user <%= @solution.creator %> –
-    <%= link_to "Remove", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <div class="delete-section">
+    Created by <strong><%= User.find(@solution.creator).name %></strong> <br>
+    <%= link_to "Delete this proposal", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
   </span>
 <% end %>
 
 
-
 <script type="text/javascript">
   $(".poll-yes").click(function() {
-    $(this).parent().html("<small>You answered YES. Refresh to view stats.</small>")
+    $(this).parent().html("<small>Your answer: YES</small>")
   });
 
   $(".poll-no").click(function() {
-    $(this).parent().html("<small>You answered NO. Refresh to view stats.</small>")
+    $(this).parent().html("<small>Your answer: NO</small>")
   });
 
   $(".remove-poll").click(function() {

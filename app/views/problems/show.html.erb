@@ -1,134 +1,105 @@
+<div class="top-flex">
+<div class="white-container">
 <div id="solver">
 
-  <% if @problem.post %>
-    <%= render(:partial => 'static/post-stuff', :locals => {:post => @problem.post})%>
-  <% end %>
-
-  <div class="issue">
-    <div class="flex-container">
-
-      <div class="issue-title view"><%= @problem.title %>
-        <span class="feed-label">Brainstorm</span>
-      </div>
-
-    </div>
-
-    <div class="right-buttons">
-      <%if @problem.user.include?(@user)%>
-        <%= link_to "Leave", unsponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
-      <%else%>
-        <%= link_to "Join", sponsor_problem_path(:problem_id => @problem.id), :method => "post", :class => "button"  %>
-      <%end%>
-    </div>
-
-    <% if @problem.goal %>
-      <div class="proposal-activity-description">
-        <i class="fas fa-link"></i>
-        Attached to goal <strong><%= link_to @problem.goal.title, goal_path(@problem.goal) %></strong>
-      </div>
-    <% end %>
-
-    <div class="issue-info">
-      <div class="post-signature">
-        <!-- <i class="fas fa-calendar"></i> -->
-        Created <%= time_ago_in_words(@problem.created_at) %> ago
-        by
-        <em><%= 
-        begin 
-          User.find(@problem.creator).name
-        rescue 
-        end  %></em>
-      </div>
-      <br>
-      <div>
-        <i class="fas fa-handshake"></i>
-        <%= @problem.user.count %> collaborators
-      </div>
-      <div>
-        <i class="fas fa-clipboard-list"></i>
-        <%= @problem.criterium.count %> criteria
-      </div>
-      <div>
-        <i class="fas fa-comment-alt"></i> 
-        <%= @problem.solution.count %> proposals
-      </div>
-
-    </div>
-
-    <% if @problem.facilitator_id %>
-      <% facilitator = User.find(@problem.facilitator_id) %>
-      Facilitator: 
-      <%= link_to facilitator.name, facilitator %>
-    <% end %>
-
-    </div>
-
-    <% if @problem.description.length > 0 %> 
-      <p class="issue-description"><%= @problem.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
-    <% end %> 
-
-
-    <!-- DETAILS ENDS -->
-
+<%= render 'problem_details' %>
 
 <!-- EXTRA-SECTIONS -->
 
     <!-- CRITERIA -->
+
+    <!-- <div class="top-left"> -->
+
     <div class="criteria-outer">
 
-      <h1 id="criteria">
+      <h2 id="criteria">
         <i class="fas fa-clipboard-list"></i>
-        <%= @criteria_count %> Criteria
-      </h1>
+        <%= @criteria_count %> <%= "Criteria" if @criteria_count != 1 %> <%= "Criterion" if @criteria_count == 1 %>
+      </h2>
 
       <div>
-        <% if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
-          <%= link_to brainstorm_table_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>
-            <i class="fas fa-table"></i> Table
+        <%# if @problem.criterium.count > (@my_criteria.count + @criteria.count) %>
+        <% if @problem.criterium.count > @criteria_count %>
+          <%= link_to full_criterium_path( :problem_id => @problem.id, :view => "suggested"), :class => "button button-hollow" do %>
+            <i class="fas fa-clipboard-list"></i> 
+            <% if @problem.scoring_method && @problem.scoring_method == 1 %>
+              Abandoned criteria
+            <% else %>
+              Suggestions
+            <% end %>
+
+            (<%= @problem.criterium.count - @criteria_count %>)
           <% end %>
           &nbsp;
         <% end %>
 
-        <% if @problem.criterium.count > (@my_criteria.count + @criteria.count) %>
-          <%= link_to full_criterium_path( :problem_id => @problem.id), :class => "button button-hollow" do %>
-            <i class="fas fa-clipboard-list"></i> View all
-          <% end %>
-          &nbsp;
-        <% end %>
 
-        <%= link_to "Add criterion", new_criterium_path( :problem_id => @problem.id), :class => "button"  %>
+        <span class="crisupport-count red tooltip-toggle" href="#" aria-label="Add a criterion to the list. If you are not the facilitator, it will get added to suggestions." tabindex="0">
+          <%#= link_to "+ Criterion", new_criterium_path( :problem_id => @problem.id), :class => "button green"  %>
+          <button id="open-new-criterion-div" class="button green">+ Criterion</button>
+        </span>
+
       </div>
 
-      <div id="issue-criteria">
+      <% if @criteria_count > 0 %>
+        <div id="issue-criteria" class="issue-criteria-main">
+          <div class="criteria-list">
+            <%# @my_criteria.each do |criterium| %>
+              <%#= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+            <%# end %>
+            <% @criteria.each do |criterium| %>
+              <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+            <% end %>
 
-        <div class="criteria-list">
-          <% @my_criteria.each do |criterium| %>
-            <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-          <% end %>
-          <% @criteria.each do |criterium| %>
-            <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
-          <% end %>
+            <% if @criteria_count >= 8 %>
+              <div class="criterium" >
+                <div class="criterium-top">
+
+                <% if @all_criteria.count.count > @criteria.count %>
+                <%= link_to full_criterium_path( :problem_id => @problem.id), :class => "center" do %>
+                  <div class="center"><%= @all_criteria.count.count - @criteria.count %> more criteria... (click to view all)</div>
+                <% end %>
+                <% end %>
+
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
+      <% end %>
 
-      </div>
     </div>
 
 <!-- CRITERIA ENDS -->
-
-<div id="extra-sections-outer">
 
 <!-- SOLUTIONS -->
 
   <div class="solutions-outer">
 
-    <h1 id="solutions">
-      <i class="fas fa-comment-alt"></i>
-      <%= @solutions.count %> Proposals
-    </h1>
+    <h2 id="solutions">
+      <i class="fas fa-file-alt"></i>
+      
+      <%= pluralize(@solutions.count, 'Proposal') %>
+
+    </h2>
+
+    <% if @solutions.count > 0 %>
+    <!-- <em>Click on proposals to view evaluations</em><br><br> -->
+    <% end %>
 
     <div>
-      <%= link_to 'Propose action', new_solution_path(:problem_id => @problem.id), :class => "button" if @problem.require_action %>
-      <%= link_to 'New proposal', new_solution_path(:problem_id => @problem.id), :class => "button" if !@problem.require_action %>
+    <% if @problem.solution.count > 0 && @problem.criterium.count > 0 %>
+        <span class="tooltip-toggle" href="#" aria-label="Click to view table, where you can evaluate multiple proposals at the same time, and see aggregate results. If you would like to view and evaluate one proposal at a time, click on the individual proposals below." tabindex="0">
+        <%= link_to brainstorm_table_path( :problem_id => @problem.hashid), :class => "button button-hollow" do %>
+          <i class="fas fa-eye"></i> View as table
+        <% end %>
+        &nbsp;
+      </span>
+    <% end %>
+
+        <span class="tooltip-toggle" href="#" aria-label="Add a proposal to the list. To combine elements of different proposals into a new one, right click and open the new proposal form in a new tab, and copy and paste the elements into it." tabindex="0">
+          <%= link_to '+ Proposal', new_solution_path(:problem_id => @problem.id), :class => "button green" %>
+        </span>
     </div>
     
     <ol class="solutions">
@@ -145,17 +116,36 @@
               <% #if !@problem.scoring_method || @problem.scoring_method == 1 %>
               <% if !@problem.facilitator_id %>
                 <div class="score-bar-outer">
-                  <div class="score-bar-inner" style="background-color: #9fff77; width: <%= solution.score %>%" ></div>
+                  <div class="score-bar-inner" style="background-color: #4defa7; width: <%= solution.score %>%" ></div>
                   <div class="written-criterion-score">
                     <%= solution.score %>%
                   </div>
+
                 </div>
               <% #elsif @problem.scoring_method == 2 %>
               <% elsif @problem.facilitator_id %>
-                <div class="unmet-criteria-score">
-                  <% polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 %>
-                  <span class="percentage" colspan="2"><%= ( 100 - (polls.average(:answer) * 100).round ) if polls %><%= 0 if !polls %>%</span> unmet criteria
-                </div>
+                <!-- <div class="unmet-criteria-score"> -->
+                  <%
+                    polls = Poll.where(solution_id: solution.id) if Poll.where(solution_id: solution.id).count > 0 
+                    
+                    # basic_score = solution.score
+                    # basic_score = (polls.average(:answer) * 100).round if polls
+                    # basic_score = 0 if !polls
+                  %>
+
+                  <% if solution.score %>
+                  <div class="score-bar-outer">
+                    <div class="score-bar-inner" style="
+                    background-color: rgba(82, 240, 191, <%=solution.score * 0.01%>);
+                    width: <%= solution.score %>%;" ></div>
+                    <div class="written-criterion-score">
+                      <%= solution.score %>% convergence (<%= pluralize(poll_count(solution.id), 'poll') %>)
+                    </div>
+
+                  </div>
+                  <% end %>
+
+                <!-- </div> -->
               <% #elsif @problem.scoring_method == 3 %>
               <% elsif false %>
                 (Met criteria: 
@@ -163,9 +153,11 @@
                 <span class="percentage" colspan="2"><%= ( (polls.average(:answer) * 100).round ) if polls %> <%= 0 if !polls %>%</span>)
               <% end %>
 
+              <!-- <div class="float-right button small-button button-hollow"><i class="fas fa-eye"></i> Click to open</div> -->
+              <div class="float-right"><i class="fas fa-eye"></i> Click to open</div>
+
             <% end %>
            
-
             <% if solution.user.count >= @problem.suggestion_min && solution.activity %>
               <%= link_to action_path(:activity_id => solution.activity.id), class: "button button-view" do %>
                 <em>View action</em>
@@ -180,33 +172,12 @@
     <span id="paginate_solutions"><%= will_paginate @solutions %></span>
 
   </div>
+  <!-- SOLUTIONS ENDS --->
 
-  <!-- </div> -->
-<!-- SOLUTIONS ENDS --->
-
-<!-- DISCUSSION -->
-  
-<%= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion}) if Setting.find(4).state %>
-
-<!-- DISCUSSION ENDS -->
+<!-- <script type="text/javascript">
+  let columns = <%= @criteria_count < 4? 1 : 4 %>
+  $('.criteria-list').css('column-count', columns)
+</script> -->
 
 
-
-</div>
-<!-- EXTRA-SECTIONS ENDS -->
-
-</div>
-
-<span>This is a "brainstorm". Checkout the <%= link_to "GUIDE", documentation_path %> for more info.</span>
-
-<% if logged_in? && current_user.admin? %>
-  <span class="admin-section">
-    <br><br>
-    Created by <%= @problem.creator %> –
-    <%= link_to 'Remove', @problem, method: :delete, data: { confirm: 'Delete brainstorm?' } %>
-
-    <% if @problem.post %>
-        <%= link_to "Broadcast", broadcast_post_path(:post_id => @problem.post.id), :method => "post", :class => 'button', data: { confirm: "Broadcast post?" } %>
-    <% end %>
-  </span>
-<% end %>
+<%= render 'problem_bottom' %>

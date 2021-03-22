@@ -1,6 +1,6 @@
 class StaticController < ApplicationController
 	before_action :require_login, unless: -> { public_viewable? }
-	before_action :require_login, except: [:documentation, :main_feed, :welcome], if: -> { public_viewable? }
+	before_action :require_login, except: [:documentation, :main_feed, :welcome, :home], if: -> { public_viewable? }
 
 	def choice
 	end
@@ -12,19 +12,23 @@ class StaticController < ApplicationController
 		
 	end
 
-  def dashboard
-    @user = current_user
-
-    if logged_in?
-      @commitments = @user.rolls
-      @sponsored_problems = @user.problems.order("created_at DESC")
-      @proposals = Solution.all.where(:creator => @user.id).order("created_at DESC")
-      @current_time = Time.now.to_i
-      @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
-    end
-  end
+	def home
+		if logged_in?
+			@user = current_user
+			@commitments = @user.rolls
+			@sponsored_problems = @user.problems.order("created_at DESC")
+			@proposals = @user.solutions.order("created_at DESC")
+			@current_time = Time.now.to_i
+	    @notifications = current_user.notification.order("created_at DESC").where(:read => nil).first(6) if logged_in?
+		else
+			# redirect_to documentation_path
+		end
+	end
 
 	def main_feed
+		unless current_user.admin?
+			redirect_to root_url
+		end
 
 		# require 'net/smtp'
 
@@ -83,12 +87,18 @@ class StaticController < ApplicationController
 		elsif @notification.problem
 			redirect_to issue_path(:problem_id => @notification.problem.hashid)
 		elsif @notification.criterium
-			redirect_to show_criterium_path(:criterium_id => @notification.criterium.hashid)
+			# redirect_to show_criterium_path(:criterium_id => @notification.criterium.hashid)
+			# redirect_to issue_path(:problem_id => @notification.criterium.problem.hashid)
+			if current_user.admin?
+				redirect_to full_criterium_path(:problem_id => @notification.criterium.problem.hashid, :view => "suggested"), data: { turbolinks: false }
+			else
+				redirect_to full_criterium_path(:problem_id => @notification.criterium.problem.hashid), data: { turbolinks: false }
+			end
 		elsif @notification.discussion
 			if @notification.discussion.activity
 				redirect_to action_path(@notification.discussion.activity.hashid)
 			elsif @notification.discussion.problem
-				redirect_to issue_path(:problem_id => @notification.discussion.problem.hashid)
+				redirect_to issue_path(:problem_id => @notification.discussion.problem.hashid, :discussion => "open")
 			else
 				redirect_to discussion_path(@notification.discussion.hashid)				
 			end
@@ -108,7 +118,7 @@ class StaticController < ApplicationController
 			notification.save
 		end
 
-		redirect_to notifications_path
+		redirect_back fallback_location: root_path
 	end
 
 	def destroy

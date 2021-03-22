@@ -20,7 +20,15 @@ $offwhite: #f5f5f5;
   background-color: white;
   padding: 2px 4px;
   box-shadow: 0px 3px 6px 0px #d0d0d0;
-  border: 1px solid #efefef;
+  border: 1px solid #d2d2d2;
+
+  a > * {
+    vertical-align: middle !important;
+  }
+
+  .float-right {
+    padding: 2px;
+  }
 
   .button {
     line-height: 12px;
@@ -29,6 +37,17 @@ $offwhite: #f5f5f5;
 
 #add-criteria {
   cursor: pointer;
+  width: fit-content;
+  color: #ff7455;
+  border: 1px solid;
+  padding: 2px 4px;
+  border-radius: 2px;
+  background-color: whitesmoke;
+  margin-top: 6px;
+
+  i {
+    color: #ff7455;
+  }
 }
 
 .solution-item > a, .solution-item > a > div {
@@ -37,7 +56,8 @@ $offwhite: #f5f5f5;
 }
 
 .solution-item > a:first-child {
-  width: calc(100% - 100px);
+  // width: calc(100% - 100px);
+  width: 100%;
 }
 
 .solution-form-body {
@@ -46,16 +66,30 @@ $offwhite: #f5f5f5;
 	}
 
 	#solution_description {
-		height: 200px;
+		height: 300px;
 	}
 }
 
+#proposal-description {
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  #proposal-description {
+    width: 100% !important;
+  }
+  #proposal-polling {
+    width: 76% !important;
+  }
+}
+
 #proposal-description, #proposal-polling {
-	background-color: $offwhite;
-	padding: 10px;
+	// background-color: $offwhite;
 	padding-left: 0px;
 	margin-bottom: 10px;
 	border-radius: 2px;
+  display: inline-block;
+  width: 45%;
 
 	h1 {
 		margin: 0;
@@ -63,8 +97,13 @@ $offwhite: #f5f5f5;
 		display: inline-block;
 	}
 
+  h2 {
+    margin-top: 6px;
+  }
+
 	p {
 		margin: 0;
+    // background-color: $offwhite;
 	}
 
 	tr {
@@ -81,7 +120,7 @@ $offwhite: #f5f5f5;
 
 .score-bar-outer {
   width: 200px;
-  height: 12px;
+  height: 14px;
   border: 1px solid;
   border-radius: 2px;
   margin: 4px;
@@ -100,12 +139,12 @@ $offwhite: #f5f5f5;
 .score-bar-inner {
   height: 100%;
   // background-color: #ff6c52;
-  background-color: #9fff77;
+  // background-color: #9fff77;
 }
 
 .written-criterion-score {
   position: relative;
-  top: -14px;
+  top: -15px;
   font-size: 10px;
   font-weight: bold;
   text-align: center;
@@ -128,6 +167,10 @@ $offwhite: #f5f5f5;
 
 .solution-outer {
 
+  background-color: white;
+  padding: 4px 10px;
+  border: 1px solid #d8d8d8;
+
 	#proposal-description {
 		* {
 			// color: #3a3a3a;
@@ -137,8 +180,36 @@ $offwhite: #f5f5f5;
 	#proposal-polling {
 		display: inline-block;
 		vertical-align: top;
-    	min-width: 46%;
+    margin-right: 10px;
+  	// min-width: 46%;
+    // width: 46%;
+    // width: 76%;
 		color: #3a3a3a;
+    background-color: transparent;
+
+    h2 {
+      // margin-top: 0;
+    }
+
+    tr {
+      color: #3a3a3a;
+      background-color: #f5f5f5;
+      border: 1px solid #d8d8d8;
+
+      &:first-child {
+        background: #636363;
+        color: white !important;
+        border: 0;
+
+        th {
+          padding: 4px 6px;
+        }
+
+        * {
+          color: white;
+        }
+      }
+    }
 
 		* {
 			color: #3a3a3a;			
