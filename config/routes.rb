@@ -53,7 +53,7 @@ Rails.application.routes.draw do
 
   get '', to: 'static#main_feed', :as => :main_feed
   # get '', to: 'static#welcome', :as => :main_feed
-  # get '', to: 'static#home', :as => :home
+  get 'home', to: 'static#home', :as => :home
   # get 'main_feed', to: 'static#main_feed', :as => :main_feed
 
   get 'guide', to: 'static#documentation', :as => :documentation

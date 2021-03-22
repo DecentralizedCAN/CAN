@@ -99,21 +99,12 @@
 					<% end %>
 				<% elsif post.problem %>
 
-				<li class="post-outer">
+				<li class="post-outer home-item home-item-underlined">
 				<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
 				<%= link_to issue_path(post.problem) do %>
 	        <% #if post.problem.user.count > 0 %>
 	          <div class="issue">
-	            <div class="issue-title"><span class="underline"><%= post.problem.title %></span> <span class="feed-label">Brainstorm</span></div>
-
-					      <% if post.problem.goal %>
-					        <div class="proposal-activity-description">
-					          <i class="fas fa-link"></i>
-					          Attached to goal <strong>"<%= post.problem.goal.title %>"</strong>
-					        </div>
-					      <% end %>
-
-		            <div class="issue-info">
+	            <div class="issue-title"><span class="underline"><%= post.problem.title %></span> <span class="feed-label">Brainstorm</span>
 		              <div class="post-signature">
 		                <!-- <i class="fas fa-calendar"></i> -->
 		                Created <%= time_ago_in_words(post.problem.created_at) %> ago
@@ -124,7 +115,57 @@
 				            rescue 
 				            end  %></em>
 		              </div>
-		              <br>
+	            </div>
+
+					      <% if post.problem.goal %>
+					        <div class="proposal-activity-description">
+					          <i class="fas fa-link"></i>
+					          Attached to goal <strong>"<%= post.problem.goal.title %>"</strong>
+					        </div>
+					      <% end %>
+
+					      <% problem = post.problem %>
+
+
+                  <% if problem.facilitator_id && problem.facilitator_id != current_user.id && problem.facilitator_id > 0 %>
+                    <div class="facilitator">
+                        <i class="fas fa-user-shield"></i>
+                        <% facilitator = User.find(problem.facilitator_id) %>
+                        Facilitator: 
+                        <strong><%= User.find(problem.facilitator_id).name %></strong>
+                    </div>
+                  <% elsif problem.facilitator_id && problem.facilitator_id == current_user.id %>
+                    <div class="facilitating">
+                      <i class="fas fa-star"></i>
+                      Facilitating
+                    </div>
+                  <% else %>
+                    <div class="facilitator">
+                      <i class="fas fa-user-shield"></i>
+                      Distributed facilitation
+                    </div>
+                  <% end %>
+
+                  <div class="issue-info">
+                    <div id="open-collaborators">
+                      Collaborators<br>
+                      <div><i class="fas fa-users"></i>
+                      <strong><%= problem.user.count %></strong></div>
+                    </div>
+                    <div>
+                      Proposals<br>
+                      <div><i class="fas fa-file"></i>
+                      <strong><%= problem.solution.count %></strong></div>
+                    </div>
+                    <div>
+                      Criteria<br>
+                      <div><i class="fas fa-clipboard-check"></i>
+                      <strong><%= problem.criterium.joins(:user).group("criteria.id").count.count %></strong></div>
+                    </div>
+
+		            <!-- <div class="issue-info"> -->
+
+<!-- 		              <br>
 		              <div>
 		                <i class="fas fa-handshake"></i>
 		                <%= post.problem.user.count %> collaborators
@@ -136,14 +177,14 @@
 		              <div>
 		                <i class="fas fa-comment-alt"></i>
 		                <%= pluralize(post.problem.solution.count, "proposal") %>
-		              </div>
+		              </div> -->
 		  
 
 		            </div>
 		          </div>
 
-					</li>
 	      <% end %>
+	    	</li>
 
 
 				<% elsif post.discussion %>

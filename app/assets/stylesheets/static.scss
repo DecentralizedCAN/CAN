@@ -352,7 +352,7 @@ $label-blue: #81c4ff;
 	vertical-align: top;
 
   // margin-right: 40px;
-  border: 1px solid black;
+  // border: 1px solid black;
   padding: 4px 8px;
   margin-top: 8px;
 
@@ -380,7 +380,7 @@ $label-blue: #81c4ff;
   margin-left: 0;
 	background-color: $offwhite;
 
-    display: inline-block;
+    // display: inline-block;
 
   
   &:hover {
@@ -586,7 +586,7 @@ li.home-item-underlined {
       color: #ec6f68;;
     }
     > .issue-info {
-      width: 30%;
+      width: 40%;
       text-align: center;
 
       i {
