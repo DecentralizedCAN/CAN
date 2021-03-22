@@ -343,7 +343,7 @@ class CriteriaController < ApplicationController
     end
 
     def facilitating?(problem)
-      problem.facilitator_id && problem.facilitator_id != current_user.id
+      problem.facilitator_id && problem.facilitator_id == current_user.id
     end
 
     def weighted_scoring?(problem)
