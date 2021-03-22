@@ -1,7 +1,7 @@
 class Goal < ApplicationRecord
   include Hashid::Rails
 
-	has_many :actions
+	has_many :actions, dependent: :destroy
 	has_many :brainstorms
 	has_many :discussions
 	has_and_belongs_to_many :users

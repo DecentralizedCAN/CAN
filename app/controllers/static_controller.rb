@@ -1,9 +1,11 @@
 class StaticController < ApplicationController
-	before_action :require_login, except: [:documentation, :main_feed], if: -> { public_viewable? }
 	before_action :require_login, unless: -> { public_viewable? }
+	before_action :require_login, except: [:documentation, :main_feed, :welcome], if: -> { public_viewable? }
 
 	def choice
-		
+	end
+
+	def welcome
 	end
 
   def dashboard
@@ -87,6 +89,13 @@ class StaticController < ApplicationController
 				redirect_to discussion_path(@notification.discussion.hashid)				
 			end
 		end
+	end
+
+	def clear_notification
+		@n = Notification.find(params[:notification_id])
+		@n.read = true
+		@n.save
+		redirect_back fallback_location: root_path  
 	end
 
 	def clear_notifications

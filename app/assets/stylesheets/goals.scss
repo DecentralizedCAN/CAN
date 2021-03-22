@@ -1,3 +1,22 @@
+.centered-notifications {
+  li {
+    margin: auto !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+    text-decoration: none !important;
+
+    a:hover {
+      cursor: pointer;
+    }
+  
+    .close-window {
+      float: right;
+      margin: 4px;
+      cursor: pointer;
+    }
+  }
+}
+
 .referenced-goal {
   border-radius: 40px;
   padding: 1px 4px;
@@ -16,10 +35,14 @@
 
 .goal-node-outer {
   position: absolute;
-  width: 100vw;
+  width: 98vw;
   left: 0;
   text-align: center;
   overflow: auto;
+}
+
+.goal-details-section > ul > .details-subgoal > .goal-mini > div {
+  max-width: none !important;
 }
 
 .goal-node {
@@ -27,6 +50,8 @@
 
   h1 {
     min-height: 25px;
+    color: black;
+    font-weight: 900;
   }
 
   .details-subgoal {
@@ -52,9 +77,9 @@
     list-style: none;
     width: 200px;
     text-align: left;
-    border-radius: 40px;
+    // border-radius: 40px;
     padding: 10px 20px;
-    background-color: #bbe9ff;
+    // background-color: #bbe9ff;
     // border: 1px solid #000000;
     // border: 1px solid gray;
     // border-radius: 20px;
@@ -68,7 +93,8 @@
     // background-color: gainsboro;
     // background-color: #e8e8e8;
     // background-color: #f7dcff;
-    border: 1px solid #dd72ff;
+    // border: 1px solid #dd72ff;
+    border: 1px solid black;
     // border: 1px solid #dd72ff;
     // position: relative;
     // right: -58px;
@@ -89,7 +115,8 @@
 
   .goals-link {
     text-transform: uppercase;
-    color: #ebacff;
+    // color: #ebacff;
+    color: #b9b9b9;
     font-style: normal;
     padding: 2px 4px;
     border: 1px solid;
@@ -97,7 +124,8 @@
   }
 
   .goals-link.focus {
-    color: #dd72ff;
+    // color: #dd72ff;
+    color: gray;
   }
 
 
@@ -163,7 +191,7 @@
     }
   }
 
-  .mark-accomplished {
+  .view-goal-details {
     // background-color: #dcdcdc;
     padding: 2px 4px;
     right: 12px;
@@ -173,12 +201,13 @@
     color: gray;
 
     &:hover {
-      // background-color: #c3c3c3;
-      background-color: #dd72ff;
+      background-color: #c3c3c3;
+      border-radius: 6px;
+      // background-color: #dd72ff;
     }
   }
 
-  .view-goal-details {
+  .mark-accomplished {
     display: inline-block;
     // background-color: #dcdcdc;
     padding: 2px 4px;
@@ -188,8 +217,9 @@
     color: gray;
 
     &:hover {
-      // background-color: #c3c3c3;
-      background-color: #dd72ff;
+      background-color: #c3c3c3;
+      border-radius: 6px;
+      // background-color: #dd72ff;
     }
   }
 
@@ -203,8 +233,9 @@
     color: gray;
 
     &:hover {
-      // background-color: #c3c3c3;
-      background-color: #dd72ff;
+      // background-color: #dd72ff;
+      background-color: #c3c3c3;
+      border-radius: 6px;
     }
   }
 
@@ -221,13 +252,19 @@
 
   .goal-actions {
     // background-color: #f3bab7 !important;
-    background-color: #91ff9e !important;
+    // background-color: #91ff9e !important;
   }
 
-  .btn-group.dropright {
+  .btn-group.dropright, .btn-group.dropright-top {
     display: block;
     margin-top: 20px;
     min-width: 300px;
+  }
+
+  .btn-group.dropright-top {
+    margin-top: 0;
+
+    &:hover {background: transparent;}
   }
 
   .button.add {
@@ -242,8 +279,9 @@
     // background-color: #dcdcdc;
 
     &:hover {
-      // background-color: #c3c3c3;
-      background-color: #dd72ff;
+      background-color: #c3c3c3;
+      border-radius: 6px;
+      // background-color: #dd72ff;
     }
 
     .fas {
@@ -274,7 +312,7 @@
 
   .branches {
     list-style: none;
-    bottom: -4px;
+    // bottom: -4px;
     position: relative;
     // display: flex;
 
@@ -285,6 +323,12 @@
 
       // flex: 1 1 100%;
       text-align: center;
+
+      margin-bottom: -10px;
+
+      .highlight {
+        margin-bottom: 10px;
+      }
     }
   }
 
@@ -370,17 +414,19 @@
   .line {
     height: 30px;
     // border-right: 4px dashed #dcdcdc;
-    border-right: 4px dashed;
+    // border-right: 4px dashed;
     text-align: center;
-    width: 1px;
+    width: 2px;
     margin: auto;
-    border-color: #dd72ff !important;
+    // border-color: #dd72ff !important;
+    background: linear-gradient(to bottom, black, red);
   }
 
   .horizontal {
     height: 1px;
     width: 30px;
     display: inline-block;
+    // border-top: 4px dashed #dcdcdc;
     border-top: 4px dashed #dcdcdc;
   }
 
@@ -405,17 +451,30 @@
     border-radius: 20px;
     color: #787878;
     border: 1px solid #dd72ff;
+
+    // width: fit-content;
+    // margin: auto;
+    // padding: 0 4px;
     
     a {
       max-width: 100px;  
-      color: #3c3c3c;
+      // color: #3c3c3c;
+      color: black;
+      font-weight: 900;
+    }
+
+    .mini-actions {
+      background-color: #91ff9e;
+      display: inline-block;
+      padding: 0px 2px;
+      border-radius: 4px;
     }
 
     .highlight-title {
-      max-width: 120px;
-      margin: auto;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      // max-width: 120px;
+      // margin: auto;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
 
       i {
         margin-left: -2px;
@@ -425,23 +484,108 @@
 
   }
 
+    // BUBBLE INSIDE STYLING
+  .goal-mini {
+    width: 100%;
+    > div {
+      display: inline-block;
+      // width: max-width;
+      vertical-align: middle;
+
+      max-width: 120px;
+      margin: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
   .highlight.short {
     width: fit-content;
     margin: auto;
     padding: 2px 4px;
   }
 
-  // .roots2 {
-  //   color: red;
-  // }
+  .branches5 {
+    > li {
+      > .highlight {border-color: #019bff;}
+    }
+  }
 
-  // .roots3 {
-  //   color: green;
-  // }
+  .branches4 {
+    > li {
+      > .highlight {border-color: #1cd600;}
+   
+      > .line {background: linear-gradient(to top, #1cd600, #019bff);}
+    }
+  }
 
-  // .roots4 {
-  //   color: purple;
-  // }
+  .branches3 {
+    > li {
+      > .highlight {border-color: #ffd03b;}
+   
+      > .line {background: linear-gradient(to top, #ffd03b, #1cd600);}
+    }
+  }
+
+  .branches2 {
+    > li {
+      > .highlight {border-color: orange;}
+   
+      > .line {background: linear-gradient(to top, orange, #ffd03b);}
+    }
+  }
+
+  .branches1 {
+    > li {
+      > .highlight {border-color: red;}
+   
+      > .line {background: linear-gradient(to top, red, orange);}
+    }
+  }
+
+  .branches0 {
+    > li {
+      // > .highlight {border-color: red;}
+   
+      > .line {background: linear-gradient(to top, black, red);}
+    }
+  }
+
+  .roots1 {
+    > li {
+      .highlight {border-color: red;}
+   
+      > .line {background: linear-gradient(to bottom, red, orange);}
+    }
+  }
+
+  .roots2 {
+    > li {
+      .highlight {border-color: orange;}
+   
+      > .line {background: linear-gradient(to bottom, orange, #ffd03b);}
+    }
+  }
+
+  .roots3 {
+    > li {
+      .highlight {border-color: #ffd03b;}
+   
+      > .line {background: linear-gradient(to bottom, #ffd03b, #1cd600);}
+    }
+  }
+
+  .roots4 {
+    > li {
+      .highlight {border-color: #1cd600;}
+   
+      > .line {background: linear-gradient(to bottom, #1cd600, #019bff);}
+    }
+  }
+
+  .roots5 {
+    li > .highlight {border-color: #019bff;}
+  }
 
   .dropdown-menu {
     // left: -50px;
@@ -532,4 +676,21 @@
 
 #myUL li a:hover:not(.header), #myUL2 li a:hover:not(.header) {
   background-color: #c7c7c7; /* Add a hover effect to all links, except for headers */
+}
+
+#reload {
+  cursor: pointer;
+  margin: auto;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.reload-now {
+  background-color: red;
+  color: white;
+}
+
+.goal-mini-inner-1 {
+  display: inline-block;
 }

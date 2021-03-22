@@ -262,7 +262,10 @@ h2 {
 .dashboard-item {
 	display: inline-block;
 	vertical-align: top;
-  margin-right: 40px;
+  // margin-right: 40px;
+  border: 1px solid black;
+  padding: 4px 8px;
+  margin-top: 8px;
 
 	h1, h2 {
 		color: #525252;
@@ -280,9 +283,12 @@ h2 {
 .dashboard-item li {
 	list-style: none;
 	font-size: 13px;
-	margin: 4px;
+	margin: 4px 20px;
   margin-left: 0;
 	background-color: $offwhite;
+
+    display: inline-block;
+
   
   &:hover {
     text-decoration: underline;
@@ -309,9 +315,10 @@ h2 {
 
   li {
     max-width: 600px;
-    width: fit-content;
-    margin: 4px 0px;
-    padding: 0px 2px;
+    width: 400px;
+    margin: 8px 0px;
+    padding: 2px 4px;
+    border: 1px solid;
 
     &:hover {
       text-decoration: underline;
@@ -346,8 +353,8 @@ h2 {
 }
 
 .unread {
-  border: 1px solid gray;
-  background-color: lightgray;
+  border: 2px solid #ec6f68 !important;
+  background-color: #ec6f681c;
 }
 
 // ABOUT

@@ -30,7 +30,8 @@ html, body {
     height: 100%;
     margin: 0px;
     padding: 0px;
-    overflow-x: hidden; 
+    // overflow-x: hidden; 
+    height: fit-content;
     // line-height: 15px;
 }
 
@@ -337,6 +338,10 @@ form select {
 
 .blue {
   color: $neutral-blue;
+}
+
+.invisible {
+  color: transparent;
 }
 // COLORS ENDS
 

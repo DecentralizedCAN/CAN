@@ -1,4 +1,5 @@
 <% if @public_parents.length > 0 %>
+<br><br>
 <ul class="branches branches0">
 <li>
 
@@ -49,15 +50,17 @@
                                 <% @uplinks_5.each do |link5| %>
                                   <li>
                                     <div class="highlight">
-                                      <%= link_to goal_path(:goal_id => link5.parent.hashid, :view => 'public') do %>
+                                      <%= link_to goal_path(:goal_id => link5.child.hashid, :view => 'public') do %>
                                         <div class="highlight-title">
 
-                                          <% if Link.where(child_id: link5.parent.id).where.not(parent_id: @goal.id).count > 0 %>
+                                          <% if Link.where(child_id: link5.child.id).where.not(parent_id: @goal.id).count > 0 %>
                                             <i class="fas fa-caret-up"></i>
                                             <br>
                                           <% end %>
 
-                                          <%= link5.parent.title %>    
+                                          <%= render(:partial => 'link_unlink_links_branches', :locals => {:link => link5, :@goal => link5.child, :view => 'public'})%>
+
+                                          <%#= link5.parent.title %>    
                                         </div>
                                       <% end %>
                                     </div>
@@ -71,8 +74,9 @@
                               <!-- ======================== -->
 
                               <div class="highlight">
-                                <%= link_to goal_path(:goal_id => link4.parent.hashid, :view => 'public') do %>
-                                  <div class="highlight-title"><%= link4.parent.title %></div>
+                                <%= link_to goal_path(:goal_id => link4.child.hashid, :view => 'public') do %>
+                                  <%= render(:partial => 'link_unlink_links_branches', :locals => {:link => link4, :@goal => link4.child, :view => 'public'})%>
+                                  <!-- <div class="highlight-title"><%= link4.parent.title %></div> -->
                                 <% end %>
                               </div>
                               
@@ -86,8 +90,11 @@
                       <% end %>
 
                       <div class="highlight">
-                        <%= link_to goal_path(:goal_id => link3.parent.hashid, :view => 'public') do %>
-                          <div class="highlight-title"><%= link3.parent.title %></div>
+                        <%= link_to goal_path(:goal_id => link3.child.hashid, :view => 'public') do %>
+                          <div class="highlight-title">
+                            <%#= link3.parent.title %>
+                            <%= render(:partial => 'link_unlink_links_branches', :locals => {:link => link3, :@goal => link3.child, :view => 'public'})%>  
+                          </div>
                         <% end %>
                       </div>
                     </li>
@@ -101,8 +108,11 @@
               <% end %>
 
               <div class="highlight">
-                <%= link_to goal_path(:goal_id => link2.parent.hashid, :view => 'public') do %>
-                  <div class="highlight-title"><%= link2.parent.title %></div>
+                <%= link_to goal_path(:goal_id => link2.child.hashid, :view => 'public') do %>
+                  <div class="highlight-title">
+                    <%#= link2.parent.title %>
+                    <%= render(:partial => 'link_unlink_links_branches', :locals => {:link => link2, :@goal => link2.child, :view => 'public'})%>
+                  </div>
                 <% end %>
               </div>
 
@@ -117,12 +127,13 @@
       <% end %>
     
       <div class="highlight">
-        <%= link_to goal_path(:goal_id => link.parent.hashid, :view => 'public') do %>
+        <%= link_to goal_path(:goal_id => link.child.hashid, :view => 'public') do %>
           <div class="highlight-title">
-            <%= link.parent.title %>
-            <%= link_to unlink_path(:link_id => link.id), :method => 'post', :class => 'unlink' do %>
+            <%= render(:partial => 'link_unlink_links_branches', :locals => {:link => link, :@goal => link.child, :view => 'public'})%>
+            <!-- <%= link.parent.title %> -->
+            <%#= link_to unlink_path(:link_id => link.id), :method => 'post', :class => 'unlink' do %>
               <!-- <i class="fas fa-times"></i> -->
-            <% end %>
+            <%# end %>
           </div>
         <% end %>
       </div>

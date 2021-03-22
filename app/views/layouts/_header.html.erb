@@ -12,7 +12,7 @@
         <span class="icon-bar"></span>
       </button>
       <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
-      <%= link_to root_path, id: "logo", :class => "navbar-brand" do %>
+      <%= link_to '', id: "logo", :class => "navbar-brand" do %>
      <!--    <%= image_tag("logo.png", :border=>0, :class => 'logo-image') %> -->
         <span id="logo-name"><%= group_name %></span>
       <% end %>
@@ -22,37 +22,38 @@
     <div class="collapse navbar-collapse toolbar-1" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="#">All posts <span class="sr-only">(current)</span></a></li> -->
-        <% if logged_in? && Setting.find(14).state %>
-          <li>
-              <%= link_to dashboard_path do %>
+        <% #if logged_in? && Setting.find(14).state %>
+          <!-- <li> -->
+             <!--  <%= link_to dashboard_path do %> -->
                 <!-- <i class="fas fa-tachometer-alt"></i> -->
                 <!-- Dashboard -->
-                <i class="fas fa-handshake"></i>
-                Commitments
-              <% end %>
-          </li>
-        <% end %>
-        <li>
+                <!-- <i class="fas fa-check"></i> -->
+                <!-- Tasks -->
+              <!-- <% end %> -->
+          <!-- </li> -->
+        <% #end %>
+        <!-- <li>
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to main_feed_path do %>
               <i class="fas fa-bullhorn"></i>
               Feed
             <% end %>
           <% end %>
-        </li>
+        </li> -->
         
 
         <li>
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to goal_path(Goal.first, :view => 'public'), :id => 'goal-path' do %>
               <!-- <i class="fas fa-project-diagram"></i> -->
-              <i class="fas fa-map"></i>
-              Roadmap
+              <!-- <i class="fas fa-map"></i> -->
+              <i class="fas fa-home"></i>
+              Main page
             <% end %>
           <% end %>
         </li>
 
-        <% if logged_in? && (Setting.first.state || current_user.admin?) %>
+        <% if false && logged_in? && (Setting.first.state || current_user.admin?) %>
           <li>
               <%= link_to choice_path do %>
                 <i class="fas fa-pen"></i>
@@ -88,7 +89,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <% if logged_in? %>
+          <% if false && logged_in? %>
 
             <%= link_to notifications_path do %>
 

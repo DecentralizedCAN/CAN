@@ -1,18 +1,7 @@
 <div class="goal-mini">
   <div class="goal-mini-inner-1">
-    <% if link.child.users.count > 0 %>
-
-      <%= link.child.users.count %>
+    <%= link.child.users.count %>
     <i class="fas fa-check-double"></i>
-    
-    <% else %>
-    
-    <span class="invisible">
-    0 <i class="fas fa-check-double"></i>
-    </span>
-
-    <% end %>
-
   </div>
 
   <div class="goal-mini-inner-2">
@@ -48,24 +37,15 @@
 
     <br>
 
-    <!-- TITLE -->
-
-      <%= link_to goal_path(:goal_id => link.child.hashid, :view => view) do %>
+      <%= link_to goal_details_path(:goal_id => link.child.hashid, :view => view) do %>
         <% if link.child.users.include?(@user) %>
           <span class="strikethrough"><%= link.child.title %></span>
         <% else %>
           <%= link.child.title %>
         <% end %>
       <% end %>
-
-    <!-- TITLE ENDS -->
       
-      <% child_links_count = Link.where(parent_id: link.child.id).joins(:user).group("links.id").count.count %>
-      <% if child_links_count > 0 %>
-      <div> <%= child_links_count %> <i class="fas fa-project-diagram"></i></div>
-      <% else %>
-      <div class="invisible">none</div>
-      <% end %>
+      <div> <%= Link.where(parent_id: link.child.id).count %> <i class="fas fa-project-diagram"></i></div>
 
   </div>
 
@@ -82,12 +62,12 @@
     </div> -->
 
     <% if Activity.where(:goal_id => link.child.id).count > 0 %>
-      <!-- <div class="mini-actions"> -->
+      <div class="mini-actions">
         <%= Activity.where(:goal_id => link.child.id).count %>
         <i class="fas fa-tools"></i>
-      <!-- </div> -->
+      </div>
     <% else %>
-      <span class="invisible">0 <i class="fas fa-tools"></i></span>
+      0 <i class="fas fa-tools"></i>
     <% end %>
   </div>
 </div>
