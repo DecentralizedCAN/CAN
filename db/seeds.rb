@@ -28,7 +28,7 @@ User.create!(name:  "admin",
              activated: true,
              activated_at: Time.zone.now)
 
-Goal.create!(title: "Goals")
+Goal.create!(title: "Top")
 
 10.times do |n|
   name  = "example-#{n+1}" #Faker::Name.name
