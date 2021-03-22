@@ -19,20 +19,19 @@
 	  <%= link_to '+', new_group_path %>
 	</div><% end %>
 
-  <!-- Sort: -->
+	<!-- <i class="fas fa-sort"></i> -->
+	Sort:
     <%= link_to url_for(request.params.merge(:sort => 'popular')) do %>
-	  <i class="fas fa-sort"></i>
+	  <!-- <i class="fas fa-sort"></i> -->
     <% if params[:sort] != 'recent' %>
     	<span class="underline-permanent">popular</span>
     <% else %>
     	popular
     <% end %>
   <% end %>
-  
-	&nbsp;
-
+	  |
 	<%= link_to url_for(request.params.merge(:sort => 'recent')) do %>
-	  <i class="fas fa-sort"></i>
+	  <!-- <i class="fas fa-sort"></i> -->
     <% if params[:sort] != 'recent' %>
     	recent
     <% else %>
@@ -99,6 +98,7 @@
 					<% end %>
 				<% elsif post.problem %>
 
+				<li class="post-outer">
 				<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
 				<%= link_to issue_path(post.problem) do %>
 	        <% #if post.problem.user.count > 0 %>
@@ -141,10 +141,12 @@
 		            </div>
 		          </div>
 
-		      <% end %>
+					</li>
+	      <% end %>
 
 
 				<% elsif post.discussion %>
+					<li class="post-outer">			
 					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
 					<%= link_to discussion_path(post.discussion) do %>
 	          <div class="discussion">
@@ -183,6 +185,7 @@
 	            </div>
 						</div>
 		      <% end %>
+		    </li>
 				<% end %>
 
 				<!-- <hr> -->

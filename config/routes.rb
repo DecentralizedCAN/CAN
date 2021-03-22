@@ -50,8 +50,8 @@ Rails.application.routes.draw do
   get 'about', to: 'static#about', :as => :about
   get 'choice', to: 'static#choice', :as => :choice
   get 'commitments', to: 'static#commitments', :as => :commitment
-  # get '', to: 'static#main_feed', :as => :main_feed
-  get '', to: 'static#welcome', :as => :main_feed
+  get '', to: 'static#main_feed', :as => :main_feed
+  # get '', to: 'static#welcome', :as => :main_feed
   get 'guide', to: 'static#documentation', :as => :documentation
   get 'manage', to: 'static#manage', :as => :manage
 
@@ -108,8 +108,8 @@ Rails.application.routes.draw do
   get 'password_resets/edit'
 
   # root   'static#commitments'
-  # root   'static#main_feed'
-  root   'static#welcome'
+  root   'static#main_feed'
+  # root   'static#welcome'
   get    '/dashboard', to: 'static#dashboard'
   get    '/signup',  to: 'users#new'
   get    '/add',  to: 'users#add'

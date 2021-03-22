@@ -11,11 +11,11 @@
         <span class="icon-bar"></span>
       </button>
 
-      <% ENV['GROUP_NAME'] = 'CommitCamp' %>
+      <% ENV['GROUP_NAME'] = 'Xymmer' %>
       <% (ENV['GROUP_NAME'] != nil)? group_name = ENV['GROUP_NAME'] : group_name = "Decentralized CAN" %>
       <%= link_to root_path, id: "logo", :class => "navbar-brand" do %>
         <%= image_tag("logo.png", :border=>0, :class => 'logo-image') %>
-        <span id="logo-name"><%= group_name %></span><span id="beta-tag">Beta</span>
+        <span id="logo-name"><%= group_name %></span><!-- <span id="beta-tag">Beta</span> -->
       <% end %>
     </div>
 
@@ -34,26 +34,31 @@
               <!-- <% end %> -->
           <!-- </li> -->
         <%# end %>
-        <!-- <li>
+
+        <li>
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to main_feed_path do %>
               <i class="fas fa-bullhorn"></i>
-              Feed
+              Bulletin
             <% end %>
           <% end %>
-        </li> -->
+        </li>
         
 
         <li>
           <% if logged_in? || Setting.find(6).state %>
             <%= link_to goal_path(Goal.first, :view => 'public'), :id => 'goal-path' do %>
               <!-- <i class="fas fa-project-diagram"></i> -->
-              <!-- <i class="fas fa-map"></i> -->
-              <i class="fas fa-home"></i>
-              Main page
+              <i class="fas fa-map"></i>
+              <!-- <i class="fas fa-home"></i> -->
+              Roadmap
             <% end %>
+          <% end %>            
+        </li>
 
       </ul>
+
+
       <ul class="nav navbar-nav navbar-left">
         
         <!-- <li>
@@ -63,14 +68,14 @@
           <% end %>
         </li> -->
 
-        <% if logged_in? && (Setting.first.state || current_user.admin?) %>
-          <li>
+          <!-- <li>
           <%= link_to root_path do %>
             <i class="fas fa-bullhorn"></i>
             Public
           <% end %>
-          </li>
+          </li> -->
 
+        <% if logged_in? && (Setting.first.state || current_user.admin?) %>
           <li>
           <%= link_to post_action_path do %>
             <i class="fas fa-plus-circle"></i>
@@ -83,8 +88,11 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <% if false && logged_in? %>
-
             <%= link_to notifications_path do %>
+              hi
+            <% end %>
+          <% end %>
+        </li>
 
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
@@ -110,7 +118,6 @@
             <!-- Notifications -->
           <% end %>
         </li>
-        <% end %>
 
         <!-- <li>
           <span class="tooltip-toggle" href="#" aria-label="If you have a question, comment or need assistance, feel free to email convergentfacilitation@
@@ -118,6 +125,8 @@
           <i class="far fa-question-circle" style="font-size: 18px; margin-top: 8px; margin-left: 6px;"></i>
           </span>
         </li> -->
+        
+        <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
