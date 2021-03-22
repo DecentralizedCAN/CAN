@@ -19,7 +19,7 @@
 
       <div>
         <%# if @problem.criterium.count > (@my_criteria.count + @criteria.count) %>
-        <% if @problem.criterium.count > @criteria.count %>
+        <% if @problem.criterium.count > @criteria_count %>
           <%= link_to full_criterium_path( :problem_id => @problem.id, :view => "suggested"), :class => "button button-hollow" do %>
             <i class="fas fa-clipboard-list"></i> 
             <% if @problem.scoring_method && @problem.scoring_method == 1 %>

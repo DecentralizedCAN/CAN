@@ -18,7 +18,7 @@
 
     <br><br>
 
-    <% if @problem.criterium.count > @criteria.count && !(params[:view] == 'suggested') %>
+    <% if @problem.criterium.count > @criteria_count && !(params[:view] == 'suggested') %>
       <%= link_to full_criterium_path( :problem_id => @problem.id, :view => "suggested"), :class => "button button-hollow" do %>
         <i class="fas fa-eye"></i> 
         <% if @weighted %>
@@ -91,7 +91,7 @@
         <h2>Criteria</h2>
       <% end %>
 
-      <% if @criteria.count > 0 %>
+      <% if @criteria_count > 0 %>
       <% end %>
       <div class="criteria-list">
       <% @criteria.each do |criterium| %>
