@@ -27,8 +27,8 @@ class User < ApplicationRecord
   before_save   :downcase_email
   before_create :create_activation_digest
   validates :name,  presence: true, length: { maximum: 50 },
-                    uniqueness: { case_sensitive: false },
-                    format: { without: /\s/, message: "Username cannot contain spaces" }
+                    uniqueness: { case_sensitive: false }#,
+                    # format: { without: /\s/, message: "Username cannot contain spaces" }
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
@@ -37,7 +37,7 @@ class User < ApplicationRecord
                     if: -> { Setting.find(7).state }
 
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :password, presence: true, length: { minimum: 1 }, allow_nil: true
 
 
   # make sure blank emails are saved as nil, not encrypted code

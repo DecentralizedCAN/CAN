@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 20201212024617) do
     t.datetime "updated_at", null: false
     t.text "creator_ciphertext"
     t.bigint "goal_id"
-    t.boolean "include_comments"
     t.index ["deadline_bidx"], name: "index_activities_on_deadline_bidx"
     t.index ["expiration_bidx"], name: "index_activities_on_expiration_bidx"
     t.index ["goal_id"], name: "index_activities_on_goal_id"
@@ -233,7 +232,6 @@ ActiveRecord::Schema.define(version: 20201212024617) do
     t.boolean "require_action"
     t.integer "facilitator_id"
     t.integer "scoring_method"
-    t.boolean "include_comments"
     t.index ["goal_id"], name: "index_problems_on_goal_id"
   end
 
@@ -280,7 +278,6 @@ ActiveRecord::Schema.define(version: 20201212024617) do
     t.datetime "updated_at", null: false
     t.bigint "discussion_id"
     t.text "creator_ciphertext"
-    t.boolean "draft"
     t.index ["discussion_id"], name: "index_solutions_on_discussion_id"
     t.index ["problem_id"], name: "index_solutions_on_problem_id"
   end

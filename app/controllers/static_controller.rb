@@ -8,6 +8,10 @@ class StaticController < ApplicationController
 	def welcome
 	end
 
+	def about
+		
+	end
+
   def dashboard
     @user = current_user
 
@@ -35,7 +39,7 @@ class StaticController < ApplicationController
 		#   smtp.send_message message, 'me@fromdomain.com', 'test@todomain.com'
 		# end
 
-		if params[:sort] == "popular"
+		if params[:sort] != "recent"
 			(!params[:group] || params[:group] == '0') ? group_id = nil : group_id = params[:group]
 			@posts = Post.left_joins(:upvotes)
 			  .where(:group_id => group_id)

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get '/action/:activity_id', to: 'activities#show', :as => :action
   get '/i/:activity_id', to: 'activities#invitation', :as => :invitation
   get '/action/participate/:roll_id', to: 'activities#commit', :as => :commit
+  get '/masscommit', to: 'activities#masscommit', :as => :masscommit
   post '/activator/participate/:roll_id', to: 'activities#participate', :as => :participate
   post '/action/unparticipate/:roll_id', to: 'activities#unparticipate', :as => :unparticipate
   post '/activator/complete/:activity_id', to: 'activities#complete', :as => :complete
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
   post 'notifications/broadcast_post/:post_id', to: 'notifications#broadcast_post', :as => :broadcast_post
   post 'notifications/broadcast_criterion/:criterion_id', to: 'notifications#broadcast_criterion', :as => :broadcast_criterion
 
+  get 'about', to: 'static#about', :as => :about
   get 'choice', to: 'static#choice', :as => :choice
   get 'commitments', to: 'static#commitments', :as => :commitment
   # get '', to: 'static#main_feed', :as => :main_feed

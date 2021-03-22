@@ -2,6 +2,24 @@ $background-gray: #efeeee;
 $success-red: #ff7455;
 $offwhite: #f5f5f5;
 
+.show-action {
+  // border: 1px solid #d8d8d8; 
+  // border-radius: 2px;
+  // margin-right: 10px;
+  display: inline-block !important;
+  margin-right: 20px;
+  margin-bottom: 10px;
+
+  .activity-title {
+    margin: 0;
+  }
+
+  .roll-progress-outer {
+    width: 200px;
+    margin: 0;
+  }
+}
+
 .proposal {
   border-radius: 2px;
   margin-bottom: 10px;
@@ -15,6 +33,7 @@ $offwhite: #f5f5f5;
 
 .activity-title {
   font-size: 14px;
+  padding-bottom: 2px;
 }
 
 .activity_title {
@@ -64,7 +83,7 @@ $offwhite: #f5f5f5;
   margin-top: 4px;
 
   .participation-progress.second {
-    top: -6px;
+    top: -18px;
     position: relative;
   }
 }
@@ -79,8 +98,8 @@ $offwhite: #f5f5f5;
 .written-progress {
 
   position: relative;
-  top: 4px;
-  left: -162px;
+  top: -13px;
+  // left: -162px;
   // color: #565656 !important;
   color: #757575 !important;
   font-weight: bold !important;
@@ -129,7 +148,7 @@ $offwhite: #f5f5f5;
     box-shadow: 0px 3px 6px 0px #d0d0d0;
     border: 1px solid #efefef;
     padding: 14px 18px;
-    padding-bottom: 14px;
+    padding-bottom: 2px;
   }
 }
 
@@ -160,14 +179,15 @@ $offwhite: #f5f5f5;
   position: relative;
   margin: 4px;
   margin-left: 0;
-  top: 6px;
+  top: -10.5px;
   font-size: 9px;
   text-transform: uppercase;
   color: black;
   font-weight: bolder;
-  left: -138px;
+  // left: -138px;
+  // left: 62px;
   letter-spacing: 1px;
-  display: flex !important;
+  // display: flex !important;
 }
 
 .completed-tag {
@@ -202,11 +222,19 @@ $offwhite: #f5f5f5;
   border-radius: 2px;
 }
 
+.roll-progress-outer {
+  margin: 0 50px;
+  display: flex;
+}
+
 .roll-progress {
+  margin: auto;
   max-height: 20px;
   min-width: fit-content;
   width: 100%;
-  display: flex;  
+  // display: flex;  
+  display: inline-block;
+  text-align: center;
 
   div {
     display: inline-block;
@@ -214,7 +242,7 @@ $offwhite: #f5f5f5;
 
   // line-height: 15px;
   line-height: 0;
-  margin-top: 2px;
+  // margin-top: 2px;
 }
 
 #role_title {
@@ -335,9 +363,9 @@ $offwhite: #f5f5f5;
   cursor: pointer;
 }
 
-#action-columns {
-  column-count: 2;
-}
+// #action-columns {
+//   column-count: 2;
+// }
 
 // INVITATION
 .signup-action-form {
@@ -369,7 +397,7 @@ $offwhite: #f5f5f5;
   * {transition: all 0.5s ease;}
 
   li {
-    padding-bottom: 14px;
+    padding-bottom: 2px;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -470,7 +498,7 @@ $offwhite: #f5f5f5;
     margin-top: 6px;
 
     .participation-progress.second {
-      top: -6px;
+      top: -18px;
       position: relative;
     }
   }
@@ -588,3 +616,24 @@ $offwhite: #f5f5f5;
   float: right;
   color: #3a3a3a !important;
 }
+
+#open-discussion {
+  background: #d6d6d6;
+  padding: 4px 8px;
+  border-radius: 1px;
+  cursor: pointer;
+  width: max-content;
+
+  position: relative;
+  top: -10px;
+  left: 10px;
+}
+
+// 
+// #main-feed .proposal {
+//   display: flex;
+//   background-color: white;
+//   padding: 20px;
+//   border-radius: 3px;
+//   margin-bottom: 20px;
+// }

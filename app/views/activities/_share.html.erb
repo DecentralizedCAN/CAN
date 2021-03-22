@@ -1,0 +1,92 @@
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  opacity: 1;
+}
+
+.tooltip button {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+#locationInput {
+  width: 240px;
+  text-overflow: ellipsis;
+}
+
+#close-share-div {
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+<i class="fas fa-times float-right" id="close-share-div"></i>
+<p>Share this link with other people for them to receive a fancy invitation to this action.</p>
+
+<div class="tooltip">
+  <!-- <em>Share this link with stakeholders so they can join this issue</em><br> -->
+  <button onclick="myFunction()" onmouseout="outFunc()">
+    <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+    <input type="text" id="locationInput" value="window.location">
+  </button>
+</div><br>
+
+<!-- <p>The document.execCommand() method is not supported in IE8 and earlier.</p> -->
+
+<script>
+$(document).ready(function() {
+  var location = window.location + " "
+  $('#locationInput').val(location.replace('action', 'i'))
+});
+
+function myFunction() {
+  var copyText = document.getElementById("locationInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copied link"
+}
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Click to copy";
+}
+</script>

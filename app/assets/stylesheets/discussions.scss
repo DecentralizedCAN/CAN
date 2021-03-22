@@ -15,7 +15,7 @@ p > a, .comment > a {
 // }
 
 .discussion-column {
-	background-color: $offwhite;
+  background-color: $offwhite;
   display: block;
   float: left;
   background-color: white;
@@ -25,21 +25,21 @@ p > a, .comment > a {
   // border: 1px solid #efefef;
   border: 1px solid #d8d8d8;
 
-	li {
-		list-style: none;
+  li {
+    list-style: none;
     padding-bottom: 5px;
-	}
+  }
 
-	* {
-		color: black;
+  * {
+    color: black;
     font-family: 'Monteserrat', sans-serif;
-	}
+  }
 
-	h1 {
-		margin: 0;
+  h1 {
+    margin: 0;
     margin-bottom: 10px;
     padding: 4px 7px;
-	}
+  }
 
   h3 {
     font-weight: bold;
@@ -48,8 +48,10 @@ p > a, .comment > a {
 }
 
 #main-discussion {
-	width: 70%;
+  width: 70%;
+  // width: 100%;
   background-color: white;
+  border-top: 0;
 }
 
 .discussion-large {
@@ -70,14 +72,14 @@ p > a, .comment > a {
 }
 
 #scroll-div {
-	height: 400px;
+  // height: 400px;
   overflow: auto;
   padding: 0;
-	.like-div, .time, .reply { display:none; }
+  .like-div, .time, .reply { display:none; }
 
-	li {
-		margin-bottom: 6px;
-	}
+  li {
+    margin-bottom: 6px;
+  }
 }
 
 #scroll-div > li:hover .reply {
@@ -89,26 +91,26 @@ p > a, .comment > a {
 #scroll-div > li:hover .time,
 #scroll-div > li:hover .like-div,
 #scroll-div > li > .like-div.active { 
-	display:inline-block; 
+  display:inline-block; 
 }
 
 .time {
-	color: gray;
-	font-style: italic;
+  color: gray;
+  font-style: italic;
 }
 
 
 .like-div {
-	display: inline-block;
+  display: inline-block;
   letter-spacing: -1px;
 
   &:focus, form:focus, button {
-  	outline: none;
+    outline: none;
   }
 
-	form {
-		display: inline-block;
-	}
+  form {
+    display: inline-block;
+  }
 }
 
 .red-like {
@@ -117,12 +119,12 @@ p > a, .comment > a {
   padding: 0;
 
   .fa-thumbs-up:before {
-		color: $neutral-blue;
+    color: $neutral-blue;
   }
-	
-	span {
-		color: $neutral-blue !important;
-	}
+  
+  span {
+    color: $neutral-blue !important;
+  }
 }
 
 
@@ -132,13 +134,13 @@ p > a, .comment > a {
   padding: 0;
   background-color: transparent;
 
-	.fa-thumbs-up:before, .gray-like-count {
-		color: gray !important;
-	}
+  .fa-thumbs-up:before, .gray-like-count {
+    color: gray !important;
+  }
 
-	span {
-		color: gray;
-	}
+  span {
+    color: gray;
+  }
 }
 
 
@@ -146,19 +148,18 @@ p > a, .comment > a {
 
 
 .comment-box, .submit-comment {
-	display: inline-block;
-	vertical-align: bottom;
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 .comment-box {
   width: 100%;
-  height: 22px;
+  height: 34px;
 
   #comment_content {
-  	width: 100%;
+    width: 100%;
     padding-right: 50px;
-    border: 0;
-    border-top: 1px solid #d8d8d8;
+    height: 34px;
   }
 }
 
@@ -168,8 +169,7 @@ p > a, .comment > a {
 
 #submit_discussion {
   margin-top: 12px;
-  // background-color: $neutral-blue;
-  background-color: #81c4ff;
+  background-color: $neutral-blue;
   border: 1px solid #ddd;
   color: white;
   font-size: 16px;
@@ -187,18 +187,20 @@ p > a, .comment > a {
 
 
 #comment_content:focus {
-	outline: none;
+  outline: none;
 }
 
 
 .gravatar {
   width: 24px;
+  border-radius: 20px;
+  border: 1px solid gray;
 }
 
 #send {
   float: right;
   position: relative;
-  top: -18px;
+  top: -22px;
   left: -8px;
   border: none;
   padding: 0;
@@ -225,21 +227,124 @@ p > a, .comment > a {
   font-size: 14px;
 }
 
-.discussion-content {
-  margin-top: -8px;
+.discussion-content { 
+
+  strong {
+    font-size: 13px;
+  }
+
+  margin-top: 8px;
   margin-bottom: 8px;
   font-size: 12px;
   padding: 6px 10px;
-  // border: 1px solid #d8d8d8;
-  // background: white;
+  border: 1px solid #d8d8d8;
+  background: white;
 }
 
 #top-liked-mini {
   padding: 6px;
   border-radius: 2px;
   border: 1px solid #c7c7c7;
+  margin: 6px;
+  background: #f1f1f1;
 
   h2 {
     margin-top: 2px;
+    font-size: 16px;
   }
+}
+
+.comment-user-info {
+  img {
+    width: 18px;
+  }
+}
+
+
+
+
+
+// DISCUSSION
+#extra-sections-outer {
+  width: 100%;
+
+  &>div {
+    display: inline-block;
+    width: 47%;
+  }
+}
+
+.discussion-extraouter {
+  width: 100%;
+  background-color: white;
+  // padding: 0 6px;
+  border: 1px solid #d8d8d8;
+  border-left: 0;
+  height: fit-content;
+
+  h2 {
+    padding-left: 10px;
+    margin-top: 10px;
+
+    i.float-right {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+  }
+
+  #main-discussion {
+    width: 100%;
+    // margin-left: 0;   
+    margin: 0;
+  }
+
+  .discussion-column.mini {
+    min-height: 290px;
+    height: auto;
+    // box-shadow: 0px 3px 6px 0px #d0d0d0;
+    // border: 1px solid #efefef;
+    // border: 1px solid #d2d2d2;
+    border: 0;
+    // border-top: 1px solid #d2d2d2;
+    padding: 0;
+
+    .comment-box input {
+      border: none;
+      border-top: 1px solid #d2d2d2;
+      height: 24px;
+
+      &#send {
+        background: transparent;
+        margin: 2px;
+        top: -31px;
+      }
+    }
+
+    * {
+      color: #3a3a3a;
+    }
+
+    #scroll-div {
+      border-top: 1px solid #d2d2d2;
+      height: 62vh !important;
+      resize: vertical !important;
+      overflow-y: auto !important;
+      padding-left: 10px;
+      padding-top: 10px;
+      margin: 0;
+    }
+
+    ul {
+      padding: 0;
+    }
+  }
+}
+
+#full-discussion-view {
+  float: right;
+  // color: #3a3a3a !important;
+  font-size: 14px;
+  margin: 4px;
+  // font-style: normal;
+  // text-transform: uppercase;
 }

@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  include ActivitiesHelper
+  include CommentsHelper
+  include UpvoteHelper
 
   def new
   end
@@ -11,7 +14,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:add_email].downcase) if !user && params[:session][:add_email]
     user = User.find_by(email: params[:session][:add_email]) if !user && params[:session][:add_email]
 
-    if user && user.authenticate(params[:session][:password])
+    if user && params[:session][:password].length > 0 && user.authenticate(params[:session][:password])
       if user.activated?
         log_in user
         # params[:session][:remember_me] == '0' ? forget(user) : remember(user)
@@ -22,6 +25,46 @@ class SessionsController < ApplicationController
         flash[:warning] = message
       end
 
+    # if someone enters wrong information on invitation, just deal with it
+    elsif user && params[:session][:commitments_json] && params[:session][:commitments_json].length > 0
+      @username = params[:session][:email].downcase
+      @useremail = params[:session][:add_email].downcase
+
+      if User.find_by(:email => @useremail)
+        flash[:warning] = 'The email ' + params[:session][:add_email] + ' was taken, so we could not add it to your account. If you would like to add an email, you can do so in your account settings.'
+        @useremail = ''
+      end
+
+      if User.exists?(:name => @username)
+        flash[:warning] = 'The username ' + params[:session][:email] + ' was taken and you did not enter the password for it, so we added a number to the end.'
+        
+        def find_username(attempt, i)
+          if User.exists?(:name => attempt + i.to_s)
+            find_username(attempt, i + 1)
+          else
+            @username = attempt + i.to_s
+            puts @username
+          end
+        end
+
+        puts "===="
+        puts User.exists?(:name => @username)
+        find_username(@username, 1)
+        
+        puts @username
+        puts '----------------'
+      end
+
+      puts @username
+      puts '----------------'
+
+      @user = User.new(:name => @username, :email => @useremail, :password => params[:session][:password], :email_notifications => true,
+                          :password_confirmation => params[:session][:password], :admin => String(rand(382132)), :superadmin =>  String(rand(382130)))
+      @user.save
+      @user.activate
+      log_in @user
+      remember(@user)
+
     elsif user
       flash[:danger] = 'Incorrect password'
 
@@ -31,12 +74,25 @@ class SessionsController < ApplicationController
                           :password_confirmation => params[:session][:password], :admin => String(rand(382132)), :superadmin =>  String(rand(382130)))
       @user.save
       @user.activate
-      flash[:success] = 'Welcome to ' + ENV['GROUP_NAME'] + ', ' + @user.name + '!'
+      # flash[:success] = 'Welcome to ' + ENV['GROUP_NAME'] + ', ' + @user.name + '!'
       log_in @user
-      remember(user)
+      remember(@user)
     end
 
-    if Setting.find(6).state
+    if params[:session][:commitments_json] && params[:session][:commitments_json].length > 0
+      puts "--------"
+      puts params[:session][:commitments_json]
+      puts"========="
+
+      commitments = JSON.parse(params[:session][:commitments_json])
+
+      commitments.each do |role_id|
+        commit_to_a_role(role_id)
+      end
+
+      flash[:success] = "Thanks for your participation!"
+      redirect_to action_path(:activity_id => Roll.find(commitments[0]).activity.hashid)
+    elsif Setting.find(6).state
       redirect_back fallback_location: root_path
     else
       redirect_to root_path

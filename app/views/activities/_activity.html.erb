@@ -1,4 +1,5 @@
-  <div class="proposal-block-one">
+
+  <!-- <div class="proposal-block-one"> -->
     <div class="activity-title">
 
       <% if activity.goal %>
@@ -12,15 +13,21 @@
       <i class="fas fa-arrow-right"></i>
       <% end %>
 
-      <span class="underline" style="text-shadow: 0px 0px 12px #2afb43;"><%= activity.title %></span></span> <span class="feed-label">Action</div>
+      <!-- <span class="underline" style="text-shadow: 0px 0px 12px #2afb43;"><%= activity.title %></span></span> <span class="feed-label">Collective action</div> -->
+      <span class="underline" ><%= activity.title %></span></span>
+        <!-- <span class="feed-label">Collective action</span> -->
+<!--     </div>
+    
 
-  		<% if activity.solution %>
-  			<div class="proposal-activity-description">
-  				Proposal for <em><%= activity.solution.problem.title %></em>
-  				with <%= activity.solution.score %>% estimated support
+    <div class="activity-info"> -->
+
+      <% if activity.solution %>
+        <div class="proposal-activity-description">
+          Proposal for <em><%= activity.solution.problem.title %></em>
+          with <%= activity.solution.score %>% estimated support
         </div>
 
-  		<% end %>
+      <% end %>
 
       <% if false && activity.goal %>
         <div class="proposal-activity-description">
@@ -34,8 +41,6 @@
           </strong>
         </div>
       <% end %>
-
-    <div class="activity-info">
 
       <div class="post-signature">
         <!-- <i class="fas fa-calendar"></i> -->
@@ -58,6 +63,7 @@
 
     </div>
 
+    <div class="roll-progress-outer">
     <div class="roll-progress">
       
       <div class="participation-meter">
@@ -91,12 +97,12 @@
           Complete
         </div>
       <% elsif total_committed(activity) >= total_minimum(activity) %>
-        <div class="activated-tag">
+        <br><div class="activated-tag">
           Activated
         </div>
       <% else %>
-        <div class="written-progress">
-          <i class="fas fa-users"></i>
+        <br><div class="written-progress">
+          <!-- <i class="fas fa-users"></i> -->
           <% if !total_maximum(activity) %>
             <%= total_committed(activity) %>/<%= total_minimum(activity) %>-∞
           <% elsif total_minimum(activity) < total_maximum(activity) %>
@@ -109,6 +115,7 @@
       <% end %>
 
     </div>
+    </div>
 
     <% if activity.actdissent.count > 0 %>
       <div class="dissenter-count">
@@ -116,4 +123,4 @@
         <%= activity.actdissent.count %> objections
       </div>
     <% end %>
-</div>
+<!-- </div> -->

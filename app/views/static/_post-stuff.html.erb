@@ -1,11 +1,4 @@
 <% if post %>
-<% if current_user && current_user.admin? %>
-<div class="delete-button">
-	<%= link_to "Ø", delete_post_path(:post_id => post.id), method: :delete,
-                                  data: { confirm: "Delete post?" } %>
-
-</div>
-<% end %>
 
 <% pre_upvote = post.upvotes.find { |upvote| upvote.user_id == current_user.id} if current_user %>
 
@@ -19,9 +12,17 @@
       <span class="gray-upvote-count"><%= post.upvotes.count %></span>
     <% end %>
 	<% end %>
+
+  <% if current_user && current_user.admin? %>
+  <!--   <div class="delete-button">
+      <br><br>
+      <%= link_to "Ø", delete_post_path(:post_id => post.id), method: :delete,
+                                      data: { confirm: "Delete post?" } %>
+
+    </div> -->
+  <% end %>
+
 </div>
-
-
 
 <script type="text/javascript">
 
@@ -50,4 +51,8 @@
   });
 
 </script>
+<% else %>
+<!-- <div class="upvote-div">
+  <i class="fas fa-star"></i>
+</div> -->
 <% end %>
