@@ -47,6 +47,7 @@
 			<% #if post.upvotes.count > 0 %>
 			<% if true #(params[:group] == 'main' || params[:group].to_i == post.group_id) %>
 				<% if post.link_id %>
+					<li class="post-outer">
 					<%= render(:partial => 'post-stuff', :locals => {:post => post})%>
   				<%= link_to goal_path(:goal_id => Goal.find(post.link.child.hashid), :view => "public") do %>
 	          <div class="issue">
@@ -60,19 +61,18 @@
         						<%= Goal.find(post.link.child.id).title %>
       						</span></span>
       						<span class="feed-label">Goal</span>
+                  
+                  <div class="post-signature">
+                    <%= time_ago_in_words(post.created_at) %> ago
+                    • by <em><%= 
+                    begin 
+                      post.upvotes.first.user.name
+                    rescue 
+                    end  %></em>
+                  </div>
 	          	</div>
 
 		            <div class="issue-info">
-
-		              <div class="post-signature">
-		                Created <%= time_ago_in_words(post.created_at) %> ago
-		      					• by <em><%= 
-				            begin 
-				              post.upvotes.first.user.name
-				            rescue 
-				            end  %></em>
-		              </div>•
-
 		              <!-- <br> -->
 
 		              <div>
@@ -83,6 +83,7 @@
 	            	</div>
 						</div>
 					<% end %>
+					</li>
 
 				<% elsif post.activity %>
 			  	
@@ -107,8 +108,8 @@
 	            <div class="issue-title"><span class="underline"><%= post.problem.title %></span> <span class="feed-label">Brainstorm</span>
 		              <div class="post-signature">
 		                <!-- <i class="fas fa-calendar"></i> -->
-		                Created <%= time_ago_in_words(post.problem.created_at) %> ago
-          					by
+		                <%= time_ago_in_words(post.problem.created_at) %> ago
+          					• by
           					<em><%= 
 				            begin 
 				              User.find(post.problem.creator).name
@@ -126,7 +127,7 @@
 
 					      <% problem = post.problem %>
 
-
+                <% if false %>
                   <% if problem.facilitator_id && problem.facilitator_id != current_user.id && problem.facilitator_id > 0 %>
                     <div class="facilitator">
                         <i class="fas fa-user-shield"></i>
@@ -145,6 +146,8 @@
                       Distributed facilitation
                     </div>
                   <% end %>
+                <% end %>
+
 
                   <div class="issue-info">
                     <div id="open-collaborators">
@@ -212,8 +215,8 @@
 							<div class="issue-info">
 	              <div class="post-signature">
 	                <!-- <i class="fas fa-calendar"></i> -->
-	                Created <%= time_ago_in_words(post.discussion.created_at) %> ago
-        					by
+	                <%= time_ago_in_words(post.discussion.created_at) %> ago
+        					• by
         					<em><%= 
 			            begin 
 			              User.find(post.discussion.creator).name
