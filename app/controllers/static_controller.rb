@@ -26,9 +26,9 @@ class StaticController < ApplicationController
 	end
 
 	def main_feed
-		unless current_user.admin?
-			redirect_to root_url
-		end
+		# unless current_user.admin?
+		# 	redirect_to root_url
+		# end
 
 		# require 'net/smtp'
 
