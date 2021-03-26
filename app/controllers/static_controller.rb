@@ -26,6 +26,7 @@ class StaticController < ApplicationController
 	end
 
 	def main_feed
+		@public_viewable = public_viewable?
 		# unless current_user.admin?
 		# 	redirect_to root_url
 		# end
