@@ -105,7 +105,7 @@
 				<%= link_to issue_path(post.problem) do %>
 	        <% #if post.problem.user.count > 0 %>
 	          <div class="issue">
-	            <div class="issue-title"><span class="underline"><%= post.problem.title %></span> <span class="feed-label">Brainstorm</span>
+	            <div class="issue-title"><span class="underline"><%= post.problem.title %></span> <span class="feed-label">Solver</span>
 		              <div class="post-signature">
 		                <!-- <i class="fas fa-calendar"></i> -->
 		                <%= time_ago_in_words(post.problem.created_at) %> ago
@@ -202,30 +202,25 @@
 				          <i class="fas fa-arrow-right"></i>
 				      <% end %>
 							<span class="underline" style="text-shadow: 0px 0px 12px #81c4ff"><%= post.discussion.title %></span>
-							<span class="feed-label">Discussion</span></div>
-
-				      <% if false && post.discussion.goal %>
-				        <div class="proposal-activity-description">
-				          <i class="fas fa-link"></i>
-				          <!-- Attached to goal  -->
-				          <span class="referenced-goal"><strong>"<%= post.discussion.goal.title %>"</strong></span>
-				        </div>
-				      <% end %>
+							<span class="feed-label">Discussion</span>
+              <div class="post-signature">
+                  <!-- <i class="fas fa-calendar"></i> -->
+                  <%= time_ago_in_words(post.discussion.created_at) %> ago
+                  • by
+                  <em><%= 
+                  begin 
+                    User.find(post.discussion.creator).name
+                  rescue 
+                  end  %></em>
+                </div>
+              </div>
 
 							<div class="issue-info">
-	              <div class="post-signature">
-	                <!-- <i class="fas fa-calendar"></i> -->
-	                <%= time_ago_in_words(post.discussion.created_at) %> ago
-        					• by
-        					<em><%= 
-			            begin 
-			              User.find(post.discussion.creator).name
-			            rescue 
-			            end  %></em> •
-	              </div>
+	              
 	              <div>
-	                <!-- <i class="fas fa-comment-dots"></i> -->
-	                <%= pluralize(post.discussion.comment.count, "comment") %>
+	                Comments<br>
+                  <div><i class="fas fa-comment-dots"></i>
+                  <%= post.discussion.comment.count %></div>
 	              </div>
 	            </div>
 						</div>
@@ -265,8 +260,6 @@
   			<%= link_to 'New Post', new_discussion_path if logged_in? %>
 		  </div> -->
 
-		  <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state %>
-
 			<% if logged_in? && @notifications.length > 0 %>
 		  <div class="card-item">
 
@@ -287,6 +280,8 @@
 
 			</div>
 	  	<% end %>
+
+      <%= render(:partial => 'static/commitments-mini') if logged_in? && !Setting.find(14).state %>
 
 		</ol>
 	</div>

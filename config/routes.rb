@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
 # MAIN STUFF
   get '/solver', to: 'problems#index', :as => :solver
-  get '/collaboration/post', to: 'problems#new', :as => :post_problem
+  get '/solver/post', to: 'problems#new', :as => :post_problem
   post '/solver/sponsor', to: 'criteria#sponsor', :as => :sponsor_criteria
   post '/solver/unsponsor', to: 'criteria#unsponsor', :as => :unsponsor_criteria
   post '/solver/dissent', to: 'criteria#dissent', :as => :dissent_criteria

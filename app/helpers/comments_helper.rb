@@ -24,7 +24,16 @@ module CommentsHelper
 
         # Notifications
         if @linked_user
-          notification = @linked_user.notification.create(:details => "You were mentioned in the discussion about \"" + @comment.discussion.problem.title + "\"", :discussion_id => @comment.discussion.id)
+          discussion_topic = ""
+          if @comment.discussion.problem
+            "about" + discussion_topic = @comment.discussion.problem.title
+          elsif @comment.discussion.activity
+            "about" + discussion_topic = @comment.discussion.problem.title
+          elsif @comment.discussion.title
+            discussion_topic = @comment.discussion.title
+          end
+
+          notification = @linked_user.notification.create(:details => "You were mentioned in the discussion \"" + discussion_topic + "\"", :discussion_id => @comment.discussion.id)
           
           if @linked_user.email_notifications
             notification.send_email

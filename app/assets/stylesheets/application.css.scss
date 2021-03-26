@@ -170,6 +170,14 @@ p {
   width: 100% !important;
 }
 
+// .white-header {
+//   background-color: white;
+//   border: 1px solid #d8d8d8;
+//   padding: 10px;
+//   min-width: 68%;
+//   width: 100% !important;
+// }
+
 span.click {
   background-color: gainsboro;
   padding: 2px 4px;
@@ -514,11 +522,11 @@ header {
   a {
     padding-top: 4px !important;
     
-    i {
-      font-size: 26px;
-      color: #ec6f68;
-      margin-right: -7px;
-    }
+    // i {
+    //   font-size: 26px;
+    //   color: #ec6f68;
+    //   margin-right: -7px;
+    // }
 
     .notification-number {
       color: white;
@@ -945,9 +953,9 @@ nav #logo {
 }
 
 #open-collaborators, #open-share-div, a {
-  &:hover {
-    text-decoration: underline;
-  }
+  // &:hover {
+  //   text-decoration: underline;
+  // }
 }
 
 // SHARE DIV

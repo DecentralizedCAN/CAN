@@ -2,7 +2,7 @@
   <%= link_to "ø", delete_goal_path(@goal.id), :method=>"post" %>
 <% end %>
 
-<% if current_user %>
+<% if false && current_user %>
 <ol id="notifications" class="centered-notifications">
 <% @notifications.each do |notification| %>
   <% if !notification.read %>

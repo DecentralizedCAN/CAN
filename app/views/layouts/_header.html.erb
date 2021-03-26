@@ -78,7 +78,7 @@
 
         <% if logged_in? && (Setting.first.state || current_user.admin?) %>
           <li>
-          <%= link_to post_action_path do %>
+          <%= link_to choice_path do %>
             <i class="fas fa-plus-circle"></i>
             New
           <% end %>
@@ -97,14 +97,6 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
-        
-        <li class="user-nav-link">
-          <%= link_to current_user do %>
-            <%= current_user.name %>
-            <i class="fas fa-cog"></i>
-            <%= gravatar_for(current_user) if false %>
-          <% end %>
-        </li>
 
         <li class="notifications-li">
           <%= link_to notifications_path do %>
@@ -119,6 +111,14 @@
             <!-- Notifications -->
           <% end %>
         </li>
+        
+        <li class="user-nav-link">
+          <%= link_to current_user do %>
+            <%= current_user.name %>
+            <i class="fas fa-cog"></i>
+            <%= gravatar_for(current_user) if false %>
+          <% end %>
+        </li>
 
 
         <!-- <li>
@@ -131,12 +131,12 @@
 
         <% end %>
 
-        <li>
+<!--         <li>
           <span class="tooltip-toggle" href="#" aria-label="If you have a question, comment or need assistance, feel free to email convergentfacilitation@
           baynvc.org" tabindex="0">
           <i class="far fa-question-circle" style="font-size: 18px; margin-top: 8px; margin-left: 6px;"></i>
           </span>
-        </li>
+        </li> -->
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

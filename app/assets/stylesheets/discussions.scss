@@ -2,7 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $offwhite: #f5f5f5;
-$label-blue: #81c4ff;
+// $label-blue: #81c4ff;
+$label-blue: #95a7ff;
 $neutral-blue: #0091ff;
 
 
@@ -13,6 +14,26 @@ p > a, .comment > a {
 // .discussion-sidebar {
 //   background-color: white;
 // }
+
+.discussion {
+  width: 100%;
+
+  .issue-info {
+    width: 100%;
+    text-align: center;
+
+    > div > div {
+      font-size: 20px;
+      margin: 0px;
+      margin-top: 6px;
+      font-weight: 800;
+
+      i {
+        color: $label-blue;
+      }
+    }
+  }
+}
 
 .discussion-column {
   background-color: $offwhite;
@@ -51,7 +72,7 @@ p > a, .comment > a {
   width: 70%;
   // width: 100%;
   background-color: white;
-  border-top: 0;
+  // border: 1px solid #d2d2d2;
 }
 
 .discussion-large {
@@ -60,6 +81,9 @@ p > a, .comment > a {
   margin-right: 10px;
 
   #scroll-div {
+    height: fit-content;
+    min-height: 50vh;
+    max-height: 64vh;
     padding: 10px;
   }
 }
@@ -154,12 +178,14 @@ p > a, .comment > a {
 
 .comment-box {
   width: 100%;
-  height: 34px;
+  height: 26px;
 
   #comment_content {
     width: 100%;
     padding-right: 50px;
-    height: 34px;
+    height: 26px;
+    border: 0;
+    border-top: 1px solid #d8d8d8;
   }
 }
 
@@ -237,7 +263,7 @@ p > a, .comment > a {
   margin-bottom: 8px;
   font-size: 12px;
   padding: 6px 10px;
-  border: 1px solid #d8d8d8;
+  // border: 1px solid #d8d8d8;
   background: white;
   overflow: hidden;
 }
@@ -282,6 +308,7 @@ p > a, .comment > a {
   border: 1px solid #d8d8d8;
   border-left: 0;
   height: fit-content;
+  z-index: 1;
 
   h2 {
     padding-left: 10px;

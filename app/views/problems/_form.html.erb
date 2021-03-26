@@ -44,7 +44,7 @@
     <% if Setting.find(10).state && false %>
       <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode
     <% else %>
-      <%= form.hidden_field :facilitator_id, id: :facilitator_id, value: current_user.id %>
+      <%#= form.hidden_field :facilitator_id, id: :facilitator_id, value: current_user.id %>
     <% end %>
 
 
@@ -61,6 +61,8 @@
         <!-- Scoring method -->
         <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>
       </div>
+    <% else %>
+      <%= form.hidden_field :scoring_method, id: :scoring_method, value: 1 %>
     <% end %>
 
     <div>
@@ -69,12 +71,16 @@
     <% end %>
     </div>
 
+  <% if false %>
   Facilitator: 
   <%= current_user.name %>
   <span class="crisupport-count red tooltip-toggle" href="#" aria-label="The person who creates a process becomes the facilitator. Facilitators must approve all new criteria." tabindex="0">
     <i class="far fa-question-circle"></i>
   </span>
   </div>
+  <% end %>
+
+  <%= link_to 'Cancel', main_feed_path, class: 'cancel-button' %>
 
   <% if controller.action_name == "edit" %>
     <%= form.submit "Save changes", id: :submit_brainstorm %>

@@ -347,6 +347,6 @@ class CriteriaController < ApplicationController
     end
 
     def weighted_scoring?(problem)
-      problem.scoring_method && problem.scoring_method = 1
+      problem.scoring_method && problem.scoring_method == 1
     end
 end

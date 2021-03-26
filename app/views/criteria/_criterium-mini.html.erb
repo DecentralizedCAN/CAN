@@ -2,7 +2,7 @@
 
   <%
     def weighted_scoring?(problem)
-      problem.scoring_method && problem.scoring_method = 1
+      problem.scoring_method && problem.scoring_method == 1
     end
 
     # if weighted_scoring?(criterium.problem)
@@ -17,7 +17,6 @@
     status_color = "#ff7455d9;;" if criterium.user.include?(@user)
     status_color = "#05adabab;" if criterium.cridissent.find_by(user: @user) 
   %>
-
 
   <div class="criterium" >
 
@@ -79,9 +78,9 @@
 
 
       <!-- If there's a facilitator -->
-      <% if criterium.problem.facilitator_id && logged_in? %>
+      <% if logged_in? %>
         <!-- If you are the facilitator -->
-        <% if criterium.problem.facilitator_id == @user.id %>
+        <% if criterium.problem.facilitator_id && criterium.problem.facilitator_id == @user.id %>
   
           <!-- If weighted scoring is off -->
           <% if !weighted_scoring?(criterium.problem) %>

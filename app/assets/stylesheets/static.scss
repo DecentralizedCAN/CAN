@@ -1,5 +1,6 @@
 $offwhite: #f5f5f5;
-$label-blue: #81c4ff;
+// $label-blue: #81c4ff;
+$label-blue: #95a7ff;
 
 // MAIN FEED
 
@@ -34,11 +35,11 @@ $label-blue: #81c4ff;
   display: inline-block;
   font-weight: bold;
   font-size: 14px;
-  margin: 10px;
+  // margin: 10px;
 }
 
 .issue-info, .activity-info, .discussion-info, .written-progress {
-  line-height: 16px;
+  line-height: 13px;
   display: inline-block;
   // margin-left: 22px;
   font-weight: normal;
@@ -56,6 +57,11 @@ $label-blue: #81c4ff;
   font-size: 12px !important;
   font-weight: 100;
   height: 10px;
+}
+
+.problem-title-outer {
+  width: 100%;
+  margin: 5px;
 }
 
 .post-outer {
@@ -176,7 +182,8 @@ $label-blue: #81c4ff;
     background: url(two-arrow-white.svg) center no-repeat;
     background-size: 18px;
     border: 0;
-    background-color: #ff7455 !important;
+    // background-color: #ff7455 !important;
+    background-color: #ff7272 !important;
 
     &:active, &:focus {
       outline: 0;
@@ -244,7 +251,8 @@ $label-blue: #81c4ff;
   text-transform: uppercase;
   font-size: 10px;
   // background-color: #fd9f8c;
-  background-color: #2afb43;
+  // background-color: #2afb43;
+  background-color: #73e677;
   padding: 1px 4px;
   border-radius: 2px;
   line-height: 12px;
@@ -423,7 +431,7 @@ $label-blue: #81c4ff;
   }
 
 
-  div {
+  > div {
     max-width: 500px;
     // width: fit-content;
     margin: 8px 0px;
@@ -464,7 +472,7 @@ $label-blue: #81c4ff;
 // }
 
 .unread {
-  border: 2px solid #ec6f68 !important;
+  // border: 2px solid #ec6f68 !important;
   background-color: #ec6f681c;
 
   // border: 1px solid gray;
@@ -600,13 +608,30 @@ li.home-item-underlined {
       }
     }
   }
+}
 
-  &:hover {
-    text-decoration: none;
+// CHOICE BEGINS
+.choice {
+  text-align: center;
 
-    .issue-title {
-      text-decoration: underline;
-    }
+  div {
+      display: inline-block;
+      border: 1px solid gray;
+      background-color: white;
+      width: 200px;
+      height: 200px;
+      vertical-align: top;
+      margin: 20px;
+      cursor: pointer;
+      padding: 10px;
+
+      p {
+        opacity: 0;
+      }
+
+      &:hover p {
+          opacity: 1;
+      }
   }
 }
 // CHOICE ENDS

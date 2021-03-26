@@ -70,7 +70,7 @@
       <br>
     <% end %>
 
-    <%= form.check_box :make_public, {checked: true}, false, true %> Private action (don't post to main page)
+    <%= form.check_box :make_public, {checked: false}, false, true %> Private action (don't post to main page)
 
     <br>
 
@@ -80,7 +80,7 @@
     <br>
     <% end %>
 
-  
+  <%= link_to 'Cancel', main_feed_path, class: 'cancel-button' %>
   <%= form.submit value: "Create", id: :submit_action do %>
   <% end %>
 

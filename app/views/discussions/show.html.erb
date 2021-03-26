@@ -1,4 +1,5 @@
-<br>
+<div id="activator" class="white-container">
+
 <% if @discussion.problem %>
   <div class="back-button">
     <%= link_to issue_path(@discussion.problem) do %>
@@ -38,8 +39,8 @@
       </div>
     <% end %>
   </div> -->
-
-    <%= render(:partial => 'static/post-stuff', :locals => {:post => @discussion.post})%>
+<li class="post-outer show-post">
+<%= render(:partial => 'static/post-stuff', :locals => {:post => @discussion.post})%>
 
 <div class="discussion">
 
@@ -51,24 +52,19 @@
   <span class="underline" style="text-shadow: 0px 0px 12px #81c4ff"><%= @discussion.title %></span>
   <span class="feed-label">Discussion</span></div>
 
-  <div class="issue-info">
     <div class="post-signature">
       <!-- <i class="fas fa-calendar"></i> -->
-      Created <%= time_ago_in_words(@discussion.created_at) %> ago
+      Created <%= time_ago_in_words(@discussion.created_at) %> ago •
       by
       <em><%= 
       begin 
         User.find(@discussion.creator).name
       rescue 
       end  %></em> •
-      in <%= @discussion.post.group ? @discussion.post.group.name : 'main feed' %> •
+      in <%= @discussion.post.group ? @discussion.post.group.name : 'main feed' %>
     </div>
-    <div>
-      <!-- <i class="fas fa-comment-dots"></i> -->
-      <%= pluralize(@discussion.comment.count, "comment") %>
-    </div>
-  </div>
 </div>
+</li>
 
 <% if @discussion.content.length > 0 %>
   <p class="discussion-content">Discussion info: 
@@ -227,7 +223,9 @@
   <% end %>
 </div>
 
+</li></ul></div>
 <% if logged_in? && current_user.admin? %>
+  <br><br><br>
   <span class="admin-section">
     Created by user <%= @discussion.creator %> –
     <%= link_to 'Remove', @discussion, method: :delete, data: { confirm: 'Are you sure?' } %>

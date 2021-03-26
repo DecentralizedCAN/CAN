@@ -25,11 +25,11 @@ $success-red: #ff7455;
 }
 
 .issue-info{
-  #open-collaborators, #open-share-div, a {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  // #open-collaborators, #open-share-div, a {
+  //   &:hover {
+  //     text-decoration: underline;
+  //   }
+  // }
 
   div {
     display: inline-block;
@@ -241,10 +241,11 @@ $success-red: #ff7455;
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
   top: 0;
   left: 0;
   background-color: #8080803b;
+  z-index: 1;
 
   .objection-inner, .objection-list-inner, .new-criterion-inner {
     background-color: white;
