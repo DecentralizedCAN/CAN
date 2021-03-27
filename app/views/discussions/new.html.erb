@@ -1,31 +1,22 @@
 <div class="backdrop">
 
-<!-- <div class="back-button">
-  <%= link_to main_feed_path do %>
-    <div class="back-button-arrow"></div>
-    <div class="back-button-content">
-      Back
-    </div>
-  <% end %>
-</div> -->
-
-<% if false %>
+<% if true %>
 <ul class="nav nav-tabs">
   <% if params[:goal] %>
-    <!-- <li><%= link_to 'Brainstorm', post_problem_path(:goal => params[:goal]) %></li> -->
+    <li><%= link_to 'Brainstorm', post_problem_path(:goal => params[:goal]) %></li>
     <li><%= link_to 'Action', post_action_path(:goal => params[:goal]) %></li>
     <li class="active"><%= link_to 'Discussion', new_discussion_path(:goal => params[:goal]) %></li>
   <% else %>
-    <!-- <li><%= link_to 'Brainstorm', post_problem_path %></li> -->
+    <li><%= link_to 'Brainstorm', post_problem_path %></li>
     <li><%= link_to 'Action', post_action_path %></li>
     <li class="active"><%= link_to 'Discussion', new_discussion_path %></li>
   <% end %>
 </ul>
 <% end %>
 
-<h2> New Discussion </h2>
+<!-- <h2> New Discussion </h2> -->
 
-<ul class="nav nav-tabs"></ul>
+<!-- <ul class="nav nav-tabs"></ul> -->
 
 
 <div class="form-tab">
