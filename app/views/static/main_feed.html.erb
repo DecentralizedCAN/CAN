@@ -105,7 +105,13 @@
 				<%= link_to issue_path(post.problem) do %>
 	        <% #if post.problem.user.count > 0 %>
 	          <div class="issue">
-	            <div class="issue-title"><span class="underline"><%= post.problem.title %></span> <span class="feed-label">Solver</span>
+	            <div class="issue-title">
+                <% if post.problem.goal %>
+                  <span class="referenced-goal"><strong><%= post.problem.goal.title %></strong></span>
+                  <i class="fas fa-arrow-right"></i>
+                <% end %>
+
+                <span class="underline"><%= post.problem.title %></span> <span class="feed-label">Solver</span>
 		              <div class="post-signature">
 		                <!-- <i class="fas fa-calendar"></i> -->
 		                <%= time_ago_in_words(post.problem.created_at) %> ago
@@ -118,7 +124,7 @@
 		              </div>
 	            </div>
 
-					      <% if post.problem.goal %>
+					      <% if false && post.problem.goal %>
 					        <div class="proposal-activity-description">
 					          <i class="fas fa-link"></i>
 					          Attached to goal <strong>"<%= post.problem.goal.title %>"</strong>
@@ -198,10 +204,10 @@
 
 							<div class="discussion-title">
 				      	<% if post.discussion.goal %>
-				          <span class="referenced-goal"><strong>"<%= post.discussion.goal.title %>"</strong></span>
+				          <span class="referenced-goal"><strong><%= post.discussion.goal.title %></strong></span>
 				          <i class="fas fa-arrow-right"></i>
 				      <% end %>
-							<span class="underline" style="text-shadow: 0px 0px 12px #81c4ff"><%= post.discussion.title %></span>
+							<span class="underline"><%= post.discussion.title %></span>
 							<span class="feed-label">Discussion</span>
               <div class="post-signature">
                   <!-- <i class="fas fa-calendar"></i> -->

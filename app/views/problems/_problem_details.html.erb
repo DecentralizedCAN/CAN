@@ -8,14 +8,21 @@
 
       <div class="issue-title view">
         
-        <h3><strong><%= @problem.title %></strong> <span class="feed-label">Solver</span></h3>
+        <h3>
+
+        <% if @problem.goal %>
+          <span class="referenced-goal"><strong><%= link_to @problem.goal.title, goal_path(@problem.goal) %></strong></span>
+          <i class="fas fa-arrow-right"></i>
+        <% end %>
+        
+        <strong><%= @problem.title %></strong> <span class="feed-label">Solver</span></h3>
         
       </div>
 
 
     <!-- </div> -->
 
-    <% if @problem.goal %>
+    <% if false && @problem.goal %>
       <div class="proposal-activity-description">
         <i class="fas fa-link"></i>
         Attached to goal <strong><%= link_to @problem.goal.title, goal_path(@problem.goal) %></strong>

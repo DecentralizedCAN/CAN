@@ -46,10 +46,10 @@
 
   <div class="discussion-title">
     <% if @discussion.goal %>
-      <span class="referenced-goal"><strong>"<%= link_to @discussion.goal.title, goal_path(@discussion.goal) %>"</strong></span>
+      <span class="referenced-goal"><strong><%= link_to @discussion.goal.title, goal_path(@discussion.goal) %></strong></span>
       <i class="fas fa-arrow-right"></i>
   <% end %>
-  <span class="underline" style="text-shadow: 0px 0px 12px #81c4ff"><%= @discussion.title %></span>
+  <span class="underline"><%= @discussion.title %></span>
   <span class="feed-label">Discussion</span></div>
 
     <div class="post-signature">
