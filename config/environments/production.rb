@@ -72,18 +72,6 @@ Rails.application.configure do
   host = ENV['SERVER_HOST']
   config.action_mailer.default_url_options = { host: host, protocol: 'http' }
 
-
-  # ActionMailer::Base.smtp_settings = {
-  #   :address        => 'smtp.sendgrid.net',
-  #   :port           => '587',
-  #   :authentication => :plain,
-  #   :user_name      => ENV['SENDGRID_USERNAME'],
-  #   :password       => ENV['SENDGRID_PASSWORD'],
-  #   :domain         => ENV['SERVER_HOST'],
-  #   :enable_starttls_auto => true
-  # }
-
-
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",

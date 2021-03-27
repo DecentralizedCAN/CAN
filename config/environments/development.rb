@@ -34,15 +34,13 @@ Rails.application.configure do
   end
 
   # Care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
   config.action_mailer.perform_caching = false
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-
   host = ENV['SERVER_HOST']                    # Local server
   config.action_mailer.default_url_options = { host: host, protocol: 'http' }
 
+  # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :domain               => 'mail.google.com',
