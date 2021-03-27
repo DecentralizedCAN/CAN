@@ -154,15 +154,21 @@
               <% end %>
 
               <!-- <div class="float-right button small-button button-hollow"><i class="fas fa-eye"></i> Click to open</div> -->
-              <div class="float-right"><i class="fas fa-eye"></i> Click to open</div>
+              <!-- <div class="float-right"><i class="fas fa-eye"></i> Click to open</div> -->
 
             <% end %>
-           
+
+            <div class="suggest-action">
             <% if solution.user.count >= @problem.suggestion_min && solution.activity %>
               <%= link_to action_path(:activity_id => solution.activity.id), class: "button button-view" do %>
-                <em>View action</em>
+                View action
+              <% end %>
+            <% elsif false && solution.roll.count > 0 %>
+              <%= link_to suggest_path(:solution_id => solution.id), method: "post", class: "button button-view" do %>
+                Send to activator
               <% end %>
             <% end %>
+            </div>
 
           </div>
         </li>

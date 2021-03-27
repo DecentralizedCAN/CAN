@@ -4,13 +4,36 @@
     <i class="fas fa-arrow-left">&nbsp;</i> Back to all proposals
 <% end %></div><br>
 
-    <h1>Proposal: </strong><%= @solution.title %></h1>
+  <h1>Proposal: </strong><%= @solution.title %></h1>
 
-  <% if @solution.description.length > 0 %> 
+  <div class="suggest-action">
+  <% if @solution.user.count >= @problem.suggestion_min && @solution.activity %>
+    <%= link_to action_path(:activity_id => @solution.activity.id), class: "button button-view" do %>
+      View action
+    <% end %>
+  <% elsif @solution.roll.count > 0 %>
+    <%= link_to suggest_path(:solution_id => @solution.id), method: "post", data: {confirm: "Are you sure you want to turn this proposal into an action?"}, class: "button button-view" do %>
+      Send to activator
+    <% end %>
+  <% end %>
+  </div>
+
+  <% if @solution.description.length > 0 || @solution.roll.count > 0 %> 
     <div id="proposal-description">
       <p class="discussion-content"><%= @solution.description.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+
+      <% if @solution.roll.count > 0 %> 
+        <h1>Roles</h1>
+        <ul>
+          <% for roll in @solution.roll do %> 
+            <li><%= roll.title %> (<%= roll.minimum %><% if roll.maximum %> to <%= roll.maximum %><% end %>) 
+            </li>
+          <% end %> 
+        </ul>
+      <% end %> 
     </div>
-  <% end %> 
+  <% end %>
+
 
 <!-- CRITERIA -->
 <div id="proposal-polling">
