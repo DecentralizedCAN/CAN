@@ -1,11 +1,11 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
-Setting.create!(id: 1, title: "Allow any member to post", state: false)
+Setting.create!(id: 1, title: "Allow any member to post", state: true)
 Setting.create!(id: 2, title: "Limit multiple posts within a short amount of time", state: false)
-Setting.create!(id: 3, title: "Allow users to sign up on their own", state: false)
-Setting.create!(id: 4, title: "Include a discussion section for brainstorms", state: false)
-Setting.create!(id: 5, title: "Include a discussion section for actions", state: false)
+Setting.create!(id: 3, title: "Allow users to sign up on their own", state: true)
+Setting.create!(id: 4, title: "Include a discussion section for brainstorms", state: true)
+Setting.create!(id: 5, title: "Include a discussion section for actions", state: true)
 Setting.create!(id: 6, title: "Make content viewable without an account", state: false)
 Setting.create!(id: 7, title: "Require new members to provide an email address", state: false)
 Setting.create!(id: 8, title: "Allow users to receive emails (reduced security)", state: false)

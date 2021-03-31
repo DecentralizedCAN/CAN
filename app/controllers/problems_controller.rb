@@ -179,7 +179,7 @@ class ProblemsController < ApplicationController
   def update
     @problem = Problem.find(params[:id])
 
-    if @problem.facilitator_id && @problem.facilitator_id == current_user.id
+    if (@problem.facilitator_id && @problem.facilitator_id == current_user.id) || current_user.admin?
       respond_to do |format|
         if @problem.update(problem_params)
           format.html { redirect_to issue_path(@problem), notice: 'Process was successfully updated.' }
