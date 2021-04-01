@@ -333,7 +333,7 @@
       <%= form.hidden_field :parent_id, :value => @goal.id %>
 
       <% if Setting.find(13).state %>
-        <%= form.check_box :post_goal, {checked: true}, true, false %> <label>Post to feed</label><br>
+        <%= form.check_box :post_goal, {checked: true}, true, false %> <label>Post to bulletin</label><br>
       <% end %>
 
       <%= form.submit "Submit", id: :submit_goal, :class => 'button'%>
