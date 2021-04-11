@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201212024617) do
+ActiveRecord::Schema.define(version: 20210410161408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 20201212024617) do
     t.bigint "user_id", null: false
     t.index ["activity_id", "user_id"], name: "index_activities_users_on_activity_id_and_user_id"
     t.index ["user_id", "activity_id"], name: "index_activities_users_on_user_id_and_activity_id"
+  end
+
+  create_table "cofacilitators", force: :cascade do |t|
+    t.bigint "problem_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["problem_id"], name: "index_cofacilitators_on_problem_id"
+    t.index ["user_id"], name: "index_cofacilitators_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -328,6 +337,8 @@ ActiveRecord::Schema.define(version: 20201212024617) do
   add_foreign_key "actdissents", "activities"
   add_foreign_key "actdissents", "users"
   add_foreign_key "activities", "goals"
+  add_foreign_key "cofacilitators", "problems"
+  add_foreign_key "cofacilitators", "users"
   add_foreign_key "comments", "discussions"
   add_foreign_key "comments", "users"
   add_foreign_key "completions", "rolls"

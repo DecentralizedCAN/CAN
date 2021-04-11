@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post '/solver/assent', to: 'criteria#assent', :as => :assent_criteria
   post '/problem/sponsor', to: 'problems#sponsor', :as => :sponsor_problem
   post '/problem/unsponsor', to: 'problems#unsponsor', :as => :unsponsor_problem
+  post '/problem/:problem_id/add_cofacilitator/:user_id', to: 'problems#add_cofacilitator', :as => :add_cofacilitator
   get '/c/:problem_id', to: 'problems#show', :as => :issue
   get '/c/table/:problem_id', to: 'problems#table', :as => :brainstorm_table
   resources :problems, only: [:create, :destroy, :edit, :update]

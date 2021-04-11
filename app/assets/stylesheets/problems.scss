@@ -213,6 +213,18 @@ $success-red: #ff7455;
     }
   }
 
+  .red-support {
+    * {
+      color: $success-red;      
+    }
+  }
+
+  .gray-support {
+    * {
+      color: gray;      
+    }
+  }
+
 }
 
 #open-discussion {
@@ -315,6 +327,9 @@ $success-red: #ff7455;
 
         div {
           width: 100%;
+          max-width: 71%;
+          height: fit-content;
+          line-break: anywhere;
         }
 
         a {

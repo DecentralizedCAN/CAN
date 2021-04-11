@@ -47,23 +47,44 @@
             <%# @my_criteria.each do |criterium| %>
               <%#= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
             <%# end %>
+
+            <% if params[:criteria] == "all" %>
+              <%= link_to issue_path( :problem_id => @problem.id), :class => "center" do %>
+                <div class="button button-hollow center" style="margin: 6px 0">
+                  <i class="fas fa-chevron-up"></i>
+                  Collapse criteria
+                </div>
+              <% end %>
+            <% end %>
+
             <% @criteria.each do |criterium| %>
               <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
             <% end %>
 
-            <% if @criteria_count >= 8 %>
-              <div class="criterium" >
+            <%# if @criteria_count >= 8 && @all_criteria.count.count > @criteria.count %>
+            <% if @criteria_count >= 8 && @all_criteria.count.count > @criteria.count %>
+              <!-- <div class="criterium" > -->
                 <div class="criterium-top">
 
-                <% if @all_criteria.count.count > @criteria.count %>
-                <%= link_to full_criterium_path( :problem_id => @problem.id), :class => "center" do %>
-                  <div class="center"><%= @all_criteria.count.count - @criteria.count %> more criteria... (click to view all)</div>
-                <% end %>
+                <%= link_to issue_path( :problem_id => @problem.id, :criteria => "all"), :class => "center" do %>
+                  <div class="button button-hollow center" style="margin: 6px 0">
+                    <i class="fas fa-chevron-down"></i> <%= @all_criteria.count.count - @criteria.count %> more criteria... (click to view all)
+                  </div>
                 <% end %>
 
                 </div>
-              </div>
+              <!-- </div> -->
             <% end %>
+
+            <% if params[:criteria] == "all" %>
+              <%= link_to issue_path( :problem_id => @problem.id), :class => "center" do %>
+                <div class="button button-hollow center" style="margin: 6px 0">
+                  <i class="fas fa-chevron-up"></i>
+                  Collapse criteria
+                </div>
+              <% end %>
+            <% end %>
+
           </div>
         </div>
       <% end %>

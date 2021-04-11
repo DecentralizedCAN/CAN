@@ -1,6 +1,7 @@
-<%= link_to notification_redirect_url(:notification_id => @notification.id) do %>
-  <p><%= @notification.details %></p>
-<% end %>
+<p><%= @notification.details %></p>
 
+<p><%= link_to notification_redirect_url(:notification_id => @notification.id) do %>
+  Click here to view in the browser
+<% end %></p>
 
 <p>You can update your email preferences in your profile settings</p>

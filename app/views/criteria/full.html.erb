@@ -64,7 +64,15 @@
     <% end %>
 
 
-    <% if !@problem.facilitator_id || ( @problem.facilitator_id && current_user && @problem.facilitator_id == current_user.id ) || @weighted %>
+    <h2>Criteria</h2>
+
+    <div class="criteria-list">
+    <% @active_criteria.each do |criterium| %>
+      <%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => criterium})%>
+    <% end %>
+    </div>
+
+    <% if false && (!@problem.facilitator_id || ( @problem.facilitator_id && current_user && @facilitating ) || @weighted) %>
 
       <% if @weighted %>
         <h2>Supported Criteria</h2>
@@ -83,7 +91,7 @@
 
     <% end %>
 
-    <% if @criteria_count - @my_criteria.count  > 0 %>
+    <% if false && @criteria_count - @my_criteria.count  > 0 %>
 
       <% if @weighted %>
         <h2>Unsupported Criteria</h2>

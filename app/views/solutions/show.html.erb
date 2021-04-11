@@ -4,7 +4,14 @@
     <i class="fas fa-arrow-left">&nbsp;</i> Back to all proposals
 <% end %></div><br>
 
-    <h1>Proposal: </strong><%= @solution.title %></h1>
+    <h1>Proposal: </strong><%= @solution.title %>
+    <%= link_to '+ Modify', new_solution_path(:problem_id => @problem.id, :duplicate => @solution.id), :class => "button green" %>
+    <%=
+      if logged_in? && (current_user.admin? || current_user.id == @problem.facilitator_id || @problem.cofacilitator.find { |person| person.user_id == current_user.id} )
+        link_to "ø delete", destroy_solution_path(@solution), :class => "button gray", method: :delete, data: { confirm: 'Are you sure?' }         
+      end
+     %>
+    </h1>
 
   <% if @solution.description.length > 0 %> 
     <div id="proposal-description">
@@ -185,11 +192,12 @@
 
 </div>
 
-<% if logged_in? && (current_user.admin? || current_user.id == @problem.facilitator_id ) %>
+<% if logged_in? && (current_user.admin? || current_user.id == @problem.facilitator_id || @problem.cofacilitator.find { |person| person.user_id == current_user.id} ) %>
   <br>
   <div class="delete-section">
     Created by <strong><%= User.find(@solution.creator).name %></strong> <br>
-    <%= link_to "Delete this proposal", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <br>
+    <%#= link_to "Delete this proposal", destroy_solution_path(@solution), method: :delete, data: { confirm: 'Are you sure?' } %>
   </span>
 <% end %>
 

@@ -12,6 +12,7 @@
 
     <li >
       <%= notification.details %>
+      <br><%= notification.created_at.strftime("%Y/%m/%d at %H:%M") %>
     </li>
 
   <% end %>

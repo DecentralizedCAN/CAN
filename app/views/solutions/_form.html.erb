@@ -22,8 +22,16 @@
   <% end %> -->
 
   <div class="solution-form-body">
-    <%= form.text_area :title, id: :solution_title, placeholder: "Title" %>
-    <%= form.text_area :description, id: :solution_description, placeholder: "Description" %>
+    <% 
+    begin 
+      placeholder_title = @original.title.split(" (")[0] + ' (new version by ' + current_user.name + ' on ' + Time.new.strftime("%Y/%m/%d at %H:%M") + ')' 
+    rescue
+      placeholder_title = ""
+    end
+    %>
+
+    <%= form.text_area :title, id: :solution_title, placeholder: "Title", value: placeholder_title %>
+    <%= form.text_area :description, id: :solution_description, placeholder: "Description", value: @original.description %>
 
     <% if Setting.find(9).state %>
       <div class="activation">

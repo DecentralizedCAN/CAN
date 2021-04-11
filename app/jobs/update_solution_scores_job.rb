@@ -4,8 +4,9 @@ class UpdateSolutionScoresJob < ApplicationJob
 
   def perform(problem_id)
     solutions = Problem.find(problem_id).solution.all
+    problem = Problem.find(problem_id)
 
-    if Problem.find(problem_id).facilitator_id
+    if problem.scoring_method && problem.scoring_method != 1
       solutions.each do |solution|
         polls = Criterium.where(problem_id: problem_id).joins(:user).joins(:poll).where('"polls".solution_id': solution.id)
         # polls = Poll.joins(:user).group("id").where(solution_id: solution.id)

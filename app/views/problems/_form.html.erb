@@ -56,12 +56,16 @@
     </div>
 
     <%# if Setting.find(11).state %>
-    <% if params[:scoring] == "show" %>
-      <div>
+    <%# if params[:scoring] == "show" %>
+      <br><div>
         <!-- Scoring method -->
-        <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>
-      </div>
-    <% end %>
+        Convergence score: <%= form.select :scoring_method, { 'classic score (recommended)': 2, 'weighted by criteria support': 1 }%>
+
+        <span class="crisupport-count red tooltip-toggle" href="#" aria-label='Classic scoring requires facilitators to approve criteria, which are all valued equally. Weighted scoring allows anyone to "support" a criterion, which gives that criterion more importance in proposal scores' tabindex="0">
+          <i class="far fa-question-circle"></i>
+        </span>
+      </div><br>
+    <%# end %>
 
     <div>
     <% if Setting.find(12).state %>
@@ -71,7 +75,7 @@
 
   Facilitator: 
   <%= current_user.name %>
-  <span class="crisupport-count red tooltip-toggle" href="#" aria-label="The person who creates a process becomes the facilitator. Facilitators must approve all new criteria." tabindex="0">
+  <span class="crisupport-count red tooltip-toggle" href="#" aria-label="The person who creates a process becomes the facilitator. You can add co-facilitators later." tabindex="0">
     <i class="far fa-question-circle"></i>
   </span>
   </div>
