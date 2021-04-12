@@ -24,7 +24,7 @@
   <div class="solution-form-body">
     <% 
     begin 
-      placeholder_title = @original.title.split(" (")[0] + ' (new version by ' + current_user.name + ' on ' + Time.new.strftime("%Y/%m/%d at %H:%M") + ')' 
+      placeholder_title = @original.title.split(" (")[0] + ' (new version by ' + current_user.name + ' on ' + Time.new.strftime("%m/%d/%Y at %H:%M") + ')' 
     rescue
       placeholder_title = ""
     end
