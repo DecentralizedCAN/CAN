@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :actdissent, dependent: :destroy
   has_many :comment, dependent: :destroy
   has_many :notification, dependent: :destroy
+  has_many :cofacilitator, dependent: :destroy
 
   encrypts :name
   blind_index :name, slow: true

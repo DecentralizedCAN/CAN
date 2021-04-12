@@ -7,7 +7,8 @@ class Problem < ApplicationRecord
 	has_one :post, dependent: :destroy
   has_one :discussion, dependent: :destroy
   has_many :notification, dependent: :destroy
-  
+  has_many :cofacilitator, dependent: :destroy
+
   validates :title, presence: true, length: { minimum: 1, maximum: 200 }
   validates :description, length: { maximum: 2000 }
   belongs_to :goal, optional: true

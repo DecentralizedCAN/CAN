@@ -16,11 +16,15 @@ class CriteriaController < ApplicationController
   # GET /criteria/1
   # GET /criteria/1.json
   def show
+    @facilitating = facilitating?(@criterium.problem)
     @user = current_user
+    @discussion = @criterium.problem.discussion
   end
 
   def full
     @problem = Problem.find(params[:problem_id])
+
+    @facilitating = facilitating?(@problem)
 
     @active_criteria = @problem.criterium
       .joins(:user)
@@ -67,13 +71,15 @@ class CriteriaController < ApplicationController
     @criterium = Criterium.new(criterium_params.except(:alt_id, :redirect))
     @criterium.creator = @user.id
 
+    @facilitating = facilitating?(@criterium.problem)
+
     if @criterium.save
-      @criterium.user << @user unless (facilitating?(@criterium.problem) || criterium_params[:alt_id].length > 0 ) && !weighted_scoring?(@criterium.problem)
+      @criterium.user << @user unless ( ( !weighted_scoring?(@criterium.problem) && !facilitating?(@criterium.problem) ) || criterium_params[:alt_id].length > 0 )
 
       if @criterium.problem.facilitator_id
         facilitator = User.find(@criterium.problem.facilitator_id)
         unless facilitator.id == @user.id
-          notification = facilitator.notification.create(:details => "Someone has suggested a new criterion for \"" + @criterium.problem.title + "\"",
+          notification = facilitator.notification.create(:details => "Someone has suggested a new criterion for \"" + @criterium.problem.title + "\": " + @criterium.title,
             :criterium_id => @criterium.id)
           if facilitator.email_notifications
             notification.send_email
@@ -103,12 +109,17 @@ class CriteriaController < ApplicationController
           redirect_to show_criterium_path(:criterium_id => @from.id)
         elsif @alternative.save
           new_comment('!chatlog suggested "' + Criterium.find(@alternative.alternative).title + '" as an alternative to "' + @from.title + '"', @from.problem.discussion.id)
-          flash[:success] = "You suggested an alternative criterion. Thanks for your suggestion!"
+          
+          if @from.user.include?(@user)
+            flash[:success] = 'You suggested an alternative criterion. You can transfer your support to the alternative by clicking the alternatives link, and then "Switch to this" next to your alternative.'          
+          else
+            flash[:success] = "You suggested an alternative criterion. Thanks for your suggestion!"
+          end
         
           # send notifications
           if @from.crialt.count == 1
             @from.user.each do |user|
-              notification = user.notification.create(:details => "Someone suggested an alternative to the criterion \"" + @from.title + "\"",
+              notification = user.notification.create(:details => "Someone suggested an alternative to the criterion \"" + @from.title + "\": " + Criterium.find(@alternative.alternative).title,
                 :criterium_id => @from.id)
               if user.email_notifications
                 notification.send_email
@@ -120,8 +131,12 @@ class CriteriaController < ApplicationController
       
       if criterium_params[:redirect] == "none"
         redirect_back fallback_location: root_path
+      elsif criterium_params[:alt_id].length > 0
+        redirect_to show_criterium_path(:criterium_id => criterium_params[:alt_id])
       else
-        redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+        # redirect_to issue_path(:problem_id => @criterium.problem.hashid)
+
+        redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
       end
 
     else
@@ -151,7 +166,7 @@ class CriteriaController < ApplicationController
 
     auto_upvote_post(@criterium.problem.post.id, @user.id)
 
-    redirect_back fallback_location: root_path
+    redirect_back fallback_location: root_path if params[:reload] == 'true'
   end
 
   def unsponsor
@@ -159,10 +174,14 @@ class CriteriaController < ApplicationController
     @user = this_user
     @criterium.user.delete(@user)
 
+    if !weighted_scoring?(@criterium.problem) && facilitating?(@criterium.problem)
+      @criterium.user.delete_all
+    end
+
     # update_all_solution_scores(@criterium.problem.id)
     UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
-    redirect_back fallback_location: root_path
+    redirect_back fallback_location: root_path if params[:reload] == 'true'
   end
 
   def dissent
@@ -187,7 +206,7 @@ class CriteriaController < ApplicationController
         # send notifications
           if @criterium.cridissent.count == 1
             @criterium.user.where.not(id: @user.id).each do |user|
-              notification = user.notification.create(:details => "Someone has a concern about the criterion \"" + @criterium.title + "\"",
+              notification = user.notification.create(:details => "Someone has a concern about the criterion \"" + @criterium.title + "\"" + content,
                 :criterium_id => @criterium.id)
               if user.email_notifications
                 notification.send_email
@@ -205,12 +224,13 @@ class CriteriaController < ApplicationController
         UpdateSolutionScoresJob.perform_later(@criterium.problem.id)
 
         flash[:success] = "You added a concern. Thanks for your input!"
-        # redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
-        redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
+        redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
+        # redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
       end
     else
       flash[:warning] = "You alread added a concern to this criterion. You must remove it before adding any more."
-      redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
+      redirect_to show_criterium_path(:criterium_id => @criterium.hashid)
+      # redirect_back fallback_location: show_criterium_path(:criterium_id => @criterium.hashid)
     end
   end
 
@@ -343,7 +363,7 @@ class CriteriaController < ApplicationController
     end
 
     def facilitating?(problem)
-      problem.facilitator_id && problem.facilitator_id == current_user.id
+      logged_in? && problem.facilitator_id && (problem.facilitator_id == current_user.id || problem.cofacilitator.find { |person| person.user_id == current_user.id})
     end
 
     def weighted_scoring?(problem)

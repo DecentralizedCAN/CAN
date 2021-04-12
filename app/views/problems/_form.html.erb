@@ -57,8 +57,9 @@
 
     <%# if Setting.find(11).state %>
     <% if params[:scoring] == "show" %>
-      <div>
+      <br><div>
         <!-- Scoring method -->
+
         <%= form.select :scoring_method, { 'Classic scoring': 2, 'Weighted scoring': 1 }%>
       </div>
     <% else %>
@@ -74,7 +75,7 @@
   <% if false %>
   Facilitator: 
   <%= current_user.name %>
-  <span class="crisupport-count red tooltip-toggle" href="#" aria-label="The person who creates a process becomes the facilitator. Facilitators must approve all new criteria." tabindex="0">
+  <span class="crisupport-count red tooltip-toggle" href="#" aria-label="The person who creates a process becomes the facilitator. You can add co-facilitators later." tabindex="0">
     <i class="far fa-question-circle"></i>
   </span>
   </div>

@@ -61,6 +61,7 @@ video {
 a {
   // font-style: italic;
   color: inherit;
+  height: min-content;
 }
 
 a:hover, a:focus, a:visited {
@@ -307,7 +308,7 @@ form select {
     border-radius: 2px;
     color: #fff;
     content: attr(aria-label);
-    left: -5px;
+    // left: -5px;
     padding: 2px;
     padding-right: 4px !important;
     position: absolute;

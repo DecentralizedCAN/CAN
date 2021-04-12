@@ -13,6 +13,7 @@
   <div>
     <li <%= 'class=unread' if !notification.read %> >
       <%= notification.details %>
+      <br><%= notification.created_at.strftime("%m/%d/%Y at %H:%M") %>
     </li>
   </div>
   <% end %>

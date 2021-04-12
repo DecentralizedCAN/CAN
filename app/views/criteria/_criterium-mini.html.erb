@@ -1,15 +1,14 @@
 <% if criterium.title %>
 
   <%
-    def weighted_scoring?(problem)
-      problem.scoring_method && problem.scoring_method == 1
-    end
 
-    # if weighted_scoring?(criterium.problem)
-    #   concern = "objection"
-    # else
-    #   concern = "concern"
-    # end
+    weighted_scoring = criterium.problem.scoring_method && criterium.problem.scoring_method == 1  
+
+    if weighted_scoring
+      concern = "objection"
+    else
+      concern = "concern"
+    end
     concern = "concern"
 
     @user = current_user
@@ -22,7 +21,9 @@
 
     <div class="criterium-top">
       <div class="criterium-title">
-        <%= criterium.title %>
+        <%= link_to show_criterium_path(criterium), :class=>"underline" do %>
+          <%= criterium.title %>
+        <% end %>
 
         <br>
 
@@ -80,28 +81,29 @@
       <!-- If there's a facilitator -->
       <% if logged_in? %>
         <!-- If you are the facilitator -->
-        <% if criterium.problem.facilitator_id && criterium.problem.facilitator_id == @user.id %>
+
+        <% if @facilitating %>
   
           <!-- If weighted scoring is off -->
-          <% if !weighted_scoring?(criterium.problem) %>
+          <% if !weighted_scoring %>
   
             <div class="criteria-sponsorship">
 
 
-              <%if criterium.user.include?(@user)%>
-                <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+              <%if criterium.user.count > 0%>
+                <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id, :reload => true), :method => "post" do %>
                   <!-- <div class="max-width"> -->
                   <div>
                     <span class="crisupport-count gray lightgray-background small-button" href="#" tabindex="0">
                     <i class="fas fa-times gray"></i>
-                    Remove
+                    Unapprove
                   </span></div>
                 <% end %>
               <%else%>
                   <!-- <div class="max-width"> -->
                   <div>
                     <span class="crisupport-count gray small-button green-background" href="#" tabindex="0">
-                <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
+                <%= link_to sponsor_criteria_path(:criterium_id => criterium.id, :reload => true), :method => "post" do %>
                     <i class="fas fa-thumbs-up gray"></i>
                     Approve
                   </span>
@@ -110,43 +112,44 @@
 
                 <!-- &nbsp; -->
 
+              <% end %>
+
                 <div>
                 <%= link_to destroy_criterium_path(:id => criterium.id), :method => "delete", data: { confirm: 'Are you sure you want to delete this criterion?' } do %>
-                  <span class="crisupport-count gray small-button red-background" href="#" tabindex="0">
+                  <!-- <span class="crisupport-count gray small-button" href="#" tabindex="0"> -->
+                  <span class="crisupport-count gray tooltip-toggle tooltip-small" href="#" aria-label="Delete" tabindex="0">
                     <i class="fas fa-minus-circle gray"></i>
-                    Delete
+                    <!-- Delete -->
                   </span>
                 <% end %>
                 </div>
-
-              <% end %>
             </div>
 
           <% end %>
         <% end %>
 
         <!-- If weighted scoring is on, allow supporting -->
-        <% if weighted_scoring?(criterium.problem) %>
+        <% if weighted_scoring %>
           <!-- SPONSORSHIP -->
           <div class="criteria-sponsorship">
             <%if criterium.user.include?(@user)%>
-              <%= link_to unsponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                <span class="crisupport-count red tooltip-toggle tooltip-small" href="#" aria-label="Remove&nbsp;support" tabindex="0">
-                  <i class="fas fa-hand-point-up red"></i>
-                  <%= criterium.user.count %>
+                <%= button_to unsponsor_criteria_path(:criterium_id => criterium.id), :class=>"red-support", :method => "post" do %>
+                  <span class="crisupport-count tooltip-toggle tooltip-small" href="#" aria-label="Remove&nbsp;support" tabindex="0">
+                    <i class="fas fa-hand-point-up"></i>
+                    <span class="count"><%= criterium.user.count %></span>
                 </span>
-              <% end %>
+                <% end %>
             <%else%>
-              <%= link_to sponsor_criteria_path(:criterium_id => criterium.id), :method => "post" do %>
-                <span class="crisupport-count gray tooltip-toggle tooltip-small" href="#" aria-label="Add&nbsp;support" tabindex="0">
-                  <i class="fas fa-hand-point-up gray"></i>
-                  <%= criterium.user.count %>
-                </span>
-              <% end %>
+                <%= button_to sponsor_criteria_path(:criterium_id => criterium.id), :class=>"gray-support", :method => "post" do %>
+                  <span class="crisupport-count tooltip-toggle tooltip-small" href="#" aria-label="Add&nbsp;support" tabindex="0">
+                  <i class="fas fa-hand-point-up"></i>
+                    <span class="count"><%= criterium.user.count %></span>
+                  </span>
+                <% end %>
             <% end %>
 
             <!-- If facilitator, allow deletion -->
-            <% if criterium.problem.facilitator_id && criterium.problem.facilitator_id == current_user.id %>
+            <% if @facilitating %>
               <%= link_to destroy_criterium_path(:id => criterium.id), :method => "delete", data: { confirm: 'Are you sure you want to delete this criterion?' } do %>
                 <span class="crisupport-count gray tooltip-toggle tooltip-small" href="#" aria-label="Delete" tabindex="0">
                   <i class="fas fa-minus-circle gray"></i>
@@ -187,6 +190,9 @@
       <h2><%=concern.capitalize%>s for "<%=criterium.title%>"</h2>
       <ul>
       <span class="cridissent-count submit-concern underline gray" id="submit-concern-<%=criterium.id%>">+ Add a <%=concern%></span>
+        
+      <!-- | <span class="crialt-button underline gray" id="add-crialt-2-<%=criterium.id%>">+ add an alternative</span> -->
+
       <!-- <br><br><div><strong><%=concern.capitalize%>s</strong></div> -->
       <% criterium.cridissent.each do |dissent| %>
       <%if dissent.user%>
@@ -246,9 +252,14 @@
         <span class="crialt-button underline gray" id="add-crialt-<%=criterium.id%>">+ add an alternative</span>
         <% criterium.crialt.order("transferred_user_count DESC").each do |suggestion| %>
             <li>
-              <div><strong><%= Criterium.find(suggestion.alternative).title %></strong>
+              <div><strong>
+                <% begin %>
+                <%= Criterium.find(suggestion.alternative).title %>
+                <% rescue %>
+                <% end %>
+              </strong>
 
-              <% if weighted_scoring?(@problem) && suggestion.transferred_user_count > 0 %>
+              <% if weighted_scoring && suggestion.transferred_user_count > 0 %>
                 (<i class="fas fa-sync-alt"></i> <%= pluralize(suggestion.transferred_user_count, "transfer") %>) 
               <% end %></div>
 
@@ -269,6 +280,7 @@
     $('#objection-<%=criterium.id%>').show()
   })
 
+  // close objections
   $('#objection-<%=criterium.id%>').find('.close-window').click(function(){
     $('#objection-<%=criterium.id%>').hide()
   })
@@ -286,6 +298,11 @@
     $('#crialt-<%=criterium.id%>').show()
   })
 
+  // $('#add-crialt-2-<%=criterium.id%>').click( function() {
+  //   $('.objection-popup').hide()
+  //   $('#crialt-<%=criterium.id%>').show()
+  // })
+
   $('#crialt-<%=criterium.id%>').find('.close-window').click(function(){
     $('#crialt-<%=criterium.id%>').hide()
   })
@@ -297,4 +314,34 @@
   $('#crialt-list-<%=criterium.id%>').find('.close-window').click(function(){
     $('#crialt-list-<%=criterium.id%>').hide()
   })
+
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+      $('.objection-popup').hide()
+      $('.objection-list').hide()
+      $('#new-criterion-div').hide()
+    }
+  })
+
+  // Supporting/unsupporting
+  $(".criteria-sponsorship > form > button").unbind('click').click(function() {
+    form = $(this).parent()
+    setTimeout(function () {
+        $(form).find('button').toggleClass('red-support gray-support');
+
+        if ($(form).attr('action').indexOf('unsponsor') >= 0) {
+          newAction = $(form).attr('action').replace('unsponsor', 'sponsor')
+          $(form).find('span.count')[0].innerText = Number($(form).find('span.count')[0].innerText) - 1
+          console.log('h')
+        } else {
+          newAction = $(form).attr('action').replace('sponsor', 'unsponsor')
+          $(form).find('span.count')[0].innerText = Number($(form).find('span.count')[0].innerText) + 1
+          $(form).parent().css( "display", "inline-block" );
+          console.log('k')
+        }
+    
+        $(form).attr('action', newAction);
+    }, 100);
+
+  });
 </script>

@@ -42,7 +42,15 @@ class SolutionsController < ApplicationController
   # GET /solutions/new
   def new
     @user = this_user
-    @solution = Solution.new(:problem_id => params[:problem_id])
+  
+    if params[:duplicate]
+      @original = Solution.find(params[:duplicate])
+      @solution = Solution.new(:problem_id => params[:problem_id])
+    else
+      @original = Solution.new()
+      @solution = Solution.new(:problem_id => params[:problem_id])
+    end
+  
     @problem = Problem.find(params[:problem_id])
 
     @all_criteria = @problem.criterium
@@ -140,7 +148,7 @@ class SolutionsController < ApplicationController
   # DELETE /solutions/1.json
   def destroy
     @problem = @solution.problem
-    if current_user.admin? || (@problem.facilitator_id && @problem.facilitator_id == current_user.id)
+    if current_user.admin? || (@problem.facilitator_id && (@problem.facilitator_id == current_user.id || @problem.cofacilitator.find { |person| person.user_id == current_user.id}) )
       @solution.destroy
       respond_to do |format|
         format.html { redirect_to issue_path(@problem), notice: 'Proposal was deleted.' }

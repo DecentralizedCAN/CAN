@@ -6,6 +6,7 @@ class Discussion < ApplicationRecord
   belongs_to :activity, optional: true
   belongs_to :solution, optional: true
   belongs_to :goal, optional: true
+  belongs_to :criterium, optional: true
   has_many :comment, dependent: :destroy
   has_many :notification, dependent: :destroy
   

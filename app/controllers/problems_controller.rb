@@ -1,7 +1,7 @@
 class ProblemsController < ApplicationController
   include UpvoteHelper
   include SolutionsHelper
-  before_action :set_problem, only: [:show, :table]
+  before_action :set_problem, only: [:show, :table, :add_cofacilitator]
   before_action :check_activity, only: [:create]
   before_action :require_login, unless: -> { public_viewable? }
   before_action :require_login, except: [:show, :table], if: -> { public_viewable? }
@@ -17,6 +17,8 @@ class ProblemsController < ApplicationController
   # GET /problems/1.json
 
   def show
+    @facilitating = facilitating?(@problem)
+
     @solutions = @problem.solution.paginate(:page => params[:page], :per_page => 12)
     .order("score DESC")
 
@@ -27,13 +29,18 @@ class ProblemsController < ApplicationController
     @all_criteria = @problem.criterium
       .joins(:user)
       .group("criteria.id")
-      .order("COUNT(user_id) DESC")
+      .order("criteria.created_at DESC")
+      # .order("COUNT(user_id) DESC")
 
     if logged_in?
       @my_criteria = current_user.criterium
         .where(problem_id: @problem.id)
 
-      @criteria = (@my_criteria + (@all_criteria - @my_criteria)).first(8)
+      if params[:criteria] == "all"
+        @criteria = (@my_criteria + (@all_criteria - @my_criteria))
+      else
+        @criteria = (@my_criteria + (@all_criteria - @my_criteria)).first(8)        
+      end
         # .order("COUNT(user_id) DESC").first(16) - @my_criteria
 
       @user = this_user
@@ -79,6 +86,8 @@ class ProblemsController < ApplicationController
   end
 
   def table
+    @facilitating = facilitating?(@problem)
+
     @solutions = @problem.solution.paginate(:page => params[:page], :per_page => 12)
     .order('created_at DESC')
 
@@ -105,6 +114,7 @@ class ProblemsController < ApplicationController
   # GET /problems/1/edit
   def edit
     @problem = Problem.find(params[:id])
+    @facilitating = facilitating?(@problem)
   end
 
   # POST /problems
@@ -178,6 +188,7 @@ class ProblemsController < ApplicationController
   # PATCH/PUT /problems/1.json
   def update
     @problem = Problem.find(params[:id])
+    @facilitating = facilitating?(@problem)
 
     if (@problem.facilitator_id && @problem.facilitator_id == current_user.id) || current_user.admin?
       respond_to do |format|
@@ -224,6 +235,11 @@ class ProblemsController < ApplicationController
     redirect_to issue_path(:problem_id => @problem.id)
   end
 
+  def add_cofacilitator
+    @problem.cofacilitator.create(user_id: params[:user_id])
+    redirect_to issue_path(:problem_id => @problem.id)
+  end
+
   # def add_criteria
   #   @problem = Problem.find(params[:id])
 
@@ -246,7 +262,7 @@ class ProblemsController < ApplicationController
     end
 
     def facilitating?(problem)
-      problem.facilitator_id && problem.facilitator_id == current_user.id
+      logged_in? && problem.facilitator_id && (problem.facilitator_id == current_user.id || problem.cofacilitator.find { |person| person.user_id == current_user.id})
     end
 
     def weighted_scoring?(problem)

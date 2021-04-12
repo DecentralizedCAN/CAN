@@ -3,12 +3,21 @@
 
   <div class="discussion-column mini" id="main-discussion">
 
-    <% if @top_liked.length > 0 && @discussion.comment.count > 15 %>
+    <%
+      @comment = @discussion.comment.new
+
+      @top_liked = @discussion.comment.left_joins(:upvotes)
+      .group(:id)
+      .having('count(upvotes.id) > 0')
+      .order("COUNT(upvotes.id) DESC LIMIT 5")
+      
+      if @top_liked.length > 0 && @discussion.comment.count > 15 
+    %>
 
       <ul id="top-liked-mini">
         <h2>Top Liked Comments</h2>
         <% @top_liked.each do |comment| %>
-          <% if comment.content %>
+          <% if comment.content && (@criteria_discussion != true || comment.content.include?('Regarding ' + @criteria_title) )  %>
             <li>
               <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id}  if logged_in? %>
               <div class="like-div">
@@ -43,7 +52,7 @@
  -->
     <ul id="scroll-div">
       <% @discussion.comment.order(created_at: :asc).limit(100).each do |comment| %>
-        <% if comment.content %>
+        <% if comment.content && (@criteria_discussion != true || comment.content.include?('Regarding ' + @criteria_title)) %>
           <li>
             <div class="comment-user-info">
 

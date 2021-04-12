@@ -1,18 +1,12 @@
-<div class="backdrop">
+<!-- <div class="white-container"> -->
+<!-- <div class="backdrop"> -->
 
-<div class="back-button">
-  <%= link_to issue_path(:problem_id => @criterium.problem.hashid, :view => "suggested"), data: { turbolinks: false } do %>
-    <div class="back-button-arrow"></div>
-    <div class="back-button-content">
-      All criteria
-    </div>
-  <% end %>
-</div>
+<div><%= link_to issue_path(:problem_id => @criterium.problem.hashid, :criteria => "all"), data: { turbolinks: false } do %>  
+    <i class="fas fa-arrow-left">&nbsp;</i> Back to all criteria
+<% end %></div><br>
 
 <div class="criterion-outer">
-
-<%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => @criterium})%>
-
+	<%= render(:partial => 'criteria/criterium-mini', :locals => {:criterium => @criterium})%>
 </div>
 
 <%if false%>
@@ -105,8 +99,14 @@
 </div>
 <%end #end of "false"%>
 
-</div>
+<!-- </div> -->
 
+<!-- <div class="discussion-extraouter"> -->
+	<!-- <h2>Discussion about this criterion</h2> -->
+  <%#= render(:partial => 'discussions/discussion-mini', :locals => {:@discussion => @discussion, @criteria_discussion => true}) if Setting.find(4).state %>
+<!-- </div> -->
+
+</div><br>
 <% if current_user.admin? %>
 
   Added by user <%= @criterium.creator %>
