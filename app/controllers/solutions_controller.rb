@@ -45,7 +45,7 @@ class SolutionsController < ApplicationController
   
     if params[:duplicate]
       @original = Solution.find(params[:duplicate])
-      @solution = Solution.new(@original.attributes)
+      @solution = Solution.new(:problem_id => params[:problem_id])
     else
       @original = Solution.new()
       @solution = Solution.new(:problem_id => params[:problem_id])
