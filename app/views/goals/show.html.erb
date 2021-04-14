@@ -377,7 +377,7 @@
 <% end %>
 
 <% if Activity.where(:goal_id => @goal.id).count > 0 && Discussion.where(:goal_id => @goal.id).length > 0 %>
-<br>
+  <br>
 <% end %>
 
 <% if Discussion.where(:goal_id => @goal.id).length > 0 %>
@@ -388,6 +388,21 @@
   <li>
     <i class="fas fa-comments"></i>
     <%= link_to discussion.title, discussion_path(discussion) %>
+  </li>
+<% end %>
+
+<% if Discussion.where(:goal_id => @goal.id).length > 0 %>
+  <br>
+<% end %>
+
+<% if Problem.where(:goal_id => @goal.id).length > 0 %>
+  <strong>Problems</strong>
+<% end %>
+
+<% Problem.where(:goal_id => @goal.id).each do |problem| %>
+  <li>
+    <i class="fas fa-comments"></i>
+    <%= link_to problem.title, issue_path(problem) %>
   </li>
 <% end %>
 

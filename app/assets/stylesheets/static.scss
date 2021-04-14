@@ -295,6 +295,18 @@ $label-blue: #95a7ff;
 
     @media (max-width: 768px) {
       width: 100% !important;
+
+      .issue-title {
+        width: 100%;
+      }
+
+      .issue-info {
+        width: 100%;
+
+        * {
+          font-size: 14px !important;          
+        }
+      }
     }
   }
 
@@ -309,6 +321,10 @@ $label-blue: #95a7ff;
     width: 29%;
     margin-top: 10px;
     background-color: white;
+
+    @media (max-width: 768px) {
+      display: none !important;
+    }
 
     li {
       color: #525252;

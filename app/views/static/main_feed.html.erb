@@ -98,7 +98,7 @@
 							<% end %>
 						</li>
 					<% end %>
-				<% elsif post.problem %>
+				<% elsif post.problem && post.problem.user.count > 0 %>
 
 				<li class="post-outer home-item home-item-underlined">
 				<%= render(:partial => 'post-stuff', :locals => {:post => post})%>

@@ -226,7 +226,7 @@ textarea:focus, input:focus {
 }
 
 .backdrop, #activator, #solver, #dashboard, #main-feed {
-  z-index: 1;
+  // z-index: 1;
 
   input {
     color: #3a3a3a;
