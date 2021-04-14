@@ -1,6 +1,6 @@
 <div class="choice">
 
-<h1>What do you want to do?</h1>
+<h1>What do you want to do<%= ' to work toward the goal "' + Goal.find(params[:goal]).title + '"' if params[:goal] %>?</h1>
 
 <%= link_to post_action_path(:goal => params[:goal]) do %>
 <div style="background: #2afb43">Do something together
@@ -29,10 +29,12 @@
 <p>Have an open-ended discussion about any topic.</p></div>
 <% end %>
 
+<% unless params[:goal] %>
 <%= link_to goal_path(Goal.first, :view => 'public') do %>
 <div style="background: #dd72ff;">Develop your goals
 <h1><i class="fas fa-bullseye"></i></h1>
 <p>Build your roadmap and suggest goals to the community.</p></div>
+<% end %>
 <% end %>
 
 </div>

@@ -641,8 +641,12 @@ li.home-item-underlined {
       cursor: pointer;
       padding: 10px;
 
+      &:hover {
+        
+      }
+
       p {
-        opacity: 0;
+        // opacity: 0;
       }
 
       &:hover p {

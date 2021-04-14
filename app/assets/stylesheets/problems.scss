@@ -391,6 +391,16 @@ $success-red: #ff7455;
   text-align: right;
   height: fit-content;
 
+  button {
+    border: 1px solid #e3e3e3;
+    border-bottom-width: 1px;
+    background: transparent;
+    padding: 1px 14px;
+    width: max-content;
+    border-radius: 4px;
+    border-bottom-width: 1.5px;
+  }
+
   a {
     width: max-content;
   }

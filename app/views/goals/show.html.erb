@@ -310,9 +310,9 @@
 
 
   <% if @goal.id != 1 %>
-    <%= link_to post_action_path(:goal => @goal.id) do %>
+    <%= link_to choice_path(:goal => @goal.id) do %>
       <div class="view-actionables">
-        <i class="fas fa-tools"></i> Action
+        <i class="fas fa-tools"></i> Mobilize
       </div>
     <% end %>
 
