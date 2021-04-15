@@ -75,6 +75,18 @@
 </h2>
 <% end %>
 
+  <% if @goal.id == 1 %>
+    <!-- <h1>Goals</h1>  -->
+    <%= link_to goals_path do %>
+      <div id="search-goals" class="underline">
+        Search goals
+        <i class="fas fa-search"></i> <!-- Search all -->
+      </div>
+    <% end %><br>
+    
+    <!-- <br><i class="fas fa-search"></i> View all top goals -->
+  <% end %>
+
 <% if params[:view] == 'public' %>
   <%= link_to goal_path(@goal), :class => "goals-link" do %>
     My map
@@ -296,19 +308,6 @@
 
 
 
-  <% if @goal.id == 1 && false %>
-    <!-- <h1>Goals</h1>  -->
-    <%= link_to goals_path do %>
-      <div id="search-goals">
-        Search goals
-        <i class="fas fa-search"></i> <!-- Search all -->
-      </div>
-    <% end %>
-    
-    <!-- <br><i class="fas fa-search"></i> View all top goals -->
-  <% end %>
-
-
   <% if @goal.id != 1 %>
     <%= link_to choice_path(:goal => @goal.id) do %>
       <div class="view-actionables">
@@ -339,7 +338,7 @@
       <%= form.submit "Submit", id: :submit_goal, :class => 'button'%>
     <% end %>
 
-<!--     <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search existing goals...">
+    <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search existing goals...">
     <ul id="myUL2">
 
       <% @my_goals.each do |goal| %>
@@ -347,7 +346,7 @@
           <%= link_to '+ ' + goal.title, newlink_path(:parent_id => @goal.id, :child_id => goal.id), :method => 'post', :class => 'button goal-button' %> 
         </li>
       <% end %>
-    </ul> -->
+    </ul>
   </div>
 </div>
 

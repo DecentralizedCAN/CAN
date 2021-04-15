@@ -8,15 +8,23 @@
 <ol id="notifications">
 <% @notifications.each do |notification| %>
 <div <%= 'class=unread' if !notification.read %>>
-  <%= link_to notification_redirect_path(:notification_id => notification.id) do %>
+  <%= link_to notification_redirect_path(:notification_id => notification.id), :style=>"width: 96%;" do %>
 
-  <div>
+  <!-- <div> -->
     <li <%= 'class=unread' if !notification.read %> >
       <%= notification.details %>
       <br><%= notification.created_at.strftime("%m/%d/%Y at %H:%M") %>
     </li>
-  </div>
+  <!-- </div> -->
   <% end %>
+
+  <% if !notification.read %>
+    <div class="float-right x"><%= link_to clear_notification_path(notification.id), :method => "post" do %>
+      <i class="fas fa-times close-window"></i>
+    <% end %></div>
+  <% end %>
+
+
 </div>
 <% end %>
 </ol>

@@ -41,10 +41,10 @@
     <% end %>
 
     <div>
-    <% if Setting.find(10).state && false %>
+    <% if Setting.find(10).state %>
       <%= form.check_box :facilitator_id, {checked: true}, current_user.id, false %> Facilitator mode
     <% else %>
-      <%#= form.hidden_field :facilitator_id, id: :facilitator_id, value: current_user.id %>
+      <%= form.hidden_field :facilitator_id, id: :facilitator_id, value: nil %>
     <% end %>
 
 
