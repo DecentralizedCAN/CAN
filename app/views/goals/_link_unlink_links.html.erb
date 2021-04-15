@@ -50,7 +50,7 @@
 
     <!-- TITLE -->
 
-      <%= link_to goal_path(:goal_id => link.child.hashid, :view => view) do %>
+      <%= link_to goal_path(:goal_id => link.child.hashid, :view => view, :anchor => link.child.hashid) do %>
         <% if link.child.users.include?(@user) %>
           <span class="strikethrough"><%= link.child.title %></span>
         <% else %>
