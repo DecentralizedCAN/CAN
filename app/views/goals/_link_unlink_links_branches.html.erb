@@ -73,9 +73,15 @@
       <% end %>
     </div> -->
 
-    <% if Activity.where(:goal_id => link.parent.id).count > 0 %>
+<% 
+    activity_count = Activity.where(:goal_id => link.parent.id).count
+    discussion_count = Discussion.where(:goal_id => link.parent.id).count
+    problem_count = Problem.where(:goal_id => link.parent.id).count
+    stuff_count = activity_count + discussion_count + problem_count
+
+    if stuff_count > 0  %>
       <!-- <div class="mini-actions"> -->
-        <%= Activity.where(:goal_id => link.parent.id).count %>
+        <%= stuff_count %>
         <i class="fas fa-tools"></i>
       <!-- </div> -->
     <% else %>
