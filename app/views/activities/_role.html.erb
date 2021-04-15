@@ -28,7 +28,7 @@
       <% end %>
 
       <% elsif !@activity.actdissent.find_by(user: @user) && (!role.maximum || role.user.count < role.maximum) %>
-       
+
         <div class="button complete" id="commit-button-<%=role.id%>"><i class="fas fa-user-plus"></i> COMMIT</div>
 
        <!--  <%= link_to commit_path(:roll_id => role.id), :class => "button complete" do %>
@@ -38,6 +38,9 @@
       <% end %>
 
     <% end %>
+
+        <%= role.maximum %>
+
     <br>
     <!-- COMMIT BUTTON ENDS -->
 
@@ -59,8 +62,8 @@
 
     <div class="participation-meter participation-meter-outer">
       <div class="participation-progress" style="
-      width: <%= role.user.count.to_f / role.minimum.to_f * 100%>%; 
-      background-color: rgba(119, 166, 255, <%= role.user.count.to_f / role.minimum.to_f %>);
+      width: <%= role.user.count.to_f / [role.minimum.to_f, 1].max * 100%>%; 
+      background-color: rgba(119, 166, 255, <%= role.user.count.to_f / [role.minimum.to_f, 1].max %>);
       ">
       </div>
       <% if role.maximum %>

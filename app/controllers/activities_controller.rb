@@ -130,10 +130,10 @@ class ActivitiesController < ApplicationController
         @roles.each do |role|
 
           minimum = role['minimum'].to_i
-          minimum = 1 unless role['minimum'].to_i > 0          
+          minimum = 1 unless role['minimum'].to_i >= 0       
 
           maximum = role['maximum'].to_i
-          maximum = nil unless role['maximum'].to_i >= minimum
+          maximum = nil unless role['maximum'].to_i >= [minimum, 1].max
 
           Roll.create(:title => role['title'],
                       :description => role['description'],

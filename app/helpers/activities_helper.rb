@@ -32,7 +32,7 @@ module ActivitiesHelper
     total = 0
 
     action.roll.each do |role|
-      total += role.user.count
+      total += [role.user.count, role.minimum].min
     end
 
     total
@@ -42,7 +42,7 @@ module ActivitiesHelper
     total = 0
 
     action.roll.each do |role|
-      total += Completion.where(roll_id: role.id).count
+      total += [Completion.where(roll_id: role.id).count, role.minimum].min
     end
 
     total
