@@ -3,6 +3,12 @@
 <ul class="branches branches0">
 <li>
 
+<% def parent_links(goal_id)
+  Link.where(child_id: goal_id).where.not(parent_id: @goal.id)
+      .joins(:user)
+      .group("links.id")
+      .order("COUNT(user_id) DESC").first(4)
+end %>
 
   <!-- ======================== -->
 
@@ -11,7 +17,11 @@
     <li>
 
       <div>
-        <% @uplinks_2 = Link.where(child_id: link.parent.id).where.not(parent_id: @goal.id).first(4) %>      
+        <% 
+          # @uplinks_2 = Link.where(child_id: link.parent.id).where.not(parent_id: @goal.id).first(4) 
+
+          @uplinks_2 = parent_links(link.parent.id)
+        %>      
       </div>
       <!-- <hr> -->
       <% if @uplinks_2.length > 0 %>
@@ -22,7 +32,7 @@
           <% @uplinks_2.each do |link2| %>
             <li>
               <!-- <hr> -->
-              <% @uplinks_3 = Link.where(child_id: link2.parent.id).where.not(parent_id: @goal.id).first(4) %>
+              <% @uplinks_3 = parent_links(link2.parent.id) %>
               <% if @uplinks_3.length > 0  %>
                 
                 <!-- ======================== -->
@@ -31,7 +41,7 @@
                   <% @uplinks_3.each do |link3| %>
                     <li>
                       <!-- <hr> -->
-                      <% @uplinks_4 = Link.where(child_id: link3.parent.id).where.not(parent_id: @goal.id).first(4) %>
+                      <% @uplinks_4 = parent_links(link3.parent.id) %>
                       <% if @uplinks_4.length > 0  %>
 
                         <!-- ======================== -->
@@ -41,7 +51,7 @@
                             <li>
 
 
-                            <% @uplinks_5 = Link.where(child_id: link4.parent.id).where.not(parent_id: @goal.id).first(4) %>
+                            <% @uplinks_5 = parent_links(link4.parent.id) %>
                             <% if @uplinks_5.length > 0  %>
 
                               <!-- ======================== -->
