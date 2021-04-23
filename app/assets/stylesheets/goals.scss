@@ -672,7 +672,7 @@
   font-size: 12px; /* Increase the font-size */
   // color: black; /* Add a black text color */
   display: block; /* Make it into a block element to fill the whole list */
-  height: fit-content;
+  height: max-content;
 }
 
 #myUL li a:hover:not(.header), #myUL2 li a:hover:not(.header) {
