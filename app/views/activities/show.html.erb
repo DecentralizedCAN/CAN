@@ -113,7 +113,7 @@
 
 <!-- <div class="thisisa">This is an "action". Checkout the <%= link_to "GUIDE", documentation_path %> for more info. -->
 
-<% if logged_in? && current_user.admin? && false %>
+<% if logged_in? && current_user.admin? %>
   <br><br>
   Created by user <%= @activity.creator %> –
   <%= link_to 'Remove', @activity, method: :delete, data: { confirm: 'Delete action?' } %>
