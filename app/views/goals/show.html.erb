@@ -497,14 +497,15 @@ function myFunction2() {
   }
 }
 
-$(document).ready(function(){
-  localStorage.setItem("goal", '/goal/' + window.location.href.split('/goal/')[1]);
+// scroll to middle and store goal id in local
+// $(document).ready(function(){
+//   localStorage.setItem("goal", '/goal/' + window.location.href.split('/goal/')[1]);
 
-  var outerContent = $('.goal-node-outer');
-  var innerContent = $('.roots0');
+//   var outerContent = $('.goal-node-outer');
+//   var innerContent = $('.roots0');
 
-  outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);        
-});
+//   outerContent.scrollLeft((innerContent.width() - outerContent.width()) / 2);        
+// });
 
 $("#reload").click(function() {
   location.reload()

@@ -1,69 +1,28 @@
-<% if @activity.goal %>
-<div class="action-goal">
-  <div class="proposal-activity-description">
-    <!-- <i class="fas fa-link"></i> -->
-    <!-- Attached to goal  -->
-    <strong>
-      <% if @activity %>
-        <%= link_to @activity.goal.title, goal_path(@activity.goal) %>    
-      <% else %>
-        "<%= activity.goal.title %>"
-      <% end %>
-    </strong>
-  </div>
-</div>
-<% end %>
-
 <div class="top-flex">
 
 <div id="activator" class="white-container">
-
-<!--   <div class="back-button">
-    <%= link_to main_feed_path do %>
-      <div class="back-button-arrow"></div>
-      <div class="back-button-content">
-        Feed
-      </div>
-    <% end %>
-  </div> -->
 
   <div class="post-outer show-post">
     <%= render(:partial => 'static/post-stuff', :locals => {:post => @activity.post})%>
 
     <div class="action show-action">
 
-      <!-- <div class="flex-container"> -->
 
-        <!-- <div class="issue-title view">   -->
-          <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
-        <!-- </div> -->
-
-      <!-- </div> -->
+    <%= render(:partial => 'activities/activity', :locals => {:activity => @activity})%>
 
 
-      <% if @activity.solution && @activity.solution.problem %>
-        <br>
-        <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid) do %>
-          <i class="fas fa-comment-alt"></i>
-          View original proposal
-        <% end %>
-        
-        &nbsp;
-        
+
+    <% if @activity.solution && @activity.solution.problem %>
+      <br>
+      <%= link_to solution_path(:problem_id => @activity.solution.problem.hashid, :solution_id => @activity.solution.hashid) do %>
+        <i class="fas fa-comment-alt"></i>
+        View original proposal
       <% end %>
+      
+      &nbsp;
+      
+    <% end %>
 
-      <!-- &nbsp; -->
-
-    <!--   <% if logged_in? %>
-        <% if @activity.roll.first.user.include?(@user) %>
-        <% unless @activity.roll.last.user.include?(@user) %>
-          <%= link_to complete_path(:activity_id => @activity.id), :method => "post", :class => "button" do %>
-            <i class="fa fa-check"></i>
-            Mark complete
-          <% end %>
-        <% end %>
-        <% end %>
-      <% end %> -->
       
     </div>
 
