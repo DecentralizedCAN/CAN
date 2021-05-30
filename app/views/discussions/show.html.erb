@@ -69,6 +69,8 @@
 <% if @discussion.content.length > 0 %>
   <p class="discussion-content">Discussion info: 
 <%= @discussion.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').html_safe %></p>
+
+
 <% end %>
 
 <% end %>
@@ -93,8 +95,7 @@
             <% comment_class = "comment" %>
           <% end %>
           
-          <div class=<%= comment_class%>><%= comment.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').gsub('!chatlog', '').html_safe  %>
-          </div>
+          <p class=<%= comment_class%>><%= comment.content.gsub(URI.regexp, '<a target="_blank" href="\0">\0</a>').gsub('!chatlog', '').html_safe  %></p>
 
           <% pre_upvote = comment.upvotes.find { |upvote| upvote.user_id == current_user.id} if logged_in? %>
           
@@ -143,9 +144,9 @@
     <%= form.hidden_field :discussion_id %>
 
     <div class="comment-box">
-      <%= form.text_field :content, id: :comment_content, autocomplete: "off", :maxlength => 3000, :size => 40 %>
+      <%= form.text_area :content, id: :comment_content, autocomplete: "off", :maxlength => 3000, :size => 40 %>
 
-      <%= form.submit "Send", id: :send %>
+      <div style="position: relative; margin-top: -10px;"><%= form.submit "Send", id: :send %></div>
     </div>
 
   <% end %>

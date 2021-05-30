@@ -187,6 +187,19 @@ p > a, .comment > a {
     border: 0;
     border-top: 1px solid #d8d8d8;
   }
+
+  textarea#comment_content {
+    padding-right: 0;
+    width: calc(100% - 50px);
+    height: 46px;
+    margin-top: -20px;
+    border-right: 1px solid #d8d8d8;
+    resize: vertical;
+
+    &::-webkit-resizer {
+      display: none;
+    }
+  }
 }
 
 
