@@ -13,7 +13,9 @@ development:
   host: localhost
   adapter: postgresql
   encoding: unicode
-  database: dcanencrypted
+  # database: dcanencrypted
+  database: dcanencrypted2
+  # database: metadcan
   username: dcanuser
   password: dcanpassword
 
